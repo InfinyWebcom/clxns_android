@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:paddingStart="@dimen/dp24"
+    android:paddingEnd="@dimen/dp24"
+    tools:context=".ui.login.LoginActivity">
+
+    <ImageView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/app_name"
+        android:keepScreenOn="true"
+        android:padding="@dimen/dp16"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_main_logo"
+        android:transitionName="app_logo" />
+
+
+    <TextView
+        android:id="@+id/txtLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fullscreen_content"
+        android:fontFamily="@font/gtwalsheimpromedium"
+        android:includeFontPadding="false"
+        android:text="Login"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/sp22" />
+
+    <TextView
+        android:id="@+id/txtSubHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtLogin"
+        android:layout_marginTop="@dimen/dp10"
+        android:fontFamily="@font/gtwalsheimpromedium"
+        android:includeFontPadding="false"
+        android:text="Enter your details"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/sp16" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/mobileNumberIL"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtSubHeader"
+        android:layout_marginTop="@dimen/dp24"
+        android:hint="Mobile"
+        app:startIconDrawable="@drawable/ic_phone_android_24"
+        app:startIconTint="@color/colorPrimary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mobileNumberET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gtwalsheimproregular"
+            android:inputType="number"
+            android:maxLength="10"
+            android:textColor="@color/colorPrimary" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordIL"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mobileNumberIL"
+        android:layout_marginTop="@dimen/dp24"
+        android:hint="Password"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/colorPrimary"
+        app:startIconDrawable="@drawable/ic_lock_24"
+        app:startIconTint="@color/colorPrimary">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gtwalsheimproregular"
+            android:inputType="textPassword"
+            android:maxLength="50"
+            android:textColor="@color/colorPrimary" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordIL"
+        android:layout_marginTop="@dimen/dp24"
+        android:fontFamily="@font/gtwalsheimpromedium"
+        android:padding="16dip"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp16"
+        app:icon="@drawable/ic_arrow_forward_20"
+        app:iconGravity="end"
+        app:iconTint="@color/white" />
+
+
+    <TextView
+        android:id="@+id/txtForgetPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginBtn"
+        android:layout_marginTop="@dimen/dp16"
+        android:fontFamily="@font/gtwalsheimpromedium"
+        android:includeFontPadding="false"
+        android:text="Forgot Password?"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/sp16" />
+</RelativeLayout>

@@ -1,0 +1,14 @@
+<vector android:height="200dp" android:viewportHeight="200"
+    android:viewportWidth="200" android:width="200dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/quantum_grey200" android:pathData="M78.73,129.681L43.675,167H0.139L60.001,103.273L78.73,129.681Z"/>
+    <path android:fillColor="@color/quantum_grey200" android:pathData="M85.657,62.934L85.595,62.999L60.852,89.341L19.743,31.373H63.276L85.657,62.934Z"/>
+    <path android:fillColor="@color/quantum_grey200" android:pathData="M110.829,49.159L91.226,70.032L84.821,76.851L66.419,96.441L99.451,143.023H142.987L109.953,96.441L154.364,49.159H110.829Z"/>
+    <path android:fillColor="@color/quantum_grey200" android:pathData="M122.735,33.952H116.844V41.099H122.735V33.952Z"/>
+    <path android:fillColor="@color/quantum_grey200" android:pathData="M131.791,36.996H138.882V28.392H131.791V36.996Z"/>
+    <path android:fillColor="@color/quantum_grey200" android:pathData="M145.1,41.563H157.375V26.672H145.1V41.563Z"/>
+    <path android:fillColor="@color/quantum_grey200" android:pathData="M145.372,8.008H137.246V17.869H145.372V8.008Z"/>
+    <path android:fillColor="@color/quantum_grey200" android:pathData="M131.791,19.127H127.1V24.819H131.791V19.127Z"/>
+    <path android:fillColor="@color/quantum_grey200" android:pathData="M155.41,15.42H151.648V19.987H155.41V15.42Z"/>
+    <path android:fillColor="@color/quantum_grey200" android:pathData="M161.547,17.869V24.819H167.276V17.869H161.547Z"/>
+    <path android:fillColor="@color/quantum_grey200" android:pathData="M166.702,0H157.375V11.317H166.702V0Z"/>
+</vector>
