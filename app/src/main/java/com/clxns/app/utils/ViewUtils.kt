@@ -1,4 +1,4 @@
-package com.edpd.duolingodemo.util
+package com.clxns.app.utils
 
 import android.content.Context
 import android.view.View
@@ -18,7 +18,7 @@ fun ProgressBar.hide() {
     visibility = View.GONE
 }
 
-fun View.snackbar(message: String) {
+fun View.snackBar(message: String) {
     Snackbar.make(this, message, Snackbar.LENGTH_LONG).also { snackbar ->
         snackbar.setAction("ok") {
             snackbar.dismiss()

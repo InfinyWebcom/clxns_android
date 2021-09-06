@@ -1,4 +1,4 @@
-package com.edpd.duolingodemo.util
+package com.clxns.app.utils
 
 import java.io.IOException
 
