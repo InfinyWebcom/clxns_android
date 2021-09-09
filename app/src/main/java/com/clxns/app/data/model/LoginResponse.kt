@@ -49,11 +49,11 @@ data class LoginData(
     @Json(name = "lastName")
     val lastName: String,
     @Json(name = "latitude")
-    val latitude: Int,
+    val latitude: Double,
     @Json(name = "location")
     val location: String,
     @Json(name = "longitude")
-    val longitude: Int,
+    val longitude: Double,
     @Json(name = "otp")
     val otp: Any?,
     @Json(name = "otpExpired")

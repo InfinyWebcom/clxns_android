@@ -15,11 +15,13 @@
         <entry key="app/src/main/res/drawable/ic_main_logo.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/drawable/ic_phone_android_24.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/drawable/ic_round_close_24.xml" value="0.17314814814814813" />
+        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.15572916666666667" />
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.21" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17083333333333334" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2" />
         <entry key="app/src/main/res/layout/custom_back_btn.xml" value="0.17083333333333334" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1388888888888889" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.17083333333333334" />
       </map>
     </option>

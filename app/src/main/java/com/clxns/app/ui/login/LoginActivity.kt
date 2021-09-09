@@ -2,6 +2,8 @@ package com.clxns.app.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.EditorInfo
@@ -10,16 +12,20 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import com.clxns.app.ui.MainActivity
 import com.clxns.app.R
+import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityLoginBinding
+import com.clxns.app.ui.MainActivity
 import com.clxns.app.ui.forgotPassword.ForgotPasswordActivity
+import com.clxns.app.utils.Constants
 import com.clxns.app.utils.Status
 import com.clxns.app.utils.Utilities
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -32,6 +38,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mobileNumberIL: TextInputLayout
     private lateinit var passwordET: TextInputEditText
     private lateinit var passwordIL: TextInputLayout
+
+    @Inject
+    lateinit var sessionManager: SessionManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginBinding = ActivityLoginBinding.inflate(layoutInflater)
@@ -102,13 +111,26 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.loginResponse.observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
-                    loginBinding.txtLogin.text = "Welcome ${it.data?.loginData?.firstName}"
-                    startActivity(Intent(this, MainActivity::class.java))
+                    Toast.makeText(this, it.data?.title, Toast.LENGTH_LONG).show()
+                    val loginData = it.data?.loginData
+                    val name = loginData?.firstName + loginData?.lastName
+                    loginBinding.txtLogin.text = "Welcome $name"
+                    sessionManager.saveAnyData(Constants.TOKEN, it.data?.token!!)
+                    sessionManager.saveAnyData(Constants.USER_NAME, name)
+                    sessionManager.saveAnyData(Constants.USER_ID, loginData!!.id)
+                    sessionManager.saveAnyData(Constants.USER_DOB, loginData.dob)
+                    sessionManager.saveAnyData(Constants.USER_EMAIL, loginData.email)
+                    sessionManager.saveAnyData(Constants.USER_MOBILE, loginData.phone)
+                    sessionManager.saveAnyData(Constants.USER_ADDRESS, loginData.address)
+                    sessionManager.saveAnyData(Constants.USER_LOCATION, loginData.location)
+                    sessionManager.saveAnyData(Constants.IS_USER_LOGGED_IN, true)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    }, Constants.SPLASH_SCREEN_TIMEOUT)
                 }
                 Status.ERROR -> {
-                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                    loginBinding.txtLogin.text = "Failed to login"
+                    loginBinding.txtLogin.text = it.message
                 }
                 Status.LOADING -> {
                     loginBinding.txtLogin.text = "Loading...."

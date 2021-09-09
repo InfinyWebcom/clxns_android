@@ -168,7 +168,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 ) {
                     val otp = "${otpET1.text.toString()}${otpET2.text.toString()}${otpET3.text.toString()}${otpET4.text.toString()}"
                     Utilities.showSnackBar(otp, binding.root)
-                    passwordViewModel.verifyOTP(Constants.TOKEN, otp, Constants.DEMO_USER)
+                    //passwordViewModel.verifyOTP(Constants.TOKEN, otp, Constants.DEMO_USER)
                 }
                 clearFocusFromOTPET()
             }

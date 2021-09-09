@@ -26,14 +26,18 @@ class LoginViewModel @Inject constructor(
 
     fun performLogin(mobileNo:String, password:String){
         viewModelScope.launch {
-            _loginResponse.postValue(Resource.loading(null))
             if (networkHelper.isNetworkConnected()){
+                _loginResponse.postValue(Resource.loading(null))
                 loginRepository.performLogin(mobileNo, password).let {
                     if (it!!.isSuccessful){
-                        _loginResponse.postValue(Resource.success(it.body()))
-                    }else _loginResponse.postValue(Resource.error(it.errorBody().toString(), null))
+                        if (it.body()?.error == true){
+                            _loginResponse.postValue(Resource.error(it.body()!!.title, null))
+                        }else {
+                            _loginResponse.postValue(Resource.success(it.body()))
+                        }
+                    }else _loginResponse.postValue(Resource.error("Something went wrong.", null))
                 }
-            }else _loginResponse.postValue(Resource.error("No internet connection", null))
+            }else _loginResponse.postValue(Resource.error("No Internet Connection", null))
         }
     }
 
