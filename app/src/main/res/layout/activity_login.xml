@@ -10,27 +10,25 @@
     tools:context=".ui.login.LoginActivity">
 
     <ImageView
-        android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
+        android:id="@+id/login_logo"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:contentDescription="@string/app_name"
         android:keepScreenOn="true"
-        android:padding="@dimen/dp16"
-        android:scaleType="fitCenter"
         android:src="@drawable/ic_main_logo"
-        android:transitionName="app_logo" />
+        android:transitionName="app_logo_anim" />
 
 
     <TextView
         android:id="@+id/txtLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fullscreen_content"
-        android:fontFamily="@font/gtwalsheimpromedium"
-        android:includeFontPadding="false"
-        android:text="Login"
+        android:layout_below="@id/login_logo"
+        android:text="@string/login"
+        android:layout_marginTop="@dimen/dp16"
+        android:textStyle="bold"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/sp22" />
 
@@ -39,31 +37,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtLogin"
-        android:layout_marginTop="@dimen/dp10"
-        android:fontFamily="@font/gtwalsheimpromedium"
-        android:includeFontPadding="false"
-        android:text="Enter your details"
+        android:layout_marginTop="@dimen/dp8"
+        android:text="@string/enter_your_details"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/sp16" />
+        android:textSize="@dimen/sp18" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/mobileNumberIL"
+        android:id="@+id/emailIL"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtSubHeader"
-        android:layout_marginTop="@dimen/dp24"
-        android:hint="Mobile"
-        app:startIconDrawable="@drawable/ic_phone_android_24"
+        android:layout_marginTop="@dimen/dp16"
+        android:hint="@string/email"
+        app:startIconDrawable="@drawable/ic_email_24"
         app:startIconTint="@color/colorPrimary">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mobileNumberET"
+            android:id="@+id/emailET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/gtwalsheimproregular"
-            android:inputType="number"
-            android:maxLength="10"
+            android:inputType="textEmailAddress"
             android:textColor="@color/colorPrimary" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,9 +68,9 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mobileNumberIL"
-        android:layout_marginTop="@dimen/dp24"
-        android:hint="Password"
+        android:layout_below="@+id/emailIL"
+        android:layout_marginTop="@dimen/dp16"
+        android:hint="@string/password"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/colorPrimary"
         app:startIconDrawable="@drawable/ic_lock_24"
@@ -98,11 +93,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/passwordIL"
         android:layout_marginTop="@dimen/dp24"
-        android:fontFamily="@font/gtwalsheimpromedium"
-        android:padding="16dip"
-        android:text="Login"
+        android:padding="12dip"
+        android:text="@string/login"
+        android:textStyle="bold"
+        app:cornerRadius="@dimen/dp24"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp16"
+        android:textSize="@dimen/sp18"
         app:icon="@drawable/ic_arrow_forward_20"
         app:iconGravity="end"
         app:iconTint="@color/white" />
@@ -114,9 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/loginBtn"
         android:layout_marginTop="@dimen/dp16"
-        android:fontFamily="@font/gtwalsheimpromedium"
-        android:includeFontPadding="false"
-        android:text="Forgot Password?"
+        android:text="@string/forgot_password_question"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/sp16" />
+        android:textSize="@dimen/sp18" />
 </RelativeLayout>

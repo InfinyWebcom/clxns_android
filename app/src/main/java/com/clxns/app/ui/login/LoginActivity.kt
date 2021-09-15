@@ -1,11 +1,14 @@
 package com.clxns.app.ui.login
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Pair
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -19,12 +22,12 @@ import com.clxns.app.ui.MainActivity
 import com.clxns.app.ui.forgotPassword.ForgotPasswordActivity
 import com.clxns.app.utils.Constants
 import com.clxns.app.utils.Status
-import com.clxns.app.utils.Utilities
+import com.clxns.app.utils.hideKeyboard
+import com.clxns.app.utils.removeFocus
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -34,8 +37,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginBinding: ActivityLoginBinding
 
     private lateinit var loginBtn: MaterialButton
-    private lateinit var mobileNumberET: TextInputEditText
-    private lateinit var mobileNumberIL: TextInputLayout
+    private lateinit var emailET: TextInputEditText
+    private lateinit var emailIL: TextInputLayout
     private lateinit var passwordET: TextInputEditText
     private lateinit var passwordIL: TextInputLayout
 
@@ -56,8 +59,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initView() {
         loginBtn = loginBinding.loginBtn
-        mobileNumberET = loginBinding.mobileNumberET
-        mobileNumberIL = loginBinding.mobileNumberIL
+        emailET = loginBinding.emailET
+        emailIL = loginBinding.emailIL
         passwordET = loginBinding.passwordET
         passwordIL = loginBinding.passwordIL
     }
@@ -65,40 +68,41 @@ class LoginActivity : AppCompatActivity() {
     private fun setListeners() {
 
         loginBinding.txtForgetPassword.setOnClickListener {
-            startActivity(
-                Intent(this, ForgotPasswordActivity::class.java)
-            )
+            val goToFP = Intent(this, ForgotPasswordActivity::class.java)
+            val p = Pair<View, String>(loginBinding.loginLogo, "app_logo_anim")
+            val options = ActivityOptions.makeSceneTransitionAnimation(this, p)
+            startActivity(goToFP, options.toBundle())
         }
         loginBtn.setOnClickListener {
-            Utilities.hideKeyboardFrom(this, loginBinding.root)
-            Utilities.clearFocus(mobileNumberET)
-            Utilities.clearFocus(passwordET)
+            this.hideKeyboard(loginBinding.root)
+            emailET.removeFocus()
+            passwordET.removeFocus()
 
-            if (!mobileNumberET.text.isNullOrEmpty() && !passwordET.text.isNullOrEmpty()) {
+            if (!emailET.text.isNullOrEmpty() && !passwordET.text.isNullOrEmpty()) {
                 loginViewModel.performLogin(
-                    mobileNumberET.text.toString(),
+                    emailET.text.toString(),
                     passwordET.text.toString()
                 )
             }
         }
 
-        mobileNumberET.afterTextChanged {
+        emailET.afterTextChanged {
             loginViewModel.loginDataChanged(
-                mobileNumberET.text.toString(),
+                emailET.text.toString(),
                 passwordET.text.toString()
             )
         }
 
         passwordET.afterTextChanged {
             loginViewModel.loginDataChanged(
-                mobileNumberET.text.toString(),
+                emailET.text.toString(),
                 passwordET.text.toString()
             )
         }
 
         passwordET.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
-                EditorInfo.IME_ACTION_DONE -> Utilities.clearFocus(passwordET)
+                EditorInfo.IME_ACTION_DONE -> passwordET.removeFocus()
             }
             false
         }
@@ -113,7 +117,7 @@ class LoginActivity : AppCompatActivity() {
                 Status.SUCCESS -> {
                     Toast.makeText(this, it.data?.title, Toast.LENGTH_LONG).show()
                     val loginData = it.data?.loginData
-                    val name = loginData?.firstName + loginData?.lastName
+                    val name = loginData?.firstName + " " + loginData?.lastName
                     loginBinding.txtLogin.text = "Welcome $name"
                     sessionManager.saveAnyData(Constants.TOKEN, it.data?.token!!)
                     sessionManager.saveAnyData(Constants.USER_NAME, name)
@@ -152,15 +156,10 @@ class LoginActivity : AppCompatActivity() {
                     ContextCompat.getColorStateList(this, R.color.quantum_grey400)
             }
 
-            if (loginState.mobileNumberError != null) {
-                mobileNumberIL.error = getString(loginState.mobileNumberError)
+            if (loginState.emailAddressError != null) {
+                emailIL.error = getString(loginState.emailAddressError)
             } else {
-                mobileNumberIL.isErrorEnabled = false
-            }
-            if (loginState.passwordError != null) {
-                passwordIL.error = getString(loginState.passwordError)
-            } else {
-                passwordIL.isErrorEnabled = false
+                emailIL.isErrorEnabled = false
             }
         })
 

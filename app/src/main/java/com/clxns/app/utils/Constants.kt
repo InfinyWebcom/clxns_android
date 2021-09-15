@@ -1,9 +1,14 @@
 package com.clxns.app.utils
 
+import android.text.TextUtils
+import android.util.Patterns
 import com.clxns.app.BuildConfig
 
 class Constants {
     companion object {
+        const val DEMO_USER = "7977264662"
+        const val TOKEN_TEMP = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoYXJ1a2guc0BpbmZpbnkuaW4iLCJwaG9uZSI6Ijc5NzcyNjQ2NjIiLCJ1c2VyX2lkIjoyNiwicm9sZUlkIjo3LCJleHAiOjE4NDcyMDAzOTQsImlhdCI6MTYzMTIwMDM5NH0.B_-JIZ0KGlc4527sioyUz2zZWusoKquNRn_w0Xat38Y"
+
         const val PREF_NAME = "clxns_pref_${BuildConfig.APPLICATION_ID}"
         const val TOKEN = "token"
         const val USER_NAME = "user_name"

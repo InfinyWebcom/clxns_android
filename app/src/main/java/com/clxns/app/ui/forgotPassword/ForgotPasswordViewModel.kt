@@ -26,16 +26,16 @@ class ForgotPasswordViewModel @Inject constructor(
         MutableLiveData()
     val verifyOTPResponse: LiveData<Resource<ForgotPasswordResponse>> get() = _verifyOTPResponse
 
-    fun getOTPFromDB(mobileNo: String) {
+    fun getOTPFromDB(emailId: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
                 _forgotPasswordResponse.postValue(Resource.loading(null))
-                forgotPasswordRepository.getOTP(mobileNo).let {
+                forgotPasswordRepository.getOTP(emailId).let {
                     if (it.isSuccessful) {
                         if (it.body()?.error == true) {
                             _forgotPasswordResponse.postValue(
                                 Resource.error(
-                                    "Incorrect mobile no.",
+                                    "Incorrect email address",
                                     null
                                 )
                             )
@@ -52,11 +52,11 @@ class ForgotPasswordViewModel @Inject constructor(
         }
     }
 
-    fun verifyOTP(token: String, otp: String, mobileNo: String) {
+    fun verifyOTP(token: String, otp: String, emailId: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
                 _verifyOTPResponse.postValue(Resource.loading(null))
-                forgotPasswordRepository.verifyOTP(token, otp, mobileNo).let {
+                forgotPasswordRepository.verifyOTP(token, otp, emailId).let {
                     if (it.isSuccessful) {
                         if (it.body()?.error == true) {
                             _verifyOTPResponse.postValue(

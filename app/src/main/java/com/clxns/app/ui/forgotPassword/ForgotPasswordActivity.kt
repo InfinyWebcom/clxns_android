@@ -6,20 +6,19 @@ import android.text.Html
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
-import com.clxns.app.ui.MainActivity
 import com.clxns.app.R
+import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityForgotPasswordBinding
-import com.clxns.app.utils.Constants
-import com.clxns.app.utils.Status
-import com.clxns.app.utils.Utilities
+import com.clxns.app.ui.changePassword.ChangePasswordActivity
+import com.clxns.app.utils.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ForgotPasswordActivity : AppCompatActivity() {
@@ -31,12 +30,16 @@ class ForgotPasswordActivity : AppCompatActivity() {
     private lateinit var otpET2: TextInputEditText
     private lateinit var otpET3: TextInputEditText
     private lateinit var otpET4: TextInputEditText
-    private lateinit var forgotPasswordMobileET: TextInputEditText
+    private lateinit var emailET: TextInputEditText
 
     private lateinit var didNotGetOTPTxt: TextView
 
     private lateinit var getOTPBtn: MaterialButton
 
+    private lateinit var token: String
+
+    @Inject
+    lateinit var sessionManager: SessionManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
@@ -54,11 +57,12 @@ class ForgotPasswordActivity : AppCompatActivity() {
         passwordViewModel.forgotPasswordResponse.observe(this, {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Toast.makeText(this, it.data?.title, Toast.LENGTH_LONG).show()
+                    this.toast(it.data?.title!!)
+                    token = it.data.token.toString()
                     updateUIOnSuccessfulGetOTP()
                 }
                 Status.ERROR -> {
-                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                    this.toast(it.message!!)
                 }
                 Status.LOADING -> {
                     binding.forgotPasswordSubHeader.text = "Loading...."
@@ -69,13 +73,12 @@ class ForgotPasswordActivity : AppCompatActivity() {
         passwordViewModel.verifyOTPResponse.observe(this, {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Utilities.showSnackBar("OTP verification completed successfully", binding.root)
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    binding.root.snackBar("OTP verification completed successfully")
+                    startActivity(Intent(this, ChangePasswordActivity::class.java))
                 }
                 Status.ERROR -> {
-                    Utilities.showSnackBar(it.message, binding.root)
-                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                    binding.root.snackBar(it.message!!)
+                    this.toast(it.message)
                 }
                 Status.LOADING -> {
 
@@ -88,24 +91,25 @@ class ForgotPasswordActivity : AppCompatActivity() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             binding.forgotPasswordSubHeader.text = (Html.fromHtml(
                 "<html><body><font size=12><b>OTP Verification</b></font><br/>" +
-                        "Enter the OTP sent to +91-${forgotPasswordMobileET.text.toString()}</body><html>",
+                        "Enter the OTP sent to ${emailET.text.toString()}</body><html>",
                 Html.FROM_HTML_MODE_LEGACY
             ))
         } else {
             binding.forgotPasswordSubHeader.text =
                 Html.fromHtml(
-                    "<html><body><b>OTP Verification</b><br/>" +
-                            "Enter the OTP sent to +91-${forgotPasswordMobileET.text.toString()}</body><html>"
+                    "<html><body><font size=12><b>OTP Verification</b></font><br/>" +
+                            "Enter the OTP sent to ${emailET.text.toString()}</body><html>"
                 )
         }
-        forgotPasswordMobileET.visibility = View.GONE
+        emailET.visibility = View.GONE
         binding.didNotGetOTPTxt.visibility = View.VISIBLE
         binding.otpETParent.visibility = View.VISIBLE
         getOTPBtn.updateLayoutParams<ConstraintLayout.LayoutParams> {
             topToBottom = binding.didNotGetOTPTxt.id
         }
-        getOTPBtn.text = getString(R.string.verify_otp)
-        binding.mobileNumberLabel.text = getString(R.string.enter_otp)
+        getOTPBtn.text = getString(R.string.verify_proceed)
+        binding.emailLabel.text = getString(R.string.enter_otp)
+        binding.forgotPasswordTitle.text = getString(R.string.verify_otp)
     }
 
     private fun initView() {
@@ -115,7 +119,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         otpET3 = binding.otpET3
         otpET4 = binding.otpET4
         didNotGetOTPTxt = binding.didNotGetOTPTxt
-        forgotPasswordMobileET = binding.forgotPasswordMobileET
+        emailET = binding.forgotPasswordEmailET
 
         getOTPBtn = binding.getOTPBtn
 
@@ -143,7 +147,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         binding.didNotGetOTPTxt.setOnClickListener {
             //Requesting the OTP again after not receiving
-            passwordViewModel.getOTPFromDB(forgotPasswordMobileET.text.toString())
+            passwordViewModel.getOTPFromDB(emailET.text.toString())
             clearFocusFromOTPET()
             otpET1.setText("")
             otpET2.setText("")
@@ -152,26 +156,25 @@ class ForgotPasswordActivity : AppCompatActivity() {
         }
 
         getOTPBtn.setOnClickListener {
-            Utilities.hideKeyboardFrom(this, binding.root)
-            if (getOTPBtn.text.equals("Get OTP")) {
-                Utilities.clearFocus(forgotPasswordMobileET)
-                if (forgotPasswordMobileET.text.toString()
-                        .isNotEmpty() && forgotPasswordMobileET.text.toString().length == 10
-                ) {
-                    passwordViewModel.getOTPFromDB(binding.forgotPasswordMobileET.text.toString())
-                } else {
-                    Utilities.showSnackBar("Please enter correct mobile no.", binding.root)
-                }
-            } else {
-                if (otpET1.text?.isNotEmpty() == true && otpET2.text?.isNotEmpty() == true
-                    && otpET3.text?.isNotEmpty() == true && otpET4.text?.isNotEmpty() == true
-                ) {
-                    val otp = "${otpET1.text.toString()}${otpET2.text.toString()}${otpET3.text.toString()}${otpET4.text.toString()}"
-                    Utilities.showSnackBar(otp, binding.root)
-                    //passwordViewModel.verifyOTP(Constants.TOKEN, otp, Constants.DEMO_USER)
-                }
-                clearFocusFromOTPET()
-            }
+            startActivity(Intent(this, ChangePasswordActivity::class.java))
+//            this.hideKeyboard(binding.root)
+//            if (getOTPBtn.text.equals("Get OTP")) {
+//                emailET.removeFocus()
+//                if (emailET.text.toString().isNotEmpty() && emailET.text.toString().isValidEmail()) {
+//                    passwordViewModel.getOTPFromDB(emailET.text.toString())
+//                } else {
+//                    binding.root.snackBar("Please enter correct email address")
+//                }
+//            } else {
+//                if (otpET1.text?.isNotEmpty() == true && otpET2.text?.isNotEmpty() == true
+//                    && otpET3.text?.isNotEmpty() == true && otpET4.text?.isNotEmpty() == true
+//                ) {
+//                    val otp =
+//                        "${otpET1.text.toString()}${otpET2.text.toString()}${otpET3.text.toString()}${otpET4.text.toString()}"
+//                    passwordViewModel.verifyOTP(token, otp, emailET.text.toString())
+//                }
+//                clearFocusFromOTPET()
+//            }
 
         }
 
@@ -186,9 +189,9 @@ class ForgotPasswordActivity : AppCompatActivity() {
     }
 
     private fun clearFocusFromOTPET() {
-        Utilities.clearFocus(otpET1)
-        Utilities.clearFocus(otpET2)
-        Utilities.clearFocus(otpET3)
-        Utilities.clearFocus(otpET4)
+        otpET1.removeFocus()
+        otpET2.removeFocus()
+        otpET3.removeFocus()
+        otpET4.removeFocus()
     }
 }

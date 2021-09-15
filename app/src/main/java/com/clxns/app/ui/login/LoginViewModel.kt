@@ -1,15 +1,17 @@
 package com.clxns.app.ui.login
 
-import android.util.Patterns
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.clxns.app.R
 import com.clxns.app.data.model.LoginResponse
 import com.clxns.app.data.repository.LoginRepository
 import com.clxns.app.utils.NetworkHelper
 import com.clxns.app.utils.Resource
+import com.clxns.app.utils.isValidEmail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,43 +23,37 @@ class LoginViewModel @Inject constructor(
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
-    private val _loginResponse : MutableLiveData<Resource<LoginResponse>> = MutableLiveData()
-    val loginResponse : LiveData<Resource<LoginResponse>> get() = _loginResponse
+    private val _loginResponse: MutableLiveData<Resource<LoginResponse>> = MutableLiveData()
+    val loginResponse: LiveData<Resource<LoginResponse>> get() = _loginResponse
 
-    fun performLogin(mobileNo:String, password:String){
+    fun performLogin(mobileNo: String, password: String) {
         viewModelScope.launch {
-            if (networkHelper.isNetworkConnected()){
+            if (networkHelper.isNetworkConnected()) {
                 _loginResponse.postValue(Resource.loading(null))
                 loginRepository.performLogin(mobileNo, password).let {
-                    if (it!!.isSuccessful){
-                        if (it.body()?.error == true){
+                    if (it!!.isSuccessful) {
+                        if (it.body()?.error == true) {
                             _loginResponse.postValue(Resource.error(it.body()!!.title, null))
-                        }else {
+                        } else {
                             _loginResponse.postValue(Resource.success(it.body()))
                         }
-                    }else _loginResponse.postValue(Resource.error("Something went wrong.", null))
+                    } else _loginResponse.postValue(Resource.error("Something went wrong.", null))
                 }
-            }else _loginResponse.postValue(Resource.error("No Internet Connection", null))
+            } else _loginResponse.postValue(Resource.error("No Internet Connection", null))
         }
     }
 
     fun loginDataChanged(mobileNo: String, password: String) {
-        if (!isMobileNumberValid(mobileNo)) {
-            _loginForm.value = LoginFormState(mobileNumberError = R.string.invalid_mobile, isDataValid = false)
-        } else if (!isPasswordValid(password)) {
-            _loginForm.value = LoginFormState(passwordError = R.string.invalid_password, isDataValid = false)
+        if (!isEmailAddressValid(mobileNo)) {
+            _loginForm.value =
+                LoginFormState(emailAddressError = R.string.invalid_email, isDataValid = false)
         } else {
             _loginForm.value = LoginFormState(isDataValid = true)
         }
     }
 
     // A placeholder username validation check
-    private fun isMobileNumberValid(mobileNo: String): Boolean {
-        return mobileNo.length >= 10
-    }
-
-    // A placeholder password validation check
-    private fun isPasswordValid(password: String): Boolean {
-        return password.length > 5
+    private fun isEmailAddressValid(emailId: String): Boolean {
+        return emailId.isValidEmail()
     }
 }
