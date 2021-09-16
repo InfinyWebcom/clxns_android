@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Clxns</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_my_plan">My Plan</string>
+    <string name="title_cases">Cases</string>
     <string name="invalid_email">Invalid email address</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="forgot_password_txt_1">We will send you an <b>One Time Password</b> on this email address</string>
@@ -22,4 +22,18 @@
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="submit">Submit</string>
+    <string name="error_password_not_match">Password does not matches</string>
+    <string name="welcome_back">Welcome Back,</string>
+    <string name="my_statistics">My Statistics</string>
+    <string name="today">Today</string>
+    <string name="this_week">This week</string>
+    <string name="this_month">This Month</string>
+    <string name="cases_allocated">Cases Allocated</string>
+    <string name="visit_pending">Visit Pending</string>
+    <string name="follow_ups">Follow Ups</string>
+    <string name="actions_pending">Actions Pending</string>
+    <string name="amount_recovered">Amount Recovered</string>
+    <string name="total_due">Total Due</string>
+    <string name="total_pos">Total POS</string>
+    <string name="notifications">Notifications</string>
 </resources>

@@ -33,7 +33,7 @@ class SplashScreenActivity : AppCompatActivity() {
         if (isLoggedIn){
             openNewActivity(MainActivity())
         }else{
-            openNewActivity(LoginActivity())
+            openNewActivity(MainActivity())
         }
     }
 

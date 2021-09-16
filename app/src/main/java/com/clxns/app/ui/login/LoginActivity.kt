@@ -88,15 +88,13 @@ class LoginActivity : AppCompatActivity() {
 
         emailET.afterTextChanged {
             loginViewModel.loginDataChanged(
-                emailET.text.toString(),
-                passwordET.text.toString()
+                emailET.text.toString()
             )
         }
 
         passwordET.afterTextChanged {
             loginViewModel.loginDataChanged(
-                emailET.text.toString(),
-                passwordET.text.toString()
+                emailET.text.toString()
             )
         }
 

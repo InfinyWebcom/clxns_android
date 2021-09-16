@@ -26,11 +26,11 @@ class LoginViewModel @Inject constructor(
     private val _loginResponse: MutableLiveData<Resource<LoginResponse>> = MutableLiveData()
     val loginResponse: LiveData<Resource<LoginResponse>> get() = _loginResponse
 
-    fun performLogin(mobileNo: String, password: String) {
+    fun performLogin(emailId: String, password: String) {
         viewModelScope.launch {
             if (networkHelper.isNetworkConnected()) {
                 _loginResponse.postValue(Resource.loading(null))
-                loginRepository.performLogin(mobileNo, password).let {
+                loginRepository.performLogin(emailId, password).let {
                     if (it!!.isSuccessful) {
                         if (it.body()?.error == true) {
                             _loginResponse.postValue(Resource.error(it.body()!!.title, null))
@@ -43,8 +43,8 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun loginDataChanged(mobileNo: String, password: String) {
-        if (!isEmailAddressValid(mobileNo)) {
+    fun loginDataChanged(emailId: String) {
+        if (!isEmailAddressValid(emailId)) {
             _loginForm.value =
                 LoginFormState(emailAddressError = R.string.invalid_email, isDataValid = false)
         } else {

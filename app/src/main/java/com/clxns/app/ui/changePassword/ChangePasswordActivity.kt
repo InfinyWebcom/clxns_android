@@ -1,5 +1,6 @@
 package com.clxns.app.ui.changePassword
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,14 +9,17 @@ import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.isVisible
 import com.clxns.app.R
+import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityChangePasswordBinding
-import com.clxns.app.utils.Status
-import com.clxns.app.utils.removeFocus
-import com.clxns.app.utils.toast
+import com.clxns.app.ui.login.LoginActivity
+import com.clxns.app.utils.*
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChangePasswordActivity : AppCompatActivity() {
@@ -27,6 +31,10 @@ class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var oldPasswordET: TextInputEditText
     private lateinit var oldPasswordIL: TextInputLayout
     private lateinit var confirmPasswordIL: TextInputLayout
+
+    @Inject
+    lateinit var sessionManager: SessionManager
+    private lateinit var token: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChangePasswordBinding.inflate(layoutInflater)
@@ -38,9 +46,49 @@ class ChangePasswordActivity : AppCompatActivity() {
 
         setListeners()
 
+        token = sessionManager.getString(Constants.TOKEN).toString()
+
     }
 
     private fun setListeners() {
+
+        binding.changePasswordSubmitBtn.setOnClickListener {
+            this.hideKeyboard(binding.root)
+            confirmPasswordET.removeFocus()
+            if (oldPasswordIL.isVisible) {
+                if (!oldPasswordET.text.isNullOrEmpty() && !newPasswordET.text.isNullOrEmpty() && !confirmPasswordET.text.isNullOrEmpty()) {
+                    Timber.i("With old password")
+                    if (newPasswordET.text.toString()
+                            .contentEquals(confirmPasswordET.text.toString())
+                    ) {
+                        changePasswordViewModel.changePassword(
+                            token,
+                            newPasswordET.text.toString(),
+                            confirmPasswordET.text.toString(),
+                            oldPasswordET.text.toString()
+                        )
+                    } else {
+                        binding.root.snackBar(getString(R.string.error_password_not_match))
+                    }
+                }
+            } else if (!newPasswordET.text.isNullOrEmpty() && !confirmPasswordET.text.isNullOrEmpty()) {
+                Timber.i("Without old password")
+                if (newPasswordET.text.toString()
+                        .contentEquals(confirmPasswordET.text.toString())
+                ) {
+                    changePasswordViewModel.changePassword(
+                        token,
+                        newPasswordET.text.toString(),
+                        confirmPasswordET.text.toString(),
+                        ""
+                    )
+                } else {
+                    binding.root.snackBar(getString(R.string.error_password_not_match))
+                }
+            }
+
+        }
+
         newPasswordET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -100,6 +148,7 @@ class ChangePasswordActivity : AppCompatActivity() {
             )
         )
     }
+
     private fun setConfirmETCross() {
         confirmPasswordIL.startIconDrawable =
             AppCompatResources.getDrawable(
@@ -116,7 +165,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (intent.getBooleanExtra("isFromOTPScreen", false)){
+        if (intent.getBooleanExtra("isFromOTPScreen", false)) {
             oldPasswordIL.visibility = View.GONE
         }
     }
@@ -134,12 +183,15 @@ class ChangePasswordActivity : AppCompatActivity() {
             when (it.status) {
                 Status.SUCCESS -> {
                     this.toast(it.data?.title!!)
+                    val finishAllActivitiesExceptLogin = Intent(this, LoginActivity::class.java)
+                    finishAllActivitiesExceptLogin.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(finishAllActivitiesExceptLogin)
                 }
                 Status.ERROR -> {
-                    this.toast(it.message!!)
+                    binding.root.snackBar(it.message!!)
                 }
                 Status.LOADING -> {
-                    this.toast("Loading....")
+                    binding.root.snackBar("Changing password...")
                 }
             }
         })

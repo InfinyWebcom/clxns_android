@@ -37,8 +37,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
     private lateinit var getOTPBtn: MaterialButton
 
-    private lateinit var token: String
-
     @Inject
     lateinit var sessionManager: SessionManager
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,11 +57,11 @@ class ForgotPasswordActivity : AppCompatActivity() {
             when (it.status) {
                 Status.SUCCESS -> {
                     this.toast(it.data?.title!!)
-                    token = it.data.token.toString()
+                    sessionManager.saveAnyData(Constants.TOKEN, it.data.token.toString())
                     updateUIOnSuccessfulGetOTP()
                 }
                 Status.ERROR -> {
-                    this.toast(it.message!!)
+                    binding.root.snackBar(it.message!!)
                 }
                 Status.LOADING -> {
                     binding.forgotPasswordSubHeader.text = "Loading...."
@@ -74,8 +72,10 @@ class ForgotPasswordActivity : AppCompatActivity() {
         passwordViewModel.verifyOTPResponse.observe(this, {
             when (it.status) {
                 Status.SUCCESS -> {
-                    binding.root.snackBar("OTP verification completed successfully")
-                    val goToChangePasswordActivity = Intent(this, ChangePasswordActivity::class.java)
+                    sessionManager.saveAnyData(Constants.TOKEN, it.data?.token!!)
+                    this.toast(it.data.title)
+                    val goToChangePasswordActivity =
+                        Intent(this, ChangePasswordActivity::class.java)
                     goToChangePasswordActivity.putExtra("isFromOTPScreen", true)
                     startActivity(goToChangePasswordActivity)
                 }
@@ -83,7 +83,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                     binding.root.snackBar(it.message!!)
                 }
                 Status.LOADING -> {
-
+                    binding.root.snackBar("Verifying OTP...")
                 }
             }
         })
@@ -116,7 +116,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (binding.forgotPasswordTitle.text.equals("Verify OTP")){
+        if (binding.forgotPasswordTitle.text.equals("Verify OTP")) {
             emailET.visibility = View.GONE
         }
     }
@@ -181,7 +181,11 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 ) {
                     val otp =
                         "${otpET1.text.toString()}${otpET2.text.toString()}${otpET3.text.toString()}${otpET4.text.toString()}"
-                    passwordViewModel.verifyOTP(token, otp, emailET.text.toString())
+                    passwordViewModel.verifyOTP(
+                        sessionManager.getString(Constants.TOKEN).toString(),
+                        otp,
+                        emailET.text.toString()
+                    )
                 }
                 clearFocusFromOTPET()
             }
@@ -218,7 +222,8 @@ class ForgotPasswordActivity : AppCompatActivity() {
         exitDialog.setTitle("Confirm exit?")
         exitDialog.setMessage("Are you sure want to exit \"OTP Verification Process\"?")
 
-        exitDialog.setPositiveButton("Yes") { dialog, _ -> dialog.dismiss()
+        exitDialog.setPositiveButton("Yes") { dialog, _ ->
+            dialog.dismiss()
             finish()
         }.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
 

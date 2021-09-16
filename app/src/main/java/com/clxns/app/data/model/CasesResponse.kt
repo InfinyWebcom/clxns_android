@@ -5,13 +5,15 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class ChangePasswordResponse(
+data class CasesResponse(
+    @Json(name = "amountCollected")
+    val amountCollected: Any?,
+    @Json(name = "data")
+    val data: List<Any>,
     @Json(name = "error")
     val error: Boolean,
     @Json(name = "title")
     val title: String,
-    @Json(name = "token")
-    val token: String? = "",
-    @Json(name = "detail")
-    val userData: UserData? = null
+    @Json(name = "total")
+    val total: Int
 )
