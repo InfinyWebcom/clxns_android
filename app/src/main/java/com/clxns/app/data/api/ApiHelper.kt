@@ -1,5 +1,6 @@
 package com.clxns.app.data.api
 
+import com.clxns.app.data.model.CasesResponse
 import com.clxns.app.data.model.ChangePasswordResponse
 import com.clxns.app.data.model.ForgotPasswordResponse
 import com.clxns.app.data.model.LoginResponse
@@ -22,4 +23,6 @@ interface ApiHelper {
         confirmPassword: String,
         oldPassword: String
     ): Response<ChangePasswordResponse>
+
+    suspend fun getCasesList(token: String) : Response<CasesResponse>
 }

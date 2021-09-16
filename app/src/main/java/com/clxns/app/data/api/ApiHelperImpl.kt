@@ -1,5 +1,6 @@
 package com.clxns.app.data.api
 
+import com.clxns.app.data.model.CasesResponse
 import com.clxns.app.data.model.ChangePasswordResponse
 import com.clxns.app.data.model.ForgotPasswordResponse
 import com.clxns.app.data.model.LoginResponse
@@ -27,5 +28,9 @@ class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : Ap
         oldPassword: String
     ): Response<ChangePasswordResponse> =
         apiService.changePassword(token, newPassword, confirmPassword, oldPassword)
+
+    override suspend fun getCasesList(token: String): Response<CasesResponse> {
+       return apiService.getCasesList(token, "",10,0,"","")
+    }
 
 }

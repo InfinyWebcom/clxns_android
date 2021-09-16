@@ -36,4 +36,7 @@
     <string name="total_due">Total Due</string>
     <string name="total_pos">Total POS</string>
     <string name="notifications">Notifications</string>
+    <string name="my_cases">My Cases</string>
+    <string name="filter">Filter</string>
+    <string name="search_hint_txt">Search cases by Lead Id/Loan Id/Name/Mobile</string>
 </resources>

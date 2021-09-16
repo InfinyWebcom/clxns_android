@@ -33,7 +33,9 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15" />
         <entry key="app/src/main/res/layout/activity_notification.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/cases_list_item.xml" value="0.16" />
         <entry key="app/src/main/res/layout/custom_back_btn.xml" value="0.17083333333333334" />
+        <entry key="app/src/main/res/layout/fragment_cases.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1388888888888889" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.16" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.17083333333333334" />

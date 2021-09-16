@@ -6,17 +6,113 @@
     android:layout_height="match_parent"
     tools:context=".ui.cases.CasesFragment">
 
-    <TextView
-        android:id="@+id/text_notifications"
+    <RelativeLayout
+        android:id="@+id/cases_custom_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/toolbar_background">
+
+        <TextView
+            android:id="@+id/txtAppName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginTop="@dimen/dp16"
+            android:textStyle="bold"
+            android:layout_toStartOf="@id/txtFilterSort"
+            android:text="@string/my_cases"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp18" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/txtFilterSort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/dp8"
+            android:layout_marginEnd="@dimen/dp16"
+            android:drawableEnd="@drawable/ic_arrow_drop_down_24"
+            android:includeFontPadding="false"
+            android:text="@string/filter"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp16"
+            app:cornerRadius="@dimen/dp24"
+            app:strokeColor="@color/white"
+            app:strokeWidth="@dimen/dp1" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/searchCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtFilterSort"
+            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginTop="@dimen/dp4"
+            android:layout_marginEnd="@dimen/dp8"
+            android:transitionName="search_bar"
+            app:cardBackgroundColor="@color/quantum_grey100"
+            app:cardCornerRadius="@dimen/dp32"
+            app:cardElevation="0dp">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:padding="@dimen/dp10"
+                android:text="@string/search_hint_txt"
+                android:textColor="@color/quantum_grey800" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/searchCard"
+            android:layout_marginTop="@dimen/dp8"
+            android:background="@drawable/toolbar_background"
+            android:backgroundTint="@color/colorPrimaryVariant"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp16"
+            android:paddingTop="@dimen/dp8"
+            android:paddingEnd="@dimen/dp16"
+            android:paddingBottom="@dimen/dp8">
+
+            <TextView
+                android:id="@+id/cases_allotted_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".6"
+                android:textStyle="bold"
+                android:text="Cases : 987"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16" />
+
+            <TextView
+                android:id="@+id/amount_collected_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.3"
+                android:textStyle="bold"
+                android:text="Collectable : ₹6,25,000"
+                android:textAlignment="textEnd"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/cases_rv"
+        tools:listitem="@layout/cases_list_item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/cases_custom_toolbar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

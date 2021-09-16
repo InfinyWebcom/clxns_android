@@ -1,5 +1,6 @@
 package com.clxns.app.data.api
 
+import com.clxns.app.data.model.CasesResponse
 import com.clxns.app.data.model.ChangePasswordResponse
 import com.clxns.app.data.model.ForgotPasswordResponse
 import com.clxns.app.data.model.LoginResponse
@@ -42,5 +43,15 @@ interface ApiService {
         @Field("email") emailId: String
     ) : Response<ForgotPasswordResponse>
 
+    @POST("fos/getCasesList")
+    @FormUrlEncoded
+    suspend fun getCasesList(
+        @Header("token") token :String,
+        @Field("filter") filter:String,
+        @Field("length") length:Int,
+        @Field("start") start:Int,
+        @Field("dispositionId") dispositionId:String,
+        @Field("subdispositionId") subDispositionId:String
+    ) : Response<CasesResponse>
 
 }
