@@ -39,4 +39,7 @@
     <string name="my_cases">My Cases</string>
     <string name="filter">Filter</string>
     <string name="search_hint_txt">Search cases by Lead Id/Loan Id/Name/Mobile</string>
+    <string name="account">Account</string>
+    <string name="select_bank">Select Bank</string>
+    <string name="profile_subtitle">CLXNS Technologies Pvt. Ltd.</string>
 </resources>

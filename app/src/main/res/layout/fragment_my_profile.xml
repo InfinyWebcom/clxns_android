@@ -13,12 +13,12 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:importantForAccessibility="no"
-            android:src="@drawable/ic_logo_x"
             android:scaleType="centerCrop"
+            android:src="@drawable/ic_logo_x"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/user_name_tv"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_name_tv" />
 
         <ImageView
             android:id="@+id/selectedBankImage"
@@ -57,37 +57,42 @@
             app:layout_constraintTop_toBottomOf="@id/profile_logo" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/profileEditBankBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:cardCornerRadius="@dimen/dp50"
             android:layout_margin="@dimen/dp8"
-            android:id="@+id/profileEditBankBtn"
-            app:rippleColor="@color/colorPrimary"
             app:cardBackgroundColor="@color/quantum_grey200"
-            app:layout_constraintTop_toTopOf="parent">
+            app:cardCornerRadius="@dimen/dp50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="@color/colorPrimary">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/dp8"
-                android:src="@drawable/ic_baseline_more_vert_24"
-                />
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_baseline_more_vert_24" />
         </com.google.android.material.card.MaterialCardView>
 
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/user_profile_img"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/user_profile_img_container"
             android:layout_width="@dimen/dp150"
             android:layout_height="@dimen/dp150"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
             android:layout_marginTop="@dimen/dp24"
-            android:src="@drawable/sample_img"
+            app:cardCornerRadius="@dimen/dp200"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/logo_subtitle" />
+            app:layout_constraintTop_toBottomOf="@id/logo_subtitle">
 
+            <ImageView
+                android:id="@+id/user_profile_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
+                android:src="@drawable/sample_img" />
+
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:id="@+id/user_name_tv"
@@ -100,7 +105,7 @@
             android:textSize="@dimen/sp22"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/user_profile_img" />
+            app:layout_constraintTop_toBottomOf="@id/user_profile_img_container" />
 
         <TextView
             android:id="@+id/user_employee_code_tv"
