@@ -12,14 +12,21 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_my_plan"
-        android:name="com.clxns.app.ui.myPlan.MyPlanFragment"
-        android:label="@string/title_my_plan"
-        tools:layout="@layout/fragment_my_plan" />
+        android:id="@+id/navigation_dashboard"
+        android:name="com.clxns.app.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_cases"
-        android:name="com.clxns.app.ui.cases.CasesFragment"
-        android:label="@string/title_cases"
-        tools:layout="@layout/fragment_cases" />
+        android:id="@+id/navigation_notifications"
+        android:name="com.clxns.app.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/myProfileFragment"
+        tools:layout="@layout/fragment_my_profile"
+        android:name="com.clxns.app.ui.home.account.MyProfileFragment"
+        android:label="MyProfileFragment" />
+
 </navigation>

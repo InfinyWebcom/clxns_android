@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_logo_x"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_name_tv"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/selectedBankImage"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp150"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_hdfc_bank_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/manager_contact_tv"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageView
+            android:id="@+id/profile_logo"
+            android:layout_width="@dimen/dp65"
+            android:layout_height="@dimen/dp30"
+            android:layout_marginTop="@dimen/dp8"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_main_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/logo_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gtwalsheimpromedium"
+            android:gravity="center"
+            android:text="@string/profile_subtitle"
+            android:textSize="@dimen/sp18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_logo" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:cardCornerRadius="@dimen/dp50"
+            android:layout_margin="@dimen/dp8"
+            android:id="@+id/profileEditBankBtn"
+            app:rippleColor="@color/colorPrimary"
+            app:cardBackgroundColor="@color/quantum_grey200"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dp8"
+                android:src="@drawable/ic_baseline_more_vert_24"
+                />
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_profile_img"
+            android:layout_width="@dimen/dp150"
+            android:layout_height="@dimen/dp150"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp24"
+            android:src="@drawable/sample_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logo_subtitle" />
+
+
+        <TextView
+            android:id="@+id/user_name_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp32"
+            android:fontFamily="@font/gtwalsheimproregular"
+            android:text="Rohit Sharma"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp22"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_profile_img" />
+
+        <TextView
+            android:id="@+id/user_employee_code_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp32"
+            android:layout_marginTop="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp32"
+            android:fontFamily="@font/gtwalsheimproregular"
+            android:text="Employee Code : 1001"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_name_tv" />
+
+        <TextView
+            android:id="@+id/user_employee_blood_group_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp32"
+            android:layout_marginTop="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp32"
+            android:fontFamily="@font/gtwalsheimproregular"
+            android:text="Blood Group : A+"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_employee_code_tv" />
+
+        <TextView
+            android:id="@+id/reporting_manager_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp32"
+            android:layout_marginTop="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp32"
+            android:fontFamily="@font/gtwalsheimproregular"
+            android:text="Reporting Manager : Ramesh Patel"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_employee_blood_group_tv" />
+
+        <TextView
+            android:id="@+id/manager_contact_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp32"
+            android:layout_marginTop="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp32"
+            android:fontFamily="@font/gtwalsheimproregular"
+            android:text="Manager Contact : 9768558945"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp18"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reporting_manager_tv" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

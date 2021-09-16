@@ -4,7 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.17314814814814813" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable-v24/ic_acc_selector.xml" value="0.19948717948717948" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable-v24/ic_baseline_more_vert_24.xml" value="0.19948717948717948" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable-v24/ic_state_bank_of_india_logo.xml" value="0.19948717948717948" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/ic_account_select.xml" value="0.19948717948717948" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/ic_account_unselect.xml" value="0.19948717948717948" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_forgot_password.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_main.xml" value="0.18645833333333334" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_my_profile.xml" value="0.18645833333333334" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_my_profile.xml" value="0.1" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/menu/bottom_nav_menu.xml" value="0.18645833333333334" />
         <entry key="app/src/main/res/drawable-v24/ic_main_logo.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/drawable/deselect_radio_color.xml" value="0.140234375" />
         <entry key="app/src/main/res/drawable/home_rb_state_background.xml" value="0.140234375" />
