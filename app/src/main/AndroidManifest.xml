@@ -15,7 +15,8 @@
         android:theme="@style/Theme.Clxns">
         <activity
             android:name=".ui.changePassword.ChangePasswordActivity"
-            android:exported="true" />
+            android:exported="true"
+            />
         <activity
             android:name=".ui.forgotPassword.ForgotPasswordActivity"
             android:exported="true" />

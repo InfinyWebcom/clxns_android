@@ -122,6 +122,7 @@ class LoginActivity : AppCompatActivity() {
                     sessionManager.saveAnyData(Constants.TOKEN, it.data?.token!!)
                     sessionManager.saveAnyData(Constants.USER_NAME, name)
                     sessionManager.saveAnyData(Constants.USER_ID, loginData!!.id)
+                    sessionManager.saveAnyData(Constants.USER_EMPLOYEE_ID, loginData.employeeId)
                     sessionManager.saveAnyData(Constants.USER_DOB, loginData.dob)
                     sessionManager.saveAnyData(Constants.USER_EMAIL, loginData.email)
                     sessionManager.saveAnyData(Constants.USER_MOBILE, loginData.phone)

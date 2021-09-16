@@ -7,6 +7,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
@@ -74,11 +75,12 @@ class ForgotPasswordActivity : AppCompatActivity() {
             when (it.status) {
                 Status.SUCCESS -> {
                     binding.root.snackBar("OTP verification completed successfully")
-                    startActivity(Intent(this, ChangePasswordActivity::class.java))
+                    val goToChangePasswordActivity = Intent(this, ChangePasswordActivity::class.java)
+                    goToChangePasswordActivity.putExtra("isFromOTPScreen", true)
+                    startActivity(goToChangePasswordActivity)
                 }
                 Status.ERROR -> {
                     binding.root.snackBar(it.message!!)
-                    this.toast(it.message)
                 }
                 Status.LOADING -> {
 
@@ -112,6 +114,13 @@ class ForgotPasswordActivity : AppCompatActivity() {
         binding.forgotPasswordTitle.text = getString(R.string.verify_otp)
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (binding.forgotPasswordTitle.text.equals("Verify OTP")){
+            emailET.visibility = View.GONE
+        }
+    }
+
     private fun initView() {
 
         otpET1 = binding.otpET1
@@ -143,7 +152,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
 
     private fun setListener() {
-        binding.forgotPasswordBackBtn.setOnClickListener { finish() }
+        binding.forgotPasswordBackBtn.setOnClickListener { onBackPressed() }
 
         binding.didNotGetOTPTxt.setOnClickListener {
             //Requesting the OTP again after not receiving
@@ -156,25 +165,26 @@ class ForgotPasswordActivity : AppCompatActivity() {
         }
 
         getOTPBtn.setOnClickListener {
-            startActivity(Intent(this, ChangePasswordActivity::class.java))
-//            this.hideKeyboard(binding.root)
-//            if (getOTPBtn.text.equals("Get OTP")) {
-//                emailET.removeFocus()
-//                if (emailET.text.toString().isNotEmpty() && emailET.text.toString().isValidEmail()) {
-//                    passwordViewModel.getOTPFromDB(emailET.text.toString())
-//                } else {
-//                    binding.root.snackBar("Please enter correct email address")
-//                }
-//            } else {
-//                if (otpET1.text?.isNotEmpty() == true && otpET2.text?.isNotEmpty() == true
-//                    && otpET3.text?.isNotEmpty() == true && otpET4.text?.isNotEmpty() == true
-//                ) {
-//                    val otp =
-//                        "${otpET1.text.toString()}${otpET2.text.toString()}${otpET3.text.toString()}${otpET4.text.toString()}"
-//                    passwordViewModel.verifyOTP(token, otp, emailET.text.toString())
-//                }
-//                clearFocusFromOTPET()
-//            }
+            this.hideKeyboard(binding.root)
+            if (getOTPBtn.text.equals("Get OTP")) {
+                emailET.removeFocus()
+                if (emailET.text.toString().isNotEmpty() && emailET.text.toString()
+                        .isValidEmail()
+                ) {
+                    passwordViewModel.getOTPFromDB(emailET.text.toString())
+                } else {
+                    binding.root.snackBar("Please enter correct email address")
+                }
+            } else {
+                if (otpET1.text?.isNotEmpty() == true && otpET2.text?.isNotEmpty() == true
+                    && otpET3.text?.isNotEmpty() == true && otpET4.text?.isNotEmpty() == true
+                ) {
+                    val otp =
+                        "${otpET1.text.toString()}${otpET2.text.toString()}${otpET3.text.toString()}${otpET4.text.toString()}"
+                    passwordViewModel.verifyOTP(token, otp, emailET.text.toString())
+                }
+                clearFocusFromOTPET()
+            }
 
         }
 
@@ -185,7 +195,37 @@ class ForgotPasswordActivity : AppCompatActivity() {
             false
         }
 
+        emailET.setOnEditorActionListener { _, actionId, _ ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> emailET.removeFocus()
+            }
+            false
+        }
 
+
+    }
+
+    override fun onBackPressed() {
+        if (binding.forgotPasswordTitle.text.equals("Verify OTP")) {
+            showExitConfirmDialog()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    private fun showExitConfirmDialog() {
+        val exitDialog = AlertDialog.Builder(this)
+        exitDialog.setTitle("Confirm exit?")
+        exitDialog.setMessage("Are you sure want to exit \"OTP Verification Process\"?")
+
+        exitDialog.setPositiveButton("Yes") { dialog, _ -> dialog.dismiss()
+            finish()
+        }.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+
+        val d = exitDialog.create()
+        d.show()
+        d.getButton(AlertDialog.BUTTON_POSITIVE).isAllCaps = false
+        d.getButton(AlertDialog.BUTTON_NEGATIVE).isAllCaps = false
     }
 
     private fun clearFocusFromOTPET() {
