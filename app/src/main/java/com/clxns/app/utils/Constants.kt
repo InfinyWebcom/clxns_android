@@ -17,8 +17,11 @@ class Constants {
         const val USER_ADDRESS = "user_address"
         const val USER_LOCATION = "user_location"
         const val USER_DOB = "user_dob"
+        const val USER_BLOOD_GROUP = "user_blood_group"
         const val USER_ID = "user_id"
         const val USER_EMPLOYEE_ID = "user_employee_id"
+        const val USER_REPORTING_MANAGER = "user_reporting_manager"
+        const val USER_REPORTING_MANAGER_CONTACT = "user_reporting_manager_contact"
         const val IS_USER_LOGGED_IN = "logged_in_status"
         const val SPLASH_SCREEN_TIMEOUT: Long = 1000
     }

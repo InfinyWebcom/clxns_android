@@ -24,9 +24,9 @@
         tools:layout="@layout/fragment_my_plan" />
 
     <fragment
-        android:id="@+id/myProfileFragment"
-        android:name="com.clxns.app.ui.home.account.MyProfileFragment"
-        android:label="MyProfileFragment"
+        android:id="@+id/profileFragment"
+        android:name="com.clxns.app.ui.home.account.ProfileFragment"
+        android:label="ProfileFragment"
         tools:layout="@layout/fragment_my_profile" />
 
 </navigation>
