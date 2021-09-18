@@ -1,9 +1,6 @@
 package com.clxns.app.data.api
 
-import com.clxns.app.data.model.CasesResponse
-import com.clxns.app.data.model.ChangePasswordResponse
-import com.clxns.app.data.model.ForgotPasswordResponse
-import com.clxns.app.data.model.LoginResponse
+import com.clxns.app.data.model.*
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -22,7 +19,7 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun getOTP(
         @Field("email") emailId: String
-    ) : Response<ForgotPasswordResponse>
+    ): Response<ForgotPasswordResponse>
 
 
     @POST("fos/changePassword")
@@ -32,26 +29,34 @@ interface ApiService {
         @Field("password") newPassword: String,
         @Field("confirmPassword") confirmPassword: String,
         @Field("oldPassword") oldPassword: String
-    ) : Response<ChangePasswordResponse>
+    ): Response<ChangePasswordResponse>
 
 
     @POST("fos/verifyOTP")
     @FormUrlEncoded
     suspend fun verifyOTP(
-        @Field("token") token : String,
-        @Field("verifyOtp") otp : String,
+        @Field("token") token: String,
+        @Field("verifyOtp") otp: String,
         @Field("email") emailId: String
-    ) : Response<ForgotPasswordResponse>
+    ): Response<ForgotPasswordResponse>
 
     @POST("fos/getCasesList")
     @FormUrlEncoded
     suspend fun getCasesList(
-        @Header("token") token :String,
-        @Field("filter") filter:String,
-        @Field("length") length:Int,
-        @Field("start") start:Int,
-        @Field("dispositionId") dispositionId:String,
-        @Field("subdispositionId") subDispositionId:String
-    ) : Response<CasesResponse>
+        @Header("token") token: String,
+        @Field("filter") filter: String,
+        @Field("length") length: Int,
+        @Field("start") start: Int,
+        @Field("dispositionId") dispositionId: String,
+        @Field("subdispositionId") subDispositionId: String
+    ): Response<CasesResponse>
+
+
+
+    @FormUrlEncoded
+    @POST("fos/listMyPlan")
+    suspend fun getMyPlanList(
+        @Header("token") token: String
+    ): Response<MyPlanResponse>
 
 }

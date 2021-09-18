@@ -7,7 +7,7 @@ import com.clxns.app.BuildConfig
 class Constants {
     companion object {
         const val DEMO_USER = "sharukh.s@infiny.in"
-        const val TOKEN_TEMP = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoYXJ1a2guc0BpbmZpbnkuaW4iLCJwaG9uZSI6Ijc5NzcyNjQ2NjIiLCJ1c2VyX2lkIjoyNiwicm9sZUlkIjo3LCJleHAiOjE4NDcyMDAzOTQsImlhdCI6MTYzMTIwMDM5NH0.B_-JIZ0KGlc4527sioyUz2zZWusoKquNRn_w0Xat38Y"
+        const val TOKEN_TEMP = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoYXJ1a2guc0BpbmZpbnkuaW4iLCJwaG9uZSI6Ijc5NzcyNjQ2NjIiLCJ1c2VyX2lkIjoyNiwicm9sZUlkIjo3LCJleHAiOjE4NDc5NjI5MjQsImlhdCI6MTYzMTk2MjkyNH0.mbTfb0f_Q9mcpxhyxTxgmuKRcTfS3Ypp62s7aHPxU_A"
 
         const val PREF_NAME = "clxns_pref_${BuildConfig.APPLICATION_ID}"
         const val TOKEN = "token"

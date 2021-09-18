@@ -7,12 +7,25 @@
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable-v24/ic_acc_selector.xml" value="0.19948717948717948" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable-v24/ic_baseline_more_vert_24.xml" value="0.19948717948717948" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable-v24/ic_state_bank_of_india_logo.xml" value="0.19948717948717948" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/background_date_filter.xml" value="0.18055555555555555" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/background_green_border.xml" value="0.18055555555555555" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/background_tab.xml" value="0.18055555555555555" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/ic_account_select.xml" value="0.19948717948717948" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/ic_account_unselect.xml" value="0.19948717948717948" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/ic_follow_up.xml" value="0.18055555555555555" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/ic_location_on_24.xml" value="0.18055555555555555" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/ic_phone_call.xml" value="0.18055555555555555" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/icon_dropdown.xml" value="0.18055555555555555" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_forgot_password.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_main.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_my_profile.xml" value="0.18645833333333334" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/custom_info_contents.xml" value="0.1984375" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_cases.xml" value="0.13796296296296295" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_map_view.xml" value="0.1984375" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_my_plan.xml" value="0.17777777777777778" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_my_profile.xml" value="0.22" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/list_view_fragment.xml" value="0.1984375" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/plan_list_items.xml" value="0.17777777777777778" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/menu/account_menu.xml" value="0.17777777777777778" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/menu/bottom_nav_menu.xml" value="0.18645833333333334" />
         <entry key="app/src/main/res/drawable-v24/ic_main_logo.xml" value="0.17962962962962964" />
