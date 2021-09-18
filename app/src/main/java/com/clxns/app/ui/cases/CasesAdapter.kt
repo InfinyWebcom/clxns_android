@@ -18,7 +18,7 @@ class CasesAdapter(
     RecyclerView.Adapter<CasesAdapter.CasesVH>() {
 
     class CasesVH(itemView: CasesListItemBinding) : RecyclerView.ViewHolder(itemView.root) {
-        val contactBinding = itemView
+        private val contactBinding = itemView
         fun bind(casesData: CasesData, casesListener: (CasesData) -> Unit) {
             contactBinding.casesUsernameTv.text = casesData.name.makeFirstLetterCapital()
             contactBinding.casesStatusTv.text = casesData.paymentStatus.makeFirstLetterCapital()

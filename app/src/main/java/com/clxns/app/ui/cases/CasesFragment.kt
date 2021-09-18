@@ -7,6 +7,7 @@ import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -42,11 +43,13 @@ class CasesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         casesViewModel.getCasesList(Constants.TOKEN_TEMP)
-        casesViewModel.casesResponse.observe(viewLifecycleOwner,{
-          when(it.status){
+        casesViewModel.casesResponse.observe(viewLifecycleOwner,{ it ->
+            when(it.status){
               Status.SUCCESS -> binding.casesRv.apply {
                   layoutManager = LinearLayoutManager(context)
-                  adapter = CasesAdapter(it.data?.data!!)
+                  adapter = CasesAdapter(it.data?.data!!){
+                      Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+                  }
               }
               Status.ERROR -> Timber.i("Error loading")
               else -> Timber.i("Nothing")

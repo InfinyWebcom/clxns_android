@@ -4,13 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Window
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivitySplashScreenBinding
 import com.clxns.app.ui.MainActivity
-import com.clxns.app.ui.login.LoginActivity
 import com.clxns.app.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -30,14 +27,14 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val isLoggedIn = sessionManager.getBoolean(Constants.IS_USER_LOGGED_IN)
-        if (isLoggedIn){
+        if (isLoggedIn) {
             openNewActivity(MainActivity())
-        }else{
+        } else {
             openNewActivity(MainActivity())
         }
     }
 
-    private fun openNewActivity(activity : AppCompatActivity){
+    private fun openNewActivity(activity: AppCompatActivity) {
 
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, activity::class.java)
