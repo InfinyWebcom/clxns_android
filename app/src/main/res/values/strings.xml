@@ -38,14 +38,28 @@
     <string name="notifications">Notifications</string>
     <string name="my_cases">My Cases</string>
     <string name="filter">Filter</string>
-    <string name="search_hint_txt">Search cases by Lead Id/Loan Id/Name/Mobile</string>
+    <string name="search_hint_txt">Search by Lead Id/Loan Id/Name/Mobile/Pincode</string>
     <string name="account">Account</string>
     <string name="profile">Profile</string>
     <string name="select_bank">Select Bank</string>
     <string name="profile_subtitle">CLXNS Technologies Pvt. Ltd.</string>
     <string name="logout">Logout</string>
-    <string name="followup">Follow Up</string>
+    <string name="status">Status</string>
+    <string name="sub_status">Sub Status</string>
+    <string name="from">From</string>
+    <string name="start_date">Start Date</string>
+    <string name="to">To</string>
+    <string name="end_date">End Date</string>
+    <string name="reset">Reset</string>
+    <string name="apply">Apply</string>
+    <string name="search_cases">Search Cases</string>
+    <string name="refresh">Refresh</string>
+        <string name="followup">Follow Up</string>
+
     <string name="check_in">Check In</string>
+
     <string name="create_route">Create Route</string>
+
     <string name="my_plans">My Plans</string>
+
 </resources>
