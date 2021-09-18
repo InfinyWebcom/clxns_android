@@ -4,9 +4,6 @@ import com.clxns.app.data.api.ApiService
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
-    suspend fun getMyPlanList(token: String) =
-        apiService.getMyPlanList(token)
-
 
     suspend fun performLogin(emailId: String, password: String) =
         apiService.performLogin(emailId, password)
@@ -29,5 +26,8 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getCasesList(token: String) =
         apiService.getCasesList(token, "", 10, 0, "", "")
+
+    suspend fun getMyPlanList(token: String) =
+        apiService.getMyPlanList(token)
 }
 

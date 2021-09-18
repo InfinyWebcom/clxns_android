@@ -1,11 +1,14 @@
 package com.clxns.app.data.repository
 
 import com.clxns.app.data.api.ApiService
+import com.clxns.app.data.api.helper.BaseApiResponse
+import com.clxns.app.data.api.helper.RemoteDataSource
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
+@ActivityRetainedScoped
 class ProfileRepository @Inject constructor(
-    private val apiService: ApiService
-) {
+    private val remoteDataSource: RemoteDataSource
+) : BaseApiResponse() {
 }
