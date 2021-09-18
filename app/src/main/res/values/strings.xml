@@ -54,4 +54,12 @@
     <string name="apply">Apply</string>
     <string name="search_cases">Search Cases</string>
     <string name="refresh">Refresh</string>
+        <string name="followup">Follow Up</string>
+
+    <string name="check_in">Check In</string>
+
+    <string name="create_route">Create Route</string>
+
+    <string name="my_plans">My Plans</string>
+
 </resources>
