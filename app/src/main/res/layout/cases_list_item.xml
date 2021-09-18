@@ -2,18 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/dp16">
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rippleColor="@color/colorPrimary"
+        android:id="@+id/cases_card_view"
+        >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp8"
+        >
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cases_image_container"
             android:layout_width="@dimen/dp48"
             android:layout_height="@dimen/dp48"
             android:elevation="0dp"
+            android:visibility="gone"
             app:cardCornerRadius="@dimen/dp200"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -41,16 +50,14 @@
                 android:id="@+id/cases_username_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp8"
                 android:text="SHARUKH SHAIKH"
-                android:textSize="@dimen/sp22"
+                android:textSize="@dimen/sp20"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/load_account_no_tv"
+                android:id="@+id/loan_id_date_pincode_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp8"
                 android:text="5465865"
                 android:textColor="@color/quantum_grey600"
                 android:textSize="@dimen/sp14" />
@@ -72,13 +79,12 @@
             android:id="@+id/cases_status_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp8"
-            android:layout_marginTop="@dimen/dp8"
+            android:layout_marginTop="@dimen/dp4"
             android:layout_toStartOf="@+id/cases_plan_btn"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Residence Shifted"
-            android:textSize="@dimen/sp14"
+            android:textSize="@dimen/sp16"
             app:layout_constraintStart_toStartOf="@+id/cases_detail_layout"
             app:layout_constraintTop_toBottomOf="@+id/cases_detail_layout" />
 
@@ -99,4 +105,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/cases_status_tv" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </RelativeLayout>

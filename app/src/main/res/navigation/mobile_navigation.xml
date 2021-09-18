@@ -15,7 +15,11 @@
         android:id="@+id/navigation_cases"
         android:name="com.clxns.app.ui.cases.CasesFragment"
         android:label="@string/title_cases"
-        tools:layout="@layout/fragment_cases" />
+        tools:layout="@layout/fragment_cases" >
+        <action
+            android:id="@+id/action_navigation_cases_to_navigation_cases_filter"
+            app:destination="@id/navigation_cases_filter" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_my_plan"
@@ -28,5 +32,11 @@
         android:name="com.clxns.app.ui.home.account.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_my_profile" />
+    <dialog
+        android:id="@+id/navigation_cases_filter"
+        android:name="com.clxns.app.ui.bottomSheetDialog.CasesFilterBS"
+        android:label="CasesFilterBS"
+        tools:layout="@layout/bottom_sheet_cases_filter"
+        />
 
 </navigation>

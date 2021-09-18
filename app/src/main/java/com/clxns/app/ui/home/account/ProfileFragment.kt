@@ -1,6 +1,7 @@
 package com.clxns.app.ui.home.account
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,9 @@ import androidx.fragment.app.viewModels
 import com.clxns.app.R
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentMyProfileBinding
+import com.clxns.app.ui.changePassword.ChangePasswordActivity
 import com.clxns.app.utils.Constants
+import com.clxns.app.utils.snackBar
 import com.clxns.app.utils.toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +27,7 @@ class ProfileFragment : Fragment() {
     private val profileVM: ProfileViewModel by viewModels()
     private lateinit var binding: FragmentMyProfileBinding
     private val bankNames = arrayOf("Kotak Bank", "SBI", "HDFC")
+
     @Inject
     lateinit var sessionManager: SessionManager
 
@@ -44,9 +48,11 @@ class ProfileFragment : Fragment() {
 
 
     private fun bindUI() {
-        binding.userNameTv.text=sessionManager.getString(Constants.USER_NAME)
-        binding.userEmployeeCodeTv.text="Employee Code : "+sessionManager.getString(Constants.USER_EMPLOYEE_ID)
-        binding.userEmployeeBloodGroupTv.text="Blood Group : "+sessionManager.getString(Constants.USER_BLOOD_GROUP)
+        binding.userNameTv.text = sessionManager.getString(Constants.USER_NAME)
+        binding.userEmployeeCodeTv.text =
+            "Employee Code : " + sessionManager.getString(Constants.USER_EMPLOYEE_ID)
+        binding.userEmployeeBloodGroupTv.text =
+            "Blood Group : " + sessionManager.getString(Constants.USER_BLOOD_GROUP)
 //        binding.reportingManagerTv.text="Reporting Manager : "+sessionManager.getString(Constants.USER_BLOOD_GROUP)
 //        binding.managerContactTv.text="Manager Contact : "+sessionManager.getString(Constants.USER_BLOOD_GROUP)
         binding.profileEditBankBtn.setOnClickListener {
@@ -62,10 +68,10 @@ class ProfileFragment : Fragment() {
 
             when (item.title) {
                 "Account" -> {
-                    requireContext().toast("Account")
+                    binding.root.snackBar("Refreshing...")
                 }
                 "Change Password" -> {
-                    requireContext().toast("Change Password")
+                    startActivity(Intent(requireContext(), ChangePasswordActivity::class.java))
                 }
                 "Logout" -> {
                     requireContext().toast("Logout")
@@ -73,8 +79,8 @@ class ProfileFragment : Fragment() {
                 "Select Bank" -> {
                     val bankDialogBuilder = MaterialAlertDialogBuilder(requireContext())
                         .setTitle("Select your bank")
-                        .setItems(bankNames) { _: DialogInterface, item: Int ->
-                            when (bankNames[item]) {
+                        .setItems(bankNames) { _: DialogInterface, i: Int ->
+                            when (bankNames[i]) {
                                 "SBI" -> binding.selectedBankImage.setImageDrawable(
                                     ContextCompat.getDrawable(
                                         requireContext(),

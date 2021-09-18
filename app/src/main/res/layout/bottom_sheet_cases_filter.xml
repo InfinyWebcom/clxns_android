@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cases_filter_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_sheet_background"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    >
+
+
+    <TextView
+        android:id="@+id/imgDash"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp6"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp8"
+        android:background="@drawable/bottom_sheet_dash"
+        android:paddingHorizontal="@dimen/dp24" />
+
+    <RelativeLayout
+        android:id="@+id/filter_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginEnd="@dimen/dp16">
+
+
+        <TextView
+            android:id="@+id/status_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp16"
+            android:includeFontPadding="false"
+            android:text="@string/status"
+            android:textSize="@dimen/sp14" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/status_spinner_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/status_tv"
+            android:layout_marginTop="@dimen/dp4"
+            android:backgroundTint="@color/quantum_grey100"
+            app:cardCornerRadius="@dimen/dp8"
+            app:strokeColor="@color/quantum_grey400"
+            app:strokeWidth="@dimen/dp1">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/status_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overlapAnchor="false"
+                android:paddingVertical="@dimen/dp10"
+                android:spinnerMode="dialog" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/sub_status_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/status_spinner_container"
+            android:layout_marginTop="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp16"
+            android:includeFontPadding="false"
+            android:text="@string/sub_status"
+            android:textSize="@dimen/sp14" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/sub_status_spinner_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sub_status_tv"
+            android:layout_marginTop="@dimen/dp4"
+            android:backgroundTint="@color/quantum_grey100"
+            app:cardCornerRadius="@dimen/dp8"
+            app:strokeColor="@color/quantum_grey400"
+            app:strokeWidth="@dimen/dp1">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/sub_status_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overlapAnchor="false"
+                android:paddingVertical="@dimen/dp10"
+                android:spinnerMode="dialog" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sub_status_spinner_container"
+            android:layout_marginTop="@dimen/dp16"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/from_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="@string/from"
+                    android:textSize="@dimen/sp14" />
+
+
+                <TextView
+                    android:id="@+id/start_date_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp4"
+                    android:layout_marginEnd="@dimen/dp8"
+                    android:background="@drawable/background_edittext_roundable"
+                    android:hint="@string/start_date"
+                    android:paddingVertical="@dimen/dp8"
+                    android:paddingStart="@dimen/dp6"
+                    android:paddingEnd="@dimen/dp6"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/dp8"
+                android:orientation="vertical"
+                android:paddingEnd="0dp">
+
+                <TextView
+                    android:id="@+id/to_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:text="@string/to"
+                    android:textSize="@dimen/sp14" />
+
+
+                <TextView
+                    android:id="@+id/end_date_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp4"
+                    android:background="@drawable/background_edittext_roundable"
+                    android:hint="@string/end_date"
+                    android:paddingVertical="@dimen/dp8"
+                    android:paddingStart="@dimen/dp6"
+                    android:paddingEnd="@dimen/dp6"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/filter_btn_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp8"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filter_reset_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp8"
+            android:layout_weight="1"
+            android:text="@string/reset"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/white"
+            app:strokeWidth="@dimen/dp1"
+            app:strokeColor="@color/red"
+            android:textColor="@color/red"
+            android:textSize="@dimen/sp18" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/filter_apply_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp8"
+            android:layout_weight="1"
+            app:rippleColor="@color/colorSecondaryVariant"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/apply"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp18" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.clxns.app.databinding.FragmentHomeBinding
-import com.clxns.app.ui.changePassword.ChangePasswordActivity
 import com.clxns.app.ui.notification.NotificationActivity
 import dagger.hilt.android.AndroidEntryPoint
 

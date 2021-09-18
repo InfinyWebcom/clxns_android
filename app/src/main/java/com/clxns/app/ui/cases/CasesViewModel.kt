@@ -26,7 +26,11 @@ class CasesViewModel @Inject constructor(
             if (networkHelper.isNetworkConnected()){
                 casesRepository.getCasesList(token).let {
                     if (it.isSuccessful){
-                        _casesResponse.postValue(Resource.success(it.body()))
+                        if (it.body()?.data.isNullOrEmpty()){
+                            _casesResponse.postValue(Resource.error("Empty list",null))
+                        }else {
+                            _casesResponse.postValue(Resource.success(it.body()))
+                        }
                     }
                 }
             }

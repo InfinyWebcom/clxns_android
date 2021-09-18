@@ -1,16 +1,21 @@
 package com.clxns.app.ui.cases
 
+import android.app.ActivityOptions
+import android.content.Intent
 import android.os.Bundle
+import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.clxns.app.R
 import com.clxns.app.databinding.FragmentCasesBinding
+import com.clxns.app.ui.search.SearchActivity
 import com.clxns.app.utils.Constants
 import com.clxns.app.utils.Status
-import com.clxns.app.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -41,12 +46,23 @@ class CasesFragment : Fragment() {
           when(it.status){
               Status.SUCCESS -> binding.casesRv.apply {
                   layoutManager = LinearLayoutManager(context)
-                  adapter = CasesAdapter(context, it.data?.data!!)
+                  adapter = CasesAdapter(it.data?.data!!)
               }
               Status.ERROR -> Timber.i("Error loading")
               else -> Timber.i("Nothing")
           }
         })
+
+        binding.filterBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_cases_to_navigation_cases_filter)
+        }
+
+        binding.searchCard.setOnClickListener {
+            val i = Intent(requireContext(), SearchActivity::class.java)
+            val p = Pair<View, String>(binding.searchCard, "search_bar")
+            val options = ActivityOptions.makeSceneTransitionAnimation(requireActivity(), p)
+            startActivity(i, options.toBundle())
+        }
     }
 
     override fun onDestroyView() {
