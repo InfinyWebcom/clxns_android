@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import com.clxns.app.R
+import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityChangePasswordBinding
 import com.clxns.app.ui.login.LoginActivity
@@ -24,7 +25,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChangePasswordBinding
-    private val changePasswordViewModel: ChangePasswordViewModel by viewModels()
+    private val viewModel: ChangePasswordViewModel by viewModels()
 
     private lateinit var newPasswordET: TextInputEditText
     private lateinit var confirmPasswordET: TextInputEditText
@@ -61,7 +62,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                     if (newPasswordET.text.toString()
                             .contentEquals(confirmPasswordET.text.toString())
                     ) {
-                        changePasswordViewModel.changePassword(
+                        viewModel.changePassword(
                             token,
                             newPasswordET.text.toString(),
                             confirmPasswordET.text.toString(),
@@ -76,7 +77,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                 if (newPasswordET.text.toString()
                         .contentEquals(confirmPasswordET.text.toString())
                 ) {
-                    changePasswordViewModel.changePassword(
+                    viewModel.changePassword(
                         token,
                         newPasswordET.text.toString(),
                         confirmPasswordET.text.toString(),
@@ -179,22 +180,45 @@ class ChangePasswordActivity : AppCompatActivity() {
     }
 
     private fun setObserver() {
-        changePasswordViewModel.changePasswordResponse.observe(this, {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    this.toast(it.data?.title!!)
+        viewModel.response.observe(this) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    binding.progressBar.hide()
+
                     val finishAllActivitiesExceptLogin = Intent(this, LoginActivity::class.java)
                     finishAllActivitiesExceptLogin.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(finishAllActivitiesExceptLogin)
+                    // bind data to the view
                 }
-                Status.ERROR -> {
-                    binding.root.snackBar(it.message!!)
+                is NetworkResult.Error -> {
+                    binding.progressBar.hide()
+                    toast(response.message!!)
+                    // show error message
                 }
-                Status.LOADING -> {
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
                     binding.root.snackBar("Changing password...")
+                    // show a progress bar
                 }
             }
-        })
+        }
+
+//        changePasswordViewModel.changePasswordResponse.observe(this, {
+//            when (it.status) {
+//                Status.SUCCESS -> {
+//                    this.toast(it.data?.title!!)
+//                    val finishAllActivitiesExceptLogin = Intent(this, LoginActivity::class.java)
+//                    finishAllActivitiesExceptLogin.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                    startActivity(finishAllActivitiesExceptLogin)
+//                }
+//                Status.ERROR -> {
+//                    binding.root.snackBar(it.message!!)
+//                }
+//                Status.LOADING -> {
+//                    binding.root.snackBar("Changing password...")
+//                }
+//            }
+//        })
     }
 
 }

@@ -12,23 +12,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ListViewViewModel @Inject constructor(
     private val repository: ListViewRepository
-) :ViewModel() {
-
-//    private var _myPlanResponse: MutableLiveData<Resource<BlogModel>> = MutableLiveData()
-//    val myPlanResponse: LiveData<Resource<BlogModel>> get() = _myPlanResponse
-
-//    suspend fun getMyPlanList(token: String) = withContext(Dispatchers.IO) {
-//        viewModelScope.launch {
-//            if (networkHelper.isNetworkConnected()) {
-//                repository.getMyPlanList(token).let {
-//                    if (it.isSuccessful) {
-//                        _myPlanResponse.postValue(Resource.success(it.body()))
-//                    }
-//                }
-//            }
-//        }
-//    }
-
+) : ViewModel() {
 
     private val _response: MutableLiveData<NetworkResult<MyPlanResponse>> = MutableLiveData()
     val response: LiveData<NetworkResult<MyPlanResponse>> = _response
@@ -37,11 +21,5 @@ class ListViewViewModel @Inject constructor(
             _response.value = values
         }
     }
-
-//    suspend fun userLogin(
-//        email: String,
-//        password: String
-//    ) = withContext(Dispatchers.IO) { repository.userLogin(email, password) }
-
 
 }

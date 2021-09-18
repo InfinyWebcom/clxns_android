@@ -16,14 +16,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.clxns.app.R
+import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityLoginBinding
 import com.clxns.app.ui.MainActivity
 import com.clxns.app.ui.forgotPassword.ForgotPasswordActivity
-import com.clxns.app.utils.Constants
-import com.clxns.app.utils.Status
-import com.clxns.app.utils.hideKeyboard
-import com.clxns.app.utils.removeFocus
+import com.clxns.app.utils.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -32,9 +30,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
-    private val loginViewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels()
 
-    private lateinit var loginBinding: ActivityLoginBinding
+    private lateinit var binding: ActivityLoginBinding
 
     private lateinit var loginBtn: MaterialButton
     private lateinit var emailET: TextInputEditText
@@ -46,8 +44,8 @@ class LoginActivity : AppCompatActivity() {
     lateinit var sessionManager: SessionManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loginBinding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(loginBinding.root)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         initView()
 
@@ -58,28 +56,28 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        loginBtn = loginBinding.loginBtn
-        emailET = loginBinding.emailET
-        emailIL = loginBinding.emailIL
-        passwordET = loginBinding.passwordET
-        passwordIL = loginBinding.passwordIL
+        loginBtn = binding.loginBtn
+        emailET = binding.emailET
+        emailIL = binding.emailIL
+        passwordET = binding.passwordET
+        passwordIL = binding.passwordIL
     }
 
     private fun setListeners() {
 
-        loginBinding.txtForgetPassword.setOnClickListener {
+        binding.txtForgetPassword.setOnClickListener {
             val goToFP = Intent(this, ForgotPasswordActivity::class.java)
-            val p = Pair<View, String>(loginBinding.loginLogo, "app_logo_anim")
+            val p = Pair<View, String>(binding.loginLogo, "app_logo_anim")
             val options = ActivityOptions.makeSceneTransitionAnimation(this, p)
             startActivity(goToFP, options.toBundle())
         }
         loginBtn.setOnClickListener {
-            this.hideKeyboard(loginBinding.root)
+            this.hideKeyboard(binding.root)
             emailET.removeFocus()
             passwordET.removeFocus()
 
             if (!emailET.text.isNullOrEmpty() && !passwordET.text.isNullOrEmpty()) {
-                loginViewModel.performLogin(
+                viewModel.performLogin(
                     emailET.text.toString(),
                     passwordET.text.toString()
                 )
@@ -87,13 +85,13 @@ class LoginActivity : AppCompatActivity() {
         }
 
         emailET.afterTextChanged {
-            loginViewModel.loginDataChanged(
+            viewModel.loginDataChanged(
                 emailET.text.toString()
             )
         }
 
         passwordET.afterTextChanged {
-            loginViewModel.loginDataChanged(
+            viewModel.loginDataChanged(
                 emailET.text.toString()
             )
         }
@@ -110,14 +108,48 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setObserver() {
 
-        loginViewModel.loginResponse.observe(this, Observer {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    Toast.makeText(this, it.data?.title, Toast.LENGTH_LONG).show()
-                    val loginData = it.data?.loginData
+//        viewModel.loginResponse.observe(this, Observer {
+//            when (it.status) {
+//                Status.SUCCESS -> {
+//                    Toast.makeText(this, it.data?.title, Toast.LENGTH_LONG).show()
+//                    val loginData = it.data?.loginData
+//                    val name = loginData?.firstName + " " + loginData?.lastName
+//                    binding.txtLogin.text = "Welcome $name"
+//                    sessionManager.saveAnyData(Constants.TOKEN, it.data?.token!!)
+//                    sessionManager.saveAnyData(Constants.USER_NAME, name)
+//                    sessionManager.saveAnyData(Constants.USER_ID, loginData!!.id)
+//                    sessionManager.saveAnyData(Constants.USER_EMPLOYEE_ID, loginData.employeeId)
+//                    sessionManager.saveAnyData(Constants.USER_DOB, loginData.dob)
+//                    sessionManager.saveAnyData(Constants.USER_BLOOD_GROUP, loginData.bloodGroup)
+//                    sessionManager.saveAnyData(Constants.USER_EMAIL, loginData.email)
+//                    sessionManager.saveAnyData(Constants.USER_MOBILE, loginData.phone)
+//                    sessionManager.saveAnyData(Constants.USER_ADDRESS, loginData.address)
+//                    sessionManager.saveAnyData(Constants.USER_LOCATION, loginData.location)
+//                    sessionManager.saveAnyData(Constants.IS_USER_LOGGED_IN, true)
+//                    Handler(Looper.getMainLooper()).postDelayed({
+//                        startActivity(Intent(this, MainActivity::class.java))
+//                        finish()
+//                    }, Constants.SPLASH_SCREEN_TIMEOUT)
+//                }
+//                Status.ERROR -> {
+//                    binding.txtLogin.text = it.message
+//                }
+//                Status.LOADING -> {
+//                    binding.txtLogin.text = "Loading...."
+//                }
+//            }
+//        })
+
+         viewModel.response.observe(this) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    binding.progressBar.hide()
+
+                    Toast.makeText(this, response.data?.title, Toast.LENGTH_LONG).show()
+                    val loginData = response.data?.loginData
                     val name = loginData?.firstName + " " + loginData?.lastName
-                    loginBinding.txtLogin.text = "Welcome $name"
-                    sessionManager.saveAnyData(Constants.TOKEN, it.data?.token!!)
+                    binding.txtLogin.text = "Welcome $name"
+                    sessionManager.saveAnyData(Constants.TOKEN, response.data?.token!!)
                     sessionManager.saveAnyData(Constants.USER_NAME, name)
                     sessionManager.saveAnyData(Constants.USER_ID, loginData!!.id)
                     sessionManager.saveAnyData(Constants.USER_EMPLOYEE_ID, loginData.employeeId)
@@ -132,17 +164,22 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     }, Constants.SPLASH_SCREEN_TIMEOUT)
+                    // bind data to the view
                 }
-                Status.ERROR -> {
-                    loginBinding.txtLogin.text = it.message
+                is NetworkResult.Error -> {
+                    binding.progressBar.hide()
+                    binding.txtLogin.text = response.message
+                    // show error message
                 }
-                Status.LOADING -> {
-                    loginBinding.txtLogin.text = "Loading...."
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
+                    binding.txtLogin.text = "Loading...."
+                    // show a progress bar
                 }
             }
-        })
+        }
 
-        loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
+        viewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
 
             // disable login button unless both username / password is valid

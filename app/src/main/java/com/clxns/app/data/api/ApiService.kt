@@ -53,7 +53,6 @@ interface ApiService {
 
 
 
-    @FormUrlEncoded
     @POST("fos/listMyPlan")
     suspend fun getMyPlanList(
         @Header("token") token: String

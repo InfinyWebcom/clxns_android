@@ -12,9 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
 import com.clxns.app.R
+import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityForgotPasswordBinding
 import com.clxns.app.ui.changePassword.ChangePasswordActivity
+import com.clxns.app.ui.login.LoginActivity
 import com.clxns.app.utils.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -25,7 +27,7 @@ import javax.inject.Inject
 class ForgotPasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityForgotPasswordBinding
 
-    private val passwordViewModel: ForgotPasswordViewModel by viewModels()
+    private val viewModel: ForgotPasswordViewModel by viewModels()
 
     private lateinit var otpET1: TextInputEditText
     private lateinit var otpET2: TextInputEditText
@@ -53,40 +55,94 @@ class ForgotPasswordActivity : AppCompatActivity() {
     }
 
     private fun setObserver() {
-        passwordViewModel.forgotPasswordResponse.observe(this, {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    this.toast(it.data?.title!!)
-                    sessionManager.saveAnyData(Constants.TOKEN, it.data.token.toString())
+        viewModel.responseGetOTP.observe(this) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+//                    binding.progressBar.hide()
+
+                    this.toast(response.data?.title!!)
+                    sessionManager.saveAnyData(Constants.TOKEN, response.data.token.toString())
                     updateUIOnSuccessfulGetOTP()
+                    // bind data to the view
                 }
-                Status.ERROR -> {
-                    binding.root.snackBar(it.message!!)
+                is NetworkResult.Error -> {
+//                    binding.progressBar.hide()
+                    toast(response.message!!)
+                    // show error message
                 }
-                Status.LOADING -> {
+                is NetworkResult.Loading -> {
+//                    binding.progressBar.show()
                     binding.forgotPasswordSubHeader.text = "Loading...."
+                    // show a progress bar
                 }
             }
-        })
+        }
 
-        passwordViewModel.verifyOTPResponse.observe(this, {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    sessionManager.saveAnyData(Constants.TOKEN, it.data?.token!!)
-                    this.toast(it.data.title)
+        viewModel.responseVerifyOTP.observe(this) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+//                    binding.progressBar.hide()
+
+                    sessionManager.saveAnyData(Constants.TOKEN, response.data?.token!!)
+                    this.toast(response.data.title)
                     val goToChangePasswordActivity =
                         Intent(this, ChangePasswordActivity::class.java)
                     goToChangePasswordActivity.putExtra("isFromOTPScreen", true)
                     startActivity(goToChangePasswordActivity)
+                    // bind data to the view
                 }
-                Status.ERROR -> {
-                    binding.root.snackBar(it.message!!)
+                is NetworkResult.Error -> {
+//                    binding.progressBar.hide()
+                    toast(response.message!!)
+                    // show error message
                 }
-                Status.LOADING -> {
+                is NetworkResult.Loading -> {
+//                    binding.progressBar.show()
                     binding.root.snackBar("Verifying OTP...")
+                    // show a progress bar
                 }
             }
-        })
+        }
+
+//        passwordViewModel.forgotPasswordResponse.observe(this, {
+//            when (it.status) {
+//                Status.SUCCESS -> {
+//                    this.toast(it.data?.title!!)
+//                    sessionManager.saveAnyData(Constants.TOKEN, it.data.token.toString())
+//                    updateUIOnSuccessfulGetOTP()
+//                }
+//                Status.ERROR -> {
+//                    binding.root.snackBar(it.message!!)
+//                }
+//                Status.LOADING -> {
+//                    binding.forgotPasswordSubHeader.text = "Loading...."
+//                }
+//            }
+//        })
+
+
+
+//        passwordViewModel.verifyOTPResponse.observe(this, {
+//            when (it.status) {
+//                Status.SUCCESS -> {
+//                    sessionManager.saveAnyData(Constants.TOKEN, it.data?.token!!)
+//                    this.toast(it.data.title)
+//                    val goToChangePasswordActivity =
+//                        Intent(this, ChangePasswordActivity::class.java)
+//                    goToChangePasswordActivity.putExtra("isFromOTPScreen", true)
+//                    startActivity(goToChangePasswordActivity)
+//                }
+//                Status.ERROR -> {
+//                    binding.root.snackBar(it.message!!)
+//                }
+//                Status.LOADING -> {
+//                    binding.root.snackBar("Verifying OTP...")
+//                }
+//            }
+//        })
+
+
+
     }
 
     private fun updateUIOnSuccessfulGetOTP() {
@@ -156,7 +212,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         binding.didNotGetOTPTxt.setOnClickListener {
             //Requesting the OTP again after not receiving
-            passwordViewModel.getOTPFromDB(emailET.text.toString())
+            viewModel.getOTP(emailET.text.toString())
             clearFocusFromOTPET()
             otpET1.setText("")
             otpET2.setText("")
@@ -171,7 +227,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 if (emailET.text.toString().isNotEmpty() && emailET.text.toString()
                         .isValidEmail()
                 ) {
-                    passwordViewModel.getOTPFromDB(emailET.text.toString())
+                    viewModel.getOTP(emailET.text.toString())
                 } else {
                     binding.root.snackBar("Please enter correct email address")
                 }
@@ -181,7 +237,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 ) {
                     val otp =
                         "${otpET1.text.toString()}${otpET2.text.toString()}${otpET3.text.toString()}${otpET4.text.toString()}"
-                    passwordViewModel.verifyOTP(
+                    viewModel.verifyOTP(
                         sessionManager.getString(Constants.TOKEN).toString(),
                         otp,
                         emailET.text.toString()
