@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivitySplashScreenBinding
 import com.clxns.app.ui.MainActivity
+import com.clxns.app.ui.login.LoginActivity
 import com.clxns.app.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -30,7 +31,7 @@ class SplashScreenActivity : AppCompatActivity() {
         if (isLoggedIn) {
             openNewActivity(MainActivity())
         } else {
-            openNewActivity(MainActivity())
+            openNewActivity(LoginActivity())
         }
     }
 

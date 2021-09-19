@@ -30,7 +30,6 @@ class ListViewFragment : Fragment() {
 
     private val viewModel: ListViewViewModel by viewModels()
     private var _binding: ListViewFragmentBinding? = null
-
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -62,7 +61,7 @@ class ListViewFragment : Fragment() {
 
 
     private fun setObserver() {
-        viewModel.getMyPlanList(Constants.TOKEN_TEMP)
+        viewModel.getMyPlanList(sessionManager.getString(Constants.TOKEN)!!)
         viewModel.response.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {

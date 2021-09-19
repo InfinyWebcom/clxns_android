@@ -81,6 +81,7 @@ class LoginActivity : AppCompatActivity() {
                     emailET.text.toString(),
                     passwordET.text.toString()
                 )
+                binding.progressBar.show()
             }
         }
 
