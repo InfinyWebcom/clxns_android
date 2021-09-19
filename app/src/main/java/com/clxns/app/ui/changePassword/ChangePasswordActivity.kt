@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
@@ -68,6 +69,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                             confirmPasswordET.text.toString(),
                             oldPasswordET.text.toString()
                         )
+                        binding.progressBar.show()
                     } else {
                         binding.root.snackBar(getString(R.string.error_password_not_match))
                     }
@@ -184,21 +186,26 @@ class ChangePasswordActivity : AppCompatActivity() {
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.hide()
-
+                    toast(response.data?.title!!)
+                    //clear token
+                    sessionManager.saveAnyData(Constants.TOKEN, "")
+                    sessionManager.saveAnyData(Constants.IS_USER_LOGGED_IN, false)
+                    //start login screen
                     val finishAllActivitiesExceptLogin = Intent(this, LoginActivity::class.java)
                     finishAllActivitiesExceptLogin.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(finishAllActivitiesExceptLogin)
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {
+                    // show error message
                     binding.progressBar.hide()
                     toast(response.message!!)
-                    // show error message
                 }
                 is NetworkResult.Loading -> {
+                    // show a progress bar
+                    Log.d("ChangesPassddddd", "setObserver: Loafing")
                     binding.progressBar.show()
                     binding.root.snackBar("Changing password...")
-                    // show a progress bar
                 }
             }
         }

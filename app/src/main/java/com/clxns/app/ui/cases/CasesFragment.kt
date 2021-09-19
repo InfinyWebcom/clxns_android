@@ -14,21 +14,25 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
+import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentCasesBinding
 import com.clxns.app.ui.search.SearchActivity
 import com.clxns.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CasesFragment : Fragment() {
 
     private val viewModel: CasesViewModel by viewModels()
     private var _binding: FragmentCasesBinding? = null
-
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,7 +74,7 @@ class CasesFragment : Fragment() {
     }
 
     private fun setObserver() {
-        viewModel.getCasesList(Constants.TOKEN_TEMP)
+        viewModel.getCasesList(sessionManager.getString(Constants.TOKEN)!!)
         viewModel.response.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {

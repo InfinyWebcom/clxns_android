@@ -11,12 +11,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.clxns.app.R
+import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentMyProfileBinding
 import com.clxns.app.ui.changePassword.ChangePasswordActivity
-import com.clxns.app.utils.Constants
-import com.clxns.app.utils.snackBar
-import com.clxns.app.utils.toast
+import com.clxns.app.ui.login.LoginActivity
+import com.clxns.app.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -24,7 +24,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
-    private val profileVM: ProfileViewModel by viewModels()
+    private val viewModel: ProfileViewModel by viewModels()
     private lateinit var binding: FragmentMyProfileBinding
     private val bankNames = arrayOf("Kotak Bank", "SBI", "HDFC")
 
@@ -44,6 +44,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindUI()
+        setObserver()
     }
 
 
@@ -74,7 +75,8 @@ class ProfileFragment : Fragment() {
                     startActivity(Intent(requireContext(), ChangePasswordActivity::class.java))
                 }
                 "Logout" -> {
-                    requireContext().toast("Logout")
+                    viewModel.logout(sessionManager.getString(Constants.TOKEN)!!)
+                    binding.progressBar.show()
                 }
                 "Select Bank" -> {
                     val bankDialogBuilder = MaterialAlertDialogBuilder(requireContext())
@@ -109,5 +111,35 @@ class ProfileFragment : Fragment() {
             true
         }
         popup.show()
+    }
+
+    private fun setObserver() {
+        viewModel.responseLogout.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    // update UI
+                    binding.progressBar.hide()
+                    requireContext().toast(response.data?.title!!)
+                    //clear token
+                    sessionManager.saveAnyData(Constants.TOKEN, "")
+                    sessionManager.saveAnyData(Constants.IS_USER_LOGGED_IN, false)
+                    //start login screen
+                    val intent = Intent(requireActivity(), LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    startActivity(intent)
+                    requireActivity().finish()
+                    // bind data to the view
+                }
+                is NetworkResult.Error -> {
+                    binding.progressBar.hide()
+                    requireContext().toast(response.message!!)
+                    // show error message
+                }
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
+                    // show a progress bar
+                }
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
 import retrofit2.http.POST
+import java.util.*
 
 interface ApiService {
     @POST("fos/login")
@@ -14,6 +15,11 @@ interface ApiService {
         @Field("email") emailId: String,
         @Field("password") password: String
     ): Response<LoginResponse>
+
+    @POST("fos/logout")
+    suspend fun logout(
+        @Header("token") token: String
+    ): Response<LogoutResponse>
 
     @POST("fos/forgotPassword")
     @FormUrlEncoded

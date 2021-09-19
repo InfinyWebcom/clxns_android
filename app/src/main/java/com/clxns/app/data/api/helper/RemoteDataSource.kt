@@ -8,6 +8,9 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     suspend fun performLogin(emailId: String, password: String) =
         apiService.performLogin(emailId, password)
 
+    suspend fun logout(token: String) =
+        apiService.logout(token)
+
     suspend fun getOTP(emailId: String) =
         apiService.getOTP(emailId)
 
