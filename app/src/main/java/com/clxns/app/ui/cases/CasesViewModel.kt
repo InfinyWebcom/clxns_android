@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
+import com.clxns.app.data.model.AddToPlanModel
 import com.clxns.app.data.model.CasesResponse
+import com.clxns.app.data.model.LoginResponse
 import com.clxns.app.data.repository.CasesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -17,11 +19,26 @@ class CasesViewModel @Inject constructor(
     private val repository: CasesRepository
 ) : ViewModel() {
 
-    private val _response: MutableLiveData<NetworkResult<CasesResponse>> = MutableLiveData()
-    val response: LiveData<NetworkResult<CasesResponse>> = _response
+    private val _responseCaseList: MutableLiveData<NetworkResult<CasesResponse>> = MutableLiveData()
+    val responseCaseList: LiveData<NetworkResult<CasesResponse>> = _responseCaseList
+
     fun getCasesList(token: String) = viewModelScope.launch {
         repository.getCasesList(token).collect { values ->
-            _response.value = values
+            _responseCaseList.value = values
+        }
+    }
+
+    private val _responseAddToPlan: MutableLiveData<NetworkResult<AddToPlanModel>> =
+        MutableLiveData()
+    val responseAddToPlan: LiveData<NetworkResult<AddToPlanModel>> = _responseAddToPlan
+
+    fun addToPlan(
+        token: String,
+        leadId: String,
+        planDate: String
+    ) = viewModelScope.launch {
+        repository.addToPlan(token, leadId, planDate).collect { values ->
+            _responseAddToPlan.value = values
         }
     }
 

@@ -26,8 +26,8 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         confirmPassword: String,
         oldPassword: String
     ) = apiService.changePassword(token, newPassword, confirmPassword, oldPassword)
-    
-     suspend fun getAllDispositions() = apiService.getAllDispositions()
+
+    suspend fun getAllDispositions() = apiService.getAllDispositions()
 
     suspend fun getCasesList(token: String) =
         apiService.getCasesList(token, "", 10, 0, "", "")
@@ -35,13 +35,31 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     suspend fun getMyPlanList(token: String) =
         apiService.getMyPlanList(token)
 
-    suspend fun getCaseDetails(token: String,loanAccountNumber: String) =
-        apiService.getCaseDetails(token,loanAccountNumber)
+    suspend fun getCaseDetails(token: String, loanAccountNumber: String) =
+        apiService.getCaseDetails(token, loanAccountNumber)
 
-    suspend fun getCaseHistory(token: String,loanAccountNumber: String) =
-        apiService.getCaseHistory(token,loanAccountNumber)
+    suspend fun getCaseHistory(token: String, loanAccountNumber: String) =
+        apiService.getCaseHistory(token, loanAccountNumber)
 
     suspend fun getUserDetails(token: String) = apiService.getUserDetails(token)
+
+    suspend fun saveCheckInData(
+        token: String,
+        loanAccountNo: String,
+        dispositionId: String,
+        subDispositionId: String,
+        comments: String,
+        file: String,
+        followUp: String,
+        nextAction: String,
+        additionalField: String
+    ) = apiService.saveCheckInData(
+        token, loanAccountNo, dispositionId, subDispositionId,
+        comments, file, followUp, nextAction, additionalField
+    )
+
+    suspend fun addToPlan(token: String, leadId: String, planDate: String) =
+        apiService.addToPlan(token, leadId, planDate)
 
 }
 

@@ -29,14 +29,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.clxns.app.databinding.ActivityCheckInBinding
 import com.clxns.app.ui.casedetails.casestatus.repossesions.AddImageAdapter
 import com.clxns.app.R
 import com.clxns.app.data.model.StatusModel
-import com.clxns.app.data.repository.CheckInRepository
 import com.clxns.app.ui.casedetails.bottomsheets.AddMobileOrAddressBottomSheet
 import com.clxns.app.ui.casedetails.bottomsheets.SubStatusActionBottomSheet
 import com.clxns.app.ui.casedetails.bottomsheets.SubStatusBottomSheet
@@ -59,9 +56,9 @@ import kotlin.collections.ArrayList
 class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     AddImageAdapter.removePhoto {
 
-    lateinit var checkInBinding: ActivityCheckInBinding
+    lateinit var binding: ActivityCheckInBinding
     lateinit var ctx: Context
-    val checkInViewModel: CheckInViewModel by viewModels()
+    val viewModel: CheckInViewModel by viewModels()
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     var imageCameraPickerLauncher: ActivityResultLauncher<Intent>? = null
     var imageGalleryPickerLauncher: ActivityResultLauncher<Intent>? = null
@@ -81,46 +78,50 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
+        ctx = this
+        binding = ActivityCheckInBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         setInit()
         setListeners()
     }
 
     private fun setListeners() {
 
-        checkInBinding.imgBack.setOnClickListener { finish() }
+        binding.imgBack.setOnClickListener { finish() }
 
 
-        checkInBinding.txtLocationCheckIn.setOnClickListener {
-            if (checkInBinding.txtLocationCheckIn.text.equals("Upload")) {
-                checkInBinding.txtLocationCheckIn.text = "Check In"
-                checkInBinding.txtLocationVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
+        binding.txtLocationCheckIn.setOnClickListener {
+            if (binding.txtLocationCheckIn.text.equals("Upload")) {
+                binding.txtLocationCheckIn.text = "Check In"
+                binding.txtLocationVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     ContextCompat.getDrawable(this, R.drawable.ic_verified_24),
                     null,
                     null,
                     null
                 )
                 Snackbar.make(
-                    checkInBinding.root,
+                    binding.root,
                     "Location has been verified",
                     Snackbar.LENGTH_LONG
                 ).show()
             }
         }
 
-        checkInBinding.txtImageVerify.setOnClickListener {
-            if (checkInBinding.txtImageVerify.text.equals("Upload")) {
+        binding.txtImageVerify.setOnClickListener {
+            if (binding.txtImageVerify.text.equals("Upload")) {
                 openFileUploadDialog()
             } else {
-                checkInBinding.txtImageVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                binding.txtImageVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     ContextCompat.getDrawable(this, R.mipmap.ic_delete),
                     null,
                     null,
                     null
                 )
-                checkInBinding.verifiedImageUpload.setImageResource(android.R.color.transparent)
-                checkInBinding.verifiedImageUpload.visibility = View.GONE
-                checkInBinding.txtImageVerify.text = "Upload"
-                checkInBinding.txtImageVerify.setTextColor(
+                binding.verifiedImageUpload.setImageResource(android.R.color.transparent)
+                binding.verifiedImageUpload.visibility = View.GONE
+                binding.txtImageVerify.text = "Upload"
+                binding.txtImageVerify.setTextColor(
                     ContextCompat.getColor(
                         this,
                         R.color.colorPrimary
@@ -132,18 +133,15 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     }
 
     private fun setInit() {
-        ctx = this
-        checkInBinding = ActivityCheckInBinding.inflate(layoutInflater)
-        setContentView(checkInBinding.root)
 
         addImageAdapter = AddImageAdapter(this, ctx)
-        checkInBinding.recyclerAddImage.adapter = addImageAdapter
-        checkInBinding.recyclerAddImage.isNestedScrollingEnabled = false
+        binding.recyclerAddImage.adapter = addImageAdapter
+        binding.recyclerAddImage.isNestedScrollingEnabled = false
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-        checkInBinding.txtCheckInStatus.text = intent.getStringExtra("status")
-        checkInBinding.txtCheckInName.text = intent.getStringExtra("name")
+        binding.txtCheckInStatus.text = intent.getStringExtra("status")
+        binding.txtCheckInName.text = intent.getStringExtra("name")
 
         //getLastLocation()
         getResultFromActivity()
@@ -221,7 +219,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 ContextCompat.getDrawable(this, R.drawable.ic_round_person_off_24)
             )
         )
-        checkInBinding.statusesRV.apply {
+        binding.statusesRV.apply {
             layoutManager = GridLayoutManager(context, 3)
             addItemDecoration(GridSpacingItemDecoration(3, 40, true))
             adapter = StatusAdapter(context, statusList, this@CheckInActivity)
@@ -479,7 +477,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                             Log.i(javaClass.name, "lat---->" + location.latitude + "")
                             Log.i(javaClass.name, "getLongitude---->" + location.longitude + "")
 
-                            checkInViewModel.getLatLong(location.latitude, location.longitude)
+                            viewModel.getLatLong(location.latitude, location.longitude)
                         }
 
 
