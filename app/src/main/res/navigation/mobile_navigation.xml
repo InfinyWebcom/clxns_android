@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.clxns.app.ui.home.HomeFragment"
+        android:name="com.clxns.app.ui.main.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_cases"
-        android:name="com.clxns.app.ui.cases.CasesFragment"
+        android:name="com.clxns.app.ui.main.cases.CasesFragment"
         android:label="@string/title_cases"
         tools:layout="@layout/fragment_cases" >
         <action
@@ -31,25 +31,25 @@
 
     <fragment
         android:id="@+id/navigation_my_plan"
-        android:name="com.clxns.app.ui.home.plan.PlanFragment"
+        android:name="com.clxns.app.ui.main.plan.PlanFragment"
         android:label="@string/title_my_plan"
         tools:layout="@layout/fragment_plan" />
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.clxns.app.ui.home.account.ProfileFragment"
+        android:name="com.clxns.app.ui.main.account.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_my_profile" />
     <dialog
         android:id="@+id/navigation_cases_filter"
-        android:name="com.clxns.app.ui.bottomSheetDialog.CasesFilterBS"
+        android:name="com.clxns.app.ui.main.cases.casedetails.bottomsheets.CasesFilterBS"
         android:label="CasesFilterBS"
         tools:layout="@layout/bottom_sheet_cases_filter"
         />
 
     <dialog
         android:id="@+id/navigation_home_summary"
-        android:name="com.clxns.app.ui.bottomSheetDialog.CaseSummaryBottomSheet"
+        android:name="com.clxns.app.ui.main.cases.casedetails.bottomsheets.CaseSummaryBottomSheet"
         android:label="CasesFilterBS"
         tools:layout="@layout/cases_summary_layout"
         >

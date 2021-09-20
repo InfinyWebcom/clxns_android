@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bottomsheet_background"
     android:orientation="vertical"
-    tools:context=".ui.casedetails.bottomsheets.SubStatusBottomSheet">
+    tools:context=".ui.main.cases.casedetails.bottomsheets.SubStatusBottomSheet">
 
 
     <TextView

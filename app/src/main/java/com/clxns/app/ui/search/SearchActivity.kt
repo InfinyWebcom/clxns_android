@@ -10,8 +10,8 @@ import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.CasesData
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivitySearchBinding
-import com.clxns.app.ui.cases.CasesAdapter
-import com.clxns.app.ui.cases.CasesViewModel
+import com.clxns.app.ui.main.cases.CasesAdapter
+import com.clxns.app.ui.main.cases.CasesViewModel
 import com.clxns.app.utils.Constants
 import com.clxns.app.utils.hideKeyboard
 import com.clxns.app.utils.snackBar
@@ -50,7 +50,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun subscribeObserver() {
-        casesViewModel.response.observe(this){
+        casesViewModel.responseCaseList.observe(this){
             when(it){
                 is NetworkResult.Success ->{
                     if (it.data?.error == false && it.data.casesDataList.isNotEmpty()){
