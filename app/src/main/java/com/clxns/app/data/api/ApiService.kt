@@ -58,13 +58,41 @@ interface ApiService {
     ): Response<CasesResponse>
 
 
-
     @POST("fos/listMyPlan")
     suspend fun getMyPlanList(
         @Header("token") token: String
     ): Response<MyPlanResponse>
+    
+         @POST("fos/listFosDis")
 
-    @POST("fos/listFosDis")
-    suspend fun getAllDispositions() : Response<DispositionResponse>
+     suspend fun getAllDispositions() : Response<DispositionResponse>
+
+    @FormUrlEncoded
+    @POST("fos/getCaseDetails")
+    suspend fun getCaseDetails(
+        @Header("token") token: String,
+        @Field("loanAccountNo") loanAccountNo: String
+    ): Response<MyPlanResponse>
+
+    @FormUrlEncoded
+    @POST("fos/caseHistory")
+    suspend fun caseHistory(
+        @Header("token") token: String,
+        @Field("loanAccountNo") loanAccountNo: String
+    ): Response<MyPlanResponse>
+
+    @FormUrlEncoded
+    @POST("fos/saveCheckinData")
+    suspend fun saveCheckInData(
+        @Header("token") token: String,
+        @Field("loanAccountNo") loanAccountNo: String,
+        @Field("dispositionId") dispositionId: String,
+        @Field("subDispositionId") subDispositionId: String,
+        @Field("comments") comments: String,
+        @Field("file") file: String,
+        @Field("followUp") followUp: String,
+        @Field("nextAction") nextAction: String,
+        @Field("additionalField") additionalField: String
+    ): Response<MyPlanResponse>
 
 }
