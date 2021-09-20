@@ -5,7 +5,7 @@
     android:id="@+id/relParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.plan.PlanFragment">
+    tools:context=".ui.main.plan.PlanFragment">
 
     <RelativeLayout
         android:id="@+id/relAppName"

@@ -25,7 +25,4 @@ class LoginRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-//    suspend fun performLogin(emailId: String, password: String) : Response<LoginResponse>?{
-//         return apiService.performLogin(emailId, password)
-//    }
 }

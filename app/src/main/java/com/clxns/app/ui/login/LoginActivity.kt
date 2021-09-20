@@ -19,14 +19,13 @@ import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityLoginBinding
-import com.clxns.app.ui.MainActivity
-import com.clxns.app.ui.forgotPassword.ForgotPasswordActivity
+import com.clxns.app.ui.main.MainActivity
+import com.clxns.app.ui.login.forgotPassword.ForgotPasswordActivity
 import com.clxns.app.utils.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint

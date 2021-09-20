@@ -22,26 +22,6 @@ class LoginViewModel @Inject constructor(
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
-//    private val _loginResponse: MutableLiveData<Resource<LoginResponse>> = MutableLiveData()
-//    val loginResponse: LiveData<Resource<LoginResponse>> get() = _loginResponse
-//
-//    fun performLogin(emailId: String, password: String) {
-//        viewModelScope.launch {
-//            if (networkHelper.isNetworkConnected()) {
-//                _loginResponse.postValue(Resource.loading(null))
-//                loginRepository.performLogin(emailId, password).let {
-//                    if (it!!.isSuccessful) {
-//                        if (it.body()?.error == true) {
-//                            _loginResponse.postValue(Resource.error(it.body()!!.title, null))
-//                        } else {
-//                            _loginResponse.postValue(Resource.success(it.body()))
-//                        }
-//                    } else _loginResponse.postValue(Resource.error("Something went wrong.", null))
-//                }
-//            } else _loginResponse.postValue(Resource.error("No Internet Connection", null))
-//        }
-//    }
-
     private val _response: MutableLiveData<NetworkResult<LoginResponse>> = MutableLiveData()
     val response: LiveData<NetworkResult<LoginResponse>> = _response
     fun performLogin(emailId: String, password: String) = viewModelScope.launch {

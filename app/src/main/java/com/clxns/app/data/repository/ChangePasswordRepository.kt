@@ -38,12 +38,4 @@ class ChangePasswordRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-//    suspend fun changePassword(
-//        token: String,
-//        newPassword: String,
-//        confirmPassword: String,
-//        oldPassword: String
-//    ): Response<ChangePasswordResponse> {
-//        return apiService.changePassword(token, newPassword, confirmPassword, oldPassword)
-//    }
 }

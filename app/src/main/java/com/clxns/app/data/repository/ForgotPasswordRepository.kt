@@ -36,11 +36,4 @@ class ForgotPasswordRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-//    suspend fun getOTP(mobileNo: String) : Response<ForgotPasswordResponse>{
-//        return apiService.getOTP(mobileNo)
-//    }
-//
-//    suspend fun verifyOTP(token:String, otp:String, mobileNo: String) : Response<ForgotPasswordResponse>{
-//        return apiService.verifyOTP(token, otp, mobileNo)
-//    }
 }
