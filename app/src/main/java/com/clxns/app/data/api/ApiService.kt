@@ -62,6 +62,10 @@ interface ApiService {
     suspend fun getMyPlanList(
         @Header("token") token: String
     ): Response<MyPlanResponse>
+    
+         @POST("fos/listFosDis")
+
+     suspend fun getAllDispositions() : Response<DispositionResponse>
 
     @FormUrlEncoded
     @POST("fos/getCaseDetails")
