@@ -45,7 +45,7 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //initViews()
+        initViews()
         subscribeObserver()
         setListeners()
     }
@@ -60,12 +60,12 @@ class ProfileFragment : Fragment() {
     private fun initViews() {
         val userName = sessionManager.getString(Constants.USER_NAME)
         val managerName =
-            "Reporting Manager : $sessionManager.getString(Constants.USER_REPORTING_MANAGER)"
-        val userBloodGroup = "Blood Group : $sessionManager.getString(Constants.USER_BLOOD_GROUP)"
+            "Reporting Manager : " + sessionManager.getString(Constants.USER_REPORTING_MANAGER)
+        val userBloodGroup = "Blood Group : " + sessionManager.getString(Constants.USER_BLOOD_GROUP)
         val userEmployeeCode =
-            "Employee Code : $sessionManager.getString(Constants.USER_EMPLOYEE_ID)"
+            "Employee Code : " + sessionManager.getString(Constants.USER_EMPLOYEE_ID)
         val managerContact =
-            "Manager Contact : $sessionManager.getString(Constants.USER_REPORTING_MANAGER_CONTACT)"
+            "Manager Contact : " + sessionManager.getString(Constants.USER_REPORTING_MANAGER_CONTACT)
         binding.userNameTv.text = userName
         binding.userEmployeeCodeTv.text = userEmployeeCode
         binding.userEmployeeBloodGroupTv.text = userBloodGroup
@@ -124,7 +124,7 @@ class ProfileFragment : Fragment() {
 
     private fun showConfirmLogoutDialog() {
         val logoutDialog = AlertDialog.Builder(requireContext())
-        logoutDialog.setTitle("Logout/")
+        logoutDialog.setTitle("Confirm Logout")
         logoutDialog.setMessage("Are you sure want to logout?")
 
         logoutDialog.setPositiveButton("Yes") { dialog, _ ->
@@ -148,7 +148,6 @@ class ProfileFragment : Fragment() {
                         val name = loginData?.firstName + " " + loginData?.lastName
                         val managerName =
                             loginData?.reportingDetails?.firstName + " " + loginData?.reportingDetails?.lastName
-                        sessionManager.saveAnyData(Constants.TOKEN, it.data.token!!)
                         sessionManager.saveAnyData(Constants.USER_NAME, name)
                         sessionManager.saveAnyData(
                             Constants.USER_EMPLOYEE_ID,

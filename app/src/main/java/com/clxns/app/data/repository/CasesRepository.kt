@@ -18,9 +18,9 @@ import javax.inject.Singleton
 class CasesRepository @Inject constructor( private val remoteDataSource: RemoteDataSource
 ) : BaseApiResponse() {
 
-    suspend fun getCasesList(token: String): Flow<NetworkResult<CasesResponse>> {
+    suspend fun getCasesList(token: String, searchTxt:String): Flow<NetworkResult<CasesResponse>> {
         return flow {
-            emit(safeApiCall { remoteDataSource.getCasesList(token) })
+            emit(safeApiCall { remoteDataSource.getCasesList(token, searchTxt) })
         }.flowOn(Dispatchers.IO)
     }
 //    suspend fun getCasesList(token :String): Response<CasesResponse> {

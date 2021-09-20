@@ -9,7 +9,7 @@ data class CasesResponse(
     @Json(name = "amountCollected")
     val amountCollected: String?,
     @Json(name = "data")
-    val data: List<CasesData>,
+    val casesDataList: List<CasesData>,
     @Json(name = "error")
     val error: Boolean,
     @Json(name = "title")

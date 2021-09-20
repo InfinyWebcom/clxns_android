@@ -58,6 +58,7 @@
         <entry key="app/src/main/res/layout/cases_summary_layout.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/custom_back_btn.xml" value="0.17083333333333334" />
         <entry key="app/src/main/res/layout/fragment_add_mobile_address_bottom_sheet_dialog.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_cases.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1388888888888889" />
         <entry key="app/src/main/res/layout/fragment_filter_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.16" />

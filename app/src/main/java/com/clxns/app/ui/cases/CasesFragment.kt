@@ -13,14 +13,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
+import com.clxns.app.data.model.CasesData
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentCasesBinding
 import com.clxns.app.ui.search.SearchActivity
 import com.clxns.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
+import java.text.NumberFormat
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -37,6 +40,10 @@ class CasesFragment : Fragment() {
 
     private val args: CasesFragmentArgs by navArgs()
 
+    private var casesDataList: MutableList<CasesData> = mutableListOf()
+    private lateinit var casesAdapter: CasesAdapter
+    private lateinit var casesRV: RecyclerView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,7 +55,14 @@ class CasesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getCasesList(sessionManager.getString(Constants.TOKEN)!!)
+        viewModel.getCasesList(sessionManager.getString(Constants.TOKEN)!!, "")
+
+        casesAdapter = CasesAdapter(requireContext(), casesDataList){
+            Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+        }
+        casesRV = binding.casesRv
+        casesRV.layoutManager = LinearLayoutManager(requireContext())
+        casesRV.adapter = casesAdapter
 
         setObserver()
 
@@ -73,13 +87,20 @@ class CasesFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.hide()
-
-                    binding.casesRv.apply {
-                        layoutManager = LinearLayoutManager(context)
-                        adapter = CasesAdapter(requireContext(),response.data?.data!!) {
-                            Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
+                    if (!response.data?.error!! && response.data.casesDataList.isNotEmpty()){
+                        casesDataList.addAll(response.data.casesDataList)
+                        casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
+                        binding.casesAllottedTv.text = "Cases : " + casesDataList.size
+                        var amountCollected = 0
+                        for (temp in casesDataList){
+                            amountCollected += temp.totalDueAmount
                         }
+                        val amount = NumberFormat.getCurrencyInstance(Locale("en", "in")).format(amountCollected)
+                        binding.amountCollectedTv.text = "Collectable : " + amount.substringBefore('.')
+                    }else{
+                        binding.root.snackBar("Nothing found")
                     }
+
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {

@@ -50,7 +50,7 @@ interface ApiService {
     @FormUrlEncoded
     suspend fun getCasesList(
         @Header("token") token: String,
-        @Field("filter") filter: String,
+        @Field("search") searchTxt: String,
         @Field("length") length: Int,
         @Field("start") start: Int,
         @Field("dispositionId") dispositionId: String,

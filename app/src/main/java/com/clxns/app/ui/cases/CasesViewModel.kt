@@ -19,8 +19,8 @@ class CasesViewModel @Inject constructor(
 
     private val _response: MutableLiveData<NetworkResult<CasesResponse>> = MutableLiveData()
     val response: LiveData<NetworkResult<CasesResponse>> = _response
-    fun getCasesList(token: String) = viewModelScope.launch {
-        repository.getCasesList(token).collect { values ->
+    fun getCasesList(token: String, searchTxt:String) = viewModelScope.launch {
+        repository.getCasesList(token, searchTxt).collect { values ->
             _response.value = values
         }
     }
