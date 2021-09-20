@@ -26,8 +26,8 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         confirmPassword: String,
         oldPassword: String
     ) = apiService.changePassword(token, newPassword, confirmPassword, oldPassword)
-
-    suspend fun getAllDispositions() = apiService.getAllDispositions()
+    
+     suspend fun getAllDispositions() = apiService.getAllDispositions()
 
     suspend fun getCasesList(token: String) =
         apiService.getCasesList(token, "", 10, 0, "", "")
@@ -35,7 +35,14 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     suspend fun getMyPlanList(token: String) =
         apiService.getMyPlanList(token)
 
+    suspend fun getCaseDetails(token: String,loanAccountNumber: String) =
+        apiService.getCaseDetails(token,loanAccountNumber)
+
+    suspend fun getCaseHistory(token: String,loanAccountNumber: String) =
+        apiService.getCaseHistory(token,loanAccountNumber)
+
     suspend fun getUserDetails(token: String) = apiService.getUserDetails(token)
 
 }
+
 
