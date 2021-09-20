@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
@@ -26,13 +25,15 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChangePasswordBinding
-    private val viewModel: ChangePasswordViewModel by viewModels()
+    private val changePasswordViewModel: ChangePasswordViewModel by viewModels()
 
     private lateinit var newPasswordET: TextInputEditText
     private lateinit var confirmPasswordET: TextInputEditText
     private lateinit var oldPasswordET: TextInputEditText
     private lateinit var oldPasswordIL: TextInputLayout
     private lateinit var confirmPasswordIL: TextInputLayout
+
+    private var isFromOTPScreen : Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -49,6 +50,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         setListeners()
 
         token = sessionManager.getString(Constants.TOKEN).toString()
+        isFromOTPScreen = intent.getBooleanExtra("isFromOTPScreen", false)
 
     }
 
@@ -63,7 +65,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                     if (newPasswordET.text.toString()
                             .contentEquals(confirmPasswordET.text.toString())
                     ) {
-                        viewModel.changePassword(
+                        changePasswordViewModel.changePassword(
                             token,
                             newPasswordET.text.toString(),
                             confirmPasswordET.text.toString(),
@@ -79,7 +81,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                 if (newPasswordET.text.toString()
                         .contentEquals(confirmPasswordET.text.toString())
                 ) {
-                    viewModel.changePassword(
+                    changePasswordViewModel.changePassword(
                         token,
                         newPasswordET.text.toString(),
                         confirmPasswordET.text.toString(),
@@ -168,7 +170,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (intent.getBooleanExtra("isFromOTPScreen", false)) {
+        if (isFromOTPScreen) {
             oldPasswordIL.visibility = View.GONE
         }
     }
@@ -182,50 +184,40 @@ class ChangePasswordActivity : AppCompatActivity() {
     }
 
     private fun setObserver() {
-        viewModel.response.observe(this) { response ->
-            when (response) {
+        changePasswordViewModel.changePasswordResponse.observe(this) {
+            when (it) {
                 is NetworkResult.Success -> {
                     binding.progressBar.hide()
-                    toast(response.data?.title!!)
-                    //clear token
-                    sessionManager.saveAnyData(Constants.TOKEN, "")
-                    sessionManager.saveAnyData(Constants.IS_USER_LOGGED_IN, false)
-                    //start login screen
-                    val finishAllActivitiesExceptLogin = Intent(this, LoginActivity::class.java)
-                    finishAllActivitiesExceptLogin.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    startActivity(finishAllActivitiesExceptLogin)
+                    toast(it.data?.title!!)
+                    if (!it.data.error) {
+                        if (isFromOTPScreen) {
+                            //clear token
+                            sessionManager.saveAnyData(Constants.TOKEN, "")
+                            sessionManager.saveAnyData(Constants.IS_USER_LOGGED_IN, false)
+                            //start login screen
+                            val finishAllActivitiesExceptLogin =
+                                Intent(this, LoginActivity::class.java)
+                            finishAllActivitiesExceptLogin.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            startActivity(finishAllActivitiesExceptLogin)
+                        }else{
+                            sessionManager.saveAnyData(Constants.TOKEN,it.data.token!!)
+                            onBackPressed()
+                        }
+                    }
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {
                     // show error message
                     binding.progressBar.hide()
-                    toast(response.message!!)
+                    toast(it.message!!)
                 }
                 is NetworkResult.Loading -> {
                     // show a progress bar
-                    Log.d("ChangesPassddddd", "setObserver: Loafing")
                     binding.progressBar.show()
                     binding.root.snackBar("Changing password...")
                 }
             }
         }
-
-//        changePasswordViewModel.changePasswordResponse.observe(this, {
-//            when (it.status) {
-//                Status.SUCCESS -> {
-//                    this.toast(it.data?.title!!)
-//                    val finishAllActivitiesExceptLogin = Intent(this, LoginActivity::class.java)
-//                    finishAllActivitiesExceptLogin.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-//                    startActivity(finishAllActivitiesExceptLogin)
-//                }
-//                Status.ERROR -> {
-//                    binding.root.snackBar(it.message!!)
-//                }
-//                Status.LOADING -> {
-//                    binding.root.snackBar("Changing password...")
-//                }
-//            }
-//        })
     }
 
 }

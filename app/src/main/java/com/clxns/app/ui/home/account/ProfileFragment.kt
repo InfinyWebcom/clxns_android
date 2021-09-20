@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,7 +25,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
-    private val viewModel: ProfileViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
     private lateinit var binding: FragmentMyProfileBinding
     private val bankNames = arrayOf("Kotak Bank", "SBI", "HDFC")
 
@@ -37,28 +38,40 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        profileViewModel.getUserDetails(sessionManager.getString(Constants.TOKEN)!!)
         binding = FragmentMyProfileBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindUI()
-        setObserver()
+        //initViews()
+        subscribeObserver()
+        setListeners()
     }
 
-
-    private fun bindUI() {
-        binding.userNameTv.text = sessionManager.getString(Constants.USER_NAME)
-        binding.userEmployeeCodeTv.text =
-            "Employee Code : " + sessionManager.getString(Constants.USER_EMPLOYEE_ID)
-        binding.userEmployeeBloodGroupTv.text =
-            "Blood Group : " + sessionManager.getString(Constants.USER_BLOOD_GROUP)
-//        binding.reportingManagerTv.text="Reporting Manager : "+sessionManager.getString(Constants.USER_BLOOD_GROUP)
-//        binding.managerContactTv.text="Manager Contact : "+sessionManager.getString(Constants.USER_BLOOD_GROUP)
+    private fun setListeners() {
         binding.profileEditBankBtn.setOnClickListener {
             onMenuClick(it)
         }
+    }
+
+
+    private fun initViews() {
+        val userName = sessionManager.getString(Constants.USER_NAME)
+        val managerName =
+            "Reporting Manager : $sessionManager.getString(Constants.USER_REPORTING_MANAGER)"
+        val userBloodGroup = "Blood Group : $sessionManager.getString(Constants.USER_BLOOD_GROUP)"
+        val userEmployeeCode =
+            "Employee Code : $sessionManager.getString(Constants.USER_EMPLOYEE_ID)"
+        val managerContact =
+            "Manager Contact : $sessionManager.getString(Constants.USER_REPORTING_MANAGER_CONTACT)"
+        binding.userNameTv.text = userName
+        binding.userEmployeeCodeTv.text = userEmployeeCode
+        binding.userEmployeeBloodGroupTv.text = userBloodGroup
+        binding.reportingManagerTv.text = managerName
+        binding.managerContactTv.text = managerContact
+
 
     }
 
@@ -68,15 +81,11 @@ class ProfileFragment : Fragment() {
         popup.setOnMenuItemClickListener { item ->
 
             when (item.title) {
-                "Account" -> {
-                    binding.root.snackBar("Refreshing...")
-                }
                 "Change Password" -> {
                     startActivity(Intent(requireContext(), ChangePasswordActivity::class.java))
                 }
                 "Logout" -> {
-                    viewModel.logout(sessionManager.getString(Constants.TOKEN)!!)
-                    binding.progressBar.show()
+                    showConfirmLogoutDialog()
                 }
                 "Select Bank" -> {
                     val bankDialogBuilder = MaterialAlertDialogBuilder(requireContext())
@@ -113,21 +122,77 @@ class ProfileFragment : Fragment() {
         popup.show()
     }
 
-    private fun setObserver() {
-        viewModel.responseLogout.observe(viewLifecycleOwner) { response ->
+    private fun showConfirmLogoutDialog() {
+        val logoutDialog = AlertDialog.Builder(requireContext())
+        logoutDialog.setTitle("Logout/")
+        logoutDialog.setMessage("Are you sure want to logout?")
+
+        logoutDialog.setPositiveButton("Yes") { dialog, _ ->
+            dialog.dismiss()
+            profileViewModel.logout(sessionManager.getString(Constants.TOKEN)!!)
+        }.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+
+        val d = logoutDialog.create()
+        d.show()
+        d.getButton(AlertDialog.BUTTON_POSITIVE).isAllCaps = false
+        d.getButton(AlertDialog.BUTTON_NEGATIVE).isAllCaps = false
+    }
+
+    private fun subscribeObserver() {
+        profileViewModel.responseUserDetails.observe(viewLifecycleOwner) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    binding.progressBar.hide()
+                    if (it.data?.error == false) {
+                        val loginData = it.data.loginData
+                        val name = loginData?.firstName + " " + loginData?.lastName
+                        val managerName =
+                            loginData?.reportingDetails?.firstName + " " + loginData?.reportingDetails?.lastName
+                        sessionManager.saveAnyData(Constants.TOKEN, it.data.token!!)
+                        sessionManager.saveAnyData(Constants.USER_NAME, name)
+                        sessionManager.saveAnyData(
+                            Constants.USER_EMPLOYEE_ID,
+                            loginData?.employeeId!!
+                        )
+                        sessionManager.saveAnyData(Constants.USER_EMAIL, loginData.email)
+                        sessionManager.saveAnyData(Constants.USER_MOBILE, loginData.phone)
+                        sessionManager.saveAnyData(Constants.USER_ADDRESS, loginData.address)
+                        sessionManager.saveAnyData(Constants.USER_LOCATION, loginData.location)
+                        sessionManager.saveAnyData(Constants.USER_REPORTING_MANAGER, managerName)
+                        sessionManager.saveAnyData(
+                            Constants.USER_REPORTING_MANAGER_CONTACT,
+                            loginData.reportingDetails?.phone!!
+                        )
+                    }
+                    initViews()
+                }
+
+                is NetworkResult.Error -> {
+                    binding.progressBar.hide()
+                    binding.root.snackBar(it.message!!)
+                }
+
+                is NetworkResult.Loading -> binding.progressBar.show()
+            }
+        }
+
+        profileViewModel.responseLogout.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     // update UI
                     binding.progressBar.hide()
                     requireContext().toast(response.data?.title!!)
-                    //clear token
-                    sessionManager.saveAnyData(Constants.TOKEN, "")
-                    sessionManager.saveAnyData(Constants.IS_USER_LOGGED_IN, false)
-                    //start login screen
-                    val intent = Intent(requireActivity(), LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                    startActivity(intent)
-                    requireActivity().finish()
+                    if (response.data.error == false) {
+                        //clear token
+                        sessionManager.saveAnyData(Constants.TOKEN, "")
+                        sessionManager.saveAnyData(Constants.IS_USER_LOGGED_IN, false)
+                        //start login screen
+                        val intent = Intent(requireActivity(), LoginActivity::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                        startActivity(intent)
+                        requireActivity().finish()
+                    }
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {

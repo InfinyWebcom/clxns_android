@@ -5,56 +5,36 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class UserData(
-    @Json(name = "address")
-    val address: String,
-    @Json(name = "bloodGroup")
-    val bloodGroup: String,
-    @Json(name = "createdAt")
-    val createdAt: String,
-    @Json(name = "dob")
-    val dob: String,
-    @Json(name = "email")
-    val email: String,
-    @Json(name = "emergencyPhone")
-    val emergencyPhone: String,
-    @Json(name = "employeeId")
-    val employeeId: String,
-    @Json(name = "experience")
-    val experience: Int,
-    @Json(name = "firstName")
-    val firstName: String,
-    @Json(name = "id")
     val id: Int,
-    @Json(name = "isDeleted")
-    val isDeleted: Int,
-    @Json(name = "isEmailVerified")
-    val isEmailVerified: Int,
-    @Json(name = "language")
-    val language: String,
-    @Json(name = "lastName")
+    val firstName: String,
     val lastName: String,
-    @Json(name = "latitude")
-    val latitude: Double?,
-    @Json(name = "location")
-    val location: String,
-    @Json(name = "longitude")
-    val longitude: Double?,
-    @Json(name = "otp")
-    val otp: Any?,
-    @Json(name = "otpExpired")
-    val otpExpired: Any?,
-    @Json(name = "password")
-    val password: String,
-    @Json(name = "phone")
+    val email: String,
     val phone: String,
-    @Json(name = "pincode")
-    val pincode: Int,
-    @Json(name = "reportingTo")
-    val reportingTo: Int,
-    @Json(name = "roleId")
+    val emergencyPhone: String,
+    val dob: String,
+    val address: String,
+    val location: String,
+    val bloodGroup: String,
     val roleId: Int,
-    @Json(name = "tempCode")
-    val tempCode: String,
-    @Json(name = "updatedAt")
-    val updatedAt: String
-)
+    val reportingTo: Int,
+    val experience: Int,
+    @Json(name = "pincode")
+    val pinCode: Int,
+    val employeeId: String,
+    val language: String,
+    val otp: String?,
+    val otpExpired: String?,
+    @Json(name = "profileImg")
+    val profileImage: String?,
+    @Json(name = "reporting")
+    val reportingDetails: ReportingData?
+) {
+    @JsonClass(generateAdapter = true)
+    data class ReportingData(
+        val id: Int,
+        val firstName: String,
+        val lastName: String,
+        val email: String,
+        val phone: String
+    )
+}

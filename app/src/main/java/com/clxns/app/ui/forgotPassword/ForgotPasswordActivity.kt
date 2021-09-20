@@ -59,10 +59,11 @@ class ForgotPasswordActivity : AppCompatActivity() {
             when (response) {
                 is NetworkResult.Success -> {
 //                    binding.progressBar.hide()
-
-                    this.toast(response.data?.title!!)
-                    sessionManager.saveAnyData(Constants.TOKEN, response.data.token.toString())
-                    updateUIOnSuccessfulGetOTP()
+                    binding.root.snackBar(response.data?.title!!)
+                    if (!response.data.error) {
+                        sessionManager.saveAnyData(Constants.TOKEN, response.data.token.toString())
+                        updateUIOnSuccessfulGetOTP()
+                    }
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {
@@ -72,7 +73,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 }
                 is NetworkResult.Loading -> {
 //                    binding.progressBar.show()
-                    binding.forgotPasswordSubHeader.text = "Loading...."
+                    binding.root.snackBar("Getting OTP...")
                     // show a progress bar
                 }
             }
@@ -82,13 +83,14 @@ class ForgotPasswordActivity : AppCompatActivity() {
             when (response) {
                 is NetworkResult.Success -> {
 //                    binding.progressBar.hide()
-
-                    sessionManager.saveAnyData(Constants.TOKEN, response.data?.token!!)
-                    this.toast(response.data.title)
-                    val goToChangePasswordActivity =
-                        Intent(this, ChangePasswordActivity::class.java)
-                    goToChangePasswordActivity.putExtra("isFromOTPScreen", true)
-                    startActivity(goToChangePasswordActivity)
+                    toast(response.data?.title!!)
+                    if (!response.data.error) {
+                        sessionManager.saveAnyData(Constants.TOKEN, response.data.token!!)
+                        val goToChangePasswordActivity =
+                            Intent(this, ChangePasswordActivity::class.java)
+                        goToChangePasswordActivity.putExtra("isFromOTPScreen", true)
+                        startActivity(goToChangePasswordActivity)
+                    }
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {

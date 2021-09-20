@@ -61,7 +61,7 @@ object ApplicationModule {
         okkHttpclient: OkHttpClient,
         moshi: Moshi,
         BASE_URL: String
-    ) = Retrofit.Builder()
+    ): Retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .baseUrl(BASE_URL)
         .client(okkHttpclient)

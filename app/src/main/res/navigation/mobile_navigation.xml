@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.clxns.app.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_home_summary"
+            app:destination="@id/navigation_home_summary" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_cases"
@@ -19,6 +23,10 @@
         <action
             android:id="@+id/action_navigation_cases_to_navigation_cases_filter"
             app:destination="@id/navigation_cases_filter" />
+        <argument
+            android:name="disposition_id"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 
     <fragment
@@ -38,5 +46,16 @@
         android:label="CasesFilterBS"
         tools:layout="@layout/bottom_sheet_cases_filter"
         />
+
+    <dialog
+        android:id="@+id/navigation_home_summary"
+        android:name="com.clxns.app.ui.bottomSheetDialog.CaseSummaryBottomSheet"
+        android:label="CasesFilterBS"
+        tools:layout="@layout/cases_summary_layout"
+        >
+        <action
+            android:id="@+id/action_navigation_home_summary_to_navigation_cases"
+            app:destination="@id/navigation_cases" />
+    </dialog>
 
 </navigation>

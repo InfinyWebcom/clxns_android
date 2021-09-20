@@ -95,4 +95,7 @@ interface ApiService {
         @Field("additionalField") additionalField: String
     ): Response<MyPlanResponse>
 
+    @POST("fos/getUserDetails")
+    suspend fun getUserDetails(@Header("token") token: String) : Response<LoginResponse>
+
 }

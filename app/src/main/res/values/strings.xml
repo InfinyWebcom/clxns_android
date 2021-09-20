@@ -58,6 +58,7 @@
     <string name="check_in">Check In</string>
     <string name="create_route">Create Route</string>
     <string name="my_plans">My Plans</string>
+    <string name="cases_summary">Cases Summary</string>
 
     <string name="internal_storage">Internal storage</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -151,6 +152,7 @@
     <string name="interest_due_amount">Interest Due Amount</string>
     <string name="late_fee_penal_charges">Late Fee/Penal Charges</string>
     <string name="we_will_send_you_an_one_time_password_on_this_mobile_number">We will send you an <b>One Time Password</b> on this email</string>
+
 
 
     <string-array name="yesNo">

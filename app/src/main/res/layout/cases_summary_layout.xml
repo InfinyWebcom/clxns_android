@@ -19,7 +19,7 @@
             android:layout_marginBottom="@dimen/dp12"
             android:fontFamily="@font/gtwalsheimpromedium"
             android:gravity="center_horizontal"
-            android:text="Cases Summary"
+            android:text="@string/cases_summary"
             android:textColor="@color/white"
             android:textSize="22sp" />
 
@@ -57,7 +57,6 @@
         app:rippleColor="@color/colorPrimary">
 
         <LinearLayout
-            android:id="@+id/total_cases_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -92,7 +91,7 @@
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/case_summary_new_btn"
+            android:id="@+id/case_summary_ptp_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp12"
@@ -104,7 +103,6 @@
             app:rippleColor="@color/colorPrimary">
 
             <LinearLayout
-                android:id="@+id/total_cases_btn_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -134,7 +132,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/case_summary_surrender_btn"
+            android:id="@+id/case_summary_rtp_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp12"
@@ -146,7 +144,6 @@
             app:rippleColor="@color/colorPrimary">
 
             <LinearLayout
-                android:id="@+id/total_cases_btn_2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -183,7 +180,7 @@
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/case_summary_receipt_btn"
+            android:id="@+id/case_summary_broken_ptp_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp12"
@@ -195,7 +192,6 @@
             app:rippleColor="@color/colorPrimary">
 
             <LinearLayout
-                android:id="@+id/total_cases_btn_3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -225,7 +221,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/case_summary_ptp_btn"
+            android:id="@+id/case_summary_dispute_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp12"
@@ -237,7 +233,6 @@
             app:rippleColor="@color/colorPrimary">
 
             <LinearLayout
-                android:id="@+id/total_cases_btn_4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -274,7 +269,7 @@
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/case_summary_denial_btn"
+            android:id="@+id/case_summary_customer_not_found_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp12"
@@ -286,7 +281,6 @@
             app:rippleColor="@color/colorPrimary">
 
             <LinearLayout
-                android:id="@+id/total_cases_btn_5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -316,7 +310,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/case_summary_reminder_btn"
+            android:id="@+id/case_summary_callback_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp12"
@@ -328,7 +322,6 @@
             app:rippleColor="@color/colorPrimary">
 
             <LinearLayout
-                android:id="@+id/total_cases_btn_6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -366,6 +359,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:id="@+id/case_summary_collect_btn"
             android:layout_margin="@dimen/dp12"
             android:layout_weight="1"
             android:clickable="true"
@@ -375,7 +369,6 @@
             app:rippleColor="@color/colorPrimary">
 
             <LinearLayout
-                android:id="@+id/total_cases_btn_7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -396,7 +389,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Recovered"
+                    android:text="@string/Collect"
                     android:includeFontPadding="false"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
@@ -407,6 +400,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:id="@+id/case_summary_partially_collect_btn"
             android:layout_margin="@dimen/dp12"
             android:layout_weight="1"
             android:clickable="true"
@@ -416,7 +410,6 @@
             app:rippleColor="@color/colorPrimary">
 
             <LinearLayout
-                android:id="@+id/total_cases_btn_8"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -437,7 +430,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Partially Recovered"
+                    android:text="Partially Collect"
                     android:includeFontPadding="false"
                     android:textSize="@dimen/sp14"/>
             </LinearLayout>
@@ -454,6 +447,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:id="@+id/case_summary_settlement_btn"
             android:layout_margin="@dimen/dp12"
             android:layout_weight="1"
             android:clickable="true"
@@ -463,7 +457,6 @@
             app:rippleColor="@color/colorPrimary">
 
             <LinearLayout
-                android:id="@+id/total_cases_btn_9"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -495,6 +488,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:id="@+id/case_summary_customer_deceased_btn"
             android:layout_margin="@dimen/dp12"
             android:layout_weight="1"
             android:clickable="true"
@@ -504,7 +498,6 @@
             app:rippleColor="@color/colorPrimary">
 
             <LinearLayout
-                android:id="@+id/total_cases_btn_10"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"

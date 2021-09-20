@@ -28,7 +28,7 @@
 
 
         <TextView
-            android:id="@+id/tv_username"
+            android:id="@+id/username_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_welcome"
@@ -83,12 +83,12 @@
                     android:id="@+id/rbToday"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp4"
                     android:layout_weight="1"
                     android:background="@drawable/home_rb_state_background"
                     android:button="@null"
                     android:checked="true"
                     android:gravity="center"
-                    android:layout_margin="@dimen/dp4"
                     android:includeFontPadding="false"
                     android:text="@string/today"
                     android:textAllCaps="true"
@@ -100,33 +100,33 @@
                     android:id="@+id/rbWeek"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp4"
                     android:layout_weight="1"
                     android:background="@drawable/home_rb_state_background"
                     android:button="@null"
-                    android:textStyle="bold"
-                    android:layout_margin="@dimen/dp4"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="@string/this_week"
-                    android:textColor="@drawable/radio_text_color_state"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/sp12" />
+                    android:textColor="@drawable/radio_text_color_state"
+                    android:textSize="@dimen/sp12"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:id="@+id/rbMonth"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp4"
                     android:layout_weight="1"
                     android:background="@drawable/home_rb_state_background"
                     android:button="@null"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:layout_margin="@dimen/dp4"
                     android:includeFontPadding="false"
                     android:text="@string/this_month"
-                    android:textColor="@drawable/radio_text_color_state"
                     android:textAllCaps="true"
-                    android:textSize="@dimen/sp12" />
+                    android:textColor="@drawable/radio_text_color_state"
+                    android:textSize="@dimen/sp12"
+                    android:textStyle="bold" />
 
             </RadioGroup>
 
@@ -279,19 +279,20 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/summary_tv"
+                android:id="@+id/summary_card_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp16"
+                android:backgroundTint="@color/colorPrimary"
                 app:cardCornerRadius="@dimen/dp24"
                 app:cardElevation="3dp"
-                android:backgroundTint="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/my_stats_container"
                 app:rippleColor="@color/colorSecondaryVariant">
 
                 <TextView
+                    android:id="@+id/summary_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp12"
@@ -312,7 +313,7 @@
                 app:cardElevation="3dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/summary_tv">
+                app:layout_constraintTop_toBottomOf="@id/summary_card_view">
 
                 <LinearLayout
                     android:layout_width="match_parent"

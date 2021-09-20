@@ -25,4 +25,10 @@ class ProfileRepository @Inject constructor(
             emit(safeApiCall { remoteDataSource.logout(token) })
         }.flowOn(Dispatchers.IO)
     }
+
+    suspend fun getUserDetails(token: String) : Flow<NetworkResult<LoginResponse>>{
+        return flow {
+            emit(safeApiCall { remoteDataSource.getUserDetails(token) })
+        }.flowOn(Dispatchers.IO)
+    }
 }

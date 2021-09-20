@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.ChangePasswordResponse
-import com.clxns.app.data.model.MyPlanResponse
 import com.clxns.app.data.repository.ChangePasswordRepository
-import com.clxns.app.utils.NetworkHelper
-import com.clxns.app.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -20,9 +17,9 @@ class ChangePasswordViewModel @Inject constructor(
     private val repository: ChangePasswordRepository
 ) : ViewModel() {
 
-    private val _response: MutableLiveData<NetworkResult<ChangePasswordResponse>> =
+    private val _changePasswordResponse: MutableLiveData<NetworkResult<ChangePasswordResponse>> =
         MutableLiveData()
-    val response: LiveData<NetworkResult<ChangePasswordResponse>> = _response
+    val changePasswordResponse: LiveData<NetworkResult<ChangePasswordResponse>> = _changePasswordResponse
     fun changePassword(
         token: String,
         newPassword: String,
@@ -35,7 +32,7 @@ class ChangePasswordViewModel @Inject constructor(
             confirmPassword,
             oldPassword
         ).collect { values ->
-            _response.value = values
+            _changePasswordResponse.value = values
         }
     }
 

@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.CasesResponse
-import com.clxns.app.data.model.MyPlanResponse
 import com.clxns.app.data.repository.CasesRepository
-import com.clxns.app.utils.NetworkHelper
-import com.clxns.app.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

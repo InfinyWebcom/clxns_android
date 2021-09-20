@@ -6,11 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
-import com.clxns.app.data.model.CasesResponse
 import com.clxns.app.data.model.LoginResponse
 import com.clxns.app.data.repository.LoginRepository
-import com.clxns.app.utils.NetworkHelper
-import com.clxns.app.utils.Resource
 import com.clxns.app.utils.isValidEmail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect

@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
@@ -34,12 +35,13 @@ class CasesFragment : Fragment() {
     @Inject
     lateinit var sessionManager: SessionManager
 
+    private val args: CasesFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentCasesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -47,19 +49,12 @@ class CasesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getCasesList(sessionManager.getString(Constants.TOKEN)!!)
-//        viewModel.casesResponse.observe(viewLifecycleOwner, { it ->
-//            when (it.status) {
-//                Status.SUCCESS -> binding.casesRv.apply {
-//                    layoutManager = LinearLayoutManager(context)
-//                    adapter = CasesAdapter(it.data?.data!!) {
-//                        Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//                Status.ERROR -> Timber.i("Error loading")
-//                else -> Timber.i("Nothing")
-//            }
-//        })
+
         setObserver()
+
+        if (args.dispositionId != 0){
+            binding.root.snackBar(args.dispositionId.toString())
+        }
 
         binding.filterBtn.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_cases_to_navigation_cases_filter)
@@ -74,7 +69,6 @@ class CasesFragment : Fragment() {
     }
 
     private fun setObserver() {
-        viewModel.getCasesList(sessionManager.getString(Constants.TOKEN)!!)
         viewModel.response.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {

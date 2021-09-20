@@ -6,12 +6,9 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ChangePasswordResponse(
-    @Json(name = "error")
     val error: Boolean,
-    @Json(name = "title")
     val title: String,
-    @Json(name = "token")
-    val token: String? = "",
+    val token: String?,
     @Json(name = "detail")
     val userData: UserData? = null
 )

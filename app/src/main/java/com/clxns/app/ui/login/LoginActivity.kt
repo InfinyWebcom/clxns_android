@@ -156,10 +156,10 @@ class LoginActivity : AppCompatActivity() {
                     binding.progressBar.hide()
                     Toast.makeText(this, response.data?.title, Toast.LENGTH_LONG).show()
                     if (response.data?.error == false) {
-                        val loginData = response.data?.loginData
+                        val loginData = response.data.loginData
                         val name = loginData?.firstName + " " + loginData?.lastName
                         binding.txtLogin.text = "Welcome $name"
-                        sessionManager.saveAnyData(Constants.TOKEN, response.data?.token!!)
+                        sessionManager.saveAnyData(Constants.TOKEN, response.data.token!!)
                         sessionManager.saveAnyData(Constants.USER_NAME, name)
                         sessionManager.saveAnyData(Constants.USER_ID, loginData!!.id)
                         sessionManager.saveAnyData(Constants.USER_EMPLOYEE_ID, loginData.employeeId)
