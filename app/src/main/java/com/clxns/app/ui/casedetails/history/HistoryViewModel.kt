@@ -1,4 +1,4 @@
-package com.clxns.app.ui.casedetails
+package com.clxns.app.ui.casedetails.history
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,25 +6,26 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.CaseDetailsResponse
+import com.clxns.app.data.model.CaseHistoryResponse
 import com.clxns.app.data.model.Lead
 import com.clxns.app.data.model.MyPlanModel
 import com.clxns.app.data.repository.DetailsRepository
+import com.clxns.app.data.repository.HistoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailsViewModel @Inject constructor(
-    private val repository: DetailsRepository
+class HistoryViewModel @Inject constructor(
+    private val repository: HistoryRepository
 ) : ViewModel() {
-    var loanAccountNumber: String? = null
 
-    private val _response: MutableLiveData<NetworkResult<CaseDetailsResponse>> = MutableLiveData()
-    val response: LiveData<NetworkResult<CaseDetailsResponse>> = _response
+    private val _response: MutableLiveData<NetworkResult<CaseHistoryResponse>> = MutableLiveData()
+    val response: LiveData<NetworkResult<CaseHistoryResponse>> = _response
 
-    fun getCaseDetails(token: String, loanAccountNumber: String) = viewModelScope.launch {
-        repository.getCaseDetails(token, loanAccountNumber).collect { values ->
+    fun getCaseHistory(token: String, loanAccountNumber: String) = viewModelScope.launch {
+        repository.getCaseHistory(token, loanAccountNumber).collect { values ->
             _response.value = values
         }
     }

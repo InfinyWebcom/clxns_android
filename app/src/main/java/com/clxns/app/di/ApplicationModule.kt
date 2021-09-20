@@ -1,9 +1,11 @@
 package com.clxns.app.di
 
 import android.content.Context
+import androidx.room.Room
 import com.clxns.app.BuildConfig
 import com.clxns.app.data.api.ApiService
 import com.clxns.app.data.api.helper.NetworkConnectionInterceptor
+import com.clxns.app.utils.Constants.Companion.DATABASE_NAME
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -23,6 +25,16 @@ object ApplicationModule {
 
     @Provides
     fun provideBaseUrl() = BuildConfig.BASE_URL
+
+//    @Singleton
+//    @Provides
+//    fun provideAppDatabase(
+//        @ApplicationContext app: Context
+//    ) = Room.databaseBuilder(
+//        app,
+//        AppDatabase::class.java,
+//        DATABASE_NAME
+//    ).build()
 
     @Provides
     @Singleton

@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.clxns.app.data.model.MyPlanData
+import com.clxns.app.data.model.MyPlanDataItem
 import com.clxns.app.databinding.PlanListItemsBinding
 import com.clxns.app.ui.casedetails.DetailsActivity
 import java.util.*
 
 class ListViewAdapter(var context: Context) :
-    PagingDataAdapter<MyPlanData, ListViewAdapter.MyViewHolder>(ListViewDiff) {
+    PagingDataAdapter<MyPlanDataItem, ListViewAdapter.MyViewHolder>(ListViewDiff) {
     private lateinit var cal: Calendar
 
 
@@ -67,16 +67,16 @@ class ListViewAdapter(var context: Context) :
         return MyViewHolder(PlanListItemsBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
-    object ListViewDiff : DiffUtil.ItemCallback<MyPlanData>() {
-        override fun areItemsTheSame(oldItem: MyPlanData, newItem: MyPlanData): Boolean {
-            return oldItem.image == newItem.image
+    object ListViewDiff : DiffUtil.ItemCallback<MyPlanDataItem>() {
+        override fun areItemsTheSame(oldItem: MyPlanDataItem, newItem: MyPlanDataItem): Boolean {
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: MyPlanData,
-            newItem: MyPlanData,
+            oldItem: MyPlanDataItem,
+            newItem: MyPlanDataItem,
         ): Boolean {
-            return oldItem.image == newItem.image
+            return oldItem.id == newItem.id
         }
 
     }
