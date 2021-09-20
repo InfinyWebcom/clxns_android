@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.clxns.app.data.model.MyPlanData
 import com.clxns.app.databinding.PlanListItemsBinding
-import com.clxns.app.ui.home.plan.DetailsActivity
+import com.clxns.app.ui.casedetails.DetailsActivity
 import java.util.*
 
 class ListViewAdapter(var context: Context) :

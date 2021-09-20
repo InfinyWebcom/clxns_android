@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/green</item>
+        <item name="colorAccent">@color/green</item>
+
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+    </style>
+
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorAccent">@color/green</item>
+        <!--            <item name="android:fontFamily">@font/avenirnextmedium</item>-->
+    </style>
+
+    <style name="TabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="tabIndicatorColor">@color/green</item>
+    </style>
+
+    <style name="CustomTabText" parent="TextAppearance.Design.Tab"> 22sp bold </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:editTextColor">@color/white</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+    </style>
+
+    <style name="spinnerTheme" parent="@android:style/Widget.TextView">
+        <item name="android:textSize">15sp</item>
+        <item name="android:fontFamily">@font/gtwalsheimpromedium</item>
+    </style>
+
+    <style name="spinner_style" parent="@android:style/Widget.TextView">
+        <!--        <item name="android:background">@drawable/spinner_border_grey</item>-->
+        <!--        <item name="android:layout_margin">1dp</item>-->
+        <item name="android:fontFamily">@font/gtwalsheimpromedium</item>
+        <item name="android:popupBackground">@color/hint_color</item>
+
+    </style>
+
+    <style name="TextLabelDummy" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">@color/colorPrimary</item>    // Hint Color
+        <item name="android:textColor">@color/colorPrimary</item>    // Hint Color
+        <item name="colorControlActivated">@color/colorPrimary</item>    //Floating label color
+
+    </style>
+
+    <style name="BottomNavigation1" parent="Widget.MaterialComponents.BottomNavigationView">
+
+        <item name="android:fontFamily">@font/gtwalsheimproregular</item>
+
+    </style>
+
+    <style name="HelperTextAppearance"></style>
+
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottomsheet_background</item>
+    </style>
+
+    <style name="roundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">15dp</item>
+    </style>
+
+    <style name="TITLE.TEXT.BLACK" parent="Widget.AppCompat.SearchView">
+
+        <item name="android:fontFamily">@font/gtwalsheimproregular</item>
+        <item name="android:textSize">@dimen/sp14</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+        <item name="android:textColor">@color/text_black</item>
+
+    </style>
+
+
+</resources>

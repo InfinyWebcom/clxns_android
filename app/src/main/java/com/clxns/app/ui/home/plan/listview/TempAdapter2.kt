@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.clxns.app.data.model.UserDetails
 import com.clxns.app.databinding.PlanListItemsBinding
-import com.clxns.app.ui.home.plan.DetailsActivity
+import com.clxns.app.ui.casedetails.DetailsActivity
 import com.clxns.app.utils.copyToClipBoard
 import java.util.*
 

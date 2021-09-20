@@ -21,7 +21,26 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.clxns.app.ui.home.plan.DetailsActivity"
+            android:name="com.clxns.app.ui.casedetails.history.HistoryDetailsActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".ui.casedetails.casestatus.checkin.CheckInActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.casedetails.casestatus.paymentcollection.PaymentCollectionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.casedetails.casestatus.repossesions.AssetRepossessionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.casedetails.casestatus.repossesions.map.RepossesionMapActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.casedetails.casestatus.repossesions.RepossessionsSubmitActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.casedetails.DetailsActivity"
             android:exported="true" />
         <activity
             android:name=".ui.search.SearchActivity"

@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.casedetails.casestatus.paymentcollection.PaymentCollectionActivity">
+
+    <RelativeLayout
+        android:id="@+id/payment_collection_custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_tab"
+       >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:padding="@dimen/dp16"
+            android:src="@drawable/ic_back_arrow" />
+
+
+        <TextView
+            android:id="@+id/txtAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imgBack"
+            android:fontFamily="@font/gtwalsheimprobold"
+            android:paddingTop="@dimen/dp16"
+            android:paddingBottom="@dimen/dp16"
+            android:text="Payment Collection"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp18" />
+
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/generate_receipt_btn"
+        android:layout_below="@+id/payment_collection_custom_toolbar"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainLinearLayout"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:text="Rohan Joshi"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtName"
+                    android:layout_alignTop="@+id/txtName"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:text="PTP"
+                    android:textAllCaps="true"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/sp18" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/gtwalsheimproregular"
+                android:text="12/02/2021"
+                android:textAllCaps="false"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtSkipTracing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/gtwalsheimproregular"
+                android:text="@string/financial_institution"
+                android:textAllCaps="false"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtBankName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/gtwalsheimpromedium"
+                android:text="Kotak Mahindra Bank"
+                android:textColor="@color/text_black"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/txtProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:fontFamily="@font/gtwalsheimproregular"
+                android:text="Product"
+                android:textAllCaps="false"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtProductValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/gtwalsheimpromedium"
+                android:text="Home Loan"
+                android:textColor="@color/text_black"
+                android:textSize="16sp" />
+
+
+            <LinearLayout
+                android:id="@+id/collectable_amount_et_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/collectable_amount_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gtwalsheimproregular"
+                    android:text="Collectable Amount"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/collectable_amount_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:focusable="false"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:text="₹65,950"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp16" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:fontFamily="@font/gtwalsheimproregular"
+                android:text="Amount Type"
+                android:textAllCaps="false"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_spinner">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spAmount"
+                    style="@style/spinner_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="@dimen/dp4"
+                    android:overlapAnchor="false"
+                    android:paddingVertical="@dimen/dp10"
+                    android:spinnerMode="dialog"
+                    android:theme="@style/spinnerTheme" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/amount_et_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/amount_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gtwalsheimproregular"
+                    android:text="Collected Amount"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp14" />
+
+                <EditText
+                    android:id="@+id/payment_amount_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:hint="Enter amount"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal"
+                    android:paddingVertical="@dimen/dp8" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtPaymentMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:fontFamily="@font/gtwalsheimpromedium"
+                android:text="Payment Mode"
+                android:textAllCaps="false"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/sp16" />
+
+
+            <RadioGroup
+                android:id="@+id/rgPayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbOnline"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_rb_selection"
+                    android:button="@null"
+                    android:checked="true"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="@dimen/dp10"
+                    android:text="@string/online"
+                    android:textAllCaps="true"
+                    android:textColor="@drawable/rb_text_selector"
+                    android:textSize="12sp" />
+
+                <RadioButton
+                    android:id="@+id/rbCheque"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_rb_selection"
+                    android:button="@null"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:paddingVertical="@dimen/dp10"
+                    android:text="@string/cheque"
+
+                    android:textAllCaps="true"
+                    android:textColor="@drawable/rb_text_selector"
+                    android:textSize="12sp" />
+
+                <RadioButton
+                    android:id="@+id/rbCash"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_rb_selection"
+                    android:button="@null"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:padding="10dp"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="@dimen/dp10"
+                    android:text="@string/cash"
+                    android:textAllCaps="true"
+                    android:textColor="@drawable/rb_text_selector"
+                    android:textSize="12sp" />
+
+            </RadioGroup>
+
+
+            <TextView
+                android:id="@+id/txtPaymentOrRecoveryDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:fontFamily="@font/gtwalsheimproregular"
+                android:text="Payment/Recovery Date"
+                android:textAllCaps="false"
+                android:textColor="@color/text_black"
+                android:textSize="14sp"
+                 />
+
+            <TextView
+                android:id="@+id/txtPaymentOrRecoveryDateValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/gtwalsheimpromedium"
+                android:textColor="@color/text_black"
+                android:background="@drawable/background_edittext_roundable"
+                android:paddingVertical="@dimen/dp10"
+                android:paddingHorizontal="@dimen/dp8"
+                 />
+
+
+            <TextView
+                android:id="@+id/txtReferenceNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:fontFamily="@font/gtwalsheimproregular"
+                android:text="Reference No."
+                android:textAllCaps="false"
+                android:textColor="@color/text_black"
+                android:textSize="14sp"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/edtReferenceType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_edittext_roundable"
+                android:fontFamily="@font/gtwalsheimproregular"
+                android:inputType="number"
+                android:paddingVertical="@dimen/dp10"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:visibility="visible"
+                android:importantForAutofill="no" />
+
+
+            <TextView
+                android:id="@+id/txtRemarks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:fontFamily="@font/gtwalsheimproregular"
+                android:text="Remarks"
+                android:textAllCaps="false"
+                android:textColor="@color/text_black"
+                android:textSize="14sp"
+                />
+
+            <EditText
+                android:id="@+id/remarksET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_edittext_roundable"
+                android:fontFamily="@font/gtwalsheimproregular"
+                android:inputType="text"
+                android:paddingVertical="@dimen/dp10"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:importantForAutofill="no" />
+
+
+            <TextView
+                android:id="@+id/txtUploadScreenShot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/gtwalsheimpromedium"
+                android:text="Upload Supporting"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerAddImage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <Button
+        android:id="@+id/generate_receipt_btn"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/background_button_rectangle"
+        android:fontFamily="@font/gtwalsheimpromedium"
+        android:text="@string/generate_receipt_txt"
+        android:textColor="@color/white" />
+
+
+</RelativeLayout>

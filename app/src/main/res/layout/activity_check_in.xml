@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.casedetails.casestatus.checkin.CheckInActivity">
+
+    <RelativeLayout
+        android:id="@+id/checkInCustomToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_tab">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:padding="@dimen/dp16"
+            android:src="@drawable/ic_back_arrow" />
+
+
+        <TextView
+            android:id="@+id/txtAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imgBack"
+            android:fontFamily="@font/gtwalsheimprobold"
+            android:paddingTop="@dimen/dp16"
+            android:paddingBottom="@dimen/dp16"
+            android:text="Case CheckIn"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp18" />
+
+    </RelativeLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/checkInCustomToolbar"
+        android:layout_marginTop="@dimen/dp8"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp16"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+                    android:id="@+id/txtCheckInName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/txtDate"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:text="Rohan Joshi"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/txtCheckInName"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:text="12/02/2021"
+                    android:textAllCaps="true"
+                    android:textColor="@color/text_black"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:id="@+id/txtCheckInStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtDate"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/gtwalsheimproregular"
+                    android:text="PTP"
+                    android:textAllCaps="true"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/sp16" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp8"
+                >
+                <TextView
+                    android:id="@+id/txtLocationVerification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/txtLocationCheckIn"
+                    android:drawablePadding="@dimen/dp8"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:text="@string/LocationVerified"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp16"
+                    app:drawableStartCompat="@mipmap/ic_delete" />
+
+
+                <TextView
+                    android:id="@+id/txtLocationCheckIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/dp8"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:text="Verify"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relImageVerified"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16">
+
+                <TextView
+                    android:id="@+id/txtImageVerification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toStartOf="@id/txtImageVerify"
+                    android:drawablePadding="@dimen/dp8"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:text="Image Verification"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp16"
+                    app:drawableStartCompat="@mipmap/ic_delete" />
+
+
+                <TextView
+                    android:id="@+id/txtImageVerify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/dp8"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:text="Upload"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp" />
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerAddImage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/verifiedImageUpload"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp200"
+                android:layout_margin="@dimen/dp16"
+                android:importantForAccessibility="no"
+                android:scaleType="fitCenter"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/statusesRV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp8"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</RelativeLayout>

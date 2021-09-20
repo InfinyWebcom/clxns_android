@@ -54,12 +54,178 @@
     <string name="apply">Apply</string>
     <string name="search_cases">Search Cases</string>
     <string name="refresh">Refresh</string>
-        <string name="followup">Follow Up</string>
-
+    <string name="followup">Follow Up</string>
     <string name="check_in">Check In</string>
-
     <string name="create_route">Create Route</string>
-
     <string name="my_plans">My Plans</string>
+
+    <string name="internal_storage">Internal storage</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="customer_id">Customer Id</string>
+    <string name="welcome_to_company">Welcome to company</string>
+    <string name="backtoLogin">Back to login</string>
+    <string name="enter_your_otp">Enter your 4 digit OTP below</string>
+    <string name="TotalCases">Total Cases</string>
+    <string name="OpenCases">Open Cases</string>
+    <string name="ClosedCases">Closed cases</string>
+    <string name="MyAccount">My Account</string>
+    <string name="BankName">Bank Name</string>
+    <string name="AmountDue">Amount Due</string>
+    <string name="DueDate">Due Date</string>
+    <string name="DatePassedDue">Date Passed Due</string>
+    <string name="ProductType">Product Type</string>
+    <string name="DisbursementDate">Disbursement Date</string>
+    <string name="TotalAmount">Total Amount</string>
+    <string name="Address">Address</string>
+    <string name="Status">Status</string>
+    <string name="Update">Update</string>
+    <string name="CheckIn">Check In</string>
+    <string name="Collect">Collect</string>
+    <string name="Reposses">Reposses</string>
+    <string name="searchview">searchview</string>
+    <string name="search">search</string>
+    <string name="Check_In">Check-IN</string>
+    <string name="fourWheeler">4 wheeler</string>
+    <string name="twowheeler">2 wheeler</string>
+    <string name="other">other</string>
+    <string name="Home">Home</string>
+    <string name="Cases">Cases</string>
+    <string name="MyPlan">My Plan</string>
+    <string name="Account">Account</string>
+    <string name="GotoMyCases">Go to My Cases</string>
+    <string name="MyTodayPlan">My Today\'s Plan</string>
+    <string name="cratePlan">Create Today\'s Plan</string>
+    <string name="createPlanText">You do not have plan yet.\n create now</string>
+    <string name="AddPlan">+ Plan</string>
+    <string name="AddNewMobile">Add New Mobile</string>
+    <string name="AddNewAddress">Add New Address</string>
+    <string name="LoanAmount">Loan Amount</string>
+    <string name="total_due_amount">Total Due Amount</string>
+    <string name="EmiAmount">EMI Amount</string>
+    <string name="DPDs">DPDs</string>
+    <string name="principal_outstanding_amount">Principal Outstanding Amount</string>
+    <string name="Product">Product</string>
+    <string name="pin_code">Pincode</string>
+    <string name="NewAddress">New Address</string>
+    <string name="NewMobile">New Mobile</string>
+    <string name="TypeNewAdd">Type new Address</string>
+    <string name="LocationVerified">Location Verification</string>
+    <string name="online">Online</string>
+    <string name="cheque">Cheque</string>
+    <string name="cash">cash</string>
+    <string name="upload_screenshots">Upload screenshots</string>
+    <string name="myPlas">My Plans</string>
+    <string name="MyPlans">My Plans</string>
+    <string name="repossession">Repossession</string>
+    <string name="go_to_drop_area">Go to Drop \nArea</string>
+    <string name="keep_at_home">Keep at \nhome</string>
+    <string name="submit_txt">Submit</string>
+    <string name="DropOffSet">Drop-Off Asset</string>
+    <string name="father_s_name">Father\'s Name</string>
+    <string name="name">Name</string>
+    <string name="mobile">Mobile</string>
+    <string name="Track">Track</string>
+    <string name="skip_tracing">Skip Tracing</string>
+    <string name="ContacNo">Contact number</string>
+    <string name="call">call</string>
+    <string name="blood_group">Blood Group</string>
+    <string name="Mobile">Mobile Number</string>
+    <string name="Filterby">Filter By</string>
+    <string name="cancel">Cancel</string>
+    <string name="Apply">Apply</string>
+    <string name="AssigningDate">Assigning Date</string>
+    <string name="generate_receipt_txt">Generate Receipt</string>
+    <string name="financial_institution">Financial institution</string>
+    <string name="FollowUp">Follow Up</string>
+    <string name="ChasisNumber">Chasis No.</string>
+    <string name="RegistrationNo">Registration No.</string>
+    <string name="AssetDesc">Asset Description</string>
+    <string name="EngineNo">Engine No.</string>
+    <string name="Remove">Remove</string>
+    <string name="enter_new_mobile_number">Enter new mobile number</string>
+    <string name="update_status">Update Status</string>
+    <string name="edit_button">Edit Button</string>
+    <string name="less_than_50"><![CDATA[50% <]]></string>
+    <string name="greater_than_80"><![CDATA[80% >]]></string>
+    <string name="interest_due_amount">Interest Due Amount</string>
+    <string name="late_fee_penal_charges">Late Fee/Penal Charges</string>
+    <string name="we_will_send_you_an_one_time_password_on_this_mobile_number">We will send you an <b>One Time Password</b> on this email</string>
+
+
+    <string-array name="yesNo">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="bank_sample">
+        <item>Select an option</item>
+        <item>HDFC</item>
+        <item>SBI</item>
+        <item>Bank of Baroda</item>
+    </string-array>
+
+
+    <string-array name="loan_sample">
+        <item>Select an option</item>
+        <item>Home Loan</item>
+        <item>Car Loan</item>
+        <item>Personal Loan</item>
+    </string-array>
+
+    <string-array name="filter_by">
+        <item>Select an option</item>
+        <item>PinCode</item>
+        <item>Status</item>
+        <item>Assigning Date</item>
+    </string-array>
+
+    <string-array name="status">
+        <item>Select an option</item>
+        <item>Closed</item>
+        <item>Open</item>
+        <item>Repossesion</item>
+    </string-array>
+
+    <string-array name="assetType_sample">
+        <item>Select Asset Type</item>
+        <item>CAR</item>
+        <item>MOBILE</item>
+        <item>TV</item>
+        <item>FRIDGE</item>
+        <item>OTHER</item>
+    </string-array>
+
+    <string-array name="amount_type">
+        <item>Select an Option</item>
+        <item>Total Due Amount</item>
+        <item>Principal Outstanding Amount (POS)</item>
+        <item>Settlement Amount (if different from POS)</item>
+        <item>Custom Amount</item>
+    </string-array>
+
+    <string-array name="status_list">
+        <item>Open/Pending</item>
+        <item>PTP - Promise to Pay</item>
+        <item>House Locked</item>
+        <item>Address Not Found</item>
+        <item>Denial/RTP - Refused to Pay</item>
+        <item>Not Available but Resides here</item>
+        <item>Asset Repossessed</item>
+        <item>Residence Shifted</item>
+        <item>Want to Surrender/Settlement (Case will go back to Admin bucket where admin/mgr will have to reassign to some other agent)</item>
+        <item>Reminder/Revisit</item>
+        <item>Reference Visit</item>
+        <item>Paid already</item>
+        <item>Cash Collected (Full Amount, Settlement Amount, Other Partial Amount)</item>
+        <item>Left Message with FamilyMember</item>
+        <item>Dispute (Already Paid, Abusive Language, Customer deceased, Amount Dispute)</item>
+    </string-array>
+
+    <string-array name="sub_status_list">
+        <item>PTP (based on conversation tone Red:  &lt; 50% probability)</item>
+        <item>PTP (based on conversation tone Orange: 50% -80% probability)</item>
+        <item>PTP (based on conversation tone , Green: >80% probability)</item>
+    </string-array>
 
 </resources>

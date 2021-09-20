@@ -1,9 +1,1006 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.plan.DetailsActivity">
+    android:background="@color/white"
+    tools:context=".ui.casedetails.DetailsActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/relStatusBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_tab">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:padding="@dimen/dp16"
+            android:src="@drawable/ic_back_arrow" />
+
+
+        <TextView
+            android:id="@+id/txtAppName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/imgCall"
+            android:layout_toEndOf="@id/imgBack"
+            android:ellipsize="end"
+            android:fontFamily="@font/gtwalsheimprobold"
+            android:maxLines="1"
+            android:paddingTop="@dimen/dp16"
+            android:paddingBottom="@dimen/dp16"
+            android:text="Rohan Joshi"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp18" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/txtAppName"
+            android:layout_alignParentEnd="true"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:padding="@dimen/dp16"
+            android:src="@drawable/ic_phone_call"
+            app:tint="@color/white" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnCheckIn"
+        android:layout_below="@+id/relStatusBar"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginEnd="@dimen/dp16"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    tools:ignore="UselessParent">
+
+                    <TextView
+                        android:id="@+id/txtStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:layout_toStartOf="@id/detailsPlanBtn"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/Status"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtStatusValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtStatus"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:layout_toStartOf="@id/detailsPlanBtn"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="Pending"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/detailsPlanBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp8"
+                        android:backgroundTint="@color/white"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="Plan"
+                        android:textAllCaps="false"
+                        android:textColor="@color/green"
+                        android:textSize="14sp"
+                        app:cornerRadius="@dimen/dp16"
+                        app:rippleColor="@color/green"
+                        app:strokeColor="@color/green"
+                        app:strokeWidth="@dimen/dp1" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linkBank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp16"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".3">
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgBank"
+                        android:layout_width="@dimen/dp40"
+                        android:layout_height="@dimen/dp40"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:src="@drawable/kotak_sample" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.7">
+
+                    <TextView
+                        android:id="@+id/txtBankAc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/BankName"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtBankName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtBankAc"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="Kotak Mahindra Bank"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp16"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="Loan ID"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/details_loan_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="984578"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="Payment Status"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="Pending"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linBankAc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginEnd="@dimen/dp16"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtLoanAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/LoanAmount"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtLoanAmountValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtLoanAmount"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="₹ 20,000"
+                        android:textColor="@color/text_black"
+                        android:textSize="24sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtPending"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/total_due_amount"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtPendingValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtPending"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="₹ 8,000"
+                        android:textColor="@color/text_black"
+                        android:textSize="24sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linDatePassedDue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginEnd="@dimen/dp16"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtEmiAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/EmiAmount"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtDatePassedDueValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtEmiAmount"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="₹ 3,200"
+                        android:textColor="@color/text_black"
+                        android:textSize="24sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtSettlement"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/principal_outstanding_amount"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtSettlementAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtSettlement"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="₹ 5,400"
+                        android:textColor="@color/text_black"
+                        android:textSize="24sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linAmountThirdLayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginEnd="@dimen/dp16"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtInterestDueAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/interest_due_amount"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtInterestDueAmountValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtInterestDueAmount"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="₹ 1,200"
+                        android:textColor="@color/text_black"
+                        android:textSize="24sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtLateCharges"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/late_fee_penal_charges"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtLateChargesValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtLateCharges"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="₹ 400"
+                        android:textColor="@color/text_black"
+                        android:textSize="24sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linDisbursementDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginEnd="@dimen/dp16"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtDisbursementDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/DueDate"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtDisbursementDateValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtDisbursementDate"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="12/02/2021"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtTotalAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/DPDs"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtTotalAmountValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtTotalAmount"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="95"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginEnd="@dimen/dp16"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtProduct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/Product"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtProductValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtProduct"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="PL"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/txtPinCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/pin_code"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/txtPinCodeValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtPinCode"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="@dimen/dp12"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="400706"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp12"
+                android:layout_marginEnd="@dimen/dp12"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/showMoreTxt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:padding="@dimen/dp4"
+                    android:text="Show more"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp18"
+                    app:drawableEndCompat="@drawable/ic_round_arrow_drop_down" />
+
+                <TextView
+                    android:id="@+id/txtHistory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:text="History"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/userDetailsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginTop="@dimen/dp8"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="Email"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:text="nikhil@inifiny.in"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="Contact No."
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:text="9765845865"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginTop="@dimen/dp8"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="PAN Card"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:text="IPTPS7867Q"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="DOB"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:text="11/12/1996"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginTop="@dimen/dp8"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="Cibil Score"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:text="250"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="Business Name"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:text="Infiny Webcom"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginTop="@dimen/dp8"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="City"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:text="Mumbai"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="State"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:text="Maharashtra"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txtAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="@string/Address"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/txtAddressValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtAddress"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:text="B-12, Ashoka CHS, Sec-12, New Delhi"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linNewAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txtNewAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="Alternate Address"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/txtNewAddressValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtNewAddress"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:text="Navi Mumbai, Maharashtra"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linNewMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:layout_marginBottom="@dimen/dp12"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txtNewMobile"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="Alternate Mobile"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/txtNewMobileValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/txtNewMobile"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:text="9819366976"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnCheckIn"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/background_button_rectangle"
+        android:fontFamily="@font/gtwalsheimpromedium"
+        android:text="@string/Check_In"
+        android:textAllCaps="true"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
