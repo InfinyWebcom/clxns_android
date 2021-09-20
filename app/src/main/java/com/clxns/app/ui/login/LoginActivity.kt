@@ -26,6 +26,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -61,6 +62,15 @@ class LoginActivity : AppCompatActivity() {
         emailIL = binding.emailIL
         passwordET = binding.passwordET
         passwordIL = binding.passwordIL
+
+        /**
+         * If a user has logout from the app then we'll fetch the last email address from the local storage
+         * to remind the user last logged in email id.
+         */
+        val emailId = sessionManager.getString(Constants.USER_EMAIL)
+        if (!emailId.isNullOrEmpty()){
+            binding.emailET.setText(emailId)
+        }
     }
 
     private fun setListeners() {
@@ -81,7 +91,6 @@ class LoginActivity : AppCompatActivity() {
                     emailET.text.toString(),
                     passwordET.text.toString()
                 )
-                binding.progressBar.show()
             }
         }
 
@@ -145,37 +154,37 @@ class LoginActivity : AppCompatActivity() {
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.hide()
-
                     Toast.makeText(this, response.data?.title, Toast.LENGTH_LONG).show()
-                    val loginData = response.data?.loginData
-                    val name = loginData?.firstName + " " + loginData?.lastName
-                    binding.txtLogin.text = "Welcome $name"
-                    sessionManager.saveAnyData(Constants.TOKEN, response.data?.token!!)
-                    sessionManager.saveAnyData(Constants.USER_NAME, name)
-                    sessionManager.saveAnyData(Constants.USER_ID, loginData!!.id)
-                    sessionManager.saveAnyData(Constants.USER_EMPLOYEE_ID, loginData.employeeId)
-                    sessionManager.saveAnyData(Constants.USER_DOB, loginData.dob)
-                    sessionManager.saveAnyData(Constants.USER_BLOOD_GROUP, loginData.bloodGroup)
-                    sessionManager.saveAnyData(Constants.USER_EMAIL, loginData.email)
-                    sessionManager.saveAnyData(Constants.USER_MOBILE, loginData.phone)
-                    sessionManager.saveAnyData(Constants.USER_ADDRESS, loginData.address)
-                    sessionManager.saveAnyData(Constants.USER_LOCATION, loginData.location)
-                    sessionManager.saveAnyData(Constants.IS_USER_LOGGED_IN, true)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        startActivity(Intent(this, MainActivity::class.java))
-                        finish()
-                    }, Constants.SPLASH_SCREEN_TIMEOUT)
+                    if (response.data?.error == false) {
+                        val loginData = response.data?.loginData
+                        val name = loginData?.firstName + " " + loginData?.lastName
+                        binding.txtLogin.text = "Welcome $name"
+                        sessionManager.saveAnyData(Constants.TOKEN, response.data?.token!!)
+                        sessionManager.saveAnyData(Constants.USER_NAME, name)
+                        sessionManager.saveAnyData(Constants.USER_ID, loginData!!.id)
+                        sessionManager.saveAnyData(Constants.USER_EMPLOYEE_ID, loginData.employeeId)
+                        sessionManager.saveAnyData(Constants.USER_DOB, loginData.dob)
+                        sessionManager.saveAnyData(Constants.USER_BLOOD_GROUP, loginData.bloodGroup)
+                        sessionManager.saveAnyData(Constants.USER_EMAIL, loginData.email)
+                        sessionManager.saveAnyData(Constants.USER_MOBILE, loginData.phone)
+                        sessionManager.saveAnyData(Constants.USER_ADDRESS, loginData.address)
+                        sessionManager.saveAnyData(Constants.USER_LOCATION, loginData.location)
+                        sessionManager.saveAnyData(Constants.IS_USER_LOGGED_IN, true)
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            startActivity(Intent(this, MainActivity::class.java))
+                            finish()
+                        }, Constants.SPLASH_SCREEN_TIMEOUT)
+                    }
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {
                     binding.progressBar.hide()
-                    binding.txtLogin.text = response.message
                     // show error message
+                    this.toast(response.message!!)
                 }
                 is NetworkResult.Loading -> {
-                    binding.progressBar.show()
-                    binding.txtLogin.text = "Loading...."
                     // show a progress bar
+                    binding.progressBar.show()
                 }
             }
         }

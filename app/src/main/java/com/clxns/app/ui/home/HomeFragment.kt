@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.databinding.FragmentHomeBinding
 import com.clxns.app.ui.notification.NotificationActivity
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -32,6 +34,17 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        homeViewModel.getAllDispositions()
+        homeViewModel.responseDisposition.observe(viewLifecycleOwner){
+            when(it){
+                is NetworkResult.Success -> {
+                    Timber.i(it.data.toString())
+                }
+                is NetworkResult.Loading -> {
+                    Timber.i("Loading...")}
+                is NetworkResult.Error -> Timber.i("Error")
+            }
+        }
         binding.notificationBtn.setOnClickListener {
             startActivity(Intent(context, NotificationActivity::class.java))
         }

@@ -64,4 +64,7 @@ interface ApiService {
         @Header("token") token: String
     ): Response<MyPlanResponse>
 
+    @POST("fos/listFosDis")
+    suspend fun getAllDispositions() : Response<DispositionResponse>
+
 }

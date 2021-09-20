@@ -46,7 +46,7 @@ class CasesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        viewModel.getCasesList(Constants.TOKEN_TEMP)
+        viewModel.getCasesList(sessionManager.getString(Constants.TOKEN)!!)
 //        viewModel.casesResponse.observe(viewLifecycleOwner, { it ->
 //            when (it.status) {
 //                Status.SUCCESS -> binding.casesRv.apply {

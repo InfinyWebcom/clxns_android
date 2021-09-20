@@ -48,6 +48,7 @@ class LoginViewModel @Inject constructor(
     private val _response: MutableLiveData<NetworkResult<LoginResponse>> = MutableLiveData()
     val response: LiveData<NetworkResult<LoginResponse>> = _response
     fun performLogin(emailId: String, password: String) = viewModelScope.launch {
+        _response.value = NetworkResult.Loading()
         repository.performLogin(emailId, password).collect { values ->
             _response.value = values
         }
