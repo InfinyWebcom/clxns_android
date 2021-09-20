@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <RelativeLayout
+        android:id="@+id/repossession_custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_tab"
+        android:padding="15dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back_arrow" />
+
+
+        <TextView
+            android:id="@+id/txtAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_toEndOf="@id/imgBack"
+            android:fontFamily="@font/gtwalsheimprobold"
+            android:text="Repossession"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp18" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/repossession_custom_toolbar">
+
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/gtwalsheimpromedium"
+
+            android:text="Rahul Dravid"
+            android:textAllCaps="true"
+            android:textColor="@color/text_black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/txtName"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/gtwalsheimproregular"
+            android:text="12/08/2021"
+            android:textColor="@color/text_black"
+            android:textSize="@dimen/sp14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtName" />
+
+        <TextView
+            android:id="@+id/txtStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtName"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="@dimen/dp8"
+            android:layout_marginEnd="@dimen/dp4"
+            android:ellipsize="end"
+            android:fontFamily="@font/gtwalsheimproregular"
+            android:maxLines="1"
+            android:text="Denial/RTP - Refused to Pay"
+            android:textColor="@color/text_black"
+            android:textSize="14sp" />
+
+
+    </RelativeLayout>
+
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relDetails"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/background_spinner">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spAssetType"
+                    style="@style/spinner_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="@dimen/dp4"
+                    android:overlapAnchor="false"
+                    android:paddingVertical="@dimen/dp10"
+                    android:spinnerMode="dialog"
+                    android:theme="@style/spinnerTheme" />
+            </RelativeLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/repo_form_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:cardCornerRadius="@dimen/dp8"
+                app:cardElevation="@dimen/dp2"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/repo_asset_type_container">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp12">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:ignore="MissingConstraints">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/txtAssetType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp12"
+                                android:fontFamily="@font/gtwalsheimproregular"
+                                android:text="@string/AssetDesc"
+                                android:textColor="@color/text_black"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtAssetTypeValue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtAssetType"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="@dimen/dp12"
+                                android:fontFamily="@font/gtwalsheimpromedium"
+                                android:text="Skoda Rapid 2016"
+                                android:textColor="@color/text_black"
+                                android:textSize="16sp" />
+
+
+                            <TextView
+                                android:id="@+id/txtRegisterNo"
+                                android:layout_below="@+id/txtAssetTypeValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp12"
+                                android:fontFamily="@font/gtwalsheimproregular"
+                                android:text="@string/RegistrationNo"
+                                android:textColor="@color/text_black"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtRegisterValue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtRegisterNo"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="@dimen/dp12"
+                                android:fontFamily="@font/gtwalsheimpromedium"
+                                android:text="124356879997"
+                                android:textColor="@color/text_black"
+                                android:textSize="16sp" />
+
+
+                            <TextView
+                                android:id="@+id/txtChasisNo"
+                                android:layout_below="@+id/txtRegisterValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp12"
+                                android:fontFamily="@font/gtwalsheimproregular"
+                                android:text="@string/ChasisNumber"
+                                android:textColor="@color/text_black"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtChasisNoValue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtChasisNo"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="@dimen/dp12"
+                                android:fontFamily="@font/gtwalsheimpromedium"
+                                android:text="79997"
+                                android:textColor="@color/text_black"
+                                android:textSize="16sp" />
+
+
+                            <TextView
+                                android:id="@+id/txtEngineNo"
+                                android:layout_below="@+id/txtChasisNoValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp12"
+                                android:fontFamily="@font/gtwalsheimproregular"
+                                android:text="@string/EngineNo"
+                                android:textColor="@color/text_black"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/txtEngineNoValue"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txtEngineNo"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="@dimen/dp12"
+                                android:fontFamily="@font/gtwalsheimpromedium"
+                                android:text="6U90000BB41202329"
+                                android:textColor="@color/text_black"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardImageUpoad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp30"
+                app:cardCornerRadius="@dimen/dp8"
+                app:cardElevation="@dimen/dp2"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/repo_form_container">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp12">
+
+
+                    <TextView
+                        android:id="@+id/upload_asset_img_at_pickup_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="Upload Asset Image at Pick Up"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerAddImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp8"
+                        app:layout_constraintStart_toStartOf="@id/upload_asset_img_at_pickup_txt"
+                        app:layout_constraintTop_toBottomOf="@id/upload_asset_img_at_pickup_txt" />
+
+
+                    <TextView
+                        android:id="@+id/upload_customer_slip_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="Upload Customer Slip Image"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@id/upload_asset_img_at_pickup_txt"
+                        app:layout_constraintTop_toBottomOf="@id/recyclerAddImage" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerSlipImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp8"
+                        app:layout_constraintStart_toStartOf="@id/upload_customer_slip_txt"
+                        app:layout_constraintTop_toBottomOf="@id/upload_customer_slip_txt" />
+
+
+                    <TextView
+                        android:id="@+id/nearest_address_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="3 Nearest Yards/Agencies - Kotak Bank"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="@id/upload_asset_img_at_pickup_txt"
+                        app:layout_constraintTop_toBottomOf="@id/recyclerSlipImage" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/nearest_address_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp8"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/nearest_address_txt" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/cardImageUpoad"
+                app:layout_constraintTop_toBottomOf="@+id/cardImageUpoad">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/repo_go_to_drop_area_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/green"
+                    android:fontFamily="@font/gtwalsheimproregular"
+                    android:paddingVertical="@dimen/dp10"
+                    android:text="@string/go_to_drop_area"
+                    app:cornerRadius="15dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/repo_drop_at_home_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/green"
+                    android:fontFamily="@font/gtwalsheimproregular"
+                    android:paddingVertical="@dimen/dp10"
+                    android:text="@string/keep_at_home"
+                    app:cornerRadius="15dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</RelativeLayout>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/dp16"
+    android:background="@drawable/bottomsheet_background"
+    >
+
+    <TextView
+        android:id="@+id/imgDash"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp8"
+        android:layout_gravity="center"
+        android:background="@drawable/background_bottomsheet_view"
+        android:paddingHorizontal="24dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/gtwalsheimpromedium"
+        android:text="Probability"
+        android:id="@+id/statusActionActiveLabel"
+        android:layout_marginTop="@dimen/dp16"
+        android:textColor="@color/text_black"
+        android:textSize="18sp" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/statusActionActiveRG"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/greater_than_80"
+            android:buttonTint="@color/green"
+            android:fontFamily="@font/gtwalsheimproregular"
+            android:textColor="@color/text_black"
+            />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="50% - 80%"
+            android:buttonTint="@color/quantum_orange"
+            android:fontFamily="@font/gtwalsheimproregular"
+            android:textColor="@color/text_black"
+            />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/less_than_50"
+            android:buttonTint="@color/quantum_googred"
+            android:fontFamily="@font/gtwalsheimproregular"
+            android:textColor="@color/text_black"
+            />
+    </RadioGroup>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/gtwalsheimpromedium"
+        android:text="Revisit Date"
+        android:id="@+id/revisitDateLabel"
+        android:layout_marginTop="@dimen/dp16"
+        android:textColor="@color/text_black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/revisitDateTxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp8"
+        android:background="@drawable/background_edittext_roundable"
+        android:fontFamily="@font/gtwalsheimpromedium"
+        android:hint="Set revisit date"
+        android:paddingVertical="15dp"
+        android:paddingStart="@dimen/dp10"
+        android:paddingEnd="2dp"
+        android:textColor="@color/text_black"
+        android:textSize="14sp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/revisitTimeLable"
+        android:fontFamily="@font/gtwalsheimpromedium"
+        android:text="Revisit Time"
+        android:layout_marginTop="@dimen/dp16"
+        android:textColor="@color/text_black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/revisitTimeTxt"
+        android:layout_marginTop="@dimen/dp8"
+        android:background="@drawable/background_edittext_roundable"
+        android:fontFamily="@font/gtwalsheimpromedium"
+        android:hint="Set revisit time"
+        android:paddingVertical="15dp"
+        android:paddingStart="@dimen/dp10"
+        android:paddingEnd="2dp"
+        android:textColor="@color/text_black"
+        android:textSize="14sp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/statusActionRemarkLabel"
+        android:buttonTint="@color/colorPrimary"
+        android:fontFamily="@font/gtwalsheimpromedium"
+        android:text="Remarks"
+        android:layout_marginTop="@dimen/dp16"
+        android:textColor="@color/text_black"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/statusActionRemarkET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp8"
+        android:background="@drawable/background_edittext_roundable"
+        android:fontFamily="@font/gtwalsheimproregular"
+        android:gravity="top"
+        android:hint="Type here..."
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:paddingVertical="10dp"
+        android:paddingStart="@dimen/dp10"
+        android:paddingEnd="2dp"
+        android:scrollbars="vertical"
+        android:textColor="@color/text_black"
+        android:textSize="14sp" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/assignToTracerCB"
+        android:text="Assign To Tracer"
+        android:fontFamily="@font/gtwalsheimproregular"
+        android:buttonTint="@color/colorPrimary"
+        android:textSize="16sp"
+        android:layout_marginTop="@dimen/dp16"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:id="@+id/doneBtn"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_marginTop="@dimen/dp16"
+        android:layout_gravity="end"/>
+
+
+
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgAddedImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="20dp"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/roundedImageView" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgCamera"
+        android:layout_width="@dimen/dp50"
+        android:layout_height="@dimen/dp50"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginEnd="@dimen/dp10"
+        android:src="@drawable/ic_baseline_photo_camera_24"
+        android:tint="@color/white" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgDeletePhoto"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+
+        android:layout_gravity="end"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="25dp"
+        android:src="@mipmap/ic_delete" />
+
+</FrameLayout>

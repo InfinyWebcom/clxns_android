@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="dddddddddddddddddddddddddddddddddddddddddddddddddddd"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_date_detail_track"
+        style="@style/TITLE.TEXT.BLACK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="12/06/2021"
+        app:layout_constraintEnd_toStartOf="@+id/subrl"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        style="@style/TITLE.TEXT.BLACK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="4:30 PM"
+        app:layout_constraintEnd_toStartOf="@+id/subrl"
+        app:layout_constraintTop_toBottomOf="@+id/tv_date_detail_track" />
+
+    <TextView
+        android:id="@+id/txtDueMount"
+        style="@style/TITLE.TEXT.BLACK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="₹3000"
+        app:layout_constraintEnd_toStartOf="@+id/subrl"
+        app:layout_constraintTop_toBottomOf="@+id/tvTime" />
+
+
+    <RelativeLayout
+        android:id="@+id/subrl"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="120dp"
+        android:layout_toEndOf="@+id/tv_date_detail_track"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/view_track"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_track"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="false"
+            android:src="@drawable/ic_oval_line"
+            app:layout_constraintTop_toTopOf="parent" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_status_title"
+        style="@style/TITLE.TEXT.BLACK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/gtwalsheimpromedium"
+        android:text="PTP"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toEndOf="@id/subrl"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_sub_status"
+        style="@style/TITLE.TEXT.BLACK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_status_title"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/gtwalsheimproregular"
+        android:text="Future PTP"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/subrl"
+        app:layout_constraintTop_toBottomOf="@+id/tv_status_title" />
+
+    <TextView
+        android:id="@+id/status_details"
+        style="@style/TITLE.TEXT.BLACK"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_sub_status"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="@dimen/dp4"
+        android:paddingBottom="12dp"
+        android:text="This is comment section "
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/subrl"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sub_status" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
