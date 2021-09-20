@@ -5,29 +5,54 @@ import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import com.clxns.app.R
-import com.clxns.app.data.repository.DetailsRepository
+import com.clxns.app.data.api.helper.NetworkResult
+import com.clxns.app.data.model.Lead
+import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityDetailsBinding
 import com.clxns.app.ui.casedetails.casestatus.checkin.CheckInActivity
 import com.clxns.app.ui.casedetails.history.HistoryDetailsActivity
+import com.clxns.app.ui.home.plan.listview.TempAdapter2
+import com.clxns.app.utils.Constants
+import com.clxns.app.utils.hide
+import com.clxns.app.utils.show
+import com.clxns.app.utils.toast
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
 
-    lateinit var detailsBinding: ActivityDetailsBinding
+    lateinit var binding: ActivityDetailsBinding
     lateinit var ctx: Context
-     val detailsViewModel: DetailsViewModel by viewModels()
+    val viewModel: DetailsViewModel by viewModels()
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
-        setInit()
+        binding = ActivityDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        viewModel.loanAccountNumber=intent.getStringExtra("loan_account_number")
         setListeners()
+        setObserver()
+        if (viewModel.loanAccountNumber != null) {
+            viewModel.getCaseDetails(
+                sessionManager.getString(Constants.TOKEN)!!,
+                viewModel.loanAccountNumber!!
+            )
+        } else {
+            toast("Error while fetching plan details")
+            finish()
+        }
 
     }
 
@@ -65,69 +90,123 @@ class DetailsActivity : AppCompatActivity() {
             }
         }*/
 
-        detailsBinding.btnCheckIn.setOnClickListener {
-            val checkInIntent = Intent(this, CheckInActivity::class.java)
-            checkInIntent.putExtra("status", intent.getStringExtra("status"))
-            checkInIntent.putExtra("name", intent.getStringExtra("name"))
-            startActivity(checkInIntent)
+        binding.btnCheckIn.setOnClickListener {
+            val intent = Intent(this, CheckInActivity::class.java)
+            intent.putExtra("status", intent.getStringExtra("status"))
+            intent.putExtra("name", intent.getStringExtra("name"))
+            startActivity(intent)
         }
 
-        detailsBinding.txtHistory.setOnClickListener {
-            val checkInIntent = Intent(this, HistoryDetailsActivity::class.java)
-            startActivity(checkInIntent)
+        binding.txtHistory.setOnClickListener {
+            val intent = Intent(this, HistoryDetailsActivity::class.java)
+            intent.putExtra("loan_account_number",viewModel.loanAccountNumber)
+            startActivity(intent)
         }
 
-        detailsBinding.imgBack.setOnClickListener {
+        binding.imgBack.setOnClickListener {
             finish()
         }
 
-        detailsBinding.imgCall.setOnClickListener {
+        binding.imgCall.setOnClickListener {
             val dialIntent = Intent(Intent.ACTION_DIAL)
             val number = intent.getStringExtra("mobile_number")
             dialIntent.data = Uri.parse("tel:${number ?: "0123456789"}")
             startActivity(dialIntent)
         }
-        detailsBinding.showMoreTxt.setOnClickListener {
-            if (detailsBinding.userDetailsContainer.isVisible) {
-                detailsBinding.userDetailsContainer.visibility = View.GONE
+        binding.showMoreTxt.setOnClickListener {
+            if (binding.userDetailsContainer.isVisible) {
+                binding.userDetailsContainer.visibility = View.GONE
             } else {
-                detailsBinding.userDetailsContainer.visibility = View.VISIBLE
+                binding.userDetailsContainer.visibility = View.VISIBLE
             }
         }
 
 
     }
 
-    private fun setInit() {
-        ctx = this
-        detailsBinding = ActivityDetailsBinding.inflate(layoutInflater)
-        setContentView(detailsBinding.root)
+    private fun setObserver() {
+        viewModel.response.observe(this) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    binding.progressBar.hide()
+                    if (!response.data?.error!!) {
+                        setData(response.data.data!!)
 
-        detailsBinding.txtHistory.paintFlags =
-            detailsBinding.txtHistory.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-        detailsBinding.txtAppName.text = intent.getStringExtra("name")
-        if (!intent.getStringExtra("address").isNullOrEmpty()) {
-            detailsBinding.txtAddressValue.text = intent.getStringExtra("address")
+                    } else {
+                        toast(response.data.title!!)
+                        finish()
+                    }
+                    // bind data to the view
+                }
+                is NetworkResult.Error -> {
+                    binding.progressBar.hide()
+                    toast(response.message!!)
+                    finish()
+                    // show error message
+                }
+                is NetworkResult.Loading -> {
+                    binding.progressBar.show()
+                    // show a progress bar
+                }
+            }
         }
-        if (!intent.getStringExtra("mobile_number").isNullOrEmpty()) {
-            detailsBinding.txtNewMobileValue.text = intent.getStringExtra("mobile_number")
-        }
-        if (!intent.getStringExtra("bank_name").isNullOrEmpty()) {
-            detailsBinding.txtBankName.text = intent.getStringExtra("bank_name")
-        }
-        if (!intent.getStringExtra("loan_id").isNullOrEmpty()) {
-            detailsBinding.detailsLoanId.text = intent.getStringExtra("loan_id")
-        }
-        detailsBinding.txtLoanAmountValue.text = intent.getStringExtra("amount")
-        detailsBinding.txtStatusValue.text = intent.getStringExtra("status")
+    }
+
+    private fun setData(data: Lead) {
+
+        binding.txtHistory.paintFlags =
+            binding.txtHistory.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
+        binding.txtAppName.text = data.name
+        binding.txtBankName.text=data.band
+        binding.detailsLoanId.text=data.loanAccountNo.toString()
+        binding.txtLoanAmountValue.text = data.totalLoanAmount.toString()
+        binding.txtStatusValue.text = data.paymentStatus
+        binding.txtPendingValue.text=data.totalDueAmount.toString()
+        binding.txtDatePassedDueValue.text=data.emiAmount.toString()
+        binding.txtSettlementAmount.text=data.principalOutstandingAmount.toString()
+        binding.txtInterestDueAmountValue.text=data.interestDueAmount.toString()
+        binding.txtLateChargesValue.text=data.penaltyAmount.toString()
+        binding.txtDisbursementDateValue.text=data.daysDue.toString()
+        binding.txtTotalAmountValue.text=data.allocationDpd.toString()
+        binding.txtProductValue.text=data.productTypeId.toString()
+        binding.txtPinCodeValue.text=data.applicantPincode.toString()
+        binding.txtEmail.text=data.email.toString()
+        binding.txtContactNo.text=data.applicantAlternateMobile1.toString()
+        binding.txtPanCard.text=data.applicantPanNumber.toString()
+        binding.txtDob.text=data.applicantDob.toString()
+        binding.txtCibilScore.text=data.applicantCibilScore.toString()
+        binding.txtBusinessName.text=data.businessName.toString()
+        binding.txtCity.text=data.applicantCity.toString()
+        binding.txtState.text=data.applicantState.toString()
+        binding.txtNewAddress.text=data.applicantAltAddress.toString()
+        binding.txtNewMobileValue.text=data.applicantAlternateMobile1
+//        if (!intent.getStringExtra("address").isNullOrEmpty()) {
+//            binding.txtAddressValue.text = intent.getStringExtra("address").toString()
+//        }
+//        if (!intent.getStringExtra("loan_account_number").isNullOrEmpty()) {
+//            viewModel.loanAccountNumber = intent.getStringExtra("loan_account_number").toString()
+//        }
+//        if (!intent.getStringExtra("mobile_number").isNullOrEmpty()) {
+//            binding.txtNewMobileValue.text = intent.getStringExtra("mobile_number").toString()
+//        }
+//        if (!intent.getStringExtra("bank_name").isNullOrEmpty()) {
+//            binding.txtBankName.text = intent.getStringExtra("bank_name").toString()
+//        }
+//        if (!intent.getStringExtra("loan_id").isNullOrEmpty()) {
+//            binding.detailsLoanId.text = intent.getStringExtra("loan_id")
+//        }
+//        binding.txtLoanAmountValue.text = intent.getStringExtra("amount").toString()
+//        binding.txtStatusValue.text = intent.getStringExtra("status")
+
         val isPlanned = intent.getBooleanExtra("isPlanned", false)
         if (isPlanned) {
-            detailsBinding.detailsPlanBtn.text = "Unplan"
-            detailsBinding.detailsPlanBtn.rippleColor =
+            binding.detailsPlanBtn.text = "Unplan"
+            binding.detailsPlanBtn.rippleColor =
                 ContextCompat.getColorStateList(this, R.color.light_red)
-            detailsBinding.detailsPlanBtn.strokeColor =
+            binding.detailsPlanBtn.strokeColor =
                 ContextCompat.getColorStateList(this, R.color.light_red)
-            detailsBinding.detailsPlanBtn.setTextColor(
+            binding.detailsPlanBtn.setTextColor(
                 ContextCompat.getColor(
                     this,
                     R.color.light_red

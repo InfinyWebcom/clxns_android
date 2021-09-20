@@ -10,7 +10,6 @@ import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.LoginResponse
 import com.clxns.app.data.model.LogoutResponse
-import com.clxns.app.data.model.MyPlanResponse
 import com.clxns.app.data.repository.ProfileRepository
 import com.clxns.app.utils.NetworkHelper
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

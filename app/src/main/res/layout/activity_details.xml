@@ -658,6 +658,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/txt_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -682,6 +683,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/txt_contact_no"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -716,6 +718,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/txt_pan_card"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -740,6 +743,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/txt_dob"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -774,6 +778,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/txt_cibil_score"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -798,6 +803,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/txt_business_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -832,6 +838,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/txt_city"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -856,6 +863,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:id="@+id/txt_state"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -1002,5 +1010,13 @@
         android:text="@string/Check_In"
         android:textAllCaps="true"
         android:textColor="@color/white" />
+
+
+    <ProgressBar
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:id="@+id/progress_bar"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

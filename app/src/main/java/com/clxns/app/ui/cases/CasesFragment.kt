@@ -82,7 +82,7 @@ class CasesFragment : Fragment() {
 
                     binding.casesRv.apply {
                         layoutManager = LinearLayoutManager(context)
-                        adapter = CasesAdapter(response.data?.data!!) {
+                        adapter = CasesAdapter(requireContext(),response.data?.data!!) {
                             Toast.makeText(context, it.name, Toast.LENGTH_SHORT).show()
                         }
                     }

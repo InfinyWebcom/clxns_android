@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.ChangePasswordResponse
-import com.clxns.app.data.model.MyPlanResponse
 import com.clxns.app.data.repository.ChangePasswordRepository
 import com.clxns.app.utils.NetworkHelper
 import com.clxns.app.utils.Resource

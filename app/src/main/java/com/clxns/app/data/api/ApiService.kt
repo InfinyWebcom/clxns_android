@@ -61,7 +61,7 @@ interface ApiService {
     @POST("fos/listMyPlan")
     suspend fun getMyPlanList(
         @Header("token") token: String
-    ): Response<MyPlanResponse>
+    ): Response<MyPlanModel>
     
          @POST("fos/listFosDis")
 
@@ -72,14 +72,14 @@ interface ApiService {
     suspend fun getCaseDetails(
         @Header("token") token: String,
         @Field("loanAccountNo") loanAccountNo: String
-    ): Response<MyPlanResponse>
+    ): Response<CaseDetailsResponse>
 
     @FormUrlEncoded
     @POST("fos/caseHistory")
-    suspend fun caseHistory(
+    suspend fun getCaseHistory(
         @Header("token") token: String,
         @Field("loanAccountNo") loanAccountNo: String
-    ): Response<MyPlanResponse>
+    ): Response<CaseHistoryResponse>
 
     @FormUrlEncoded
     @POST("fos/saveCheckinData")
@@ -93,6 +93,6 @@ interface ApiService {
         @Field("followUp") followUp: String,
         @Field("nextAction") nextAction: String,
         @Field("additionalField") additionalField: String
-    ): Response<MyPlanResponse>
+    ): Response<MyPlanModel>
 
 }
