@@ -41,7 +41,7 @@ class DetailsActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel.loanAccountNumber=intent.getStringExtra("loan_account_number")
+        viewModel.loanAccountNumber = intent.getStringExtra("loan_account_number")
         setListeners()
         setObserver()
         if (viewModel.loanAccountNumber != null) {
@@ -90,6 +90,23 @@ class DetailsActivity : AppCompatActivity() {
             }
         }*/
 
+        val isPlanned = intent.getBooleanExtra("isPlanned", false)
+        if (isPlanned) {
+            binding.detailsPlanBtn.text = "Unplan"
+            binding.detailsPlanBtn.rippleColor =
+                ContextCompat.getColorStateList(this, R.color.light_red)
+            binding.detailsPlanBtn.strokeColor =
+                ContextCompat.getColorStateList(this, R.color.light_red)
+            binding.detailsPlanBtn.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.light_red
+                )
+            )
+        } else {
+            binding.btnCheckIn.visibility = View.INVISIBLE
+        }
+
         binding.btnCheckIn.setOnClickListener {
             val intent = Intent(this, CheckInActivity::class.java)
             intent.putExtra("status", intent.getStringExtra("status"))
@@ -99,7 +116,7 @@ class DetailsActivity : AppCompatActivity() {
 
         binding.txtHistory.setOnClickListener {
             val intent = Intent(this, HistoryDetailsActivity::class.java)
-            intent.putExtra("loan_account_number",viewModel.loanAccountNumber)
+            intent.putExtra("loan_account_number", viewModel.loanAccountNumber)
             startActivity(intent)
         }
 
@@ -157,61 +174,38 @@ class DetailsActivity : AppCompatActivity() {
         binding.txtHistory.paintFlags =
             binding.txtHistory.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-        binding.txtAppName.text = data.name
-        binding.txtBankName.text=data.band
-        binding.detailsLoanId.text=data.loanAccountNo.toString()
-        binding.txtLoanAmountValue.text = data.totalLoanAmount.toString()
-        binding.txtStatusValue.text = data.paymentStatus
-        binding.txtPendingValue.text=data.totalDueAmount.toString()
-        binding.txtDatePassedDueValue.text=data.emiAmount.toString()
-        binding.txtSettlementAmount.text=data.principalOutstandingAmount.toString()
-        binding.txtInterestDueAmountValue.text=data.interestDueAmount.toString()
-        binding.txtLateChargesValue.text=data.penaltyAmount.toString()
-        binding.txtDisbursementDateValue.text=data.daysDue.toString()
-        binding.txtTotalAmountValue.text=data.allocationDpd.toString()
-        binding.txtProductValue.text=data.productTypeId.toString()
-        binding.txtPinCodeValue.text=data.applicantPincode.toString()
-        binding.txtEmail.text=data.email.toString()
-        binding.txtContactNo.text=data.applicantAlternateMobile1.toString()
-        binding.txtPanCard.text=data.applicantPanNumber.toString()
-        binding.txtDob.text=data.applicantDob.toString()
-        binding.txtCibilScore.text=data.applicantCibilScore.toString()
-        binding.txtBusinessName.text=data.businessName.toString()
-        binding.txtCity.text=data.applicantCity.toString()
-        binding.txtState.text=data.applicantState.toString()
-        binding.txtNewAddress.text=data.applicantAltAddress.toString()
-        binding.txtNewMobileValue.text=data.applicantAlternateMobile1
-//        if (!intent.getStringExtra("address").isNullOrEmpty()) {
-//            binding.txtAddressValue.text = intent.getStringExtra("address").toString()
-//        }
-//        if (!intent.getStringExtra("loan_account_number").isNullOrEmpty()) {
-//            viewModel.loanAccountNumber = intent.getStringExtra("loan_account_number").toString()
-//        }
-//        if (!intent.getStringExtra("mobile_number").isNullOrEmpty()) {
-//            binding.txtNewMobileValue.text = intent.getStringExtra("mobile_number").toString()
-//        }
-//        if (!intent.getStringExtra("bank_name").isNullOrEmpty()) {
-//            binding.txtBankName.text = intent.getStringExtra("bank_name").toString()
-//        }
-//        if (!intent.getStringExtra("loan_id").isNullOrEmpty()) {
-//            binding.detailsLoanId.text = intent.getStringExtra("loan_id")
-//        }
-//        binding.txtLoanAmountValue.text = intent.getStringExtra("amount").toString()
-//        binding.txtStatusValue.text = intent.getStringExtra("status")
+        binding.txtAppName.text = nullSafeString(data.name.toString())
+        binding.txtBankName.text = nullSafeString(data.chequeBank.toString())
+        binding.detailsLoanId.text = nullSafeString(data.loanAccountNo.toString())
+        binding.txtLoanAmountValue.text = nullSafeString(data.totalLoanAmount.toString())
+        binding.txtStatusValue.text = nullSafeString(data.paymentStatus.toString())
+        binding.txtPendingValue.text = nullSafeString(data.totalDueAmount.toString())
+        binding.txtDatePassedDueValue.text = nullSafeString(data.emiAmount.toString())
+        binding.txtSettlementAmount.text =
+            nullSafeString(data.principalOutstandingAmount.toString())
+        binding.txtInterestDueAmountValue.text = nullSafeString(data.interestDueAmount.toString())
+        binding.txtLateChargesValue.text = nullSafeString(data.penaltyAmount.toString())
+        binding.txtDisbursementDateValue.text = nullSafeString(data.daysDue.toString())
+        binding.txtTotalAmountValue.text = nullSafeString(data.allocationDpd.toString())
+        binding.txtProductValue.text = nullSafeString(data.productTypeId.toString())
+        binding.txtPinCodeValue.text = nullSafeString(data.applicantPincode.toString())
+        binding.txtEmail.text = nullSafeString(data.email.toString())
+        binding.txtContactNo.text = nullSafeString(data.applicantAlternateMobile1.toString())
+        binding.txtPanCard.text = nullSafeString(data.applicantPanNumber.toString())
+        binding.txtDob.text = nullSafeString(data.applicantDob.toString())
+        binding.txtCibilScore.text = nullSafeString(data.applicantCibilScore.toString())
+        binding.txtBusinessName.text = nullSafeString(data.businessName.toString())
+        binding.txtCity.text = nullSafeString(data.applicantCity.toString())
+        binding.txtState.text = nullSafeString(data.applicantState.toString())
+        binding.txtNewAddress.text = nullSafeString(data.applicantAltAddress.toString())
+        binding.txtNewMobileValue.text = nullSafeString(data.applicantAlternateMobile1.toString())
 
-        val isPlanned = intent.getBooleanExtra("isPlanned", false)
-        if (isPlanned) {
-            binding.detailsPlanBtn.text = "Unplan"
-            binding.detailsPlanBtn.rippleColor =
-                ContextCompat.getColorStateList(this, R.color.light_red)
-            binding.detailsPlanBtn.strokeColor =
-                ContextCompat.getColorStateList(this, R.color.light_red)
-            binding.detailsPlanBtn.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.light_red
-                )
-            )
+    }
+
+    private fun nullSafeString(value: String): String {
+        if (value.isNullOrEmpty() || value.isNullOrBlank() || value == "null") {
+            return "-"
         }
+        return value
     }
 }

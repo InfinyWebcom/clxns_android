@@ -68,10 +68,15 @@ class ListViewFragment : Fragment() {
                 is NetworkResult.Success -> {
                     binding.progressBar.hide()
                     if (!response.data?.error!!) {
-                        binding.recyclerContacts.apply {
-                            adapter = TempAdapter2(requireContext(), response.data.data)
-                        }
+                        if (response.data.total!! > 0) {
+                            binding.txtNoData.visibility = View.GONE
 
+                            binding.recyclerContacts.apply {
+                                adapter = TempAdapter2(requireContext(), response.data.data)
+                            }
+                        } else {
+                            binding.txtNoData.visibility = View.VISIBLE
+                        }
                     } else {
                         requireContext().toast(response.data.title!!)
                     }
