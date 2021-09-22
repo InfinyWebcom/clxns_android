@@ -5,12 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.activityViewModels
+import android.widget.*
+import androidx.fragment.app.viewModels
 import com.clxns.app.R
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.BottomSheetCasesFilterBinding
-import com.clxns.app.ui.main.cases.CasesViewModel
 import com.clxns.app.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +17,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CasesFilterBS : BottomSheetDialogFragment() {
+class CasesFilterBS : BottomSheetDialogFragment(), AdapterView.OnItemSelectedListener {
 
     private var _binding: BottomSheetCasesFilterBinding? = null
 
@@ -29,10 +28,13 @@ class CasesFilterBS : BottomSheetDialogFragment() {
     private lateinit var calendar: Calendar
     private lateinit var datePickerDialog: DatePickerDialog
 
-    private val casesViewModel: CasesViewModel by activityViewModels()
+    private val casesViewModel: CasesFilterViewModel by viewModels()
+    private lateinit var dispositionList: List<String>
 
     @Inject
     lateinit var sessionManager: SessionManager
+
+    private lateinit var dispositionSpinner : Spinner
 
     companion object {
         private var mYear: Int = 0
@@ -63,6 +65,18 @@ class CasesFilterBS : BottomSheetDialogFragment() {
 
         initView()
         setListeners()
+        casesViewModel.getAllDispositions()
+
+        dispositionSpinner = binding.statusSpinner
+        dispositionSpinner.onItemSelectedListener = this
+        casesViewModel.dispositionsResponse.observe(viewLifecycleOwner){
+            if (it.isNotEmpty()){
+                dispositionList = it
+                val dispositionAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, dispositionList)
+                dispositionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                dispositionSpinner.adapter = dispositionAdapter
+            }
+        }
     }
 
     private fun initView() {
@@ -85,7 +99,6 @@ class CasesFilterBS : BottomSheetDialogFragment() {
         }
 
         binding.filterApplyBtn.setOnClickListener {
-            //casesViewModel.getCasesList(sessionManager.getString(Constants.TOKEN)!!)
             this.dismiss()
         }
 
@@ -116,5 +129,13 @@ class CasesFilterBS : BottomSheetDialogFragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        Toast.makeText(requireContext(), position.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+
     }
 }

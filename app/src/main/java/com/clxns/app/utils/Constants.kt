@@ -6,7 +6,7 @@ import com.clxns.app.BuildConfig
 
 class Constants {
     companion object {
-        const val DATABASE_NAME="collection_db"
+        const val DATABASE_NAME="collections_database"
         const val PREF_NAME = "clxns_pref_${BuildConfig.APPLICATION_ID}"
         const val TOKEN = "token"
         const val USER_NAME = "user_name"

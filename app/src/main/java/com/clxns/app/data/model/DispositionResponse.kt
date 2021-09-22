@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class DispositionResponse(
     @Json(name = "data")
-    val `data`: List<DispositionData>,
+    val data: List<DispositionData>,
     @Json(name = "error")
     val error: Boolean,
     @Json(name = "title")

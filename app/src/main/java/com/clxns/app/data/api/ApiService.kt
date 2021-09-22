@@ -106,4 +106,6 @@ interface ApiService {
         @Field("planDate") planDate: String
     ): Response<AddToPlanModel>
 
+    @POST("fos/getStatisticsData")
+    suspend fun getHomeStatsData(@Header("token") token: String): Response<HomeStatisticsResponse>
 }
