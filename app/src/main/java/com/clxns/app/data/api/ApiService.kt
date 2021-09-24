@@ -6,7 +6,6 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
 import retrofit2.http.POST
-import java.util.*
 
 interface ApiService {
     @POST("fos/login")
@@ -60,7 +59,10 @@ interface ApiService {
 
     @POST("fos/listMyPlan")
     suspend fun getMyPlanList(
-        @Header("token") token: String
+        @Header("token") token: String,
+        @Header("start") start: Int,
+        @Header("length") length: Int,
+        @Header("planDate") planDate: String
     ): Response<MyPlanModel>
 
     @POST("fos/listFosDis")
@@ -108,4 +110,19 @@ interface ApiService {
 
     @POST("fos/getStatisticsData")
     suspend fun getHomeStatsData(@Header("token") token: String): Response<HomeStatisticsResponse>
+
+    @FormUrlEncoded
+    @POST("fos/addPayment")
+    suspend fun addPayment(
+        @Header("token") token: String,
+        @Field("leadId") leadId: String,
+        @Field("loanNo") loanNo: String,
+        @Field("amtType") amtType: String,
+        @Field("paymentMode") paymentMode: String,
+        @Field("recoveryDate") recoveryDate: String,
+        @Field("refNo") refNo: String,
+        @Field("chequeNo") chequeNo: String,
+        @Field("remark") remark: String,
+        @Field("supporting") supporting: String
+    ): Response<HomeStatisticsResponse>
 }

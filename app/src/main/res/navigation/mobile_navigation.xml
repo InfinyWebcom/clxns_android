@@ -31,9 +31,9 @@
 
     <fragment
         android:id="@+id/navigation_my_plan"
-        android:name="com.clxns.app.ui.main.plan.PlanFragment"
+        android:name="com.clxns.app.ui.main.plan.bfrag.MyPlanFragment"
         android:label="@string/title_my_plan"
-        tools:layout="@layout/fragment_plan" />
+        tools:layout="@layout/fragment_my_plan" />
 
     <fragment
         android:id="@+id/profileFragment"

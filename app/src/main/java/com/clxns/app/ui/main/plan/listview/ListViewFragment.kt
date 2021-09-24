@@ -10,7 +10,10 @@ import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.UserDetails
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ListViewFragmentBinding
-import com.clxns.app.utils.*
+import com.clxns.app.utils.Constants
+import com.clxns.app.utils.hide
+import com.clxns.app.utils.show
+import com.clxns.app.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -51,7 +54,7 @@ class ListViewFragment : Fragment() {
 
 
     private fun setObserver() {
-        viewModel.getMyPlanList(sessionManager.getString(Constants.TOKEN)!!)
+        viewModel.getMyPlanList(sessionManager.getString(Constants.TOKEN)!!,"")
         viewModel.response.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
