@@ -3,11 +3,12 @@ package com.clxns.app.data.repository
 import com.clxns.app.data.api.helper.BaseApiResponse
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.api.helper.RemoteDataSource
+import com.clxns.app.data.database.BankDetailsEntity
 import com.clxns.app.data.database.DispositionEntity
 import com.clxns.app.data.database.LocalDataSource
 import com.clxns.app.data.database.SubDispositionEntity
 import com.clxns.app.data.model.DispositionResponse
-import com.clxns.app.data.model.HomeStatisticsResponse
+import com.clxns.app.data.model.FISBankResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -20,6 +21,7 @@ class MainRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) : BaseApiResponse() {
+
     suspend fun getAllDispositions(): Flow<NetworkResult<DispositionResponse>> {
         return flow {
             emit(safeApiCall {
@@ -28,10 +30,10 @@ class MainRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getHomeStatsData(token: String): Flow<NetworkResult<HomeStatisticsResponse>> {
+    suspend fun getBankList(token: String): Flow<NetworkResult<FISBankResponse>> {
         return flow {
             emit(safeApiCall {
-                remoteDataSource.getHomeStatsData(token)
+                remoteDataSource.getBankList(token)
             })
         }.flowOn(Dispatchers.IO)
     }
@@ -42,5 +44,6 @@ class MainRepository @Inject constructor(
     suspend fun saveAllSubDispositions(subDispositionList: List<SubDispositionEntity>) =
         localDataSource.saveAllSubDispositions(subDispositionList)
 
-    suspend fun getAll() = localDataSource.getAll()
+    suspend fun saveAllBankDetails(bankDetailList: List<BankDetailsEntity>) =
+        localDataSource.saveAllBankDetails(bankDetailList)
 }

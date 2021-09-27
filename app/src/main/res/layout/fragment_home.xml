@@ -180,12 +180,13 @@
                             app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
 
                         <TextView
+                            android:id="@+id/cases_allocated_count_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="end"
-                            android:text="145"
+                            android:text="@string/zero"
                             android:textColor="@color/green"
                             android:textSize="@dimen/sp30" />
                     </LinearLayout>
@@ -208,12 +209,13 @@
                             app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
 
                         <TextView
+                            android:id="@+id/total_pos_amount_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="end"
-                            android:text="₹84,978"
+                            android:text="@string/zero"
                             android:textColor="@color/green"
                             android:textSize="@dimen/sp30" />
                     </LinearLayout>
@@ -236,12 +238,13 @@
                             app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
 
                         <TextView
+                            android:id="@+id/total_due_amount_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="end"
-                            android:text="₹1,10,948"
+                            android:text="@string/zero"
                             android:textColor="@color/red_orange"
                             android:textSize="@dimen/sp30" />
                     </LinearLayout>
@@ -264,12 +267,13 @@
                             app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
 
                         <TextView
+                            android:id="@+id/amount_collected_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:fontFamily="sans-serif-medium"
                             android:gravity="end"
-                            android:text="₹55,948"
+                            android:text="@string/zero"
                             android:textColor="@color/red_orange"
                             android:textSize="@dimen/sp30" />
                     </LinearLayout>
@@ -297,7 +301,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp12"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Summary"
+                    android:text="@string/summary"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp20"
                     app:drawableEndCompat="@drawable/ic_arrow_forward_20"
@@ -349,6 +353,7 @@
                             android:textSize="@dimen/sp16" />
 
                         <TextView
+                            android:id="@+id/visit_pending_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -356,7 +361,7 @@
                             android:gravity="end"
                             android:paddingStart="@dimen/dp8"
                             android:paddingEnd="@dimen/dp8"
-                            android:text="45"
+                            android:text="@string/zero"
                             android:textColor="@color/red_orange"
                             android:textSize="@dimen/sp30" />
 
@@ -388,6 +393,7 @@
                             android:textSize="@dimen/sp16" />
 
                         <TextView
+                            android:id="@+id/follow_up_tv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -395,7 +401,7 @@
                             android:gravity="end"
                             android:paddingStart="@dimen/dp8"
                             android:paddingEnd="@dimen/dp8"
-                            android:text="245"
+                            android:text="@string/zero"
                             android:textColor="@color/red_orange"
                             android:textSize="@dimen/sp30" />
 

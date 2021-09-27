@@ -1,19 +1,15 @@
 package com.clxns.app.data.repository
 
-import com.clxns.app.data.api.ApiService
 import com.clxns.app.data.api.helper.BaseApiResponse
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.api.helper.RemoteDataSource
-import com.clxns.app.data.model.CasesResponse
 import com.clxns.app.data.model.ForgotPasswordResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import retrofit2.Response
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @ActivityRetainedScoped
 class ForgotPasswordRepository @Inject constructor(
@@ -29,10 +25,10 @@ class ForgotPasswordRepository @Inject constructor(
     suspend fun verifyOTP(
         token: String,
         otp: String,
-        mobileNo: String
+        emailId: String
     ): Flow<NetworkResult<ForgotPasswordResponse>> {
         return flow {
-            emit(safeApiCall { remoteDataSource.verifyOTP(token, otp, mobileNo) })
+            emit(safeApiCall { remoteDataSource.verifyOTP(token, otp, emailId) })
         }.flowOn(Dispatchers.IO)
     }
 

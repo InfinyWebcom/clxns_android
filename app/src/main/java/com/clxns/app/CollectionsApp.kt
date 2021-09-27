@@ -12,5 +12,8 @@ class CollectionsApp : Application(){
         if (BuildConfig.DEBUG){
             Timber.plant(Timber.DebugTree())
         }
+        /** TODO
+         * Add OTP Timer in Forgot Password Activity
+         */
     }
 }

@@ -9,13 +9,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
-import com.clxns.app.data.model.CasesData
+import com.clxns.app.data.model.cases.CasesData
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentCasesBinding
 import com.clxns.app.ui.search.SearchActivity
@@ -27,7 +28,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CasesFragment : Fragment() {
 
-    private val viewModel: CasesViewModel by viewModels()
+    private val viewModel: CasesViewModel by activityViewModels()
     private var _binding: FragmentCasesBinding? = null
 
     // This property is only valid between onCreateView and
@@ -38,6 +39,10 @@ class CasesFragment : Fragment() {
     lateinit var sessionManager: SessionManager
 
     private val args: CasesFragmentArgs by navArgs()
+
+    private var casesDataList: ArrayList<CasesData> = arrayListOf()
+    private lateinit var casesAdapter: CasesAdapter
+    private lateinit var casesRV: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,9 +55,16 @@ class CasesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getCasesList(sessionManager.getString(Constants.TOKEN)!!, "")
 
-        setObserver()
+        subscribeObserver()
+
+        casesRV = binding.casesRv
+        casesAdapter = CasesAdapter(requireContext(), casesDataList) {
+            showPlanDialog(it)
+        }
+        casesRV.layoutManager = LinearLayoutManager(requireContext())
+        casesRV.adapter = casesAdapter
+
 
         if (args.dispositionId != 0) {
             binding.root.snackBar(args.dispositionId.toString())
@@ -68,36 +80,37 @@ class CasesFragment : Fragment() {
             val options = ActivityOptions.makeSceneTransitionAnimation(requireActivity(), p)
             startActivity(i, options.toBundle())
         }
+
+        viewModel.getCasesList(
+            sessionManager.getString(Constants.TOKEN)!!,
+            "", "", "", "", ""
+        )
     }
 
-    private fun setObserver() {
+    private fun subscribeObserver() {
         viewModel.responseCaseList.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     // bind data to the view
                     binding.progressBar.hide()
-
-                    if (!response.data?.error!!) {
-                        if (response.data.total > 0) {
+                    casesDataList.clear()
+                    casesAdapter.notifyDataSetChanged()
+                    if (response.data?.error == false) {
+                        if (!response.data.casesDataList.isNullOrEmpty()) {
                             binding.txtNoData.visibility = View.GONE
-
-                            binding.casesAllottedTv.text =
-                                "Cases: " + response.data?.total.toString()
-                            binding.amountCollectedTv.text =
-                                "Collectable : ₹${response.data?.amountCollected.toString()}"
-                            binding.casesRv.apply {
-                                layoutManager = LinearLayoutManager(context)
-                                adapter =
-                                    CasesAdapter(requireContext(), response.data.casesDataList!!) {
-                                        showPlanDialog(it)
-                                    }
-                            }
-
+                            val totalCase = "Cases: " + response.data.total.toString()
+                            binding.casesAllottedTv.text = totalCase
+                            val collectable =
+                                "Collectable : " + response.data.collectable?.convertToCurrency()
+                            binding.amountCollectedTv.text = collectable
+                            val dataList = response.data.casesDataList
+                            casesDataList.addAll(dataList)
+                            casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
                         } else {
                             binding.txtNoData.visibility = View.VISIBLE
                         }
                     } else {
-                        requireContext().toast(response.data.title)
+                        requireContext().toast(response.data?.title!!)
                     }
                 }
                 is NetworkResult.Error -> {
@@ -161,6 +174,7 @@ class CasesFragment : Fragment() {
             cal.get(Calendar.MONTH),
             cal.get(Calendar.DAY_OF_MONTH)
         )
+        datePicker.datePicker.minDate = cal.timeInMillis
 
 //        datePicker.setButton(
 //            DialogInterface.BUTTON_POSITIVE,

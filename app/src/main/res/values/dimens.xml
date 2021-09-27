@@ -38,4 +38,5 @@
     <dimen name="sp28">28sp</dimen>
     <dimen name="sp30">30sp</dimen>
     <dimen name="sp32">32sp</dimen>
+    <dimen name="sp36">36sp</dimen>
 </resources>

@@ -3,7 +3,6 @@ package com.clxns.app.data.repository
 import com.clxns.app.data.api.helper.BaseApiResponse
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.api.helper.RemoteDataSource
-import com.clxns.app.data.model.CasesResponse
 import com.clxns.app.data.model.MyPlanModel
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers

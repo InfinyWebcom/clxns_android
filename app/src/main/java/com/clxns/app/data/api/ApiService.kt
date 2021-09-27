@@ -1,12 +1,13 @@
 package com.clxns.app.data.api
 
 import com.clxns.app.data.model.*
+import com.clxns.app.data.model.cases.CasesResponse
+import com.clxns.app.data.model.home.HomeStatisticsResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
 import retrofit2.http.POST
-import java.util.*
 
 interface ApiService {
     @POST("fos/login")
@@ -51,10 +52,11 @@ interface ApiService {
     suspend fun getCasesList(
         @Header("token") token: String,
         @Field("search") searchTxt: String,
-        @Field("length") length: Int,
         @Field("start") start: Int,
         @Field("dispositionId") dispositionId: String,
-        @Field("subdispositionId") subDispositionId: String
+        @Field("subdispositionId") subDispositionId: String,
+        @Field("fromDate") fromDate: String,
+        @Field("toDate") toDate: String
     ): Response<CasesResponse>
 
 
@@ -64,7 +66,6 @@ interface ApiService {
     ): Response<MyPlanModel>
 
     @POST("fos/listFosDis")
-
     suspend fun getAllDispositions(): Response<DispositionResponse>
 
     @FormUrlEncoded
@@ -108,4 +109,7 @@ interface ApiService {
 
     @POST("fos/getStatisticsData")
     suspend fun getHomeStatsData(@Header("token") token: String): Response<HomeStatisticsResponse>
+
+    @POST("fos/listBank")
+    suspend fun getBankList(@Header("token") token: String): Response<FISBankResponse>
 }

@@ -5,15 +5,11 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class CasesResponse(
-    @Json(name = "amountCollected")
-    val amountCollected: String?,
+data class FISBankResponse(
     @Json(name = "data")
-    val casesDataList: List<CasesData>,
+    val bankData: List<BankData>,
     @Json(name = "error")
     val error: Boolean,
     @Json(name = "title")
-    val title: String,
-    @Json(name = "total")
-    val total: Int
+    val title: String
 )

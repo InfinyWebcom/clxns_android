@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
-import com.clxns.app.data.model.DispositionResponse
+import com.clxns.app.data.model.home.HomeStatisticsResponse
 import com.clxns.app.data.repository.HomeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -16,13 +16,13 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val homeRepository: HomeRepository) : ViewModel() {
 
 
-    private val _responseDisposition: MutableLiveData<NetworkResult<DispositionResponse>> =
+    private val _responseHomeStats: MutableLiveData<NetworkResult<HomeStatisticsResponse>> =
         MutableLiveData()
-    val responseDisposition: LiveData<NetworkResult<DispositionResponse>> = _responseDisposition
+    val responseHomeStats: LiveData<NetworkResult<HomeStatisticsResponse>> = _responseHomeStats
 
-    fun getAllDispositions() = viewModelScope.launch {
-        homeRepository.getAllDispositions().collect {
-            _responseDisposition.value = it
+    fun getHomeStatsData(token: String) = viewModelScope.launch {
+        homeRepository.getHomeStatsData(token).collect {
+            _responseHomeStats.value = it
         }
     }
 }

@@ -57,23 +57,19 @@ class ForgotPasswordActivity : AppCompatActivity() {
         viewModel.responseGetOTP.observe(this) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-//                    binding.progressBar.hide()
                     binding.root.snackBar(response.data?.title!!)
+
+                    // bind data to the view
                     if (!response.data.error) {
                         sessionManager.saveAnyData(Constants.TOKEN, response.data.token.toString())
                         updateUIOnSuccessfulGetOTP()
                     }
-                    // bind data to the view
                 }
                 is NetworkResult.Error -> {
-//                    binding.progressBar.hide()
                     toast(response.message!!)
-                    // show error message
                 }
                 is NetworkResult.Loading -> {
-//                    binding.progressBar.show()
                     binding.root.snackBar("Getting OTP...")
-                    // show a progress bar
                 }
             }
         }
@@ -81,7 +77,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
         viewModel.responseVerifyOTP.observe(this) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-//                    binding.progressBar.hide()
                     toast(response.data?.title!!)
                     if (!response.data.error) {
                         sessionManager.saveAnyData(Constants.TOKEN, response.data.token!!)
@@ -93,56 +88,13 @@ class ForgotPasswordActivity : AppCompatActivity() {
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {
-//                    binding.progressBar.hide()
                     toast(response.message!!)
-                    // show error message
                 }
                 is NetworkResult.Loading -> {
-//                    binding.progressBar.show()
                     binding.root.snackBar("Verifying OTP...")
-                    // show a progress bar
                 }
             }
         }
-
-//        passwordViewModel.forgotPasswordResponse.observe(this, {
-//            when (it.status) {
-//                Status.SUCCESS -> {
-//                    this.toast(it.data?.title!!)
-//                    sessionManager.saveAnyData(Constants.TOKEN, it.data.token.toString())
-//                    updateUIOnSuccessfulGetOTP()
-//                }
-//                Status.ERROR -> {
-//                    binding.root.snackBar(it.message!!)
-//                }
-//                Status.LOADING -> {
-//                    binding.forgotPasswordSubHeader.text = "Loading...."
-//                }
-//            }
-//        })
-
-
-
-//        passwordViewModel.verifyOTPResponse.observe(this, {
-//            when (it.status) {
-//                Status.SUCCESS -> {
-//                    sessionManager.saveAnyData(Constants.TOKEN, it.data?.token!!)
-//                    this.toast(it.data.title)
-//                    val goToChangePasswordActivity =
-//                        Intent(this, ChangePasswordActivity::class.java)
-//                    goToChangePasswordActivity.putExtra("isFromOTPScreen", true)
-//                    startActivity(goToChangePasswordActivity)
-//                }
-//                Status.ERROR -> {
-//                    binding.root.snackBar(it.message!!)
-//                }
-//                Status.LOADING -> {
-//                    binding.root.snackBar("Verifying OTP...")
-//                }
-//            }
-//        })
-
-
 
     }
 

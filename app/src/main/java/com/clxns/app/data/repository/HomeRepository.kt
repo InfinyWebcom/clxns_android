@@ -3,8 +3,7 @@ package com.clxns.app.data.repository
 import com.clxns.app.data.api.helper.BaseApiResponse
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.api.helper.RemoteDataSource
-import com.clxns.app.data.model.ChangePasswordResponse
-import com.clxns.app.data.model.DispositionResponse
+import com.clxns.app.data.model.home.HomeStatisticsResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -16,10 +15,10 @@ import javax.inject.Inject
 class HomeRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) : BaseApiResponse() {
-    suspend fun getAllDispositions(): Flow<NetworkResult<DispositionResponse>> {
+    suspend fun getHomeStatsData(token: String): Flow<NetworkResult<HomeStatisticsResponse>> {
         return flow {
             emit(safeApiCall {
-                remoteDataSource.getAllDispositions()
+                remoteDataSource.getHomeStatsData(token)
             })
         }.flowOn(Dispatchers.IO)
     }

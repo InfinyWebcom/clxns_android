@@ -22,7 +22,7 @@
             android:layout_width="@dimen/dp48"
             android:layout_height="@dimen/dp48"
             android:elevation="0dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:cardCornerRadius="@dimen/dp200"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -33,7 +33,7 @@
                 android:layout_height="match_parent"
                 android:importantForAccessibility="no"
                 android:scaleType="centerInside"
-                android:src="@drawable/kotak_sample" />
+                 android:src="@drawable/ic_logo_x"/>
         </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
@@ -41,6 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginStart="@dimen/dp8"
             app:layout_constraintEnd_toEndOf="@id/cases_amount_tv"
             app:layout_constraintEnd_toStartOf="@id/cases_amount_tv"
             app:layout_constraintStart_toEndOf="@+id/cases_image_container"

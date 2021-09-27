@@ -3,7 +3,7 @@ package com.clxns.app.di
 import android.content.Context
 import androidx.room.Room
 import com.clxns.app.data.database.AppDatabase
-import com.clxns.app.data.database.DispositionDao
+import com.clxns.app.data.database.AppDao
 import com.clxns.app.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -24,7 +24,7 @@ object DBModule {
     }
 
     @Provides
-    fun provideDispositionDao(appDatabase: AppDatabase): DispositionDao{
+    fun provideDispositionDao(appDatabase: AppDatabase): AppDao{
         return appDatabase.dispositionDao()
     }
 }

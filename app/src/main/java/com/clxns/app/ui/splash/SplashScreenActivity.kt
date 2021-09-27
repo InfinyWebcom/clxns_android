@@ -7,8 +7,8 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivitySplashScreenBinding
-import com.clxns.app.ui.main.MainActivity
 import com.clxns.app.ui.login.LoginActivity
+import com.clxns.app.ui.main.MainActivity
 import com.clxns.app.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -39,7 +39,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, activity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
             startActivity(intent)
             finish()
 

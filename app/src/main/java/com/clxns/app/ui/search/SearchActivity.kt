@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.clxns.app.data.api.helper.NetworkResult
-import com.clxns.app.data.model.CasesData
+import com.clxns.app.data.model.cases.CasesData
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivitySearchBinding
 import com.clxns.app.ui.main.cases.CasesAdapter
@@ -27,14 +27,14 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchView: SearchView
 
     private val casesViewModel: CasesViewModel by viewModels()
-    private var casesDataList : MutableList<CasesData> = mutableListOf()
+    private var casesDataList: MutableList<CasesData> = mutableListOf()
 
     private lateinit var casesAdapter: CasesAdapter
 
     @Inject
     lateinit var sessionManager: SessionManager
 
-    private lateinit var token:String
+    private lateinit var token: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,20 +50,22 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun subscribeObserver() {
-        casesViewModel.responseCaseList.observe(this){
-            when(it){
-                is NetworkResult.Success ->{
-                    if (it.data?.error == false && it.data.casesDataList.isNotEmpty()){
+        casesViewModel.responseCaseList.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    if (it.data?.error == false && it.data.casesDataList.isNotEmpty()) {
                         casesDataList.addAll(it.data.casesDataList)
                         casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
-                    }else{
+                    } else {
                         binding.root.snackBar("Nothing found")
                     }
                 }
                 is NetworkResult.Error -> {
                     toast(it.message!!)
                 }
-                is NetworkResult.Loading -> {Timber.i("Loading...")}
+                is NetworkResult.Loading -> {
+                    Timber.i("Loading...")
+                }
             }
         }
     }
@@ -74,7 +76,7 @@ class SearchActivity : AppCompatActivity() {
 
         searchView = binding.searchView
 
-        casesAdapter = CasesAdapter(this, casesDataList){
+        casesAdapter = CasesAdapter(this, casesDataList) {
             toast(it.name)
         }
 
@@ -96,7 +98,6 @@ class SearchActivity : AppCompatActivity() {
                 }
             }
         })
-
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 this@SearchActivity.hideKeyboard(binding.root)
@@ -106,12 +107,17 @@ class SearchActivity : AppCompatActivity() {
                 toast("Searching..")
                 casesDataList.clear()
                 if (query != null) {
-                    casesViewModel.getCasesList(token,query)
+                    casesViewModel.getCasesList(token, query, "", "", "", "")
                 }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    // Search
+                    casesDataList.clear()
+                    casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
+                }
                 return false
             }
 

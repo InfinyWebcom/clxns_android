@@ -54,7 +54,6 @@
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_payment_collection.xml" value="0.14629629629629629" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_reposseion_map.xml" value="0.14629629629629629" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_repossessions_submit.xml" value="0.14629629629629629" />
-        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_search.xml" value="0.11666666666666667" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/added_image.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/cases_summary_layout.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/custom_info_contents.xml" value="0.1984375" />
@@ -70,7 +69,6 @@
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/list_view_fragment.xml" value="0.1984375" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/nearest_address_list_item.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/plan_list_items.xml" value="0.17777777777777778" />
-        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/retry_layout.xml" value="0.11666666666666667" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/status_items.xml" value="0.14629629629629629" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/sub_status_action_bottom_sheet.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/sub_status_item.xml" value="0.14629629629629629" />
@@ -87,17 +85,25 @@
         <entry key="app/src/main/res/drawable/ic_forgot_password.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_lock_24.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/drawable/ic_logo_x.xml" value="0.17314814814814813" />
+        <entry key="app/src/main/res/drawable/ic_logo_x_color.xml" value="0.140234375" />
         <entry key="app/src/main/res/drawable/ic_main_logo.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/drawable/ic_phone_android_24.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/drawable/ic_round_close_24.xml" value="0.17314814814814813" />
         <entry key="app/src/main/res/drawable/ic_tick.xml" value="0.18697916666666667" />
-        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.19" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.18" />
+        <entry key="app/src/main/res/drawable/progress_icon.xml" value="0.140234375" />
+        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.16" />
+        <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.16" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.16" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17083333333333334" />
-        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.16" />
+        <entry key="app/src/main/res/layout/cases_list_item.xml" value="0.128125" />
+        <entry key="app/src/main/res/layout/cases_summary_layout.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/custom_back_btn.xml" value="0.17083333333333334" />
+        <entry key="app/src/main/res/layout/fragment_cases.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1388888888888889" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.128125" />
+        <entry key="app/src/main/res/layout/fragment_my_profile.xml" value="0.16" />
+        <entry key="app/src/main/res/menu/account_menu.xml" value="0.128125" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.17083333333333334" />
       </map>
     </option>

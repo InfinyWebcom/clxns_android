@@ -7,12 +7,11 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
+import com.clxns.app.data.database.BankDetailsEntity
 import com.clxns.app.data.database.DispositionEntity
-import com.clxns.app.data.database.LocalDataSource
 import com.clxns.app.data.database.SubDispositionEntity
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityMainBinding
-import com.clxns.app.ui.main.home.HomeViewModel
 import com.clxns.app.utils.Constants
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,14 +28,13 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var sessionManager: SessionManager
 
-    @Inject
-    lateinit var localDataSource: LocalDataSource
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        subscribeObserver()
 
         val token = sessionManager.getString(Constants.TOKEN).toString()
         val navView: BottomNavigationView = binding.navView
@@ -55,29 +53,49 @@ class MainActivity : AppCompatActivity() {
 
 
         mainViewModel.getAllDispositions()
-        mainViewModel.getHomeStatsData(token)
-        mainViewModel.getAll()
-        subscribeObserver()
+        mainViewModel.getBankList(token)
     }
 
     private fun subscribeObserver() {
-
-        mainViewModel.response.observe(this) {
-            Timber.i("Printing DB")
-            Timber.i(it.toString())
+        mainViewModel.responseBankList.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    Timber.i("Bank List")
+                    Timber.i(it.data.toString())
+                    if (it.data?.error == false) {
+                        val bankList = arrayListOf<BankDetailsEntity>()
+                        for (data in it.data.bankData) {
+                            bankList.add(
+                                BankDetailsEntity(
+                                    data.id,
+                                    data.name,
+                                    data.location,
+                                    data.category,
+                                    data.description,
+                                    Constants.BANK_LOGO_URL + data.fiImage
+                                )
+                            )
+                        }
+                        mainViewModel.saveAllBankDetails(bankList)
+                    }
+                }
+                is NetworkResult.Loading -> {
+                }
+                is NetworkResult.Error -> Timber.i(it.message)
+            }
         }
         mainViewModel.responseDisposition.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
                     //Timber.i(it.data.toString())
                     if (it.data?.error == false) {
-                        if (it.data.data.isNotEmpty()) {
+                        if (it.data.dispositionData.isNotEmpty()) {
                             val dispositionList = arrayListOf<DispositionEntity>()
                             val subDispositionList = arrayListOf<SubDispositionEntity>()
-                            for (dis in it.data.data) {
+                            for (dis in it.data.dispositionData) {
                                 dispositionList.add(DispositionEntity(dis.id, dis.name))
-                                if (dis.subDispositionList.isNotEmpty()) {
-                                    for (subDis in dis.subDispositionList) {
+                                if (dis.subDispositionDataList.isNotEmpty()) {
+                                    for (subDis in dis.subDispositionDataList) {
                                         subDispositionList.add(
                                             SubDispositionEntity(
                                                 subDis.id,
@@ -92,18 +110,6 @@ class MainActivity : AppCompatActivity() {
                             mainViewModel.saveAllSubDispositions(subDispositionList)
                         }
                     }
-                }
-                is NetworkResult.Loading -> {
-                    Timber.i("Loading...")
-                }
-                is NetworkResult.Error -> Timber.i("Error")
-            }
-        }
-
-        mainViewModel.responseHomeStats.observe(this) {
-            when (it) {
-                is NetworkResult.Success -> {
-                    //Timber.i(it.data.toString())
                 }
                 is NetworkResult.Loading -> {
                     Timber.i("Loading...")

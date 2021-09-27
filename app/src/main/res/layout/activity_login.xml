@@ -57,7 +57,6 @@
             android:id="@+id/emailET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/gtwalsheimproregular"
             android:inputType="textEmailAddress"
             android:textColor="@color/colorPrimary" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -80,7 +79,6 @@
             android:id="@+id/passwordET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/gtwalsheimproregular"
             android:inputType="textPassword"
             android:maxLength="50"
             android:textColor="@color/colorPrimary" />
@@ -114,10 +112,4 @@
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/sp18" />
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_centerInParent="true" />
 </RelativeLayout>

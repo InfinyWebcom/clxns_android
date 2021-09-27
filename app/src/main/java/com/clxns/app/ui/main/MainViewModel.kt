@@ -5,10 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
+import com.clxns.app.data.database.BankDetailsEntity
 import com.clxns.app.data.database.DispositionEntity
 import com.clxns.app.data.database.SubDispositionEntity
 import com.clxns.app.data.model.DispositionResponse
-import com.clxns.app.data.model.HomeStatisticsResponse
+import com.clxns.app.data.model.FISBankResponse
 import com.clxns.app.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -21,36 +22,37 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
         MutableLiveData()
     val responseDisposition: LiveData<NetworkResult<DispositionResponse>> = _responseDisposition
 
-    private val _responseHomeStats: MutableLiveData<NetworkResult<HomeStatisticsResponse>> =
+    private val _responseBankList: MutableLiveData<NetworkResult<FISBankResponse>> =
         MutableLiveData()
-    val responseHomeStats: LiveData<NetworkResult<HomeStatisticsResponse>> = _responseHomeStats
+    val responseBankList: LiveData<NetworkResult<FISBankResponse>> = _responseBankList
 
 
-    private val _response: MutableLiveData<List<DispositionEntity>> = MutableLiveData()
-    val response: LiveData<List<DispositionEntity>> = _response
-
-
-    fun getHomeStatsData(token: String) = viewModelScope.launch {
-        mainRepository.getHomeStatsData(token).collect {
-            _responseHomeStats.value = it
-        }
-    }
     fun getAllDispositions() = viewModelScope.launch {
         mainRepository.getAllDispositions().collect {
             _responseDisposition.value = it
         }
     }
 
+    fun getBankList(token: String) = viewModelScope.launch {
+        mainRepository.getBankList(token).collect {
+            _responseBankList.value = it
+        }
+    }
+
+    //Saving Disposition in the local db
     fun saveAllDispositions(dispositionList: List<DispositionEntity>) = viewModelScope.launch {
         mainRepository.saveAllDispositions(dispositionList)
     }
 
+    //Saving Sub Disposition in the local db
     fun saveAllSubDispositions(subDispositionList: List<SubDispositionEntity>) =
         viewModelScope.launch {
             mainRepository.saveAllSubDispositions(subDispositionList)
         }
 
-    fun getAll() = viewModelScope.launch {
-        _response.value = mainRepository.getAll()
-    }
+    //Saving Bank List in the local db
+    fun saveAllBankDetails(bankDetailList: List<BankDetailsEntity>) =
+        viewModelScope.launch {
+            mainRepository.saveAllBankDetails(bankDetailList)
+        }
 }

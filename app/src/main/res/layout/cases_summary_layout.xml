@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/cases_summary_background"
@@ -21,7 +22,8 @@
             android:gravity="center_horizontal"
             android:text="@string/cases_summary"
             android:textColor="@color/white"
-            android:textSize="22sp" />
+            android:textSize="22sp"
+            tools:ignore="TextContrastCheck" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/case_summary_close_btn"
@@ -40,7 +42,8 @@
                 android:layout_margin="@dimen/dp6"
                 android:contentDescription="@string/edit_button"
                 android:src="@drawable/ic_close_black_24dp"
-                app:tint="@color/text_black" />
+                app:tint="@color/text_black"
+                tools:ignore="RedundantDescriptionCheck" />
         </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
 
@@ -66,9 +69,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/total_cases_tv"
                 android:fontFamily="sans-serif-medium"
                 android:includeFontPadding="false"
-                android:text="32"
+                android:text="@string/zero"
                 android:textColor="@color/text_black"
                 android:textSize="26sp" />
 
@@ -114,7 +118,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:text="3"
+                    android:id="@+id/ptp_tv"
+                    android:text="@string/zero"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
@@ -124,7 +129,7 @@
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
                     android:includeFontPadding="false"
-                    android:text="PTP"
+                    android:text="@string/ptp"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
 
@@ -155,7 +160,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:text="5"
+                    android:text="@string/zero"
+                    android:id="@+id/rtp_tv"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
@@ -164,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="RTP"
+                    android:text="@string/rtp"
                     android:includeFontPadding="false"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
@@ -203,7 +209,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:text="7"
+                    android:text="@string/zero"
+                    android:id="@+id/broken_ptp_tv"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
@@ -212,7 +219,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Broke PTP"
+                    android:text="@string/broken_ptp"
                     android:includeFontPadding="false"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
@@ -244,7 +251,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:text="2"
+                    android:id="@+id/dispute_tv"
+                    android:text="@string/zero"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
@@ -253,7 +261,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Dispute"
+                    android:text="@string/dispute"
                     android:includeFontPadding="false"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
@@ -292,7 +300,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:text="10"
+                    android:text="@string/zero"
+                    android:id="@+id/customer_not_found_tv"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
@@ -301,7 +310,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Customer Not Found"
+                    android:text="@string/customer_not_found"
                     android:includeFontPadding="false"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
@@ -333,7 +342,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:text="6"
+                    android:id="@+id/call_back_tv"
+                    android:text="@string/zero"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
@@ -342,7 +352,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Call Back"
+                    android:text="@string/call_back"
                     android:includeFontPadding="false"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
@@ -379,8 +389,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
+                    android:id="@+id/collect_tv"
                     android:includeFontPadding="false"
-                    android:text="8"
+                    android:text="@string/zero"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
@@ -421,7 +432,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:text="12"
+                    android:id="@+id/partially_collect_tv"
+                    android:text="@string/zero"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
@@ -430,7 +442,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Partially Collect"
+                    android:text="@string/partially_collect"
                     android:includeFontPadding="false"
                     android:textSize="@dimen/sp14"/>
             </LinearLayout>
@@ -468,7 +480,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:text="4"
+                    android:id="@+id/settlement_tv"
+                    android:text="@string/zero"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
@@ -477,7 +490,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Settlement/Foreclosure"
+                    android:text="@string/settlement_foreclosure"
                     android:includeFontPadding="false"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
@@ -509,7 +522,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:text="1"
+                    android:id="@+id/customer_deceased_tv"
+                    android:text="@string/zero"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
@@ -518,7 +532,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Customer Deceased"
+                    android:text="@string/customer_deceased"
                     android:includeFontPadding="false"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>

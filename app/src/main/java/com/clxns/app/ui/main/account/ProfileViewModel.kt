@@ -21,11 +21,30 @@ class ProfileViewModel @Inject constructor(
     private val _responseLogout: MutableLiveData<NetworkResult<LogoutResponse>> = MutableLiveData()
     val responseLogout: LiveData<NetworkResult<LogoutResponse>> = _responseLogout
 
-    private val _responseUserDetails : MutableLiveData<NetworkResult<LoginResponse>> = MutableLiveData()
-    val responseUserDetails : LiveData<NetworkResult<LoginResponse>> = _responseUserDetails
+    private val _responseUserDetails: MutableLiveData<NetworkResult<LoginResponse>> =
+        MutableLiveData()
+    val responseUserDetails: LiveData<NetworkResult<LoginResponse>> = _responseUserDetails
+
+    private val _responseBankNames : MutableLiveData<List<String>> = MutableLiveData()
+    val responseBankNames : LiveData<List<String>> = _responseBankNames
+
+    private val _responseBankImage : MutableLiveData<String> = MutableLiveData()
+    val responseBankImage : LiveData<String> = _responseBankImage
+
+    fun getBankNameList() = viewModelScope.launch {
+        repository.getBankNameList().collect {
+            _responseBankNames.value = it
+        }
+    }
+
+    fun getBankImage(bankName:String) = viewModelScope.launch {
+        repository.getBankImage(bankName).collect {
+            _responseBankImage.value = it
+        }
+    }
 
     fun logout(token: String) = viewModelScope.launch {
-        _responseUserDetails.value = NetworkResult.Loading()
+        _responseLogout.value = NetworkResult.Loading()
         repository.logout(token).collect { values ->
             _responseLogout.value = values
         }
@@ -33,7 +52,7 @@ class ProfileViewModel @Inject constructor(
 
     fun getUserDetails(token: String) = viewModelScope.launch {
         _responseUserDetails.value = NetworkResult.Loading()
-        repository.getUserDetails(token).collect{
+        repository.getUserDetails(token).collect {
             _responseUserDetails.value = it
         }
     }

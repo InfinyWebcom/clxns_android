@@ -1,4 +1,4 @@
-package com.clxns.app.data.model
+package com.clxns.app.data.model.home
 
 
 import com.squareup.moshi.Json

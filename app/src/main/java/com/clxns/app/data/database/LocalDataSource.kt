@@ -2,24 +2,26 @@ package com.clxns.app.data.database
 
 import javax.inject.Inject
 
-class LocalDataSource @Inject constructor(private val dispositionDao: DispositionDao) {
+class LocalDataSource @Inject constructor(private val appDao: AppDao) {
 
     suspend fun saveAllDispositions(dispositionList: List<DispositionEntity>) =
-        dispositionDao.createAllDispositions(dispositionList)
+        appDao.createAllDispositions(dispositionList)
 
     suspend fun saveAllSubDispositions(subDispositionList: List<SubDispositionEntity>) =
-        dispositionDao.createAllSubDispositions(subDispositionList)
+        appDao.createAllSubDispositions(subDispositionList)
 
+    suspend fun saveAllBankDetails(bankDetailList: List<BankDetailsEntity>) =
+        appDao.createBankListInDB(bankDetailList)
 
-    suspend fun getAll() = dispositionDao.getAll()
+    fun getBankNameList() = appDao.getBankNameList()
 
-    suspend fun getAllDispositions() = dispositionDao.getAllDispositionsFromRoomDB()
-    /**
-     *Function to get all the dispositions from the room db
-    suspend fun getAllDisposition() : Flow<List<String>>{
-    return flow {
-    emit(localDataSource.getAllDispositions())
-    }.flowOn(Dispatchers.IO)
-    }
-     */
+    fun getBankImage(bankName: String) = appDao.getBankImageFromDB(bankName)
+
+    fun getAllDispositionsFromRoomDB() = appDao.getAllDispositions()
+
+    fun getDispositionId(dispositionName:String) = appDao.getDispositionId(dispositionName)
+
+    fun getSubDispositionId(subDispositionName: String) = appDao.getSubDispositionId(subDispositionName)
+
+    fun getAllSubDispositionsFromRoomDB(dispositionId:Int) = appDao.getAllSubDispositions(dispositionId)
 }

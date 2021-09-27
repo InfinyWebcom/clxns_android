@@ -19,7 +19,6 @@ import com.clxns.app.utils.*
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -33,7 +32,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var oldPasswordIL: TextInputLayout
     private lateinit var confirmPasswordIL: TextInputLayout
 
-    private var isFromOTPScreen : Boolean = false
+    private var isFromOTPScreen: Boolean = false
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -49,19 +48,15 @@ class ChangePasswordActivity : AppCompatActivity() {
 
         setListeners()
 
-        token = sessionManager.getString(Constants.TOKEN).toString()
-        isFromOTPScreen = intent.getBooleanExtra("isFromOTPScreen", false)
-
     }
 
     private fun setListeners() {
 
         binding.changePasswordSubmitBtn.setOnClickListener {
             this.hideKeyboard(binding.root)
-            confirmPasswordET.removeFocus()
+            removeFocusFromAllET()
             if (oldPasswordIL.isVisible) {
                 if (!oldPasswordET.text.isNullOrEmpty() && !newPasswordET.text.isNullOrEmpty() && !confirmPasswordET.text.isNullOrEmpty()) {
-                    Timber.i("With old password")
                     if (newPasswordET.text.toString()
                             .contentEquals(confirmPasswordET.text.toString())
                     ) {
@@ -77,7 +72,6 @@ class ChangePasswordActivity : AppCompatActivity() {
                     }
                 }
             } else if (!newPasswordET.text.isNullOrEmpty() && !confirmPasswordET.text.isNullOrEmpty()) {
-                Timber.i("Without old password")
                 if (newPasswordET.text.toString()
                         .contentEquals(confirmPasswordET.text.toString())
                 ) {
@@ -103,7 +97,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (confirmPasswordET.text.toString().isNotEmpty()) {
-                    if (newPasswordET.text.toString() == confirmPasswordET.text.toString()) {
+                    if (s.toString() == confirmPasswordET.text.toString()) {
                         setConfirmETTick()
                     } else {
                         setConfirmETCross()
@@ -122,7 +116,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (newPasswordET.text.toString().isNotEmpty()) {
-                    if (confirmPasswordET.text.toString() == newPasswordET.text.toString()) {
+                    if (s.toString() == newPasswordET.text.toString()) {
                         setConfirmETTick()
                     } else {
                         setConfirmETCross()
@@ -143,28 +137,21 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
     }
 
+    //If new password and confirm password matches then set the tick icon
     private fun setConfirmETTick() {
         confirmPasswordIL.startIconDrawable =
             AppCompatResources.getDrawable(applicationContext, R.drawable.ic_tick)
         confirmPasswordIL.setStartIconTintList(
-            AppCompatResources.getColorStateList(
-                applicationContext,
-                R.color.colorPrimary
-            )
+            AppCompatResources.getColorStateList(applicationContext, R.color.colorPrimary)
         )
     }
 
+    //If new password and confirm password does not matches then set the cross icon
     private fun setConfirmETCross() {
         confirmPasswordIL.startIconDrawable =
-            AppCompatResources.getDrawable(
-                applicationContext,
-                R.drawable.ic_round_close_24
-            )
+            AppCompatResources.getDrawable(applicationContext, R.drawable.ic_round_close_24)
         confirmPasswordIL.setStartIconTintList(
-            AppCompatResources.getColorStateList(
-                applicationContext,
-                R.color.colorPrimary
-            )
+            AppCompatResources.getColorStateList(applicationContext, R.color.colorPrimary)
         )
     }
 
@@ -181,6 +168,9 @@ class ChangePasswordActivity : AppCompatActivity() {
         confirmPasswordET = binding.confirmPasswordET
         oldPasswordIL = binding.oldPasswordIL
         confirmPasswordIL = binding.confirmPasswordIL
+
+        token = sessionManager.getString(Constants.TOKEN).toString()
+        isFromOTPScreen = intent.getBooleanExtra("isFromOTPScreen", false)
     }
 
     private fun setObserver() {
@@ -199,8 +189,8 @@ class ChangePasswordActivity : AppCompatActivity() {
                                 Intent(this, LoginActivity::class.java)
                             finishAllActivitiesExceptLogin.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             startActivity(finishAllActivitiesExceptLogin)
-                        }else{
-                            sessionManager.saveAnyData(Constants.TOKEN,it.data.token!!)
+                        } else {
+                            sessionManager.saveAnyData(Constants.TOKEN, it.data.token!!)
                             onBackPressed()
                         }
                     }
@@ -218,6 +208,12 @@ class ChangePasswordActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun removeFocusFromAllET() {
+        newPasswordET.removeFocus()
+        confirmPasswordET.removeFocus()
+        oldPasswordET.removeFocus()
     }
 
 }

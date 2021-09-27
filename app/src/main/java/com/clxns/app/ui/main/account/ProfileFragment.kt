@@ -8,15 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentMyProfileBinding
-import com.clxns.app.ui.main.account.changePassword.ChangePasswordActivity
 import com.clxns.app.ui.login.LoginActivity
+import com.clxns.app.ui.main.account.changePassword.ChangePasswordActivity
 import com.clxns.app.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +26,7 @@ class ProfileFragment : Fragment() {
 
     private val profileViewModel: ProfileViewModel by viewModels()
     private lateinit var binding: FragmentMyProfileBinding
-    private val bankNames = arrayOf("Kotak Bank", "SBI", "HDFC")
+    private var bankNames = arrayOf<String>()
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -43,15 +42,21 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        profileViewModel.getBankNameList()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         subscribeObserver()
         setListeners()
+        setBankImage()
     }
 
     private fun setListeners() {
-        binding.profileEditBankBtn.setOnClickListener {
+        binding.profileMoreOptionBtn.setOnClickListener {
             onMenuClick(it)
         }
     }
@@ -72,7 +77,22 @@ class ProfileFragment : Fragment() {
         binding.reportingManagerTv.text = managerName
         binding.managerContactTv.text = managerContact
 
+        if (!sessionManager.getString(Constants.USER_IMAGE).isNullOrEmpty()) {
+            val imageUrl = sessionManager.getString(Constants.USER_IMAGE)
+            binding.userProfileImg.loadImage(imageUrl!!)
+        } else {
+            val names = sessionManager.getString(Constants.USER_NAME)?.split(" ")
+            val name = names?.get(0)?.substring(0, 1) + names?.get(1)?.substring(0, 1)
+            binding.userNameInitials.visibility = View.VISIBLE
+            binding.userNameInitials.text = name
+        }
+    }
 
+    private fun setBankImage() {
+        val bankImageUrl = sessionManager.getString(Constants.SELECTED_BANK)
+        if (!bankImageUrl.isNullOrEmpty()) {
+            binding.selectedBankImage.loadImage(bankImageUrl)
+        }
     }
 
     private fun onMenuClick(view: View) {
@@ -91,27 +111,7 @@ class ProfileFragment : Fragment() {
                     val bankDialogBuilder = MaterialAlertDialogBuilder(requireContext())
                         .setTitle("Select your bank")
                         .setItems(bankNames) { _: DialogInterface, i: Int ->
-                            when (bankNames[i]) {
-                                "SBI" -> binding.selectedBankImage.setImageDrawable(
-                                    ContextCompat.getDrawable(
-                                        requireContext(),
-                                        R.drawable.ic_state_bank_of_india_logo
-                                    )
-                                )
-                                "Kotak Bank"
-                                -> binding.selectedBankImage.setImageDrawable(
-                                    ContextCompat.getDrawable(
-                                        requireContext(),
-                                        R.drawable.ic_kotak_mahindra_bank
-                                    )
-                                )
-                                "HDFC" -> binding.selectedBankImage.setImageDrawable(
-                                    ContextCompat.getDrawable(
-                                        requireContext(),
-                                        R.drawable.ic_hdfc_bank_logo
-                                    )
-                                )
-                            }
+                            profileViewModel.getBankImage(bankNames[i])
                         }
                     bankDialogBuilder.show()
                 }
@@ -142,7 +142,6 @@ class ProfileFragment : Fragment() {
         profileViewModel.responseUserDetails.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
-                    binding.progressBar.hide()
                     if (it.data?.error == false) {
                         val loginData = it.data.loginData
                         val name = loginData?.firstName + " " + loginData?.lastName
@@ -153,6 +152,12 @@ class ProfileFragment : Fragment() {
                             Constants.USER_EMPLOYEE_ID,
                             loginData?.employeeId!!
                         )
+                        if (!loginData.profileImage.isNullOrEmpty()) {
+                            sessionManager.saveAnyData(
+                                Constants.USER_IMAGE,
+                                Constants.PROFILE_IMAGE_URL + loginData.profileImage
+                            )
+                        }
                         sessionManager.saveAnyData(Constants.USER_EMAIL, loginData.email)
                         sessionManager.saveAnyData(Constants.USER_MOBILE, loginData.phone)
                         sessionManager.saveAnyData(Constants.USER_ADDRESS, loginData.address)
@@ -167,11 +172,11 @@ class ProfileFragment : Fragment() {
                 }
 
                 is NetworkResult.Error -> {
-                    binding.progressBar.hide()
                     binding.root.snackBar(it.message!!)
                 }
 
-                is NetworkResult.Loading -> binding.progressBar.show()
+                is NetworkResult.Loading -> {
+                }
             }
         }
 
@@ -179,7 +184,6 @@ class ProfileFragment : Fragment() {
             when (response) {
                 is NetworkResult.Success -> {
                     // update UI
-                    binding.progressBar.hide()
                     requireContext().toast(response.data?.title!!)
                     if (response.data.error == false) {
                         //clear token
@@ -195,15 +199,22 @@ class ProfileFragment : Fragment() {
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {
-                    binding.progressBar.hide()
-                    requireContext().toast(response.message!!)
                     // show error message
+                    binding.root.snackBar(response.message!!)
                 }
                 is NetworkResult.Loading -> {
-                    binding.progressBar.show()
-                    // show a progress bar
+                    binding.root.snackBar("Logging out...")
                 }
             }
+        }
+
+        profileViewModel.responseBankNames.observe(viewLifecycleOwner) {
+            bankNames = it.toTypedArray()
+        }
+
+        profileViewModel.responseBankImage.observe(viewLifecycleOwner) {
+            sessionManager.saveAnyData(Constants.SELECTED_BANK, it)
+            setBankImage()
         }
     }
 }

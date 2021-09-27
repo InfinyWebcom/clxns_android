@@ -5,12 +5,13 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.clxns.app.data.model.CasesData
+import com.clxns.app.data.model.cases.CasesData
 import com.clxns.app.databinding.CasesListItemBinding
 import com.clxns.app.ui.main.cases.casedetails.DetailsActivity
+import com.clxns.app.utils.Constants
+import com.clxns.app.utils.convertToCurrency
+import com.clxns.app.utils.loadImage
 import com.clxns.app.utils.makeFirstLetterCapital
-import java.text.NumberFormat
-import java.util.*
 
 
 class CasesAdapter(
@@ -22,13 +23,16 @@ class CasesAdapter(
 
     class CasesVH(itemView: CasesListItemBinding) : RecyclerView.ViewHolder(itemView.root) {
         private val contactBinding = itemView
-        fun bind(context: Context,casesData: CasesData, casesListener: (CasesData) -> Unit) {
+        fun bind(context: Context, casesData: CasesData, casesListener: (CasesData) -> Unit) {
             contactBinding.casesUsernameTv.text = casesData.name.makeFirstLetterCapital()
-            contactBinding.casesStatusTv.text = casesData.paymentStatus.makeFirstLetterCapital()
-            contactBinding.loanIdDatePincodeTv.text = casesData.loanAccountNo.toString()
-            val amount = NumberFormat.getCurrencyInstance(Locale("en", "in"))
-                .format(casesData.totalDueAmount)
-            contactBinding.casesAmountTv.text = amount.substringBefore('.')
+            contactBinding.casesStatusTv.text = "Pending"
+            val loanIdDatePinCode = casesData.loanAccountNo.toString() + " | " + casesData.applicantPincode.toString() + " | " + casesData.fosAssignedDate.subSequence(0,10)
+            contactBinding.loanIdDatePincodeTv.text = loanIdDatePinCode
+            contactBinding.casesAmountTv.text = casesData.totalDueAmount.convertToCurrency()
+            if (!casesData.fi?.fiImage.isNullOrEmpty()) {
+                val url = Constants.BANK_LOGO_URL + casesData.fi?.fiImage
+                contactBinding.casesImage.loadImage(url)
+            }
 
             contactBinding.casesPlanBtn.setOnClickListener {
                 casesListener.invoke(casesData)
@@ -50,7 +54,7 @@ class CasesAdapter(
 
     override fun onBindViewHolder(holder: CasesVH, position: Int) {
         val listItem = casesList[position]
-        holder.bind(context,listItem, casesListener)
+        holder.bind(context, listItem, casesListener)
 
     }
 

@@ -53,6 +53,9 @@
         android:label="CasesFilterBS"
         tools:layout="@layout/cases_summary_layout"
         >
+        <argument app:nullable="true"
+            android:name="summaryData"
+            app:argType="com.clxns.app.data.model.home.SummaryData"/>
         <action
             android:id="@+id/action_navigation_home_summary_to_navigation_cases"
             app:destination="@id/navigation_cases" />
