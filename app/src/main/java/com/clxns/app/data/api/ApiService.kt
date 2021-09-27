@@ -123,6 +123,6 @@ interface ApiService {
         @Field("refNo") refNo: String,
         @Field("chequeNo") chequeNo: String,
         @Field("remark") remark: String,
-        @Field("supporting") supporting: String
+        @Field("supporting") supporting: List<String>
     ): Response<HomeStatisticsResponse>
 }

@@ -44,7 +44,7 @@ class PaymentCollectionViewModel @Inject constructor(
         refNo: String,
         chequeNo: String,
         remark: String,
-        supporting: String
+        supporting:  List<String>
     ) = viewModelScope.launch {
         repository.addPayment(
             token, leadId, loanNo, amtType,
