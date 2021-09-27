@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import java.text.NumberFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.*
 
 fun Context.toast(message: String) {
@@ -71,6 +73,21 @@ fun String.makeFirstLetterCapital(): String {
         }
     }
     return String(arr)
+}
+
+fun String.convertServerDateToNormal(): String? {
+    var date = this
+    var spf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    spf.timeZone = TimeZone.getTimeZone("GMT")
+    var newDate: Date? = null
+    try {
+        newDate = spf.parse(date)
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    spf = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
+    date = spf.format(newDate)
+    return date
 }
 fun ImageView.loadImage(url:String){
     Glide.with(this).load(url).into(this)

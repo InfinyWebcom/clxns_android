@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.CaseDetailsResponse
-import com.clxns.app.data.model.HomeStatisticsResponse
+import com.clxns.app.data.model.home.HomeStatisticsResponse
 import com.clxns.app.data.repository.PaymentCollectionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -44,7 +44,7 @@ class PaymentCollectionViewModel @Inject constructor(
         refNo: String,
         chequeNo: String,
         remark: String,
-        supporting:  List<String>
+        supporting: List<String>
     ) = viewModelScope.launch {
         repository.addPayment(
             token, leadId, loanNo, amtType,

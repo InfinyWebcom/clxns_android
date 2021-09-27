@@ -4,7 +4,7 @@ import com.clxns.app.data.api.helper.BaseApiResponse
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.api.helper.RemoteDataSource
 import com.clxns.app.data.model.CaseDetailsResponse
-import com.clxns.app.data.model.HomeStatisticsResponse
+import com.clxns.app.data.model.home.HomeStatisticsResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -18,9 +18,12 @@ class PaymentCollectionRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) : BaseApiResponse() {
 
-    suspend fun getCaseDetails(token: String,loanAccountNumber: String): Flow<NetworkResult<CaseDetailsResponse>> {
+    suspend fun getCaseDetails(
+        token: String,
+        loanAccountNumber: String
+    ): Flow<NetworkResult<CaseDetailsResponse>> {
         return flow {
-            emit(safeApiCall { remoteDataSource.getCaseDetails(token,loanAccountNumber) })
+            emit(safeApiCall { remoteDataSource.getCaseDetails(token, loanAccountNumber) })
         }.flowOn(Dispatchers.IO)
     }
 
@@ -34,7 +37,7 @@ class PaymentCollectionRepository @Inject constructor(
         refNo: String,
         chequeNo: String,
         remark: String,
-        supporting:  List<String>
+        supporting: List<String>
     ): Flow<NetworkResult<HomeStatisticsResponse>> {
         return flow {
             emit(safeApiCall {

@@ -5,18 +5,18 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.plan.bfrag.MyPlanFragment"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".ui.main.plan.bfrag.MyPlanFragment">
 
     <RelativeLayout
-        android:id="@+id/relAppName"
+        android:id="@+id/my_plan_custom_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/toolbar_background"
         android:paddingStart="@dimen/dp16"
-        android:paddingTop="@dimen/dp16"
+        android:paddingTop="@dimen/dp10"
         android:paddingEnd="@dimen/dp16"
-        android:paddingBottom="@dimen/dp8"
+        android:paddingBottom="@dimen/dp10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,7 +28,7 @@
             android:layout_alignTop="@id/txtDateSort"
             android:layout_alignBottom="@id/txtDateSort"
             android:layout_toStartOf="@id/txtDateSort"
-            android:fontFamily="@font/gtwalsheimpromedium"
+            android:textStyle="bold"
             android:gravity="center_vertical"
             android:text="@string/my_plans"
             android:textColor="@color/white"
@@ -41,7 +41,6 @@
             android:layout_alignParentEnd="true"
             android:background="@drawable/background_date_filter"
             android:drawablePadding="5dp"
-            android:fontFamily="@font/gtwalsheimpromedium"
             android:gravity="center"
             android:includeFontPadding="false"
             android:paddingHorizontal="15dp"
@@ -65,13 +64,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relAppName" />
+        app:layout_constraintTop_toBottomOf="@+id/my_plan_custom_toolbar" />
 
     <Button
         android:id="@+id/btn_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Retry"
+        android:textSize="@dimen/sp16"
+        android:textColor="@color/white"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -82,6 +83,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal|center_vertical"
         android:clickable="true"
+        android:focusable="true"
         android:padding="185dp" />
 
     <TextView

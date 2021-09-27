@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackgroundBorderless"
             android:padding="@dimen/dp16"
-            android:src="@drawable/ic_back_arrow" />
+            app:tint="@color/white"
+            android:src="@drawable/ic_arrow_back_24" />
 
 
         <TextView
@@ -31,7 +32,7 @@
             android:fontFamily="@font/gtwalsheimprobold"
             android:paddingTop="@dimen/dp16"
             android:paddingBottom="@dimen/dp16"
-            android:text="Payment Collection"
+            android:text="@string/payment_collection"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/sp18" />

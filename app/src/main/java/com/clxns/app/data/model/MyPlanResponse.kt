@@ -321,7 +321,7 @@ data class Lead(
     val tenureFinished: Boolean? = null,
 
     @Json(name = "expiryDate")
-    val expiryDate: Any? = null,
+    val expiryDate: String? = null,
 
     @Json(name = "coApplicantAddress")
     val coApplicantAddress: String? = null,

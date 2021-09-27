@@ -15,44 +15,41 @@
             android:padding="@dimen/dp8">
 
             <TextView
-                android:id="@+id/planContactNameTxt"
+                android:id="@+id/planItemNameTxt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp8"
                 android:ellipsize="end"
-                android:fontFamily="@font/gtwalsheimpromedium"
                 android:maxLines="1"
-                android:text="Swapnali Joshi"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@id/planContactAmountTxt"
+                android:text="@string/app_name"
+                android:textSize="@dimen/sp20"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/planItemAmountTxt"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/planContactAmountTxt"
+                android:id="@+id/planItemAmountTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="₹65,250"
+                android:text="@string/zero"
                 android:textColor="@color/colorPrimary"
                 android:textSize="22sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/planContactBank"
+                android:id="@+id/planBankNameAndLoanId"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:fontFamily="@font/gtwalsheimproregular"
-                android:text="Kotak Bank | 152315"
+                android:text="@string/dash"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="@id/planStatusBagde"
                 app:layout_constraintEnd_toStartOf="@id/planStatusBagde"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/planContactNameTxt"
+                app:layout_constraintTop_toBottomOf="@id/planItemAmountTxt"
                 app:layout_constraintTop_toTopOf="@id/planStatusBagde" />
 
             <TextView
@@ -65,11 +62,11 @@
                 android:fontFamily="@font/gtwalsheimpromedium"
                 android:paddingHorizontal="@dimen/dp8"
                 android:paddingVertical="5dp"
-                android:text="Dispute"
+                android:text="@string/status"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/planContactAmountTxt" />
+                app:layout_constraintTop_toBottomOf="@id/planItemAmountTxt" />
 
             <TextView
                 android:id="@+id/planContactAddress"
@@ -79,10 +76,9 @@
                 android:layout_marginBottom="@dimen/dp4"
                 android:drawablePadding="@dimen/dp4"
                 android:ellipsize="end"
-                android:fontFamily="@font/gtwalsheimproregular"
                 android:gravity="center_vertical"
                 android:maxLines="3"
-                android:text="Nehru Nagar, Kurla (E), Mumbai - 400024"
+                android:text="@string/dash"
                 app:drawableStartCompat="@drawable/ic_location_on_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,59 +89,59 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp4"
-                app:strokeWidth="@dimen/dp2"
-                app:strokeColor="@color/green"
-                app:rippleColor="@color/green"
                 android:backgroundTint="@color/white"
-                android:text="Call"
-                app:cornerRadius="@dimen/dp16"
-                android:textSize="12sp"
+                android:text="@string/call"
                 android:textColor="@color/black"
+                android:textSize="12sp"
+                app:cornerRadius="@dimen/dp16"
                 app:icon="@drawable/ic_phone_call"
-                app:iconTint="@color/green"
                 app:iconSize="@dimen/dp16"
+                app:iconTint="@color/green"
                 app:layout_constraintEnd_toStartOf="@id/map"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/planContactAddress" />
+                app:layout_constraintTop_toBottomOf="@id/planContactAddress"
+                app:rippleColor="@color/green"
+                app:strokeColor="@color/green"
+                app:strokeWidth="@dimen/dp2" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/map"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp4"
-                app:strokeWidth="@dimen/dp2"
-                app:strokeColor="@color/orange"
-                app:rippleColor="@color/orange"
                 android:backgroundTint="@color/white"
+                android:text="@string/map"
                 android:textColor="@color/black"
-                app:iconTint="@color/orange"
-                android:text="Map"
-                app:cornerRadius="@dimen/dp16"
                 android:textSize="12sp"
+                app:cornerRadius="@dimen/dp16"
                 app:icon="@drawable/ic_baseline_map_24"
                 app:iconSize="@dimen/dp16"
+                app:iconTint="@color/orange"
                 app:layout_constraintEnd_toStartOf="@id/planCheckInBtn"
                 app:layout_constraintStart_toEndOf="@id/planCallBtn"
-                app:layout_constraintTop_toBottomOf="@id/planContactAddress" />
+                app:layout_constraintTop_toBottomOf="@id/planContactAddress"
+                app:rippleColor="@color/orange"
+                app:strokeColor="@color/orange"
+                app:strokeWidth="@dimen/dp2" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/planCheckInBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:strokeWidth="@dimen/dp2"
-                app:strokeColor="@color/colorPrimary"
-                app:rippleColor="@color/colorPrimary"
                 android:backgroundTint="@color/white"
-                android:textColor="@color/black"
-                app:iconTint="@color/colorPrimary"
                 android:text="@string/check_in"
-                app:cornerRadius="@dimen/dp16"
+                android:textColor="@color/black"
                 android:textSize="12sp"
+                app:cornerRadius="@dimen/dp16"
                 app:icon="@drawable/ic_location_on_24"
                 app:iconSize="@dimen/dp16"
+                app:iconTint="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/map"
-                app:layout_constraintTop_toBottomOf="@id/planContactAddress" />
+                app:layout_constraintTop_toBottomOf="@id/planContactAddress"
+                app:rippleColor="@color/colorPrimary"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="@dimen/dp2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

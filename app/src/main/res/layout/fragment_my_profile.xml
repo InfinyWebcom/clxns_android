@@ -71,7 +71,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/dp8"
                 android:importantForAccessibility="no"
-                android:src="@drawable/ic_baseline_more_vert_24" />
+                android:src="@drawable/ic_profile_more_options" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView

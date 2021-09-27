@@ -14,16 +14,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val repository: DetailsRepository
+    private val detailsRepository: DetailsRepository
 ) : ViewModel() {
-    var loanAccountNumber: String? = null
 
-    private val _response: MutableLiveData<NetworkResult<CaseDetailsResponse>> = MutableLiveData()
-    val response: LiveData<NetworkResult<CaseDetailsResponse>> = _response
+    private val _responseCaseDetail: MutableLiveData<NetworkResult<CaseDetailsResponse>> =
+        MutableLiveData()
+    val responseCaseDetail: LiveData<NetworkResult<CaseDetailsResponse>> = _responseCaseDetail
 
     fun getCaseDetails(token: String, loanAccountNumber: String) = viewModelScope.launch {
-        repository.getCaseDetails(token, loanAccountNumber).collect { values ->
-            _response.value = values
+        detailsRepository.getCaseDetails(token, loanAccountNumber).collect { values ->
+            _responseCaseDetail.value = values
         }
     }
 }

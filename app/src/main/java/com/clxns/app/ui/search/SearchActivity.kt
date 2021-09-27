@@ -1,8 +1,10 @@
 package com.clxns.app.ui.search
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.SearchView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,16 +14,14 @@ import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivitySearchBinding
 import com.clxns.app.ui.main.cases.CasesAdapter
 import com.clxns.app.ui.main.cases.CasesViewModel
-import com.clxns.app.utils.Constants
-import com.clxns.app.utils.hideKeyboard
-import com.clxns.app.utils.snackBar
-import com.clxns.app.utils.toast
+import com.clxns.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener {
 
     private lateinit var binding: ActivitySearchBinding
     private lateinit var searchView: SearchView
@@ -36,6 +36,8 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var token: String
 
+    private var searchTxt: String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +45,6 @@ class SearchActivity : AppCompatActivity() {
         initViews()
 
         setListeners()
-
-        token = sessionManager.getString(Constants.TOKEN).toString()
 
         subscribeObserver()
     }
@@ -68,17 +68,67 @@ class SearchActivity : AppCompatActivity() {
                 }
             }
         }
+
+        casesViewModel.responseAddToPlan.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    Timber.i(it.toString())
+                    casesDataList.clear()
+                    casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
+                    casesViewModel.getCasesList(
+                        token,
+                        searchTxt,
+                        "",
+                        "",
+                        "",
+                        ""
+                    )
+                }
+
+                is NetworkResult.Error -> toast(it.message!!)
+
+                is NetworkResult.Loading -> toast("Adding to my plan...")
+            }
+        }
+
+        casesViewModel.responseRemovePlan.observe(this) {
+            when (it) {
+                is NetworkResult.Success -> {
+                    binding.root.snackBar(it.data?.title!!)
+                    if (!it.data.error) {
+                        casesDataList.clear()
+                        casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
+                        casesViewModel.getCasesList(
+                            token,
+                            searchTxt,
+                            "",
+                            "",
+                            "",
+                            ""
+                        )
+                    }
+                }
+                is NetworkResult.Error -> {
+                    toast(it.message!!)
+                    // show error message
+                }
+                is NetworkResult.Loading -> {
+                    binding.root.snackBar("Removing plan...")
+                    // show a progress bar
+                }
+            }
+        }
     }
 
     private fun initViews() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        token = sessionManager.getString(Constants.TOKEN).toString()
+
         searchView = binding.searchView
 
-        casesAdapter = CasesAdapter(this, casesDataList) {
-            toast(it.name)
-        }
+        casesAdapter = CasesAdapter(this, casesDataList, this)
 
         binding.recyclerToolbarSearch.layoutManager = LinearLayoutManager(this)
     }
@@ -107,7 +157,10 @@ class SearchActivity : AppCompatActivity() {
                 toast("Searching..")
                 casesDataList.clear()
                 if (query != null) {
-                    casesViewModel.getCasesList(token, query, "", "", "", "")
+                    casesViewModel.getCasesList(
+                        token, query, "", "",
+                        "", ""
+                    )
                 }
                 return false
             }
@@ -117,6 +170,8 @@ class SearchActivity : AppCompatActivity() {
                     // Search
                     casesDataList.clear()
                     casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
+                } else {
+                    searchTxt = newText
                 }
                 return false
             }
@@ -127,5 +182,55 @@ class SearchActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         binding.searchView.requestFocus()
+    }
+
+    override fun onPlanClick(isPlanned: Boolean, casesData: CasesData) {
+        if (isPlanned) {
+            showConfirmUnPlanDialog(casesData)
+        } else {
+            showPlanDialog(casesData)
+        }
+    }
+
+    private fun showPlanDialog(casesData: CasesData) {
+        val cal = Calendar.getInstance()
+        val dateSetListener =
+            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                cal.set(Calendar.YEAR, year)
+                cal.set(Calendar.MONTH, monthOfYear)
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                casesViewModel.addToPlan(
+                    token,
+                    casesData.loanAccountNo.toString(),
+                    "${year}-${monthOfYear + 1}-${dayOfMonth}"
+                )
+            }
+        val datePicker = DatePickerDialog(
+            this,
+            dateSetListener,
+            // set DatePickerDialog to point to today's date when it loads up
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH)
+        )
+        datePicker.datePicker.minDate = cal.timeInMillis
+        datePicker.show()
+
+    }
+
+    private fun showConfirmUnPlanDialog(casesData: CasesData) {
+        val logoutDialog = AlertDialog.Builder(this)
+        logoutDialog.setTitle("UnPlan -> ${casesData.name}")
+        logoutDialog.setMessage("Are you sure want to un-plan this case?")
+
+        logoutDialog.setPositiveButton("Yes") { dialog, _ ->
+            casesViewModel.removePlan(token, casesData.loanAccountNo.toString())
+            dialog.dismiss()
+        }.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
+
+        val d = logoutDialog.create()
+        d.show()
+        d.getButton(AlertDialog.BUTTON_POSITIVE).isAllCaps = false
+        d.getButton(AlertDialog.BUTTON_NEGATIVE).isAllCaps = false
     }
 }

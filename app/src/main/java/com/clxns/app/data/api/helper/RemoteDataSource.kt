@@ -96,6 +96,11 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         paymentMode, recoveryDate, refNo, chequeNo, remark, supporting
     )
 
+    suspend fun removePlan(
+        token: String,
+        leadId: String
+    ) = apiService.removePlan(token, leadId)
+
 }
 
 

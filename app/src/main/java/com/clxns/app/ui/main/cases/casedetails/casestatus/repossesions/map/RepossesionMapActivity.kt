@@ -52,9 +52,9 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     val latlang = LatLng(19.0434696, 73.021306)
     val latlang1 = LatLng(19.0441479, 73.0214671)
-    val latlang2 = LatLng(19.0453153,73.0244009)
+    val latlang2 = LatLng(19.0453153, 73.0244009)
 
-    lateinit var locationArrayList : ArrayList<LatLng>
+    lateinit var locationArrayList: ArrayList<LatLng>
 
     lateinit var ctx: Context
     lateinit var reposseionMapBinding: ActivityReposseionMapBinding
@@ -82,7 +82,6 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun setObserver() {
 
 
-
     }
 
     private fun setInit() {
@@ -103,8 +102,9 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
 //        showCurrentPlace()
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(ctx)
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.mapFrag) as SupportMapFragment?
-        mapFragment?.getMapAsync(this)
+        //val mapFragment =
+        //    supportFragmentManager.findFragmentById(R.id.mapFrag) as SupportMapFragment?
+        //mapFragment?.getMapAsync(this)
 
         reposseionMapBinding.repossessionMapCustomToolbar.bringToFront()
 
@@ -118,16 +118,21 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
          * onRequestPermissionsResult.
          */
 
-        if (ContextCompat.checkSelfPermission(ctx,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                ctx,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             locationPermissionGranted = true
         } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                MapViewFragment.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                MapViewFragment.PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+            )
         }
 
-        if(!isLocationEnabled()){
+        if (!isLocationEnabled()) {
             Toast.makeText(ctx, "Please turn on" + " your location...", Toast.LENGTH_LONG).show()
             val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
             startActivity(intent)
@@ -135,15 +140,17 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager = ctx.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager: LocationManager =
+            ctx.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-            LocationManager.NETWORK_PROVIDER)
+            LocationManager.NETWORK_PROVIDER
+        )
     }
 
     override fun onMapReady(map: GoogleMap) {
-        Log.i(javaClass.name,"onMapReady---------->")
+        Log.i(javaClass.name, "onMapReady---------->")
         this.map = map
-        for (latLong in locationArrayList){
+        for (latLong in locationArrayList) {
 
             map.addMarker(MarkerOptions().position(latLong).title("marker"))
             map.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
@@ -164,10 +171,12 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 val customInfoContentsBinding = CustomInfoContentsBinding.inflate(layoutInflater)
 
-                val infoWindow = layoutInflater.inflate(R.layout.custom_info_contents,
-                    customInfoContentsBinding.root.findViewById<FrameLayout>(R.id.map), false)
+                val infoWindow = layoutInflater.inflate(
+                    R.layout.custom_info_contents,
+                    customInfoContentsBinding.root.findViewById<FrameLayout>(R.id.map), false
+                )
                 val title = infoWindow.findViewById<TextView>(R.id.title)
-                Log.i(javaClass.name,"getInfoContentscount--->"+ marker.title)
+                Log.i(javaClass.name, "getInfoContentscount--->" + marker.title)
                 title.text = marker.title
                 val snippet = infoWindow.findViewById<TextView>(R.id.snippet)
                 snippet.text = marker.snippet
@@ -191,20 +200,30 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
         try {
             if (locationPermissionGranted) {
                 val locationResult = fusedLocationProviderClient.lastLocation
-                locationResult.addOnCompleteListener {  task ->
+                locationResult.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         // Set the map's camera position to the current location of the device.
 
-                        Log.i("getDeviceLocation","task.result--->"+task.result)
+                        Log.i("getDeviceLocation", "task.result--->" + task.result)
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
-                            map?.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                LatLng(lastKnownLocation!!.latitude,
-                                    lastKnownLocation!!.longitude), MapViewFragment.DEFAULT_ZOOM.toFloat()))
+                            map?.moveCamera(
+                                CameraUpdateFactory.newLatLngZoom(
+                                    LatLng(
+                                        lastKnownLocation!!.latitude,
+                                        lastKnownLocation!!.longitude
+                                    ), MapViewFragment.DEFAULT_ZOOM.toFloat()
+                                )
+                            )
                         }
                     } else {
-                        map?.moveCamera(CameraUpdateFactory
-                            .newLatLngZoom(defaultLocation, MapViewFragment.DEFAULT_ZOOM.toFloat()))
+                        map?.moveCamera(
+                            CameraUpdateFactory
+                                .newLatLngZoom(
+                                    defaultLocation,
+                                    MapViewFragment.DEFAULT_ZOOM.toFloat()
+                                )
+                        )
                         map?.uiSettings?.isMyLocationButtonEnabled = false
                     }
                 }
@@ -215,7 +234,7 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun updateLocationUI() {
-        Log.i(javaClass.name,"updateLocationUI--->"+map)
+        Log.i(javaClass.name, "updateLocationUI--->" + map)
         if (map == null) {
             return
         }

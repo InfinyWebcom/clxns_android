@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <RelativeLayout
@@ -16,7 +17,8 @@
             android:id="@+id/imgBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_back_arrow" />
+            app:tint="@color/white"
+            android:src="@drawable/ic_arrow_back_24" />
 
 
         <TextView
@@ -34,25 +36,23 @@
     </RelativeLayout>
 
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/mapFrag"
-        android:layout_marginTop="-20dp"
-        android:layout_below="@+id/repossession_map_custom_toolbar"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+<!--    <androidx.fragment.app.FragmentContainerView-->
+<!--        android:id="@+id/mapFrag"-->
+<!--        android:layout_marginTop="-20dp"-->
+<!--        android:layout_below="@+id/repossession_map_custom_toolbar"-->
+<!--        android:name="com.google.android.gms.maps.SupportMapFragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent" />-->
 
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDropOffSet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/dp30"
-        android:layout_marginTop="@dimen/dp30"
-        android:layout_marginRight="@dimen/dp30"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/background_button"
+        android:layout_margin="@dimen/dp32"
+        app:cornerRadius="@dimen/dp32"
+        android:paddingVertical="@dimen/dp16"
         android:fontFamily="@font/gtwalsheimpromedium"
         android:text="@string/DropOffSet"
         android:textColor="@color/white" />

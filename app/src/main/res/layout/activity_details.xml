@@ -15,35 +15,35 @@
         android:background="@drawable/background_tab">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgBack"
+            android:id="@+id/case_detail_back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackgroundBorderless"
             android:padding="@dimen/dp16"
-            android:src="@drawable/ic_back_arrow" />
+            app:tint="@color/white"
+            android:src="@drawable/ic_arrow_back_24" />
 
 
         <TextView
-            android:id="@+id/txtAppName"
+            android:id="@+id/txtToolbarTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@id/imgCall"
-            android:layout_toEndOf="@id/imgBack"
+            android:layout_toStartOf="@id/case_detail_call_btn"
+            android:layout_toEndOf="@id/case_detail_back_btn"
             android:ellipsize="end"
             android:fontFamily="@font/gtwalsheimprobold"
             android:maxLines="1"
             android:paddingTop="@dimen/dp16"
             android:paddingBottom="@dimen/dp16"
-            android:text="Rohan Joshi"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/sp18" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgCall"
+            android:id="@+id/case_detail_call_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/txtAppName"
+            android:layout_alignTop="@+id/txtToolbarTitle"
             android:layout_alignParentEnd="true"
             android:background="?android:selectableItemBackgroundBorderless"
             android:padding="@dimen/dp16"
@@ -100,7 +100,7 @@
                         android:layout_marginBottom="@dimen/dp12"
                         android:layout_toStartOf="@id/detailsPlanBtn"
                         android:fontFamily="@font/gtwalsheimpromedium"
-                        android:text="Pending"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
 
@@ -113,7 +113,7 @@
                         android:layout_marginEnd="@dimen/dp8"
                         android:backgroundTint="@color/white"
                         android:fontFamily="@font/gtwalsheimpromedium"
-                        android:text="Plan"
+                        android:text="@string/plan"
                         android:textAllCaps="false"
                         android:textColor="@color/green"
                         android:textSize="14sp"
@@ -133,6 +133,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp8"
                 android:layout_marginEnd="@dimen/dp16"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -150,7 +151,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="@dimen/dp12"
-                        android:src="@drawable/kotak_sample" />
+                        android:src="@drawable/ic_logo_x" />
 
                 </RelativeLayout>
 
@@ -177,7 +178,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp12"
                         android:fontFamily="@font/gtwalsheimpromedium"
-                        android:text="Kotak Mahindra Bank"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
 
@@ -192,6 +193,7 @@
                 android:layout_marginStart="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp8"
                 android:layout_marginEnd="@dimen/dp16"
+                android:baselineAligned="false"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -204,7 +206,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/gtwalsheimproregular"
-                        android:text="Loan ID"
+                        android:text="@string/loan_id"
                         android:textColor="@color/text_black"
                         android:textSize="12sp" />
 
@@ -214,7 +216,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/gtwalsheimpromedium"
-                        android:text="984578"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -229,16 +231,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/gtwalsheimproregular"
-                        android:text="Payment Status"
+                        android:text="@string/payment_status"
                         android:textColor="@color/text_black"
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/payment_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/gtwalsheimpromedium"
-                        android:text="Pending"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -251,6 +254,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp16"
                 android:layout_marginEnd="@dimen/dp16"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -277,7 +281,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp12"
                         android:fontFamily="sans-serif-medium"
-                        android:text="₹ 20,000"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="24sp" />
 
@@ -290,7 +294,7 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/txtPending"
+                        android:id="@+id/txtTotalDueAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp12"
@@ -300,14 +304,14 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/txtPendingValue"
+                        android:id="@+id/totalDueAmountValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/txtPending"
+                        android:layout_below="@+id/txtTotalDueAmount"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp12"
                         android:fontFamily="sans-serif-medium"
-                        android:text="₹ 8,000"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="24sp" />
 
@@ -341,14 +345,14 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/txtDatePassedDueValue"
+                        android:id="@+id/emiAmountValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/txtEmiAmount"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp12"
                         android:fontFamily="sans-serif-medium"
-                        android:text="₹ 3,200"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="24sp" />
 
@@ -361,7 +365,7 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/txtSettlement"
+                        android:id="@+id/txtPrincipalOutstandingAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp12"
@@ -371,14 +375,14 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/txtSettlementAmount"
+                        android:id="@+id/principalOutstandingAmountValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/txtSettlement"
+                        android:layout_below="@+id/txtPrincipalOutstandingAmount"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp12"
                         android:fontFamily="sans-serif-medium"
-                        android:text="₹ 5,400"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="24sp" />
 
@@ -418,7 +422,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp12"
                         android:fontFamily="sans-serif-medium"
-                        android:text="₹ 1,200"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="24sp" />
 
@@ -448,7 +452,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp12"
                         android:fontFamily="sans-serif-medium"
-                        android:text="₹ 400"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="24sp" />
 
@@ -488,7 +492,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp12"
                         android:fontFamily="@font/gtwalsheimpromedium"
-                        android:text="12/02/2021"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
 
@@ -501,7 +505,7 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/txtTotalAmount"
+                        android:id="@+id/txtDPD"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp12"
@@ -511,14 +515,14 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/txtTotalAmountValue"
+                        android:id="@+id/DPDValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/txtTotalAmount"
+                        android:layout_below="@+id/txtDPD"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp12"
                         android:fontFamily="@font/gtwalsheimpromedium"
-                        android:text="95"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
 
@@ -532,6 +536,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dp16"
                 android:layout_marginEnd="@dimen/dp16"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -558,7 +563,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp12"
                         android:fontFamily="@font/gtwalsheimpromedium"
-                        android:text="PL"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
 
@@ -588,7 +593,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp12"
                         android:fontFamily="@font/gtwalsheimpromedium"
-                        android:text="400706"
+                        android:text="@string/dash"
                         android:textColor="@color/text_black"
                         android:textSize="16sp" />
 
@@ -598,21 +603,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp12"
-                android:layout_marginEnd="@dimen/dp12"
+                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginEnd="@dimen/dp16"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/showMoreTxt"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="?android:selectableItemBackground"
-                    android:padding="@dimen/dp4"
-                    android:text="Show more"
-                    android:textColor="@color/text_black"
-                    android:textSize="@dimen/sp18"
-                    app:drawableEndCompat="@drawable/ic_round_arrow_drop_down" />
 
                 <TextView
                     android:id="@+id/txtHistory"
@@ -621,10 +614,24 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="History"
+                    android:text="@string/history"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/sp16" />
+
+
+                <TextView
+                    android:id="@+id/showMoreTxt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_round"
+                    android:text="@string/show_more"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_black"
+                    android:textSize="@dimen/sp18"
+                    app:drawableEndCompat="@drawable/ic_round_arrow_drop_down" />
+
 
             </LinearLayout>
 
@@ -641,6 +648,7 @@
                     android:layout_marginStart="@dimen/dp16"
                     android:layout_marginTop="@dimen/dp8"
                     android:layout_marginEnd="@dimen/dp16"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -653,7 +661,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="Email"
+                            android:text="@string/email"
                             android:textColor="@color/text_black"
                             android:textSize="12sp" />
 
@@ -663,7 +671,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/gtwalsheimpromedium"
-                            android:text="nikhil@inifiny.in"
+                            android:text="@string/dash"
                             android:textColor="@color/text_black"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -678,7 +686,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="Contact No."
+                            android:text="@string/contact_no"
                             android:textColor="@color/text_black"
                             android:textSize="12sp" />
 
@@ -688,7 +696,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/gtwalsheimpromedium"
-                            android:text="9765845865"
+                            android:text="@string/dash"
                             android:textColor="@color/text_black"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -701,6 +709,7 @@
                     android:layout_marginStart="@dimen/dp16"
                     android:layout_marginTop="@dimen/dp8"
                     android:layout_marginEnd="@dimen/dp16"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -713,7 +722,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="PAN Card"
+                            android:text="@string/pan_card"
                             android:textColor="@color/text_black"
                             android:textSize="12sp" />
 
@@ -723,7 +732,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/gtwalsheimpromedium"
-                            android:text="IPTPS7867Q"
+                            android:text="@string/dash"
                             android:textColor="@color/text_black"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -738,7 +747,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="DOB"
+                            android:text="@string/dob"
                             android:textColor="@color/text_black"
                             android:textSize="12sp" />
 
@@ -748,7 +757,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/gtwalsheimpromedium"
-                            android:text="11/12/1996"
+                            android:text="@string/dash"
                             android:textColor="@color/text_black"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -761,19 +770,21 @@
                     android:layout_marginStart="@dimen/dp16"
                     android:layout_marginTop="@dimen/dp8"
                     android:layout_marginEnd="@dimen/dp16"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        tools:ignore="TooManyViews">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="Cibil Score"
+                            android:text="@string/cibil_score"
                             android:textColor="@color/text_black"
                             android:textSize="12sp" />
 
@@ -783,7 +794,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/gtwalsheimpromedium"
-                            android:text="250"
+                            android:text="@string/dash"
                             android:textColor="@color/text_black"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -798,7 +809,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="Business Name"
+                            android:text="@string/business_name"
                             android:textColor="@color/text_black"
                             android:textSize="12sp" />
 
@@ -808,7 +819,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/gtwalsheimpromedium"
-                            android:text="Infiny Webcom"
+                            android:text="@string/dash"
                             android:textColor="@color/text_black"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -821,6 +832,7 @@
                     android:layout_marginStart="@dimen/dp16"
                     android:layout_marginTop="@dimen/dp8"
                     android:layout_marginEnd="@dimen/dp16"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -833,7 +845,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="City"
+                            android:text="@string/city"
                             android:textColor="@color/text_black"
                             android:textSize="12sp" />
 
@@ -843,7 +855,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/gtwalsheimpromedium"
-                            android:text="Mumbai"
+                            android:text="@string/dash"
                             android:textColor="@color/text_black"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -858,7 +870,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="State"
+                            android:text="@string/state"
                             android:textColor="@color/text_black"
                             android:textSize="12sp" />
 
@@ -868,7 +880,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/gtwalsheimpromedium"
-                            android:text="Maharashtra"
+                            android:text="@string/dash"
                             android:textColor="@color/text_black"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -882,34 +894,27 @@
                     android:layout_marginStart="@dimen/dp16"
                     android:layout_marginTop="@dimen/dp12"
                     android:layout_marginEnd="@dimen/dp16"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txtAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/Address"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
 
-                        <TextView
-                            android:id="@+id/txtAddress"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="@string/Address"
-                            android:textColor="@color/text_black"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/txtAddressValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/txtAddress"
-                            android:layout_marginTop="5dp"
-                            android:fontFamily="@font/gtwalsheimpromedium"
-                            android:text="B-12, Ashoka CHS, Sec-12, New Delhi"
-                            android:textColor="@color/text_black"
-                            android:textSize="16sp" />
-
-                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/txtAddressValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="@string/dash"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -920,34 +925,28 @@
                     android:layout_marginStart="@dimen/dp16"
                     android:layout_marginTop="@dimen/dp12"
                     android:layout_marginEnd="@dimen/dp16"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txtNewAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/alternate_address"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
 
-                        <TextView
-                            android:id="@+id/txtNewAddress"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="Alternate Address"
-                            android:textColor="@color/text_black"
-                            android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/txtNewAddressValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="@string/dash"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
 
-                        <TextView
-                            android:id="@+id/txtNewAddressValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/txtNewAddress"
-                            android:layout_marginTop="5dp"
-                            android:fontFamily="@font/gtwalsheimpromedium"
-                            android:text="Navi Mumbai, Maharashtra"
-                            android:textColor="@color/text_black"
-                            android:textSize="16sp" />
-
-                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -959,34 +958,29 @@
                     android:layout_marginTop="@dimen/dp12"
                     android:layout_marginEnd="@dimen/dp16"
                     android:layout_marginBottom="@dimen/dp12"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:visibility="visible">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/txtNewMobile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="Alternate Mobile"
-                            android:textColor="@color/text_black"
-                            android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/txtNewMobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/alternate_mobile"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
 
-                        <TextView
-                            android:id="@+id/txtNewMobileValue"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/txtNewMobile"
-                            android:layout_marginTop="5dp"
-                            android:fontFamily="@font/gtwalsheimpromedium"
-                            android:text="9819366976"
-                            android:textColor="@color/text_black"
-                            android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/txtNewMobileValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:text="@string/dash"
+                        android:textColor="@color/text_black"
+                        android:textSize="16sp" />
 
-                    </RelativeLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -1013,10 +1007,10 @@
 
 
     <ProgressBar
-        android:layout_gravity="center_horizontal|center_vertical"
         android:id="@+id/progress_bar"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal|center_vertical" />
 
 </RelativeLayout>

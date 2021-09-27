@@ -1,5 +1,6 @@
 package com.clxns.app.data.model.cases
 
+import com.clxns.app.data.model.MyPlanDataItem
 import com.clxns.app.data.model.SubDispositionData
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -19,7 +20,7 @@ data class CasesData(
     @Json(name = "name")
     val name: String,
     @Json(name = "plans")
-    val plans: List<Any>,
+    val plans: List<MyPlanDataItem>,
     @Json(name = "srNo")
     val srNo: Int,
     @Json(name = "subDisposition")

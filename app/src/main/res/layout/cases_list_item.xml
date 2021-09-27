@@ -51,7 +51,7 @@
                 android:id="@+id/cases_username_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SHARUKH SHAIKH"
+                android:text="@string/app_name"
                 android:textSize="@dimen/sp20"
                 android:textStyle="bold" />
 
@@ -59,7 +59,7 @@
                 android:id="@+id/loan_id_date_pincode_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="5465865"
+                android:text="@string/zero"
                 android:textColor="@color/quantum_grey600"
                 android:textSize="@dimen/sp14" />
 
@@ -69,7 +69,7 @@
             android:id="@+id/cases_amount_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="₹65,250"
+            android:text="@string/zero"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/sp24"
             android:textStyle="bold"
@@ -78,14 +78,15 @@
 
         <TextView
             android:id="@+id/cases_status_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp4"
             android:layout_toStartOf="@+id/cases_plan_btn"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Residence Shifted"
+            android:text="@string/status"
             android:textSize="@dimen/sp16"
+            app:layout_constraintEnd_toStartOf="@id/cases_plan_btn"
             app:layout_constraintStart_toStartOf="@+id/cases_detail_layout"
             app:layout_constraintTop_toBottomOf="@+id/cases_detail_layout" />
 
@@ -98,7 +99,7 @@
             android:backgroundTint="@color/green"
             android:paddingHorizontal="@dimen/dp16"
             android:paddingVertical="@dimen/dp6"
-            android:text="+ Plan"
+            android:text="@string/plan"
             android:textColor="@color/white"
             android:textSize="@dimen/sp12"
             android:textStyle="bold"

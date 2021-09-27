@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.AddToPlanModel
+import com.clxns.app.data.model.UnPlanResponse
 import com.clxns.app.data.model.cases.CasesResponse
 import com.clxns.app.data.repository.CasesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,6 +38,10 @@ class CasesViewModel @Inject constructor(
         MutableLiveData()
     val responseAddToPlan: LiveData<NetworkResult<AddToPlanModel>> = _responseAddToPlan
 
+    private val _responseRemovePlan: MutableLiveData<NetworkResult<UnPlanResponse>> =
+        MutableLiveData()
+    val responseRemovePlan: LiveData<NetworkResult<UnPlanResponse>> = _responseRemovePlan
+
     //Network Calls
     fun getCasesList(
         token: String,
@@ -57,8 +62,16 @@ class CasesViewModel @Inject constructor(
         leadId: String,
         planDate: String
     ) = viewModelScope.launch {
-        repository.addToPlan(token, leadId, planDate).collect { values ->
-            _responseAddToPlan.value = values
+        _responseAddToPlan.value = NetworkResult.Loading()
+        repository.addToPlan(token, leadId, planDate).collect {
+            _responseAddToPlan.value = it
+        }
+    }
+
+    fun removePlan(token: String, leadId: String) = viewModelScope.launch {
+        _responseRemovePlan.value = NetworkResult.Loading()
+        repository.removePlan(token, leadId).collect {
+            _responseRemovePlan.value = it
         }
     }
 

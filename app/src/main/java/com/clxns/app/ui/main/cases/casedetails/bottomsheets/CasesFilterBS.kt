@@ -20,6 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class CasesFilterBS : BottomSheetDialogFragment() {
@@ -34,8 +35,8 @@ class CasesFilterBS : BottomSheetDialogFragment() {
     private lateinit var datePickerDialog: DatePickerDialog
 
     private val casesViewModel: CasesViewModel by activityViewModels()
-    private var dispositionList = arrayListOf("Select")
-    private var subDispositionList = arrayListOf("Select")
+    private var dispositionList : ArrayList<String> = arrayListOf()
+    private var subDispositionList = arrayListOf("None")
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -64,6 +65,7 @@ class CasesFilterBS : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
+        casesViewModel.getAllDispositionsFromRoomDB()
     }
 
     override fun onCreateView(
@@ -82,11 +84,12 @@ class CasesFilterBS : BottomSheetDialogFragment() {
         initSubDispositionAdapter()
         setListeners()
         subscribeObserver()
-        casesViewModel.getAllDispositionsFromRoomDB()
     }
 
     private fun subscribeObserver() {
         casesViewModel.dispositionsResponse.observe(viewLifecycleOwner) {
+            dispositionList.clear()
+            dispositionList.add("Select")
             if (it.isNotEmpty()) {
                 dispositionList.addAll(it)
                 val dispositionAdapter = ArrayAdapter(
@@ -166,18 +169,6 @@ class CasesFilterBS : BottomSheetDialogFragment() {
                 token, "", "", "", "", ""
             )
             dismiss()
-//            initView()
-//            dispositionSpinner.setSelection(0)
-//            subDispositionSpinner.setSelection(0)
-//            subDispositionList.clear()
-//            subDispositionList.add("Select")
-//            subDispositionAdapter.notifyDataSetChanged()
-//            binding.startDateTv.text = ""
-//            binding.endDateTv.text = ""
-//            fromDate = ""
-//            toDate = ""
-//            subDispositionId = ""
-//            dispositionId = ""
         }
 
         dispositionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -187,6 +178,8 @@ class CasesFilterBS : BottomSheetDialogFragment() {
                 position: Int,
                 id: Long
             ) {
+                subDispositionList.clear()
+                subDispositionList.add("Select")
                 if (position != 0) {
                     subDispositionList.clear()
                     subDispositionList.add("Select")

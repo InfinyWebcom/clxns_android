@@ -5,6 +5,7 @@ import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.api.helper.RemoteDataSource
 import com.clxns.app.data.database.LocalDataSource
 import com.clxns.app.data.model.AddToPlanModel
+import com.clxns.app.data.model.UnPlanResponse
 import com.clxns.app.data.model.cases.CasesResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
@@ -49,6 +50,12 @@ class CasesRepository @Inject constructor(
     ): Flow<NetworkResult<AddToPlanModel>> {
         return flow {
             emit(safeApiCall { remoteDataSource.addToPlan(token, leadId, planDate) })
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun removePlan(token: String, leadId: String) : Flow<NetworkResult<UnPlanResponse>>{
+        return flow {
+            emit(safeApiCall { remoteDataSource.removePlan(token, leadId) })
         }.flowOn(Dispatchers.IO)
     }
 

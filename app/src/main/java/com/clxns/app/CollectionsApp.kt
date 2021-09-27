@@ -12,8 +12,10 @@ class CollectionsApp : Application(){
         if (BuildConfig.DEBUG){
             Timber.plant(Timber.DebugTree())
         }
-        /** TODO
-         * Add OTP Timer in Forgot Password Activity
+        /**
+         * Add OTP Timer in Forgot Password Activity - TODO
+         * Show current applied filter in the cases screen - TODO
+         * Replace progress bar with Shimmer layout - TODO
          */
     }
 }

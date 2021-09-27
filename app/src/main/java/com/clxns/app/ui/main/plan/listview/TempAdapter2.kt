@@ -31,16 +31,16 @@ class TempAdapter2(
     override fun onBindViewHolder(holder: TempVH2, position: Int) {
         val details = contactList?.get(position)
 
-        holder.contactItemBinding.planContactNameTxt.text = details?.lead?.name
-        holder.contactItemBinding.planContactAmountTxt.text =
-            "₹ ${details?.lead?.totalDueAmount.toString()}"
-        holder.contactItemBinding.planContactBank.text = details?.lead?.chequeBank
-        holder.contactItemBinding.planStatusBagde.text = details?.lead?.paymentStatus
-        holder.contactItemBinding.planContactAddress.text = details?.lead?.address
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            holder.contactItemBinding.planCallBtn.tooltipText =
-                details?.lead?.applicantAlternateMobile1
-        }
+//        holder.contactItemBinding.planContactNameTxt.text = details?.lead?.name
+//        holder.contactItemBinding.planContactAmountTxt.text =
+//            "₹ ${details?.lead?.totalDueAmount.toString()}"
+//        holder.contactItemBinding.planContactBank.text = details?.lead?.chequeBank
+//        holder.contactItemBinding.planStatusBagde.text = details?.lead?.paymentStatus
+//        holder.contactItemBinding.planContactAddress.text = details?.lead?.address
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            holder.contactItemBinding.planCallBtn.tooltipText =
+//                details?.lead?.applicantAlternateMobile1
+//        }
         holder.contactItemBinding.planCallBtn.setOnLongClickListener {
             context.copyToClipBoard(details?.lead?.applicantAlternateMobile1.toString())
             Toast.makeText(context, "Number has been copied.", Toast.LENGTH_LONG)

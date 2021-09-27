@@ -168,6 +168,27 @@
     <string name="partially_collect">Partially Collect</string>
     <string name="settlement_foreclosure">Settlement/Foreclosure</string>
     <string name="customer_deceased">Customer Deceased</string>
+    <string name="cases_toolbar_txt">Cases :&#160;</string>
+    <string name="cases_collectable_txt">Collectable :&#160;</string>
+    <string name="plan">+ Plan</string>
+    <string name="un_plan">UnPlan</string>
+    <string name="case_list_empty">Case list is empty</string>
+    <string name="dash">-</string>
+    <string name="loan_id">Loan ID</string>
+    <string name="payment_status">Payment Status</string>
+    <string name="show_more">Show more</string>
+    <string name="history">History</string>
+    <string name="contact_no">Contact No.</string>
+    <string name="pan_card">PAN Card</string>
+    <string name="dob">DOB</string>
+    <string name="cibil_score">Cibil Score</string>
+    <string name="business_name">Business Name</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="alternate_address">Alternate Address</string>
+    <string name="alternate_mobile">Alternate Mobile</string>
+    <string name="payment_collection">Payment Collection</string>
+    <string name="map">Map</string>
 
 
     <string-array name="yesNo">

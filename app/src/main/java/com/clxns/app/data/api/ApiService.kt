@@ -8,7 +8,6 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Header
 import retrofit2.http.POST
-import java.util.*
 
 interface ApiService {
     @POST("fos/login")
@@ -132,4 +131,11 @@ interface ApiService {
         @Field("remark") remark: String,
         @Field("supporting") supporting: List<String>
     ): Response<HomeStatisticsResponse>
+
+    @POST("fos/deletePlan")
+    @FormUrlEncoded
+    suspend fun removePlan(
+        @Header("token") token: String,
+        @Field("leadId") leadId: String
+    ): Response<UnPlanResponse>
 }

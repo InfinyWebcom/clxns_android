@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp8"
         android:layout_gravity="center"
-        android:background="@drawable/background_bottomsheet_view"
+        android:background="@drawable/bottom_sheet_dash"
         android:paddingHorizontal="24dp" />
 
     <TextView
