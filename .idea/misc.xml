@@ -51,18 +51,21 @@
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_login.xml" value="0.16" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_main.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_my_profile.xml" value="0.18645833333333334" />
-        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_payment_collection.xml" value="0.14629629629629629" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_payment_collection.xml" value="0.18" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_reposseion_map.xml" value="0.14629629629629629" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_repossessions_submit.xml" value="0.14629629629629629" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/added_image.xml" value="0.18645833333333334" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/bottom_sheet_cases_filter.xml" value="0.18" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/cases_summary_layout.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/custom_info_contents.xml" value="0.1984375" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_add_mobile_address_bottom_sheet_dialog.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_cases.xml" value="0.18" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_filter_dialog.xml" value="0.16" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_home.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_map_view.xml" value="0.1984375" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_my_plan.xml" value="0.17777777777777778" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_my_profile.xml" value="0.2" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_plan.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/fragment_sub_status_bottom_sheet.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/history_item.xml" value="0.22" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/ic_verified_24.xml" value="0.18645833333333334" />

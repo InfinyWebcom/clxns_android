@@ -1,4 +1,4 @@
-package com.clxns.app.ui.main.plan.listview
+package com.clxns.app.ui.main.plan.bfrag
 
 import android.app.DatePickerDialog
 import android.content.Context
@@ -16,13 +16,10 @@ import com.clxns.app.ui.main.cases.casedetails.DetailsActivity
 import com.clxns.app.utils.copyToClipBoard
 import java.util.*
 
-class TempAdapter2(
+class MyPlanAdapter(
     private val context: Context,
     private val contactList: List<MyPlanDataItem?>?
-) :
-    RecyclerView.Adapter<TempAdapter2.TempVH2>() {
-    private lateinit var cal: Calendar
-
+) : RecyclerView.Adapter<MyPlanAdapter.TempVH2>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TempVH2 {
         return TempVH2(PlanListItemsBinding.inflate(LayoutInflater.from(parent.context)))
@@ -54,19 +51,16 @@ class TempAdapter2(
         }
 
         holder.contactItemBinding.map.setOnClickListener {
-            openDatePickerDialog()
+//            openDatePickerDialog()
+            val map = "http://maps.google.co.in/maps?q=${details?.lead?.address}"
+            // val uri = String.format(Locale.ENGLISH, "geo:%f,%f", details?.lead?.address)
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(map))
+            context.startActivity(intent)
         }
 
         holder.contactItemBinding.planCheckInBtn.setOnClickListener {
             val intent = Intent(context, DetailsActivity::class.java)
-//            intent.putExtra("name", details?.lead?.name)
             intent.putExtra("loan_account_number", details?.lead?.loanAccountNo.toString())
-//            intent.putExtra("amount", details?.lead?.amountDue)
-//            intent.putExtra("mobile_number", details?.lead?.applicantAlternateMobile1)
-//            intent.putExtra("address", details?.lead?.address)
-//            intent.putExtra("status", details?.lead?.paymentStatus)
-//            intent.putExtra("bank_name", details?.lead?.chequeBank)
-//            intent.putExtra("loan_id", details?.leadId)
             intent.putExtra("isPlanned", true)
             context.startActivity(intent)
         }

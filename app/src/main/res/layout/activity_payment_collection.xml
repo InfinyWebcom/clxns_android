@@ -432,5 +432,11 @@
         android:text="@string/generate_receipt_txt"
         android:textColor="@color/white" />
 
-
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:clickable="true"
+        android:padding="185dp" />
 </RelativeLayout>

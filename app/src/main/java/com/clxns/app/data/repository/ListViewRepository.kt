@@ -16,9 +16,9 @@ class ListViewRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) : BaseApiResponse() {
 
-    suspend fun getMyPlanList(token: String): Flow<NetworkResult<MyPlanModel>> {
+    suspend fun getMyPlanList(token: String, planDate: String): Flow<NetworkResult<MyPlanModel>> {
         return flow {
-            emit(safeApiCall { remoteDataSource.getMyPlanList(token) })
+            emit(safeApiCall { remoteDataSource.getMyPlanList(token, planDate) })
         }.flowOn(Dispatchers.IO)
     }
 }

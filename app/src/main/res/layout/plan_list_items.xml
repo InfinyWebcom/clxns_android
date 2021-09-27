@@ -104,12 +104,12 @@
                 app:icon="@drawable/ic_phone_call"
                 app:iconTint="@color/green"
                 app:iconSize="@dimen/dp16"
-                app:layout_constraintEnd_toStartOf="@id/planFollowUpBtn"
+                app:layout_constraintEnd_toStartOf="@id/map"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/planContactAddress" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/planFollowUpBtn"
+                android:id="@+id/map"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp4"
@@ -119,10 +119,10 @@
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
                 app:iconTint="@color/orange"
-                android:text="@string/followup"
+                android:text="Map"
                 app:cornerRadius="@dimen/dp16"
                 android:textSize="12sp"
-                app:icon="@drawable/ic_follow_up"
+                app:icon="@drawable/ic_baseline_map_24"
                 app:iconSize="@dimen/dp16"
                 app:layout_constraintEnd_toStartOf="@id/planCheckInBtn"
                 app:layout_constraintStart_toEndOf="@id/planCallBtn"
@@ -144,7 +144,7 @@
                 app:icon="@drawable/ic_location_on_24"
                 app:iconSize="@dimen/dp16"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/planFollowUpBtn"
+                app:layout_constraintStart_toEndOf="@id/map"
                 app:layout_constraintTop_toBottomOf="@id/planContactAddress" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
