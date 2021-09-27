@@ -73,7 +73,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         refNo: String,
         chequeNo: String,
         remark: String,
-        supporting: String
+        supporting:  List<String>
     ) = apiService.addPayment(
         token, leadId, loanNo, amtType,
         paymentMode, recoveryDate, refNo, chequeNo, remark, supporting
