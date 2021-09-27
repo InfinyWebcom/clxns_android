@@ -79,11 +79,10 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
+            android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-            android:label="@string/app_name"
-            android:launchMode="singleTop" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
