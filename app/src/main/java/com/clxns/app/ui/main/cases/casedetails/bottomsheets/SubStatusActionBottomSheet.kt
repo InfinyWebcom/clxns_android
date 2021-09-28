@@ -61,7 +61,7 @@ class SubStatusActionBottomSheet(private var callback: OnClick) : BottomSheetDia
     ): View {
         isPTP = arguments?.getBoolean("isPTPAction") ?: false
         dispositionType = arguments?.getString("dispositionType") ?: ""
-        dispositionType = arguments?.getString("customNotFoundReason") ?: ""
+        customNotFoundReason = arguments?.getString("customNotFoundReason") ?: ""
         actionBinding = SubStatusActionBottomSheetBinding.inflate(layoutInflater)
         return actionBinding.root
     }
