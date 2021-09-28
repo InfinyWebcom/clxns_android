@@ -130,7 +130,7 @@ interface ApiService {
         @Field("refNo") refNo: String,
         @Field("chequeNo") chequeNo: String,
         @Field("remark") remark: String,
-        @Field("supporting") supporting: List<String>
+        @Field("supporting") supporting: Array<String>
     ): Response<HomeStatisticsResponse>
 
     @FormUrlEncoded
