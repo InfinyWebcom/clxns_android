@@ -141,4 +141,12 @@ interface ApiService {
         @Field("type") type: String,
         @Field("content") content: String
     ): Response<LeadContactUpdateResponse>
+    
+    @POST("fos/deletePlan")
+    @FormUrlEncoded
+    suspend fun removePlan(
+        @Header("token") token: String,
+        @Field("leadId") leadId: String
+    ): Response<UnPlanResponse>
+
 }
