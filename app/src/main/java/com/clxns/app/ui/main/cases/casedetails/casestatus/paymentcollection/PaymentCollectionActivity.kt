@@ -158,7 +158,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                         if (paymentType == "ONLINE") binding.edtReferenceType.text.toString() else "",
                         if (paymentType == "CHEQUE") binding.edtReferenceType.text.toString() else "",
                         binding.remarksET.text.toString(),
-                        photoB64List
+                        photoB64List.toTypedArray()
                     )
                 }
             }
