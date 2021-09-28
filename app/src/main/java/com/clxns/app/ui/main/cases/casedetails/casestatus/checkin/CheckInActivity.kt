@@ -72,6 +72,9 @@ import kotlin.collections.ArrayList
 class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     AddImageAdapter.removePhoto {
 
+    var IS_SUB_DIS: Boolean = false
+    var remark: String = ""
+    var followUpDate: String = ""
     lateinit var binding: ActivityCheckInBinding
     lateinit var ctx: Context
     val viewModel: CheckInViewModel by viewModels()
@@ -301,7 +304,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         viewModel.saveCheckInData(
             sessionManager.getString(Constants.TOKEN)!!,
             viewModel.leadId!!,
-            "20",
+            dispositionId,
             (if (subDispositionId.isEmpty() || subDispositionId.isBlank()) null else subDispositionId),
             comments,
             followUp,
@@ -392,10 +395,26 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 
         viewModel.dispositionsIdResponse.observe(this) {
             dispositionId = it.toString()
+            if (!IS_SUB_DIS) {
+                saveCheckingData(
+                    remark,
+                    followUpDate,
+                    "abcd",
+                    ""
+                )
+            }
         }
 
         viewModel.subDispositionsIdResponse.observe(this) {
             subDispositionId = it.toString()
+            if (IS_SUB_DIS) {
+                saveCheckingData(
+                    remark,
+                    followUpDate,
+                    "abcd",
+                    ""
+                )
+            }
         }
     }
 
@@ -958,6 +977,9 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         assignTracker: Boolean,
         customNotFoundReason: String
     ) {
+        this.remark = remark
+        this.followUpDate = followUpDate
+
         when (dispositionType) {
             "PTP" -> {
                 viewModel.getDispositionIdFromRoomDB("Promise to Pay")
@@ -972,6 +994,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 viewModel.getDispositionIdFromRoomDB(dispositionType)
             }
             "Customer Not Found" -> {
+                IS_SUB_DIS = true
                 viewModel.getDispositionIdFromRoomDB(dispositionType)
                 viewModel.getSubDispositionIdFromRoomDB(customNotFoundReason)
             }
@@ -982,13 +1005,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 viewModel.getDispositionIdFromRoomDB(dispositionType)
             }
         }
-
-        saveCheckingData(
-            remark,
-            followUpDate,
-            "acd",
-            ""
-        )
+        binding.progressBar.show()
     }
 }
 

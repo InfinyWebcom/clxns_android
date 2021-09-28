@@ -18,10 +18,10 @@ import com.clxns.app.data.model.Lead
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityDetailsBinding
 import com.clxns.app.ui.main.cases.CasesViewModel
+import com.clxns.app.ui.main.cases.casedetails.casestatus.checkin.CheckInActivity
 import com.clxns.app.ui.main.cases.casedetails.history.HistoryDetailsActivity
 import com.clxns.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -42,6 +42,7 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var name: String
     private lateinit var status: String
     private var isPlanned = false
+    private var isCaseDetail = false
 
     private var mobileNo: String? = null
 
@@ -50,12 +51,11 @@ class DetailsActivity : AppCompatActivity() {
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnCheckIn.visibility = View.GONE
-
         binding.txtHistory.paintFlags =
             binding.txtHistory.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
         isPlanned = intent.getBooleanExtra("isPlanned", false)
+        isCaseDetail = intent.getBooleanExtra("isCaseDetail", false)
         loanAccountNo = intent.getStringExtra("loan_account_number").toString()
         status = intent.getStringExtra("status").toString()
         name = intent.getStringExtra("name").toString()
@@ -63,6 +63,9 @@ class DetailsActivity : AppCompatActivity() {
 
         binding.txtToolbarTitle.text = name
         binding.txtStatusValue.text = status
+        if (isCaseDetail) {
+            binding.btnCheckIn.visibility = View.GONE
+        }
 
         setListeners()
 
@@ -83,12 +86,13 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun setListeners() {
 
-//        binding.btnCheckIn.setOnClickListener {
-//            val intent = Intent(this, CheckInActivity::class.java)
-//            intent.putExtra("status", intent.getStringExtra("status"))
-//            intent.putExtra("name", intent.getStringExtra("name"))
-//            startActivity(intent)
-//        }
+        binding.btnCheckIn.setOnClickListener {
+            val intent = Intent(this, CheckInActivity::class.java)
+            intent.putExtra("status", intent.getStringExtra("status"))
+            intent.putExtra("loan_account_number", loanAccountNo)
+            intent.putExtra("name", intent.getStringExtra("name"))
+            startActivity(intent)
+        }
 
         binding.txtHistory.setOnClickListener {
             val intent = Intent(this, HistoryDetailsActivity::class.java)

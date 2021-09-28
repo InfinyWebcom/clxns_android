@@ -73,6 +73,7 @@ class CasesAdapter(
                 intent.putExtra("status", eventStatus)
                 intent.putExtra("name",name)
                 intent.putExtra("isPlanned", isPlanned)
+                intent.putExtra("isCaseDetail", true)
                 context.startActivity(intent)
 
             }
