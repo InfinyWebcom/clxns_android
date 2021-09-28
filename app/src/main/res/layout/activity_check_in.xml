@@ -65,7 +65,6 @@
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@id/txtDate"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Rohan Joshi"
                     android:textAllCaps="true"
                     android:textColor="@color/text_black"
                     android:textSize="16sp" />
@@ -77,7 +76,6 @@
                     android:layout_alignTop="@+id/txtCheckInName"
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="12/02/2021"
                     android:textAllCaps="true"
                     android:textColor="@color/text_black"
                     android:textSize="16sp" />
@@ -90,7 +88,6 @@
                     android:layout_below="@id/txtDate"
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/gtwalsheimproregular"
-                    android:text="PTP"
                     android:textAllCaps="true"
                     android:textColor="@color/green"
                     android:textSize="@dimen/sp16" />
@@ -202,5 +199,12 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:clickable="true"
+        android:padding="185dp" />
 
 </RelativeLayout>

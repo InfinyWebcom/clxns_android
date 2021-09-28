@@ -11,8 +11,7 @@
         android:id="@+id/payment_collection_custom_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_tab"
-       >
+        android:background="@drawable/background_tab">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgBack"
@@ -47,9 +46,9 @@
         android:fillViewport="true">
 
         <LinearLayout
+            android:id="@+id/mainLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/mainLinearLayout"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:orientation="vertical">
@@ -64,7 +63,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Rohan Joshi"
                     android:textAllCaps="true"
                     android:textColor="@color/text_black"
                     android:textSize="16sp" />
@@ -79,7 +77,6 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="PTP"
                     android:textAllCaps="true"
                     android:textColor="@color/green"
                     android:textSize="@dimen/sp18" />
@@ -91,7 +88,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/gtwalsheimproregular"
-                android:text="12/02/2021"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
@@ -113,7 +109,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/gtwalsheimpromedium"
-                android:text="Kotak Mahindra Bank"
                 android:textColor="@color/text_black"
                 android:textSize="16sp" />
 
@@ -135,7 +130,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/gtwalsheimpromedium"
-                android:text="Home Loan"
                 android:textColor="@color/text_black"
                 android:textSize="16sp" />
 
@@ -165,7 +159,6 @@
                     android:layout_marginTop="5dp"
                     android:focusable="false"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="₹65,950"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/sp16" />
 
@@ -317,20 +310,18 @@
                 android:text="Payment/Recovery Date"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
-                android:textSize="14sp"
-                 />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txtPaymentOrRecoveryDateValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/gtwalsheimpromedium"
-                android:textColor="@color/text_black"
                 android:background="@drawable/background_edittext_roundable"
-                android:paddingVertical="@dimen/dp10"
+                android:fontFamily="@font/gtwalsheimpromedium"
                 android:paddingHorizontal="@dimen/dp8"
-                 />
+                android:paddingVertical="@dimen/dp10"
+                android:textColor="@color/text_black" />
 
 
             <TextView
@@ -352,12 +343,12 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/background_edittext_roundable"
                 android:fontFamily="@font/gtwalsheimproregular"
+                android:importantForAutofill="no"
                 android:inputType="number"
                 android:paddingVertical="@dimen/dp10"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:visibility="visible"
-                android:importantForAutofill="no" />
+                android:visibility="visible" />
 
 
             <TextView
@@ -369,8 +360,7 @@
                 android:text="Remarks"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
-                android:textSize="14sp"
-                />
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/remarksET"
@@ -379,11 +369,11 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/background_edittext_roundable"
                 android:fontFamily="@font/gtwalsheimproregular"
+                android:importantForAutofill="no"
                 android:inputType="text"
                 android:paddingVertical="@dimen/dp10"
                 android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:importantForAutofill="no" />
+                android:paddingEnd="5dp" />
 
 
             <TextView

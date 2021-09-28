@@ -8,16 +8,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.clxns.app.databinding.SubStatusActionBottomSheetBinding
+import com.clxns.app.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class SubStatusActionBottomSheet : BottomSheetDialogFragment() {
+class SubStatusActionBottomSheet(private var callback: OnClick) : BottomSheetDialogFragment() {
 
     private lateinit var actionBinding: SubStatusActionBottomSheetBinding
     private var isPTP = false
+    private var dispositionType = ""
+    private var customNotFoundReason = ""
+    private var timeFormatted = "00:00:00.000Z"
+    private var dateFormatted = ""
 
     companion object {
         const val TAG = "SubStatusActionBottomSheet"
@@ -38,11 +43,12 @@ class SubStatusActionBottomSheet : BottomSheetDialogFragment() {
             "Nov",
             "Dec"
         )
+
+        fun newInstance(callback: OnClick): SubStatusActionBottomSheet {
+            return SubStatusActionBottomSheet(callback)
+        }
     }
 
-    fun newInstance(): SubStatusActionBottomSheet {
-        return SubStatusActionBottomSheet()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +60,8 @@ class SubStatusActionBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         isPTP = arguments?.getBoolean("isPTPAction") ?: false
+        dispositionType = arguments?.getString("dispositionType") ?: ""
+        dispositionType = arguments?.getString("customNotFoundReason") ?: ""
         actionBinding = SubStatusActionBottomSheetBinding.inflate(layoutInflater)
         return actionBinding.root
     }
@@ -65,6 +73,7 @@ class SubStatusActionBottomSheet : BottomSheetDialogFragment() {
             actionBinding.assignToTracerCB.visibility = View.GONE
             actionBinding.revisitTimeLable.visibility = View.GONE
             actionBinding.revisitTimeTxt.visibility = View.GONE
+            actionBinding.revisitDateTxt.hint = "Set future date"
         } else {
             actionBinding.statusActionActiveLabel.visibility = View.GONE
             actionBinding.statusActionActiveRG.visibility = View.GONE
@@ -79,20 +88,31 @@ class SubStatusActionBottomSheet : BottomSheetDialogFragment() {
         }
 
         actionBinding.doneBtn.setOnClickListener {
-            this.dismiss()
+            if (validate()) {
+                callback.onClick(
+                    dispositionType,
+                    "${dateFormatted}T${timeFormatted}",
+                    actionBinding.statusActionRemarkET.text.toString(),
+                    actionBinding.assignToTracerCB.isChecked,
+                    customNotFoundReason
+                )
+                this.dismiss()
+            }
         }
+
     }
 
     private fun showTimePicker() {
         val currentTime = Calendar.getInstance()
         val hour = currentTime[Calendar.HOUR_OF_DAY]
         val minute = currentTime[Calendar.MINUTE]
-        val formatter = SimpleDateFormat("hh:mm Aa", Locale.getDefault())
+        val formatter = SimpleDateFormat("hh:mm aa", Locale.getDefault())
         val mTimePicker = TimePickerDialog(
             requireContext(),
             { _, selectedHour, selectedMinute ->
 
                 val time = "$selectedHour:$selectedMinute"
+                timeFormatted = "$time:00.000Z"
                 val fmt = SimpleDateFormat("HH:mm", Locale.getDefault())
                 var date: Date? = null
                 try {
@@ -122,8 +142,55 @@ class SubStatusActionBottomSheet : BottomSheetDialogFragment() {
                 val m = month + 1
                 Log.i(javaClass.name, "month--->" + MONTHS[month])
                 actionBinding.revisitDateTxt.text = "$day/$m/$year"
+                dateFormatted = "${year}-${String.format("%02d", m)}-${String.format("%02d", day)}"
             }, year, month, day)
 
         datePickerDialog.show()
     }
+
+    private fun validate(): Boolean {
+        var success = true
+        var message = ""
+        if (isPTP && success && actionBinding.statusActionActiveRG.checkedRadioButtonId == -1) {
+            success = false
+            message = "Please select probability"
+        }
+
+        if (success && (actionBinding.revisitDateTxt.text.isBlank()
+                    || actionBinding.revisitDateTxt.text.isEmpty())
+        ) {
+            success = false
+            val txt = if (isPTP) "future" else "revisit"
+            message = "Please select $txt date"
+        }
+        if (!isPTP && success && (actionBinding.revisitTimeTxt.text.isBlank()
+                    || actionBinding.revisitTimeTxt.text.isEmpty())
+        ) {
+            success = false
+            message = "Please select revisit time"
+        }
+        if (success && (actionBinding.statusActionRemarkET.text.toString().isBlank()
+                    || actionBinding.statusActionRemarkET.text.toString().isEmpty())
+        ) {
+            success = false
+            message = "Please enter remark"
+        }
+
+        if (!success) {
+            context?.toast(message)
+            return false
+        }
+        return true
+    }
+
+    interface OnClick {
+        fun onClick(
+            dispositionType: String,
+            followUpDate: String,
+            remark: String,
+            assignTracker: Boolean,
+            customNotFoundReason: String
+        )
+    }
+
 }

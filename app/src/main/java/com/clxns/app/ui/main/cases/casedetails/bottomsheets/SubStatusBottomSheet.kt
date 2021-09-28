@@ -9,17 +9,17 @@ import com.clxns.app.databinding.FragmentSubStatusBottomSheetBinding
 import com.clxns.app.ui.main.cases.casedetails.casestatus.checkin.SubStatusAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class SubStatusBottomSheet : BottomSheetDialogFragment(),
+class SubStatusBottomSheet(private val callback: SubStatusActionBottomSheet.OnClick) :
+    BottomSheetDialogFragment(),
     SubStatusAdapter.OnSubStatusActionListener {
 
     lateinit var subStatusBinding: FragmentSubStatusBottomSheetBinding
 
     companion object {
         const val TAG = "SubStatusBottomSheet"
-    }
-
-    fun newInstance(): SubStatusBottomSheet {
-        return SubStatusBottomSheet()
+        fun newInstance(callback: SubStatusActionBottomSheet.OnClick): SubStatusBottomSheet {
+            return SubStatusBottomSheet(callback)
+        }
     }
 
     override fun onCreateView(
@@ -43,8 +43,15 @@ class SubStatusBottomSheet : BottomSheetDialogFragment(),
         subStatusBinding.subStatusRV.adapter = SubStatusAdapter(ctx, statusList, this)
     }
 
-    override fun openSubStatusActionBottomSheet() {
-        val openActionSheet = SubStatusActionBottomSheet().newInstance()
-        openActionSheet.show(childFragmentManager, SubStatusActionBottomSheet.TAG)
+    override fun openSubStatusActionBottomSheet(reason: String) {
+//        val openActionSheet = SubStatusActionBottomSheet.newInstance()
+//        openActionSheet.show(childFragmentManager, SubStatusActionBottomSheet.TAG)
+
+        val openSubStatusAction =
+            SubStatusActionBottomSheet.newInstance(callback)
+        val bundle = Bundle()
+        bundle.putString("customNotFoundReason", reason)
+        openSubStatusAction.arguments = bundle
+        openSubStatusAction.show(childFragmentManager, SubStatusActionBottomSheet.TAG)
     }
 }
