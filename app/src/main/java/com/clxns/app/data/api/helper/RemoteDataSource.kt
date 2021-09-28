@@ -112,5 +112,3 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     ) = apiService.removePlan(token, leadId)
 
 }
-
-
