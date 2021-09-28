@@ -45,8 +45,9 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
             val asString = jsonParser.parse(data.additionalField).asString
             val amountAsObject = jsonParser.parse(asString).asJsonObject
             holder.historyItemBinding.itemAmountTv.text =
-                amountAsObject.get("recoveredAmount").asString.toInt().convertToCurrency()
-        }else{
+                if (amountAsObject.get("recoveredAmount").asString == ""||amountAsObject.get("recoveredAmount").asString == null) "-" else
+                    amountAsObject.get("recoveredAmount").asString.toInt().convertToCurrency()
+        } else {
             holder.historyItemBinding.itemAmountTv.hide()
         }
 

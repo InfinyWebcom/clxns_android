@@ -15,7 +15,7 @@ data class HistoryData(
     @Json(name = "dispositionId")
     val dispositionId: Int,
     @Json(name = "fileName")
-    val fileName: String,
+    val fileName: String?,
     @Json(name = "followUp")
     val followUp: String,
     @Json(name = "id")
