@@ -4,7 +4,7 @@ import com.clxns.app.data.api.helper.BaseApiResponse
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.api.helper.RemoteDataSource
 import com.clxns.app.data.model.CaseDetailsResponse
-import com.clxns.app.data.model.HomeStatisticsResponse
+import com.clxns.app.data.model.home.HomeStatisticsResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

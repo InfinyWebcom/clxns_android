@@ -1,13 +1,11 @@
 package com.clxns.app.ui.main.cases.casedetails.casestatus.checkin
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.clxns.app.data.model.StatusModel
 import com.clxns.app.databinding.StatusItemsBinding
-import com.clxns.app.ui.main.cases.casedetails.casestatus.paymentcollection.PaymentCollectionActivity
 
 
 class StatusAdapter(
@@ -20,7 +18,8 @@ class StatusAdapter(
     interface OnStatusListener {
         fun openAddDetailsBottomSheet(isMobile: Boolean)
         fun openSubStatusBottomSheet()
-        fun openSubStatusActionBottomSheet(isPTPAction: Boolean)
+        fun openSubStatusActionBottomSheet(isPTPAction: Boolean, dispositionType: String)
+        fun openPaymentScreen()
     }
 
     class StatusVH(itemView: StatusItemsBinding) : RecyclerView.ViewHolder(itemView.root) {
@@ -42,7 +41,10 @@ class StatusAdapter(
                     onStatusListener.openAddDetailsBottomSheet(false)
                 }
                 holder.itemsBinding.statusTxt.text.equals("PTP") -> {
-                    onStatusListener.openSubStatusActionBottomSheet(true)
+                    onStatusListener.openSubStatusActionBottomSheet(
+                        true,
+                        holder.itemsBinding.statusTxt.text.toString()
+                    )
                 }
                 holder.itemsBinding.statusTxt.text.equals("Call Back") ||
                         holder.itemsBinding.statusTxt.text.equals("Dispute") ||
@@ -50,15 +52,16 @@ class StatusAdapter(
                         holder.itemsBinding.statusTxt.text.equals("RTP") ||
                         holder.itemsBinding.statusTxt.text.equals("Customer Deceased")
                 -> {
-                    onStatusListener.openSubStatusActionBottomSheet(false)
+                    onStatusListener.openSubStatusActionBottomSheet(
+                        false,
+                        holder.itemsBinding.statusTxt.text.toString()
+                    )
                 }
                 holder.itemsBinding.statusTxt.text.equals("Collect") ||
                         holder.itemsBinding.statusTxt.text.equals("Partially Collect") ||
                         holder.itemsBinding.statusTxt.text.equals("Settlement/Foreclosure")
                 -> {
-                    val goToPaymentCollectActivity =
-                        Intent(context, PaymentCollectionActivity::class.java)
-                    context.startActivity(goToPaymentCollectActivity)
+                    onStatusListener.openPaymentScreen()
                 }
                 holder.itemsBinding.statusTxt.text.equals("Customer Not Found") -> {
                     onStatusListener.openSubStatusBottomSheet()

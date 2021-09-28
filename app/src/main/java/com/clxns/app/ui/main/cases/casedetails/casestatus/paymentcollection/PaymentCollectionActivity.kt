@@ -108,7 +108,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         setListeners()
         getResultFromActivity()
         setObserver()
-        viewModel.loanAccountNumber = "2496"//intent.getStringExtra("loan_account_number")
+        viewModel.loanAccountNumber = intent.getStringExtra("loan_account_number")
         if (viewModel.loanAccountNumber != null) {
             viewModel.getCaseDetails(
                 sessionManager.getString(Constants.TOKEN)!!,
@@ -175,17 +175,17 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     binding.progressBar.hide()
                     if (!response.data?.error!!) {
                         caseDetails = response.data
-                        binding.txtName.text = response.data.data?.name
-                        binding.txtStatus.text = response.data.data?.paymentStatus
-                        binding.txtProductValue.text = response.data.data?.loanType
+                        binding.txtName.text = nullSafeString(response.data.data?.name)
+                        binding.txtStatus.text = nullSafeString(response.data.data?.paymentStatus)
+                        binding.txtProductValue.text = nullSafeString(response.data.data?.loanType)
                         binding.txtDate.text = formatDate(
                             response.data.data?.dateOfDefault.toString(),
                             "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                             "dd-MM-yyyy"
                         )
-                        binding.txtBankName.text = response.data.data?.chequeBank
+                        binding.txtBankName.text = nullSafeString(response.data.data?.chequeBank)
                         binding.collectableAmountEt.text =
-                            "₹${response.data.data?.totalDueAmount.toString()}"
+                            "₹${nullSafeString(response.data.data?.totalDueAmount.toString())}"
                     } else {
                         toast(response.data.title!!)
                         finish()
@@ -730,6 +730,13 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         }
         lastVal = encodedFile
         return lastVal
+    }
+
+    private fun nullSafeString(value: String?): String {
+        if (value.isNullOrEmpty() || value.isNullOrBlank() || value == "null" || value == "0") {
+            return "-"
+        }
+        return value
     }
 
 }

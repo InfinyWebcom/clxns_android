@@ -15,8 +15,9 @@ class SubStatusAdapter(
     RecyclerView.Adapter<SubStatusAdapter.SubStatusVH>() {
 
     interface OnSubStatusActionListener {
-        fun openSubStatusActionBottomSheet()
+        fun openSubStatusActionBottomSheet(reason: String)
     }
+
     class SubStatusVH(itemView: SubStatusItemBinding) : RecyclerView.ViewHolder(itemView.root) {
         val subStatusItemBinding = itemView
     }
@@ -29,7 +30,9 @@ class SubStatusAdapter(
         holder.subStatusItemBinding.subStatusText.text = subStatusList[position].status
 
         holder.subStatusItemBinding.subStatusItemParent.setOnClickListener {
-            actionListener.openSubStatusActionBottomSheet()
+            actionListener.openSubStatusActionBottomSheet(
+                holder.subStatusItemBinding.subStatusText.text.toString()
+            )
         }
     }
 

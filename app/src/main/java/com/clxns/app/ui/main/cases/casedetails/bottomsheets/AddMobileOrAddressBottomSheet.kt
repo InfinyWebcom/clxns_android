@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.clxns.app.databinding.FragmentAddMobileAddressBottomSheetDialogBinding
+import com.clxns.app.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class AddMobileOrAddressBottomSheet : BottomSheetDialogFragment() {
+class AddMobileOrAddressBottomSheet(private val listener: OnClick) : BottomSheetDialogFragment() {
 
     lateinit var ctx: Context
     lateinit var sheetDialogBinding: FragmentAddMobileAddressBottomSheetDialogBinding
@@ -17,11 +18,12 @@ class AddMobileOrAddressBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "AddMobileOrAddressBottomSheet"
+
+        fun newInstance(listener: OnClick): AddMobileOrAddressBottomSheet {
+            return AddMobileOrAddressBottomSheet(listener)
+        }
     }
 
-    fun newInstance(): AddMobileOrAddressBottomSheet {
-        return AddMobileOrAddressBottomSheet()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,9 +41,16 @@ class AddMobileOrAddressBottomSheet : BottomSheetDialogFragment() {
             FragmentAddMobileAddressBottomSheetDialogBinding.inflate(layoutInflater)
 
         sheetDialogBinding.updateDetailsBtn.setOnClickListener {
-            this.dismiss()
+            if (validate()) {
+                if (isMobile) {
+                    listener.onMobileClick(sheetDialogBinding.edtNewMobileNo.text.toString())
+                } else {
+                    listener.onAddressClick(sheetDialogBinding.edtNewAddress.text.toString())
+                }
+                this.dismiss()
+            }
         }
-        if (isMobile){
+        if (isMobile) {
             sheetDialogBinding.addNewMobileTxt.visibility = View.VISIBLE
             sheetDialogBinding.edtNewMobileNo.visibility = View.VISIBLE
             sheetDialogBinding.addNewAddressTxt.visibility = View.GONE
@@ -49,6 +58,30 @@ class AddMobileOrAddressBottomSheet : BottomSheetDialogFragment() {
         }
 
 
+    }
+
+    private fun validate(): Boolean {
+        if (isMobile) {
+            if (sheetDialogBinding.edtNewMobileNo.text.toString().isEmpty() ||
+                sheetDialogBinding.edtNewMobileNo.text.toString().isBlank()
+            ) {
+                context?.toast("Please enter mobile number")
+                return false
+            }
+        } else {
+            if (sheetDialogBinding.edtNewAddress.text.toString().isEmpty() ||
+                sheetDialogBinding.edtNewAddress.text.toString().isBlank()
+            ) {
+                context?.toast("Please enter address")
+                return false
+            }
+        }
+        return true
+    }
+
+    interface OnClick {
+        fun onMobileClick(mobile: String)
+        fun onAddressClick(address: String)
     }
 
 
