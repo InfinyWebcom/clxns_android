@@ -109,8 +109,6 @@
 
     </RelativeLayout>
 
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cases_rv"
         android:layout_width="0dp"
@@ -118,29 +116,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cases_custom_toolbar"
-        tools:listitem="@layout/cases_list_item" />
+        app:layout_constraintTop_toBottomOf="@+id/cases_custom_toolbar" />
+
+    <include
+        android:id="@+id/cases_no_data"
+        layout="@layout/no_data_layout"
+        android:visibility="gone" />
 
 
     <ProgressBar
-        android:id="@+id/progress_bar"
+        android:id="@+id/cases_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|center_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txt_no_data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/case_list_empty"
         android:visibility="gone"
-        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cases_custom_toolbar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

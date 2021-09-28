@@ -1,5 +1,6 @@
 package com.clxns.app.data.model
 
+import com.clxns.app.data.model.cases.Fi
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -369,5 +370,7 @@ data class Lead(
     val location: String? = null,
 
     @Json(name = "chequeBank")
-    val chequeBank: String? = null
+    val chequeBank: String? = null,
+    @Json(name = "fi")
+    val fiData: Fi? = null
 )

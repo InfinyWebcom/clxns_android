@@ -20,7 +20,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class CasesFilterBS : BottomSheetDialogFragment() {
@@ -35,7 +34,7 @@ class CasesFilterBS : BottomSheetDialogFragment() {
     private lateinit var datePickerDialog: DatePickerDialog
 
     private val casesViewModel: CasesViewModel by activityViewModels()
-    private var dispositionList : ArrayList<String> = arrayListOf()
+    private var dispositionList: ArrayList<String> = arrayListOf()
     private var subDispositionList = arrayListOf("None")
 
     @Inject

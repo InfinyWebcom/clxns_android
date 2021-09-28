@@ -20,19 +20,19 @@
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackgroundBorderless"
             android:padding="@dimen/dp16"
-            app:tint="@color/white"
-            android:src="@drawable/ic_arrow_back_24" />
+            android:src="@drawable/ic_arrow_back_24"
+            app:tint="@color/white" />
 
 
         <TextView
-            android:id="@+id/txtAppName"
+            android:id="@+id/history_toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/imgBack"
             android:fontFamily="@font/gtwalsheimprobold"
             android:paddingTop="@dimen/dp16"
             android:paddingBottom="@dimen/dp16"
-            android:text="History"
+            android:text="@string/history"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/sp18" />
@@ -40,50 +40,52 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/user_details_lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp16"
-        android:layout_marginEnd="@dimen/dp16"
-        android:layout_marginTop="@dimen/dp8"
-        android:id="@+id/user_details_lin"
         android:layout_below="@id/history_custom_toolbar"
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp8"
+        android:layout_marginEnd="@dimen/dp16"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
-            android:fontFamily="@font/gtwalsheimpromedium"
+            android:text="@string/name"
             android:textColor="@color/text_black"
             android:textSize="@dimen/sp16"
-            />
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rohan Joshi"
-            android:fontFamily="@font/gtwalsheimproregular"
+            android:text="@string/dash"
             android:textSize="@dimen/sp18"
-            />
+            android:textStyle="bold" />
     </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_details_track"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/user_details_lin"
-        android:paddingStart="@dimen/dp16"
+        android:paddingStart="@dimen/dp8"
         android:paddingTop="@dimen/dp16"
-        android:paddingEnd="@dimen/dp16"
+        android:paddingEnd="@dimen/dp8"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
+    <include layout="@layout/no_data_layout"
+        android:id="@+id/history_no_data"
+        android:visibility="gone"/>
 
     <ProgressBar
-        android:layout_gravity="center_horizontal|center_vertical"
         android:id="@+id/progress_bar"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        />
 </RelativeLayout>

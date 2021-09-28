@@ -38,7 +38,7 @@
     <string name="notifications">Notifications</string>
     <string name="my_cases">My Cases</string>
     <string name="filter">Filter</string>
-    <string name="search_hint_txt">Search by Lead Id/Loan Id/Name/Mobile/Pincode</string>
+    <string name="search_hint_txt">Search by Loan Id/Name/Mobile/Pincode</string>
     <string name="account">Account</string>
     <string name="profile">Profile</string>
     <string name="select_bank">Select Bank</string>
@@ -157,7 +157,7 @@
     <string name="reporting_manager_none">Reporting Manager : None</string>
     <string name="blood_group_none">Blood Group : None</string>
     <string name="employee_code_0">Employee Code : 0</string>
-    <string name="please_wait">Please wait...</string>
+    <string name="please_wait">Please wait…</string>
     <string name="summary">Summary</string>
     <string name="ptp">PTP</string>
     <string name="rtp">RTP</string>
@@ -172,7 +172,6 @@
     <string name="cases_collectable_txt">Collectable :&#160;</string>
     <string name="plan">+ Plan</string>
     <string name="un_plan">UnPlan</string>
-    <string name="case_list_empty">Case list is empty</string>
     <string name="dash">-</string>
     <string name="loan_id">Loan ID</string>
     <string name="payment_status">Payment Status</string>
@@ -189,6 +188,9 @@
     <string name="alternate_mobile">Alternate Mobile</string>
     <string name="payment_collection">Payment Collection</string>
     <string name="map">Map</string>
+    <string name="retry">Retry</string>
+    <string name="something_went_wrong">Something went wrong.</string>
+    <string name="no_data">There\'s no data available currently.</string>
 
 
     <string-array name="yesNo">

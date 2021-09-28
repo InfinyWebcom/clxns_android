@@ -21,6 +21,7 @@ class HomeViewModel @Inject constructor(private val homeRepository: HomeReposito
     val responseHomeStats: LiveData<NetworkResult<HomeStatisticsResponse>> = _responseHomeStats
 
     fun getHomeStatsData(token: String) = viewModelScope.launch {
+        _responseHomeStats.value = NetworkResult.Loading()
         homeRepository.getHomeStatsData(token).collect {
             _responseHomeStats.value = it
         }

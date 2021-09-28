@@ -2,54 +2,46 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/follow_up_date_tv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:text="dddddddddddddddddddddddddddddddddddddddddddddddddddd"
-        android:visibility="invisible"
+        android:layout_marginEnd="@dimen/dp8"
+        android:text="@string/dash"
+        app:layout_constraintEnd_toStartOf="@+id/item_track_layout"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_date_detail_track"
-        style="@style/TITLE.TEXT.BLACK"
+        android:id="@+id/item_time_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:text="12/06/2021"
-        app:layout_constraintEnd_toStartOf="@+id/subrl"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginEnd="@dimen/dp8"
+        android:text="@string/dash"
+        app:layout_constraintEnd_toStartOf="@+id/item_track_layout"
+        app:layout_constraintTop_toBottomOf="@+id/follow_up_date_tv" />
 
     <TextView
-        android:id="@+id/tvTime"
-        style="@style/TITLE.TEXT.BLACK"
+        android:id="@+id/item_amount_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:text="4:30 PM"
-        app:layout_constraintEnd_toStartOf="@+id/subrl"
-        app:layout_constraintTop_toBottomOf="@+id/tv_date_detail_track" />
-
-    <TextView
-        android:id="@+id/txtDueMount"
-        style="@style/TITLE.TEXT.BLACK"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:text="₹3000"
-        app:layout_constraintEnd_toStartOf="@+id/subrl"
-        app:layout_constraintTop_toBottomOf="@+id/tvTime" />
+        android:layout_marginEnd="@dimen/dp8"
+        android:text="@string/dash"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/item_track_layout"
+        app:layout_constraintTop_toBottomOf="@+id/item_time_tv" />
 
 
     <RelativeLayout
-        android:id="@+id/subrl"
+        android:id="@+id/item_track_layout"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="120dp"
-        android:layout_toEndOf="@+id/tv_date_detail_track"
+        android:layout_marginStart="@dimen/dp128"
+        android:layout_toEndOf="@+id/follow_up_date_tv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -67,49 +59,46 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="false"
+            android:importantForAccessibility="no"
             android:src="@drawable/ic_oval_line"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/green" />
     </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_status_title"
-        style="@style/TITLE.TEXT.BLACK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:fontFamily="@font/gtwalsheimpromedium"
-        android:text="PTP"
+        android:layout_marginStart="@dimen/dp8"
+        android:textStyle="bold"
+        android:text="@string/dash"
         android:textAllCaps="true"
-        app:layout_constraintStart_toEndOf="@id/subrl"
+        app:layout_constraintStart_toEndOf="@id/item_track_layout"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_sub_status"
-        style="@style/TITLE.TEXT.BLACK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_status_title"
-        android:layout_marginStart="10dp"
-        android:fontFamily="@font/gtwalsheimproregular"
-        android:text="Future PTP"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@+id/subrl"
+        android:layout_marginStart="@dimen/dp8"
+        android:text="@string/dash"
+        android:textSize="@dimen/sp12"
+        app:layout_constraintStart_toEndOf="@+id/item_track_layout"
         app:layout_constraintTop_toBottomOf="@+id/tv_status_title" />
 
     <TextView
-        android:id="@+id/status_details"
-        style="@style/TITLE.TEXT.BLACK"
+        android:id="@+id/item_remarks_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_sub_status"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="@dimen/dp4"
-        android:paddingBottom="12dp"
-        android:text="This is comment section "
-        android:textSize="12sp"
+        android:layout_marginStart="@dimen/dp8"
+        android:paddingBottom="@dimen/dp8"
+        android:text="@string/dash"
+        android:textSize="@dimen/sp12"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/subrl"
+        app:layout_constraintStart_toEndOf="@+id/item_track_layout"
         app:layout_constraintTop_toBottomOf="@+id/tv_sub_status" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

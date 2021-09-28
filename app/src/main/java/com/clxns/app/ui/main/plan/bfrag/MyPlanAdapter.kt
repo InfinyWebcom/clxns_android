@@ -32,8 +32,8 @@ class MyPlanAdapter(
         val amount = details?.lead?.totalDueAmount?.convertToCurrency()
         holder.contactItemBinding.planItemAmountTxt.text = amount
         var bankNameAndLoanId = " | " + details?.lead?.loanAccountNo.toString()
-        bankNameAndLoanId = if (!details?.lead?.chequeBank.isNullOrEmpty()) {
-            details?.lead?.chequeBank + bankNameAndLoanId
+        bankNameAndLoanId = if (!details?.lead?.fiData?.name.isNullOrEmpty()) {
+            details?.lead?.fiData?.name + bankNameAndLoanId
         } else {
             "-$bankNameAndLoanId"
         }
@@ -43,7 +43,7 @@ class MyPlanAdapter(
         if (details?.lead?.dispositionId != null) {
             status = details.lead.dispositionId.toString()
             if (details.lead.subDispositionId != null) {
-                status += " -> " + details.lead.subDispositionId.toString()
+                status += "[" + details.lead.subDispositionId.toString() + "]"
             }
         }
         holder.contactItemBinding.planStatusBagde.text = status
@@ -83,33 +83,10 @@ class MyPlanAdapter(
             context.startActivity(intent)
         }
     }
-    /*
-    private fun openDatePickerDialog() {
-        val cal = Calendar.getInstance()
-        val dateSetListener =
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                cal.set(Calendar.YEAR, year)
-                cal.set(Calendar.MONTH, monthOfYear)
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            }
-        val datePicker = DatePickerDialog(
-            context,
-            dateSetListener,
-            // set DatePickerDialog to point to today's date when it loads up
-            cal.get(Calendar.YEAR),
-            cal.get(Calendar.MONTH),
-            cal.get(Calendar.DAY_OF_MONTH)
-        )
 
-        datePicker.setButton(
-            DialogInterface.BUTTON_POSITIVE,
-            "Follow Up"
-        ) { _, _ ->
-            Toast.makeText(context, "Follow up has been sent.", Toast.LENGTH_LONG).show()
-        }
-        datePicker.show()
-    }*/
-
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
     override fun getItemCount(): Int {
         return contactList?.size!!
