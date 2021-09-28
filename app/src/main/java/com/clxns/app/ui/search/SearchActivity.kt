@@ -2,12 +2,14 @@ package com.clxns.app.ui.search
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.widget.RelativeLayout
 import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.cases.CasesData
 import com.clxns.app.data.preference.SessionManager
@@ -38,6 +40,9 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
 
     private var searchTxt: String = ""
 
+    private lateinit var searchRV: RecyclerView
+    private lateinit var noDataLayout: RelativeLayout
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,18 +58,26 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         casesViewModel.responseCaseList.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
+                    searchRV.show()
+                    noDataLayout.hide()
                     if (it.data?.error == false && it.data.casesDataList.isNotEmpty()) {
                         casesDataList.addAll(it.data.casesDataList)
                         casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
                     } else {
-                        binding.root.snackBar("Nothing found")
+                        binding.searchNoData.noDataTv.text = getString(R.string.no_data)
+                        binding.searchNoData.retryBtn.hide()
+                        noDataLayout.show()
                     }
                 }
                 is NetworkResult.Error -> {
-                    toast(it.message!!)
+                    noDataLayout.show()
+                    searchRV.hide()
+                    binding.searchNoData.noDataTv.text = getString(R.string.something_went_wrong)
+                    binding.searchNoData.retryBtn.show()
+                    binding.root.snackBar(it.message!!)
                 }
                 is NetworkResult.Loading -> {
-                    Timber.i("Loading...")
+                    binding.root.snackBar("Searching...")
                 }
             }
         }
@@ -72,7 +85,6 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         casesViewModel.responseAddToPlan.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-                    Timber.i(it.toString())
                     casesDataList.clear()
                     casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
                     casesViewModel.getCasesList(
@@ -85,9 +97,9 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                     )
                 }
 
-                is NetworkResult.Error -> toast(it.message!!)
+                is NetworkResult.Error -> binding.root.snackBar(it.message!!)
 
-                is NetworkResult.Loading -> toast("Adding to my plan...")
+                is NetworkResult.Loading -> binding.root.snackBar("Adding to my plan...")
             }
         }
 
@@ -109,7 +121,7 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                     }
                 }
                 is NetworkResult.Error -> {
-                    toast(it.message!!)
+                    binding.root.snackBar(it.message!!)
                     // show error message
                 }
                 is NetworkResult.Loading -> {
@@ -127,19 +139,18 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         token = sessionManager.getString(Constants.TOKEN).toString()
 
         searchView = binding.searchView
+        searchRV = binding.searchRecyclerView
+        noDataLayout = binding.searchNoData.root
 
         casesAdapter = CasesAdapter(this, casesDataList, this)
-
-        binding.recyclerToolbarSearch.layoutManager = LinearLayoutManager(this)
+        searchRV.layoutManager = LinearLayoutManager(this)
+        searchRV.adapter = casesAdapter
     }
 
     private fun setListeners() {
         binding.searchBackBtn.setOnClickListener { onBackPressed() }
 
-        binding.recyclerToolbarSearch.adapter = casesAdapter
-
-
-        binding.recyclerToolbarSearch.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        searchRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (searchView.hasFocus() && dy > 0) {
@@ -154,7 +165,6 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                 if (searchView.hasFocus()) {
                     searchView.clearFocus()
                 }
-                toast("Searching..")
                 casesDataList.clear()
                 if (query != null) {
                     casesViewModel.getCasesList(

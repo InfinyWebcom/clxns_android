@@ -31,6 +31,7 @@ class MyPlanViewModel @Inject constructor(
 
 
     fun getMyPlanList(token: String, planDate: String) = viewModelScope.launch {
+        _response.value = NetworkResult.Loading()
         repository.getMyPlanList(token, planDate).collect { values ->
             _response.value = values
         }

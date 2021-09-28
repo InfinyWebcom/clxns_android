@@ -9,7 +9,6 @@ import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
@@ -24,11 +23,11 @@ fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
 
-fun ProgressBar.show() {
+fun View.show() {
     visibility = View.VISIBLE
 }
 
-fun ProgressBar.hide() {
+fun View.hide() {
     visibility = View.GONE
 }
 
@@ -75,7 +74,7 @@ fun String.makeFirstLetterCapital(): String {
     return String(arr)
 }
 
-fun String.convertServerDateToNormal(): String? {
+fun String.convertServerDateToNormal(newFormat:String): String? {
     var date = this
     var spf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
     spf.timeZone = TimeZone.getTimeZone("GMT")
@@ -85,15 +84,16 @@ fun String.convertServerDateToNormal(): String? {
     } catch (e: ParseException) {
         e.printStackTrace()
     }
-    spf = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
+    spf = SimpleDateFormat(newFormat, Locale.getDefault())
     date = spf.format(newDate)
     return date
 }
-fun ImageView.loadImage(url:String){
+
+fun ImageView.loadImage(url: String) {
     Glide.with(this).load(url).into(this)
 }
 
-fun Int.convertToCurrency():String{
+fun Int.convertToCurrency(): String {
     val amount = NumberFormat.getCurrencyInstance(Locale("en", "in"))
         .format(this)
     return amount.substringBefore('.')

@@ -97,6 +97,7 @@ class DetailsActivity : AppCompatActivity() {
         binding.txtHistory.setOnClickListener {
             val intent = Intent(this, HistoryDetailsActivity::class.java)
             intent.putExtra("loan_account_number", loanAccountNo)
+            intent.putExtra("name", name)
             startActivity(intent)
         }
 
@@ -196,7 +197,9 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun updateUI(data: Lead) {
 
-        binding.txtBankName.text = nullSafeString(data.chequeBank.toString())
+        val bankImageUrl = Constants.BANK_LOGO_URL + data.fiData?.fiImage
+        binding.imgBank.loadImage(bankImageUrl)
+        binding.txtBankName.text = data.fiData?.name?.let { nullSafeString(it) }
         binding.detailsLoanId.text = nullSafeString(data.loanAccountNo.toString())
         binding.paymentStatus.text =
             nullSafeString(data.paymentStatus.toString()).makeFirstLetterCapital()
@@ -212,7 +215,7 @@ class DetailsActivity : AppCompatActivity() {
 
         binding.DPDValue.text = nullSafeString(data.allocationDpd.toString())
 
-        binding.txtDisbursementDateValue.text = data.disbursementDate?.convertServerDateToNormal()
+        binding.txtDisbursementDateValue.text = data.disbursementDate?.convertServerDateToNormal("dd MMM, yyyy")
 
         binding.txtProductValue.text = nullSafeString(data.productTypeId.toString())
         binding.txtPinCodeValue.text = nullSafeString(data.applicantPincode.toString())

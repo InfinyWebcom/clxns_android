@@ -28,11 +28,11 @@
             android:layout_alignTop="@id/txtDateSort"
             android:layout_alignBottom="@id/txtDateSort"
             android:layout_toStartOf="@id/txtDateSort"
-            android:textStyle="bold"
             android:gravity="center_vertical"
             android:text="@string/my_plans"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp18" />
+            android:textSize="@dimen/sp18"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtDateSort"
@@ -58,7 +58,6 @@
         android:id="@+id/recyclerContacts"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_above="@+id/btn_retry"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -66,35 +65,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_plan_custom_toolbar" />
 
-    <Button
-        android:id="@+id/btn_retry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Retry"
-        android:textSize="@dimen/sp16"
-        android:textColor="@color/white"
+
+    <include layout="@layout/no_data_layout"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:id="@+id/plan_no_data"/>
 
     <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="185dp" />
-
-    <TextView
-        android:id="@+id/txt_no_data"
+        android:id="@+id/plan_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Plan list is empty"
-        android:textSize="16sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/my_plan_custom_toolbar"
+        tools:ignore="SpeakableTextPresentCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

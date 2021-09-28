@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
+import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,9 +18,9 @@ import com.clxns.app.data.model.home.StatsData
 import com.clxns.app.data.model.home.SummaryData
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentHomeBinding
+import com.clxns.app.databinding.NoDataLayoutBinding
 import com.clxns.app.ui.notification.NotificationActivity
-import com.clxns.app.utils.Constants
-import com.clxns.app.utils.convertToCurrency
+import com.clxns.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import javax.inject.Inject
@@ -45,6 +46,8 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
     private lateinit var weekData: HomeStatsData
     private lateinit var monthData: HomeStatsData
 
+    private lateinit var noDataLayout : RelativeLayout
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,7 +61,7 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeViewModel.getHomeStatsData(sessionManager.getString(Constants.TOKEN)!!)
+        getHomeStatistics()
 
         initView()
 
@@ -68,10 +71,17 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
 
     }
 
+    private fun getHomeStatistics() {
+        homeViewModel.getHomeStatsData(sessionManager.getString(Constants.TOKEN)!!)
+    }
+
     private fun subscribeObserver() {
         homeViewModel.responseHomeStats.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
+                    binding.homeProgressBar.hide()
+                    noDataLayout.hide()
+                    binding.homeScrollView.show()
                     if (it.data?.error == false) {
                         todayData = it.data.todayData!!
                         weekData = it.data.weekData!!
@@ -80,12 +90,22 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                         //Updating UI for Today
                         summaryData = todayData.summaryData!!
                         updateHomeStatsUI(todayData.actionsData!!, todayData.stats!!)
+                    }else{
+                        noDataLayout.show()
+                        binding.homeScrollView.hide()
                     }
                 }
                 is NetworkResult.Loading -> {
-                    Timber.i("Loading...")
+                    noDataLayout.hide()
+                    binding.homeScrollView.hide()
+                    binding.homeProgressBar.show()
                 }
-                is NetworkResult.Error -> Timber.i("Error")
+                is NetworkResult.Error -> {
+                    binding.homeProgressBar.hide()
+                    binding.homeScrollView.hide()
+                    noDataLayout.show()
+                    binding.root.snackBar(it.message!!)
+                }
             }
         }
     }
@@ -93,6 +113,7 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
     private fun initView() {
         binding.homeDaysContainer.setOnCheckedChangeListener(this)
         binding.usernameTv.text = sessionManager.getString(Constants.USER_NAME)
+        noDataLayout = binding.homeNoData.root
     }
 
     private fun setListeners() {
@@ -104,6 +125,10 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
             val actions =
                 HomeFragmentDirections.actionNavigationHomeToNavigationHomeSummary(summaryData)
             findNavController().navigate(actions)
+        }
+
+        binding.homeNoData.retryBtn.setOnClickListener {
+            getHomeStatistics()
         }
     }
 

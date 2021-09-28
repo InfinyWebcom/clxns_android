@@ -1,18 +1,20 @@
 package com.clxns.app.ui.main.cases.casedetails.history
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.RelativeLayout
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
+import com.clxns.app.data.model.HistoryData
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityHistoryDetailsBinding
 import com.clxns.app.utils.Constants
 import com.clxns.app.utils.hide
 import com.clxns.app.utils.show
-import com.clxns.app.utils.toast
+import com.clxns.app.utils.snackBar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -26,66 +28,113 @@ class HistoryDetailsActivity : AppCompatActivity() {
     @Inject
     lateinit var sessionManager: SessionManager
 
+    private lateinit var noDataLayout: RelativeLayout
+    private lateinit var historyRV: RecyclerView
+    private lateinit var loanAccountNo: String
+    private var historyDataList: ArrayList<HistoryData> = arrayListOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
-        binding = ActivityHistoryDetailsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setObserver()
-        setListeners()
-        setAdapter()
 
+        initView()
+
+        subscribeObserver()
+
+        setListener()
+
+        getHistoryDetails()
     }
 
-    private fun setAdapter() {
+    private fun setListener() {
+        binding.imgBack.setOnClickListener { finish() }
 
-        historyDetailsAdapter = HistoryDetailsAdapter(this)
-        val ll = LinearLayoutManager(this)
-        ll.isAutoMeasureEnabled = false
-        binding.rvDetailsTrack.apply {
-            layoutManager = ll
+        binding.historyNoData.retryBtn.setOnClickListener {
+            getHistoryDetails()
+        }
+    }
+
+    private fun getHistoryDetails() {
+        viewModel.getCaseHistory(
+            sessionManager.getString(Constants.TOKEN)!!,
+            loanAccountNo
+        )
+    }
+
+    private fun initView() {
+
+        binding = ActivityHistoryDetailsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        historyRV = binding.rvDetailsTrack
+
+        loanAccountNo = intent.getStringExtra("loan_account_number").toString()
+
+        if (intent.getStringExtra("name") != null) {
+            binding.historyToolbarTitle.text = intent.getStringExtra("name")
+        } else {
+            binding.userDetailsLin.show()
+            binding.historyToolbarTitle.text = getString(R.string.history)
+        }
+
+        noDataLayout = binding.historyNoData.root
+
+        //Setting up adapter
+        historyDetailsAdapter = HistoryDetailsAdapter(this, historyDataList)
+        historyRV.apply {
+            layoutManager = LinearLayoutManager(context)
             adapter = historyDetailsAdapter
         }
 
-    }
-
-    private fun setListeners() {
-
-        binding.imgBack.setOnClickListener { finish() }
 
     }
 
-    private fun setObserver() {
-        viewModel.getCaseHistory(
-            sessionManager.getString(Constants.TOKEN)!!,
-            intent.getStringExtra("loan_account_number")!!
-        )
-        viewModel.response.observe(this) { response ->
-            when (response) {
+    private fun subscribeObserver() {
+        viewModel.response.observe(this) {
+            binding.historyNoData.noDataTv.text = getString(R.string.something_went_wrong)
+            when (it) {
                 is NetworkResult.Success -> {
+                    clearAndNotify()
                     binding.progressBar.hide()
-                    if (!response.data?.error!!) {
-//                        setData(response.data.data!!)
-
+                    noDataLayout.hide()
+                    historyRV.show()
+                    if (!it.data?.error!!) {
+                        if (!it.data.historyData.isNullOrEmpty()) {
+                            val list = it.data.historyData
+                            historyDataList.addAll(list)
+                            historyDetailsAdapter.notifyItemRangeChanged(0, historyDataList.size)
+                        } else {
+                            binding.historyNoData.retryBtn.hide()
+                            binding.historyNoData.noDataTv.text = getString(R.string.no_data)
+                            noDataLayout.show()
+                        }
                     } else {
-                        toast(response.data.title!!)
-                        finish()
+                        binding.root.snackBar(it.data.title)
+                        noDataLayout.show()
+                        historyRV.hide()
                     }
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {
+                    historyRV.hide()
                     binding.progressBar.hide()
-                    toast(response.message!!)
-                    finish()
+                    noDataLayout.show()
+                    binding.root.snackBar(it.message!!)
+                    clearAndNotify()
                     // show error message
                 }
                 is NetworkResult.Loading -> {
                     binding.progressBar.show()
+                    noDataLayout.hide()
                     // show a progress bar
                 }
             }
         }
+    }
+
+    private fun clearAndNotify() {
+        historyDataList.clear()
+        historyDetailsAdapter.notifyItemRangeChanged(0, historyDataList.size)
     }
 
 

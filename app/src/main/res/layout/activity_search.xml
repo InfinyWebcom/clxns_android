@@ -56,10 +56,14 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_toolbar_search"
+        android:id="@+id/search_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_view"
         android:padding="@dimen/dp8" />
+
+    <include layout="@layout/no_data_layout"
+        android:id="@+id/search_no_data"
+        android:visibility="gone"/>
 
 </RelativeLayout>

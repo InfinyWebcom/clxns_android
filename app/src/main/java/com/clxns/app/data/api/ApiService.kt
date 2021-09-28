@@ -84,7 +84,7 @@ interface ApiService {
     suspend fun getCaseHistory(
         @Header("token") token: String,
         @Field("loanAccountNo") loanAccountNo: String
-    ): Response<CaseHistoryResponse>
+    ): Response<HistoryResponse>
 
     @FormUrlEncoded
     @POST("fos/saveCheckinData")

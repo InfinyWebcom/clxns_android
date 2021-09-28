@@ -8,10 +8,11 @@ import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +31,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
 
-    private val viewModel: CasesViewModel by viewModels()
+    private val viewModel: CasesViewModel by activityViewModels()
     private var _binding: FragmentCasesBinding? = null
 
     // This property is only valid between onCreateView and
@@ -40,11 +41,14 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
     @Inject
     lateinit var sessionManager: SessionManager
 
+    private lateinit var noDataLayout: RelativeLayout
+
     private val casesArgs: CasesFragmentArgs by navArgs()
 
     private var casesDataList: ArrayList<CasesData> = arrayListOf()
     private lateinit var casesAdapter: CasesAdapter
     private lateinit var casesRV: RecyclerView
+    private lateinit var token: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,12 +68,13 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
 
         setListeners()
 
+        binding.casesProgressBar.show()
         getCaseList()
     }
 
     private fun getCaseList() {
         viewModel.getCasesList(
-            sessionManager.getString(Constants.TOKEN)!!,
+            token,
             "", "", "", "", ""
         )
     }
@@ -79,6 +84,10 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         casesRV.layoutManager = LinearLayoutManager(requireContext())
         casesAdapter = CasesAdapter(requireContext(), casesDataList, this)
         casesRV.adapter = casesAdapter
+
+        token = sessionManager.getString(Constants.TOKEN)!!
+
+        noDataLayout = binding.casesNoData.root
     }
 
     private fun setListeners() {
@@ -92,93 +101,110 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
             val options = ActivityOptions.makeSceneTransitionAnimation(requireActivity(), p)
             startActivity(i, options.toBundle())
         }
+
+        binding.casesNoData.retryBtn.setOnClickListener {
+            getCaseList()
+        }
     }
 
     private fun subscribeObserver() {
         viewModel.responseCaseList.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    // bind data to the view
-                    binding.progressBar.hide()
-                    casesDataList.clear()
-                    casesAdapter.notifyDataSetChanged()
-                    if (response.data?.error == false) {
-                        val totalCases =
-                            getString(R.string.cases_toolbar_txt) + response.data.total.toString()
-                        binding.casesAllottedTv.text = totalCases
-                        val collectable =
-                            getString(R.string.cases_collectable_txt) + (response.data.collectable?.convertToCurrency()
-                                ?: "-")
-                        binding.amountCollectedTv.text = collectable
-                        if (!response.data.casesDataList.isNullOrEmpty()) {
-                            binding.txtNoData.visibility = View.GONE
-                            val dataList = response.data.casesDataList
-                            casesDataList.addAll(dataList)
-                            casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
+            binding.casesNoData.noDataTv.text = getString(R.string.something_went_wrong)
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                when (response) {
+                    is NetworkResult.Success -> {
+                        // bind data to the view
+                        binding.casesProgressBar.hide()
+                        noDataLayout.hide()
+                        casesRV.show()
+                        casesDataList.clear()
+                        casesAdapter.notifyDataSetChanged()
+                        if (response.data?.error == false) {
+                            val totalCases =
+                                getString(R.string.cases_toolbar_txt) + response.data.total.toString()
+                            binding.casesAllottedTv.text = totalCases
+                            val collectable =
+                                getString(R.string.cases_collectable_txt) + (response.data.collectable?.convertToCurrency()
+                                    ?: "-")
+                            binding.amountCollectedTv.text = collectable
+                            if (!response.data.casesDataList.isNullOrEmpty()) {
+                                val dataList = response.data.casesDataList
+                                casesDataList.addAll(dataList)
+                                casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
+                            } else {
+                                binding.casesNoData.noDataTv.text = getString(R.string.no_data)
+                                binding.casesNoData.retryBtn.hide()
+                                noDataLayout.show()
+                            }
                         } else {
-                            binding.txtNoData.visibility = View.VISIBLE
+                            binding.casesNoData.noDataTv.text = response.data?.title
+                            noDataLayout.show()
+                            casesRV.hide()
                         }
-                    } else {
-                        requireContext().toast(response.data?.title!!)
                     }
-                }
-                is NetworkResult.Error -> {
-                    binding.progressBar.hide()
-                    requireContext().toast(response.message!!)
-                    // show error message
-                }
-                is NetworkResult.Loading -> {
-                    binding.progressBar.show()
-                    // show a progress bar
-                    binding.casesAllottedTv.text = getString(R.string.cases_toolbar_txt)
-                    binding.amountCollectedTv.text = getString(R.string.cases_collectable_txt)
+                    is NetworkResult.Error -> {
+                        binding.casesProgressBar.hide()
+                        noDataLayout.show()
+                        casesRV.hide()
+                        clearAndNotify()
+                        binding.root.snackBar(response.message!!)
+                        // show error message
+                    }
+                    is NetworkResult.Loading -> {
+                        noDataLayout.hide()
+                        binding.casesAllottedTv.text = getString(R.string.cases_toolbar_txt)
+                        binding.amountCollectedTv.text = getString(R.string.cases_collectable_txt)
+                    }
                 }
             }
         }
 
         viewModel.responseAddToPlan.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    binding.progressBar.hide()
-                    requireContext().toast(response.data?.title!!)
-                    casesDataList.clear()
-                    casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
-                    getCaseList()
-                }
-                is NetworkResult.Error -> {
-                    binding.progressBar.hide()
-                    requireContext().toast(response.message!!)
-                    // show error message
-                }
-                is NetworkResult.Loading -> {
-                    binding.progressBar.show()
-                    // show a progress bar
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                when (response) {
+                    is NetworkResult.Success -> {
+                        binding.root.snackBar(response.data?.title!!)
+                        clearAndNotify()
+                        getCaseList()
+                    }
+                    is NetworkResult.Error -> {
+                        binding.root.snackBar(response.message!!)
+                        // show error message
+                    }
+                    is NetworkResult.Loading -> {
+                        binding.root.snackBar("Adding to my plan...")
+                        // show a progress bar
+                    }
                 }
             }
         }
 
         viewModel.responseRemovePlan.observe(viewLifecycleOwner) {
-            when (it) {
-                is NetworkResult.Success -> {
-                    binding.progressBar.hide()
-                    requireContext().toast(it.data?.title!!)
-                    if (!it.data.error) {
-                        casesDataList.clear()
-                        casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
-                        getCaseList()
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                when (it) {
+                    is NetworkResult.Success -> {
+                        binding.root.snackBar(it.data?.title!!)
+                        if (!it.data.error) {
+                            clearAndNotify()
+                            getCaseList()
+                        }
                     }
-                }
-                is NetworkResult.Error -> {
-                    binding.progressBar.hide()
-                    requireContext().toast(it.message!!)
-                    // show error message
-                }
-                is NetworkResult.Loading -> {
-                    binding.progressBar.show()
-                    // show a progress bar
+                    is NetworkResult.Error -> {
+                        binding.root.snackBar(it.message!!)
+                        // show error message
+                    }
+                    is NetworkResult.Loading -> {
+                        binding.root.snackBar("Removing from my plan...")
+                        // show a progress bar
+                    }
                 }
             }
         }
+    }
+
+    private fun clearAndNotify() {
+        casesDataList.clear()
+        casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
     }
 
     private fun showPlanDialog(casesData: CasesData) {
@@ -190,7 +216,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
                 viewModel.addToPlan(
-                    sessionManager.getString(Constants.TOKEN)!!,
+                    token,
                     casesData.loanAccountNo.toString(),
                     "${year}-${monthOfYear + 1}-${dayOfMonth}"
                 )
@@ -228,7 +254,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
 
         logoutDialog.setPositiveButton("Yes") { dialog, _ ->
             viewModel.removePlan(
-                sessionManager.getString(Constants.TOKEN)!!,
+                token,
                 casesData.loanAccountNo.toString()
             )
             dialog.dismiss()
