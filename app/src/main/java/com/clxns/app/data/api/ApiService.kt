@@ -92,12 +92,13 @@ interface ApiService {
         @Header("token") token: String,
         @Field("loanAccountNo") loanAccountNo: String,
         @Field("dispositionId") dispositionId: String,
-        @Field("subDispositionId") subDispositionId: String,
+        @Field("subDispositionId") subDispositionId: String?,
         @Field("comments") comments: String,
-        @Field("file") file: String,
         @Field("followUp") followUp: String,
         @Field("nextAction") nextAction: String,
-        @Field("additionalField") additionalField: String
+        @Field("additionalField") additionalField: String,
+        @Field("location") location: String,
+        @Field("supporting") supporting: List<String>
     ): Response<MyPlanModel>
 
     @POST("fos/getUserDetails")
@@ -132,10 +133,20 @@ interface ApiService {
         @Field("supporting") supporting: List<String>
     ): Response<HomeStatisticsResponse>
 
+    @FormUrlEncoded
+    @POST("fos/leadContactUpdate")
+    suspend fun leadContactUpdate(
+        @Header("token") token: String,
+        @Field("leadId") leadId: String,
+        @Field("type") type: String,
+        @Field("content") content: String
+    ): Response<LeadContactUpdateResponse>
+    
     @POST("fos/deletePlan")
     @FormUrlEncoded
     suspend fun removePlan(
         @Header("token") token: String,
         @Field("leadId") leadId: String
     ): Response<UnPlanResponse>
+
 }
