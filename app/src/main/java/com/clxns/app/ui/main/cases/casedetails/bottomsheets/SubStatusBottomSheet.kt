@@ -48,7 +48,7 @@ class SubStatusBottomSheet(private val callback: SubStatusActionBottomSheet.OnCl
 //        openActionSheet.show(childFragmentManager, SubStatusActionBottomSheet.TAG)
 
         val openSubStatusAction =
-            SubStatusActionBottomSheet.newInstance(callback)
+            SubStatusActionBottomSheet.newInstance(null,callback)
         val bundle = Bundle()
         bundle.putString("dispositionType", "Customer Not Found")
         bundle.putString("customNotFoundReason", reason)

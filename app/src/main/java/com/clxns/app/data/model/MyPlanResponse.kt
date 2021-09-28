@@ -11,7 +11,7 @@ data class MyPlanModel(
     val total: Int? = null,
 
     @Json(name = "data")
-    val data: List<MyPlanDataItem>,
+    val data: List<MyPlanDataItem>?,
 
     @Json(name = "title")
     val title: String? = null,

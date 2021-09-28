@@ -244,6 +244,29 @@
         <item>Custom Amount</item>
     </string-array>
 
+    <string-array name="ptp_sub_dispositions">
+        <item>Select</item>
+        <item>Active PTP</item>
+        <item>Future PTP</item>
+    </string-array>
+
+    <string-array name="customer_not_found_sub_dispositions">
+        <item>Select</item>
+        <item>House Locked</item>
+        <item>Address Not Found</item>
+        <item>Not Available but Resides here</item>
+        <item>Residence Shifted</item>
+        <item>Left Message with Family Members</item>
+    </string-array>
+
+    <string-array name="dispute_sub_dispositions">
+        <item>Select</item>
+        <item>Already Paid</item>
+        <item>Amount Dispute</item>
+        <item>Fraud/Cheating</item>
+        <item>Others</item>
+    </string-array>
+
     <string-array name="status_list">
         <item>Open/Pending</item>
         <item>PTP - Promise to Pay</item>

@@ -41,6 +41,15 @@
 
     </style>
 
+    <style name="spinner_style_2" parent="@android:style/Widget.TextView">
+        <!--        <item name="android:background">@drawable/spinner_border_grey</item>-->
+        <!--        <item name="android:layout_margin">1dp</item>-->
+        <item name="android:textSize">8sp</item>
+        <item name="android:fontFamily">@font/gtwalsheimpromedium</item>
+        <item name="android:popupBackground">@color/hint_color</item>
+
+    </style>
+
     <style name="TextLabelDummy" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:textColorHint">@color/colorPrimary</item>    // Hint Color
         <item name="android:textColor">@color/colorPrimary</item>    // Hint Color

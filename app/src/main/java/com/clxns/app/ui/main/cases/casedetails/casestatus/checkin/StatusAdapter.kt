@@ -17,7 +17,7 @@ class StatusAdapter(
 
     interface OnStatusListener {
         fun openAddDetailsBottomSheet(isMobile: Boolean)
-        fun openSubStatusBottomSheet()
+//        fun openSubStatusBottomSheet()
         fun openSubStatusActionBottomSheet(isPTPAction: Boolean, dispositionType: String)
         fun openPaymentScreen()
     }
@@ -50,6 +50,7 @@ class StatusAdapter(
                         holder.itemsBinding.statusTxt.text.equals("Dispute") ||
                         holder.itemsBinding.statusTxt.text.equals("Broken PTP") ||
                         holder.itemsBinding.statusTxt.text.equals("RTP") ||
+                        holder.itemsBinding.statusTxt.text.equals("Customer Not Found") ||
                         holder.itemsBinding.statusTxt.text.equals("Customer Deceased")
                 -> {
                     onStatusListener.openSubStatusActionBottomSheet(
@@ -63,9 +64,9 @@ class StatusAdapter(
                 -> {
                     onStatusListener.openPaymentScreen()
                 }
-                holder.itemsBinding.statusTxt.text.equals("Customer Not Found") -> {
-                    onStatusListener.openSubStatusBottomSheet()
-                }
+//                holder.itemsBinding.statusTxt.text.equals("Customer Not Found") -> {
+//                    onStatusListener.openSubStatusBottomSheet()
+//                }
             }
         }
         holder.itemsBinding.statusTxt.text = statusDetails.status

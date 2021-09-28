@@ -2,159 +2,416 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/dp16"
     android:background="@drawable/bottomsheet_background"
-    >
+    android:orientation="vertical"
+    android:padding="@dimen/dp16">
 
-    <TextView
-        android:id="@+id/imgDash"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp8"
-        android:layout_gravity="center"
-        android:background="@drawable/bottom_sheet_dash"
-        android:paddingHorizontal="24dp" />
-
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/gtwalsheimpromedium"
-        android:text="Probability"
-        android:id="@+id/statusActionActiveLabel"
-        android:layout_marginTop="@dimen/dp16"
-        android:textColor="@color/text_black"
-        android:textSize="18sp" />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/statusActionActiveRG"
-        android:orientation="horizontal">
+            <TextView
+                android:id="@+id/imgDash"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp8"
+                android:layout_gravity="center"
+                android:background="@drawable/bottom_sheet_dash"
+                android:paddingHorizontal="24dp" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/greater_than_80"
-            android:buttonTint="@color/green"
-            android:fontFamily="@font/gtwalsheimproregular"
-            android:textColor="@color/text_black"
-            />
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="50% - 80%"
-            android:buttonTint="@color/quantum_orange"
-            android:fontFamily="@font/gtwalsheimproregular"
-            android:textColor="@color/text_black"
-            />
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/less_than_50"
-            android:buttonTint="@color/quantum_googred"
-            android:fontFamily="@font/gtwalsheimproregular"
-            android:textColor="@color/text_black"
-            />
-    </RadioGroup>
+            <TextView
+                android:id="@+id/statusActionActiveLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:fontFamily="@font/gtwalsheimpromedium"
+                android:text="Probability"
+                android:textColor="@color/text_black"
+                android:textSize="18sp" />
+
+            <RadioGroup
+                android:id="@+id/statusActionActiveRG"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_80"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/green"
+                    android:fontFamily="@font/gtwalsheimproregular"
+                    android:text="@string/greater_than_80"
+                    android:textColor="@color/text_black" />
+
+                <RadioButton
+                    android:id="@+id/rb_50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/quantum_orange"
+                    android:fontFamily="@font/gtwalsheimproregular"
+                    android:text="50% - 80%"
+                    android:textColor="@color/text_black" />
+
+                <RadioButton
+                    android:id="@+id/rb_30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/quantum_googred"
+                    android:fontFamily="@font/gtwalsheimproregular"
+                    android:text="@string/less_than_50"
+                    android:textColor="@color/text_black" />
+            </RadioGroup>
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/gtwalsheimpromedium"
-        android:text="Revisit Date"
-        android:id="@+id/revisitDateLabel"
-        android:layout_marginTop="@dimen/dp16"
-        android:textColor="@color/text_black"
-        android:textSize="18sp" />
+            <TextView
+                android:id="@+id/txtStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp12"
+                android:fontFamily="@font/gtwalsheimpromedium"
+                android:text="Status"
+                android:textAllCaps="false"
+                android:textColor="@color/text_black"
+                android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/revisitDateTxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp8"
-        android:background="@drawable/background_edittext_roundable"
-        android:fontFamily="@font/gtwalsheimpromedium"
-        android:hint="Set revisit date"
-        android:paddingVertical="15dp"
-        android:paddingStart="@dimen/dp10"
-        android:paddingEnd="2dp"
-        android:textColor="@color/text_black"
-        android:textSize="14sp"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/revisitTimeLable"
-        android:fontFamily="@font/gtwalsheimpromedium"
-        android:text="Revisit Time"
-        android:layout_marginTop="@dimen/dp16"
-        android:textColor="@color/text_black"
-        android:textSize="18sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_spinner">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/revisitTimeTxt"
-        android:layout_marginTop="@dimen/dp8"
-        android:background="@drawable/background_edittext_roundable"
-        android:fontFamily="@font/gtwalsheimpromedium"
-        android:hint="Set revisit time"
-        android:paddingVertical="15dp"
-        android:paddingStart="@dimen/dp10"
-        android:paddingEnd="2dp"
-        android:textColor="@color/text_black"
-        android:textSize="14sp"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/statusActionRemarkLabel"
-        android:buttonTint="@color/colorPrimary"
-        android:fontFamily="@font/gtwalsheimpromedium"
-        android:text="Remarks"
-        android:layout_marginTop="@dimen/dp16"
-        android:textColor="@color/text_black"
-        android:textSize="18sp" />
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spStatus"
+                    style="@style/spinner_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="@dimen/dp4"
+                    android:overlapAnchor="false"
+                    android:paddingVertical="@dimen/dp10"
+                    android:spinnerMode="dialog"
+                    android:theme="@style/spinnerTheme" />
+            </RelativeLayout>
 
-    <EditText
-        android:id="@+id/statusActionRemarkET"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp8"
-        android:background="@drawable/background_edittext_roundable"
-        android:fontFamily="@font/gtwalsheimproregular"
-        android:gravity="top"
-        android:hint="Type here..."
-        android:importantForAutofill="no"
-        android:inputType="textMultiLine"
-        android:lines="5"
-        android:paddingVertical="10dp"
-        android:paddingStart="@dimen/dp10"
-        android:paddingEnd="2dp"
-        android:scrollbars="vertical"
-        android:textColor="@color/text_black"
-        android:textSize="14sp" />
+            <LinearLayout
+                android:id="@+id/ll_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_spinner"
+                android:orientation="vertical">
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/assignToTracerCB"
-        android:text="Assign To Tracer"
-        android:fontFamily="@font/gtwalsheimproregular"
-        android:buttonTint="@color/colorPrimary"
-        android:textSize="16sp"
-        android:layout_marginTop="@dimen/dp16"/>
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Done"
-        android:textColor="@color/white"
-        android:id="@+id/doneBtn"
-        android:backgroundTint="@color/colorPrimary"
-        android:layout_marginTop="@dimen/dp16"
-        android:layout_gravity="end"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp10"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="Amount Type"
+                            android:textAllCaps="false"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="30dp"
+                            android:background="@drawable/background_edittext_roundable">
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/spAmount"
+                                style="@style/spinner_style_2"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:elevation="@dimen/dp4"
+                                android:overlapAnchor="false"
+                                android:padding="3dp"
+                                android:spinnerMode="dialog"
+                                android:textSize="10sp"
+                                android:theme="@style/spinnerTheme" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/amount_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp10"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="Collected Amount"
+                            android:textAllCaps="false"
+                            android:textColor="@color/text_black"
+                            android:textSize="@dimen/sp12" />
+
+                        <EditText
+                            android:id="@+id/payment_amount_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="30dp"
+                            android:background="@drawable/background_edittext_roundable"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:importantForAutofill="no"
+                            android:inputType="number"
+                            android:padding="3dp"
+                            android:textSize="12sp"
+                            android:visibility="visible" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtPaymentMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:fontFamily="@font/gtwalsheimproregular"
+                    android:text="Payment Mode"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_black"
+                    android:textSize="12sp" />
+
+                <RadioGroup
+                    android:id="@+id/rgPayment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbOnline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/online"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbCheque"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/cheque"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbCash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gtwalsheimproregular"
+                        android:text="@string/cash"
+                        android:textColor="@color/text_black"
+                        android:textSize="12sp" />
+                </RadioGroup>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_payment_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtPaymentOrRecoveryDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp16"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="Payment/Recovery Date"
+                            android:textAllCaps="false"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/txtPaymentOrRecoveryDateValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="30dp"
+                            android:gravity="center_vertical"
+                            android:background="@drawable/background_edittext_roundable"
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:padding="3dp"
+                            android:paddingHorizontal="@dimen/dp8"
+                            android:paddingVertical="@dimen/dp10"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtReferenceNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp16"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:text="Reference/Cheque No."
+                            android:textAllCaps="false"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp"
+                            android:visibility="visible" />
+
+                        <EditText
+                            android:id="@+id/edtReferenceType"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="30dp"
+                            android:background="@drawable/background_edittext_roundable"
+                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:importantForAutofill="no"
+                            android:inputType="number"
+                            android:padding="3dp"
+                            android:textSize="12sp"
+                            android:visibility="visible" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/revisitDateLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp12"
+                android:fontFamily="@font/gtwalsheimpromedium"
+                android:text="Revisit Date"
+                android:textColor="@color/text_black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/revisitDateTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp8"
+                android:background="@drawable/background_edittext_roundable"
+                android:fontFamily="@font/gtwalsheimpromedium"
+                android:hint="Set revisit date"
+                android:paddingVertical="15dp"
+                android:paddingStart="@dimen/dp10"
+                android:paddingEnd="2dp"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/revisitTimeLable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp12"
+                android:fontFamily="@font/gtwalsheimpromedium"
+                android:text="Revisit Time"
+                android:textColor="@color/text_black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/revisitTimeTxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp8"
+                android:background="@drawable/background_edittext_roundable"
+                android:fontFamily="@font/gtwalsheimpromedium"
+                android:hint="Set revisit time"
+                android:paddingVertical="15dp"
+                android:paddingStart="@dimen/dp10"
+                android:paddingEnd="2dp"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/statusActionRemarkLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp12"
+                android:buttonTint="@color/colorPrimary"
+                android:fontFamily="@font/gtwalsheimpromedium"
+                android:text="Remarks"
+                android:textColor="@color/text_black"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/statusActionRemarkET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp8"
+                android:background="@drawable/background_edittext_roundable"
+                android:fontFamily="@font/gtwalsheimproregular"
+                android:gravity="top"
+                android:hint="Type here..."
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:paddingVertical="10dp"
+                android:paddingStart="@dimen/dp10"
+                android:paddingEnd="2dp"
+                android:scrollbars="vertical"
+                android:textColor="@color/text_black"
+                android:textSize="14sp" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/assignToTracerCB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:buttonTint="@color/colorPrimary"
+                android:fontFamily="@font/gtwalsheimproregular"
+                android:text="Assign To Tracer"
+                android:textSize="16sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/doneBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/dp16"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="Done"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 
 

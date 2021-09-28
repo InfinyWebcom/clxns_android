@@ -40,7 +40,6 @@ import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityCheckInBinding
 import com.clxns.app.ui.main.cases.casedetails.bottomsheets.AddMobileOrAddressBottomSheet
 import com.clxns.app.ui.main.cases.casedetails.bottomsheets.SubStatusActionBottomSheet
-import com.clxns.app.ui.main.cases.casedetails.bottomsheets.SubStatusBottomSheet
 import com.clxns.app.ui.main.cases.casedetails.casestatus.paymentcollection.PaymentCollectionActivity
 import com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.AddImageAdapter
 import com.clxns.app.utils.Constants
@@ -75,6 +74,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     var IS_SUB_DIS: Boolean = false
     var remark: String = ""
     var followUpDate: String = ""
+    var additionalFields: String = ""
     lateinit var binding: ActivityCheckInBinding
     lateinit var ctx: Context
     val viewModel: CheckInViewModel by viewModels()
@@ -324,12 +324,14 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         photoB64List.clear()
                         addedPhotosList.clear()
                         addImageAdapter.submitList(addedPhotosList)
+                        subDispositionId=""
+                        dispositionId=""
 
 
-//                        toast(response.data.title)
+                        toast(response.data.title!!)
 
                     } else {
-//                        toast(response.data.title)
+                        toast(response.data.title!!)
                     }
                 }
                 is NetworkResult.Error -> {
@@ -395,26 +397,26 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 
         viewModel.dispositionsIdResponse.observe(this) {
             dispositionId = it.toString()
-            if (!IS_SUB_DIS) {
-                saveCheckingData(
-                    remark,
-                    followUpDate,
-                    "abcd",
-                    ""
-                )
-            }
+//            if (!IS_SUB_DIS) {
+            saveCheckingData(
+                remark,
+                followUpDate,
+                followUpDate,
+                additionalFields
+            )
+//            }
         }
 
         viewModel.subDispositionsIdResponse.observe(this) {
             subDispositionId = it.toString()
-            if (IS_SUB_DIS) {
-                saveCheckingData(
-                    remark,
-                    followUpDate,
-                    "abcd",
-                    ""
-                )
-            }
+//            if (IS_SUB_DIS) {
+//                saveCheckingData(
+//                    remark,
+//                    followUpDate,
+//                    "abcd",
+//                    ""
+//                )
+//            }
         }
     }
 
@@ -821,50 +823,51 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         )
     }
 
-    override fun openSubStatusBottomSheet() {
-        val openSubStatus =
-            SubStatusBottomSheet.newInstance(object : SubStatusActionBottomSheet.OnClick {
-                override fun onClick(
-                    dispositionType: String,
-                    followUpDate: String,
-                    remark: String,
-                    assignTracker: Boolean,
-                    customNotFoundReason: String
-                ) {
-                    prepareDataForCheckIn(
-                        dispositionType,
-                        followUpDate,
-                        remark,
-                        assignTracker,
-                        customNotFoundReason
-                    )
-                }
-            })
-        openSubStatus.show(
-            supportFragmentManager,
-            SubStatusBottomSheet.TAG
-        )
-    }
+//    override fun openSubStatusBottomSheet() {
+//        val openSubStatus =
+//            SubStatusBottomSheet.newInstance(object : SubStatusActionBottomSheet.OnClick {
+//                override fun onClick(
+//                    dispositionType: String,
+//                    followUpDate: String,
+//                    remark: String,
+//                    assignTracker: Boolean,
+//                    customNotFoundReason: String
+//                ) {
+//                    prepareDataForCheckIn(
+//                        dispositionType,
+//                        followUpDate,
+//                        remark,
+//                        assignTracker,
+//                        customNotFoundReason
+//                    )
+//                }
+//            })
+//        openSubStatus.show(
+//            supportFragmentManager,
+//            SubStatusBottomSheet.TAG
+//        )
+//    }
 
     override fun openSubStatusActionBottomSheet(isPTPAction: Boolean, dispositionType: String) {
         val openSubStatusAction =
-            SubStatusActionBottomSheet.newInstance(object : SubStatusActionBottomSheet.OnClick {
-                override fun onClick(
-                    dispositionType: String,
-                    followUpDate: String,
-                    remark: String,
-                    assignTracker: Boolean,
-                    customNotFoundReason: String
-                ) {
-                    prepareDataForCheckIn(
-                        dispositionType,
-                        followUpDate,
-                        remark,
-                        assignTracker,
-                        customNotFoundReason
-                    )
-                }
-            })
+            SubStatusActionBottomSheet.newInstance(caseDetails,
+                object : SubStatusActionBottomSheet.OnClick {
+                    override fun onClick(
+                        dispositionType: String,
+                        subDispositionType: String,
+                        followUpDate: String,
+                        remark: String,
+                        additionalFields: String
+                    ) {
+                        prepareDataForCheckIn(
+                            dispositionType,
+                            subDispositionType,
+                            followUpDate,
+                            remark,
+                            additionalFields
+                        )
+                    }
+                })
         val bundle = Bundle()
         bundle.putBoolean("isPTPAction", isPTPAction)
         bundle.putString("dispositionType", dispositionType)
@@ -972,16 +975,24 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 
     private fun prepareDataForCheckIn(
         dispositionType: String,
+        subDispositionType: String,
         followUpDate: String,
         remark: String,
-        assignTracker: Boolean,
-        customNotFoundReason: String
+        additionalFields: String
     ) {
+        if (viewModel.lat.isNullOrEmpty() || viewModel.long.isNullOrEmpty() ||
+            viewModel.lat.isNullOrBlank() || viewModel.long.isNullOrBlank()
+        ) {
+            toast("Please check in location")
+            return
+        }
         this.remark = remark
         this.followUpDate = followUpDate
+        this.additionalFields = additionalFields
 
         when (dispositionType) {
             "PTP" -> {
+                viewModel.getSubDispositionIdFromRoomDB(subDispositionType)
                 viewModel.getDispositionIdFromRoomDB("Promise to Pay")
             }
             "RTP" -> {
@@ -991,12 +1002,13 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 viewModel.getDispositionIdFromRoomDB(dispositionType)
             }
             "Dispute" -> {
+                viewModel.getSubDispositionIdFromRoomDB(subDispositionType)
                 viewModel.getDispositionIdFromRoomDB(dispositionType)
             }
             "Customer Not Found" -> {
                 IS_SUB_DIS = true
+                viewModel.getSubDispositionIdFromRoomDB(subDispositionType)
                 viewModel.getDispositionIdFromRoomDB(dispositionType)
-                viewModel.getSubDispositionIdFromRoomDB(customNotFoundReason)
             }
             "Call Back" -> {
                 viewModel.getDispositionIdFromRoomDB(dispositionType)

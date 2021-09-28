@@ -37,7 +37,7 @@ class PaymentCollectionRepository @Inject constructor(
         refNo: String,
         chequeNo: String,
         remark: String,
-        supporting: List<String>
+        supporting: Array<String>
     ): Flow<NetworkResult<HomeStatisticsResponse>> {
         return flow {
             emit(safeApiCall {
