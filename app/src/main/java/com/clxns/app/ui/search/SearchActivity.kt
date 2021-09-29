@@ -63,10 +63,10 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         casesViewModel.responseCaseList.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-                    clearAndNotifyAdapter()
                     searchRV.show()
                     noDataLayout.hide()
                     if (it.data?.error == false && it.data.casesDataList.isNotEmpty()) {
+                        clearAndNotifyAdapter()
                         val dataList = it.data.casesDataList
                         casesDataList.addAll(dataList)
                         casesAdapter.notifyItemRangeChanged(0, dataList.size)
@@ -74,6 +74,9 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                         binding.searchNoData.noDataTv.text = getString(R.string.no_data)
                         binding.searchNoData.retryBtn.hide()
                         noDataLayout.show()
+                        val size = casesDataList.size
+                        casesDataList.clear()
+                        casesAdapter.notifyItemRangeRemoved(0, size)
                     }
                 }
                 is NetworkResult.Error -> {
@@ -182,8 +185,9 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
                     // Search
+                    val size = casesDataList.size
                     casesDataList.clear()
-                    casesAdapter.notifyDataSetChanged()
+                    casesAdapter.notifyItemRangeRemoved(0, size)
                 } else {
                     searchTxt = newText
                 }
