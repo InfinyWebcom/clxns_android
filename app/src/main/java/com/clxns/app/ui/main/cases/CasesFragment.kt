@@ -135,7 +135,6 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                 when (response) {
                     is NetworkResult.Success -> {
                         // bind data to the view
-                        clearAndNotifyAdapter()
                         binding.casesProgressBar.hide()
                         noDataLayout.hide()
                         casesRV.show()
@@ -148,6 +147,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                                     ?: "-")
                             binding.amountCollectedTv.text = collectable
                             if (!response.data.casesDataList.isNullOrEmpty()) {
+                                clearAndNotifyAdapter()
                                 val dataList = response.data.casesDataList
                                 casesDataList.addAll(dataList)
                                 casesAdapter.notifyItemRangeChanged(0, dataList.size)
@@ -155,6 +155,9 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                                 binding.casesNoData.noDataTv.text = getString(R.string.no_data)
                                 binding.casesNoData.retryBtn.hide()
                                 noDataLayout.show()
+                                val size = casesDataList.size
+                                casesDataList.clear()
+                                casesAdapter.notifyItemRangeRemoved(0, size)
                             }
                         } else {
                             binding.casesNoData.noDataTv.text = response.data?.title
@@ -166,7 +169,6 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                         binding.casesProgressBar.hide()
                         noDataLayout.show()
                         casesRV.hide()
-                        clearAndNotifyAdapter()
                         binding.root.snackBar(response.message!!)
                         // show error message
                     }

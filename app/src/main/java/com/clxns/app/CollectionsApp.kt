@@ -27,6 +27,7 @@ class CollectionsApp : Application() {
          * the detail screen & search cases screen if the user changes the plan status
          * Crashing due to scrolling while updating the data in Cases & Search Cases screen - FIXED
          * My plan only max 5 lead were showing - Fixed (Pagination removed from the backend)
+         * Crashing on case filter - Fixed
          */
     }
 }
