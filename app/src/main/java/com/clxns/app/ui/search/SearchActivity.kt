@@ -63,6 +63,7 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         casesViewModel.responseCaseList.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
+                    clearAndNotifyAdapter()
                     searchRV.show()
                     noDataLayout.hide()
                     if (it.data?.error == false && it.data.casesDataList.isNotEmpty()) {
@@ -92,7 +93,6 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
             when (it) {
                 is NetworkResult.Success -> {
                     setPlanStatus()
-                    clearAndNotifyAdapter()
                     casesViewModel.getCasesList(
                         token,
                         searchTxt,
@@ -115,7 +115,6 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                     binding.root.snackBar(it.data?.title!!)
                     if (!it.data.error) {
                         setPlanStatus()
-                        clearAndNotifyAdapter()
                         casesViewModel.getCasesList(
                             token,
                             searchTxt,
@@ -171,7 +170,6 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                 if (searchView.hasFocus()) {
                     searchView.clearFocus()
                 }
-                clearAndNotifyAdapter()
                 if (query != null) {
                     casesViewModel.getCasesList(
                         token, query, "", "",
@@ -184,7 +182,8 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
                     // Search
-                    clearAndNotifyAdapter()
+                    casesDataList.clear()
+                    casesAdapter.notifyDataSetChanged()
                 } else {
                     searchTxt = newText
                 }
@@ -197,7 +196,7 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
     private fun clearAndNotifyAdapter() {
         val size = casesDataList.size
         casesDataList.clear()
-        casesAdapter.notifyItemRangeRemoved(0, size)
+        casesAdapter.notifyItemRangeChanged(0, size)
     }
 
 
@@ -284,7 +283,6 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                 val data: Intent? = it.data
                 val status = data?.getBooleanExtra("hasChangedPlanStatus", false)
                 if (status == true) {
-                    clearAndNotifyAdapter()
                     casesViewModel.getCasesList(
                         token, searchTxt, "",
                         "", "", ""

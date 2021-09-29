@@ -88,7 +88,6 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
     }
 
     private fun getCaseList() {
-        clearAndNotify()
         viewModel.getCasesList(
             token,
             "", "", "", "", ""
@@ -136,6 +135,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                 when (response) {
                     is NetworkResult.Success -> {
                         // bind data to the view
+                        clearAndNotifyAdapter()
                         binding.casesProgressBar.hide()
                         noDataLayout.hide()
                         casesRV.show()
@@ -166,7 +166,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                         binding.casesProgressBar.hide()
                         noDataLayout.show()
                         casesRV.hide()
-                        clearAndNotify()
+                        clearAndNotifyAdapter()
                         binding.root.snackBar(response.message!!)
                         // show error message
                     }
@@ -220,10 +220,10 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         }
     }
 
-    private fun clearAndNotify() {
+    private fun clearAndNotifyAdapter() {
         val size = casesDataList.size
         casesDataList.clear()
-        casesAdapter.notifyItemRangeRemoved(0,size)
+        casesAdapter.notifyItemRangeChanged(0,size)
     }
 
     private fun showPlanDialog(casesData: CasesData) {
