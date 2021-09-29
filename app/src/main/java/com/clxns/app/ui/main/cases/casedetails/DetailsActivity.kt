@@ -1,5 +1,6 @@
 package com.clxns.app.ui.main.cases.casedetails
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -45,6 +46,8 @@ class DetailsActivity : AppCompatActivity() {
     private var isCaseDetail = false
 
     private var mobileNo: String? = null
+
+    private lateinit var planStatusIntent: Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -164,6 +167,7 @@ class DetailsActivity : AppCompatActivity() {
                     binding.root.snackBar(it.data?.title!!)
                     if (it.data.error == false) {
                         isPlanned = true
+                        setPlanStatus()
                         updatePlanButtonUI()
                     }
                 }
@@ -180,6 +184,7 @@ class DetailsActivity : AppCompatActivity() {
                     binding.root.snackBar(it.data?.title!!)
                     if (!it.data.error) {
                         isPlanned = false
+                        setPlanStatus()
                         updatePlanButtonUI()
                     }
                 }
@@ -193,6 +198,12 @@ class DetailsActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun setPlanStatus() {
+        planStatusIntent = Intent()
+        planStatusIntent.putExtra("hasChangedPlanStatus", true)
+        setResult(Activity.RESULT_OK, planStatusIntent)
     }
 
     private fun updateUI(data: Lead) {
@@ -282,7 +293,6 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun updatePlanButtonUI() {
-
         if (isPlanned) {
             binding.detailsPlanBtn.text = getString(R.string.un_plan)
             binding.detailsPlanBtn.rippleColor =

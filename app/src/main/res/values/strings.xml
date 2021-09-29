@@ -159,7 +159,7 @@
     <string name="employee_code_0">Employee Code : 0</string>
     <string name="please_wait">Please wait…</string>
     <string name="summary">Summary</string>
-    <string name="ptp">PTP</string>
+    <string name="ptp">Promise to Pay</string>
     <string name="rtp">RTP</string>
     <string name="broken_ptp">Broken PTP</string>
     <string name="dispute">Dispute</string>

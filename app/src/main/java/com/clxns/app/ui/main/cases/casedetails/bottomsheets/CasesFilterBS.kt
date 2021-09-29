@@ -145,7 +145,7 @@ class CasesFilterBS : BottomSheetDialogFragment() {
         }
         binding.endDateTv.setOnClickListener {
             if (binding.startDateTv.text.isNullOrEmpty()) {
-                requireContext().toast("Please select start date first")
+                requireContext().toast("Please select start date first.")
             } else {
                 showDatePicker(it as TextView, true)
             }

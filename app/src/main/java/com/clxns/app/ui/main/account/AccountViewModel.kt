@@ -7,15 +7,15 @@ import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.LoginResponse
 import com.clxns.app.data.model.LogoutResponse
-import com.clxns.app.data.repository.ProfileRepository
+import com.clxns.app.data.repository.AccountRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(
-    private val repository: ProfileRepository
+class AccountViewModel @Inject constructor(
+    private val repository: AccountRepository
 ) : ViewModel() {
 
     private val _responseLogout: MutableLiveData<NetworkResult<LogoutResponse>> = MutableLiveData()

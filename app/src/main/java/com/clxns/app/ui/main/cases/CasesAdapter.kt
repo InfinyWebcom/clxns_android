@@ -1,7 +1,6 @@
 package com.clxns.app.ui.main.cases
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.clxns.app.R
 import com.clxns.app.data.model.cases.CasesData
 import com.clxns.app.databinding.CasesListItemBinding
-import com.clxns.app.ui.main.cases.casedetails.DetailsActivity
 import com.clxns.app.utils.*
 
 
@@ -23,6 +21,12 @@ class CasesAdapter(
 
     interface OnCaseItemClickListener {
         fun onPlanClick(isPlanned: Boolean, casesData: CasesData)
+        fun openDetailActivity(
+            loadId: String,
+            name: String,
+            dispositions: String,
+            isPlanned: Boolean
+        )
     }
 
     class CasesVH(
@@ -33,15 +37,15 @@ class CasesAdapter(
         fun bind(context: Context, casesData: CasesData) {
             val name = casesData.name.lowercase()
             contactBinding.casesUsernameTv.text = name.makeFirstLetterCapital()
-            var eventStatus = "New Lead"
+            var dispositions = "New Lead"
             if (casesData.disposition != null) {
-                eventStatus = casesData.disposition.name
+                dispositions = casesData.disposition.name
                 if (casesData.subDisposition != null) {
-                    eventStatus += " -> " + casesData.subDisposition.name
+                    dispositions += " -> " + casesData.subDisposition.name
                 }
             }
             val assignedDate = casesData.fosAssignedDate.convertServerDateToNormal("dd MMM, yyyy")
-            contactBinding.casesStatusTv.text = eventStatus
+            contactBinding.casesStatusTv.text = dispositions
             val loanIdDatePinCode = casesData.loanAccountNo.toString() + " | " +
                     casesData.applicantPincode.toString() + " | " + assignedDate
             contactBinding.loanIdDatePincodeTv.text = loanIdDatePinCode
@@ -67,15 +71,12 @@ class CasesAdapter(
 
             }
             contactBinding.casesCardView.setOnClickListener {
-
-                val intent = Intent(context, DetailsActivity::class.java)
-                intent.putExtra("loan_account_number", casesData.loanAccountNo.toString())
-                intent.putExtra("status", eventStatus)
-                intent.putExtra("name",name)
-                intent.putExtra("isPlanned", isPlanned)
-                intent.putExtra("isCaseDetail", true)
-                context.startActivity(intent)
-
+                onCaseItemClickListener.openDetailActivity(
+                    casesData.loanAccountNo.toString(),
+                    name,
+                    dispositions,
+                    isPlanned
+                )
             }
         }
     }

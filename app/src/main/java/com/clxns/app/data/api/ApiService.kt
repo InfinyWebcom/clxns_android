@@ -61,11 +61,10 @@ interface ApiService {
 
 
     @POST("fos/listMyPlan")
+    @FormUrlEncoded
     suspend fun getMyPlanList(
         @Header("token") token: String,
-        @Header("start") start: Int,
-        @Header("length") length: Int,
-        @Header("planDate") planDate: String
+        @Field("planDate") planDate: String
     ): Response<MyPlanModel>
 
     @POST("fos/listFosDis")

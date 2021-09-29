@@ -48,7 +48,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         )
 
     suspend fun getMyPlanList(token: String, planDate: String) =
-        apiService.getMyPlanList(token, 0, 100, planDate)
+        apiService.getMyPlanList(token, planDate)
 
     suspend fun getCaseDetails(token: String, loanAccountNumber: String) =
         apiService.getCaseDetails(token, loanAccountNumber)

@@ -109,10 +109,13 @@
         <entry key="app/src/main/res/drawable/ic_arrow_forward_20.xml" value="0.17314814814814813" />
         <entry key="app/src/main/res/drawable/ic_arrow_left_24.xml" value="0.17314814814814813" />
         <entry key="app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.140234375" />
+        <entry key="app/src/main/res/drawable/ic_calendar_24.xml" value="0.140234375" />
+        <entry key="app/src/main/res/drawable/ic_cases_24.xml" value="0.140234375" />
         <entry key="app/src/main/res/drawable/ic_change_password.xml" value="0.1648148148148148" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/drawable/ic_email_24.xml" value="0.1648148148148148" />
         <entry key="app/src/main/res/drawable/ic_forgot_password.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.140234375" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.140234375" />
         <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.140234375" />
         <entry key="app/src/main/res/drawable/ic_location_on_24.xml" value="0.140234375" />
@@ -143,6 +146,7 @@
         <entry key="app/src/main/res/layout/cases_list_item.xml" value="0.16" />
         <entry key="app/src/main/res/layout/cases_summary_layout.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/custom_back_btn.xml" value="0.17083333333333334" />
+        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/fragment_add_mobile_address_bottom_sheet_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_cases.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1388888888888889" />
@@ -151,6 +155,7 @@
         <entry key="app/src/main/res/layout/fragment_my_profile.xml" value="0.16" />
         <entry key="app/src/main/res/layout/fragment_sub_status_bottom_sheet.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/history_item.xml" value="0.15" />
+        <entry key="app/src/main/res/layout/list_view_fragment.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/nearest_address_list_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/no_data_layout.xml" value="0.128125" />
         <entry key="app/src/main/res/layout/plan_list_items.xml" value="0.15" />

@@ -13,19 +13,22 @@ import androidx.fragment.app.viewModels
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.preference.SessionManager
-import com.clxns.app.databinding.FragmentMyProfileBinding
+import com.clxns.app.databinding.FragmentAccountBinding
 import com.clxns.app.ui.login.LoginActivity
 import com.clxns.app.ui.main.account.changePassword.ChangePasswordActivity
-import com.clxns.app.utils.*
+import com.clxns.app.utils.Constants
+import com.clxns.app.utils.loadImage
+import com.clxns.app.utils.snackBar
+import com.clxns.app.utils.toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment() {
+class AccountFragment : Fragment() {
 
-    private val profileViewModel: ProfileViewModel by viewModels()
-    private lateinit var binding: FragmentMyProfileBinding
+    private val accountViewModel: AccountViewModel by viewModels()
+    private lateinit var binding: FragmentAccountBinding
     private var bankNames = arrayOf<String>()
 
     @Inject
@@ -37,14 +40,14 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        profileViewModel.getUserDetails(sessionManager.getString(Constants.TOKEN)!!)
-        binding = FragmentMyProfileBinding.inflate(layoutInflater)
+        accountViewModel.getUserDetails(sessionManager.getString(Constants.TOKEN)!!)
+        binding = FragmentAccountBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        profileViewModel.getBankNameList()
+        accountViewModel.getBankNameList()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -111,7 +114,7 @@ class ProfileFragment : Fragment() {
                     val bankDialogBuilder = MaterialAlertDialogBuilder(requireContext())
                         .setTitle("Select your bank")
                         .setItems(bankNames) { _: DialogInterface, i: Int ->
-                            profileViewModel.getBankImage(bankNames[i])
+                            accountViewModel.getBankImage(bankNames[i])
                         }
                     bankDialogBuilder.show()
                 }
@@ -129,7 +132,7 @@ class ProfileFragment : Fragment() {
 
         logoutDialog.setPositiveButton("Yes") { dialog, _ ->
             dialog.dismiss()
-            profileViewModel.logout(sessionManager.getString(Constants.TOKEN)!!)
+            accountViewModel.logout(sessionManager.getString(Constants.TOKEN)!!)
         }.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
 
         val d = logoutDialog.create()
@@ -139,7 +142,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun subscribeObserver() {
-        profileViewModel.responseUserDetails.observe(viewLifecycleOwner) {
+        accountViewModel.responseUserDetails.observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResult.Success -> {
                     if (it.data?.error == false) {
@@ -180,7 +183,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        profileViewModel.responseLogout.observe(viewLifecycleOwner) { response ->
+        accountViewModel.responseLogout.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     // update UI
@@ -208,11 +211,11 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        profileViewModel.responseBankNames.observe(viewLifecycleOwner) {
+        accountViewModel.responseBankNames.observe(viewLifecycleOwner) {
             bankNames = it.toTypedArray()
         }
 
-        profileViewModel.responseBankImage.observe(viewLifecycleOwner) {
+        accountViewModel.responseBankImage.observe(viewLifecycleOwner) {
             sessionManager.saveAnyData(Constants.SELECTED_BANK, it)
             setBankImage()
         }

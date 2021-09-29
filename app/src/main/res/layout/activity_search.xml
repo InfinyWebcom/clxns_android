@@ -51,14 +51,14 @@
         android:backgroundTint="@color/quantum_grey100"
         android:iconifiedByDefault="false"
         android:queryBackground="@android:color/transparent"
-        android:queryHint="Search cases by Lead Id/Loan Id/Name/Mobile"
+        android:queryHint="@string/search_hint_txt"
         android:transitionName="search_bar" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/search_view"
         android:padding="@dimen/dp8" />
 

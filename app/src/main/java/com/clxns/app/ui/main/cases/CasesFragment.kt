@@ -1,15 +1,17 @@
 package com.clxns.app.ui.main.cases
 
-import android.app.ActivityOptions
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Pair
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -22,8 +24,10 @@ import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.cases.CasesData
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentCasesBinding
+import com.clxns.app.ui.main.cases.casedetails.DetailsActivity
 import com.clxns.app.ui.search.SearchActivity
 import com.clxns.app.utils.*
+import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -42,6 +46,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
     lateinit var sessionManager: SessionManager
 
     private lateinit var noDataLayout: RelativeLayout
+    private lateinit var filterBtn: MaterialButton
 
     private val casesArgs: CasesFragmentArgs by navArgs()
 
@@ -69,10 +74,21 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         setListeners()
 
         binding.casesProgressBar.show()
-        getCaseList()
+
+        //If user is navigating from home case summary bottom sheet
+        if (casesArgs.dispositionId != 0) {
+            filterBtn.text = getString(R.string.reset)
+            viewModel.getCasesList(
+                token, "", casesArgs.dispositionId.toString(),
+                "", "", ""
+            )
+        } else {
+            getCaseList()
+        }
     }
 
     private fun getCaseList() {
+        clearAndNotify()
         viewModel.getCasesList(
             token,
             "", "", "", "", ""
@@ -88,18 +104,24 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         token = sessionManager.getString(Constants.TOKEN)!!
 
         noDataLayout = binding.casesNoData.root
+        filterBtn = binding.filterBtn
     }
 
     private fun setListeners() {
-        binding.filterBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_cases_to_navigation_cases_filter)
+        filterBtn.setOnClickListener {
+            if (filterBtn.text.equals("Filter")) {
+                findNavController().navigate(R.id.action_navigation_cases_to_navigation_cases_filter)
+            } else {
+                filterBtn.text = getString(R.string.filter)
+                getCaseList()
+            }
         }
 
         binding.searchCard.setOnClickListener {
             val i = Intent(requireContext(), SearchActivity::class.java)
             val p = Pair<View, String>(binding.searchCard, "search_bar")
-            val options = ActivityOptions.makeSceneTransitionAnimation(requireActivity(), p)
-            startActivity(i, options.toBundle())
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), p)
+            startDetailActivityForResult.launch(i, options)
         }
 
         binding.casesNoData.retryBtn.setOnClickListener {
@@ -117,8 +139,6 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                         binding.casesProgressBar.hide()
                         noDataLayout.hide()
                         casesRV.show()
-                        casesDataList.clear()
-                        casesAdapter.notifyDataSetChanged()
                         if (response.data?.error == false) {
                             val totalCases =
                                 getString(R.string.cases_toolbar_txt) + response.data.total.toString()
@@ -130,7 +150,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                             if (!response.data.casesDataList.isNullOrEmpty()) {
                                 val dataList = response.data.casesDataList
                                 casesDataList.addAll(dataList)
-                                casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
+                                casesAdapter.notifyItemRangeChanged(0, dataList.size)
                             } else {
                                 binding.casesNoData.noDataTv.text = getString(R.string.no_data)
                                 binding.casesNoData.retryBtn.hide()
@@ -164,7 +184,6 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                 when (response) {
                     is NetworkResult.Success -> {
                         binding.root.snackBar(response.data?.title!!)
-                        clearAndNotify()
                         getCaseList()
                     }
                     is NetworkResult.Error -> {
@@ -185,7 +204,6 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                     is NetworkResult.Success -> {
                         binding.root.snackBar(it.data?.title!!)
                         if (!it.data.error) {
-                            clearAndNotify()
                             getCaseList()
                         }
                     }
@@ -203,8 +221,9 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
     }
 
     private fun clearAndNotify() {
+        val size = casesDataList.size
         casesDataList.clear()
-        casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
+        casesAdapter.notifyItemRangeRemoved(0,size)
     }
 
     private fun showPlanDialog(casesData: CasesData) {
@@ -234,19 +253,6 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    override fun onPlanClick(isPlanned: Boolean, casesData: CasesData) {
-        if (isPlanned) {
-            showConfirmUnPlanDialog(casesData)
-        } else {
-            showPlanDialog(casesData)
-        }
-    }
-
     private fun showConfirmUnPlanDialog(casesData: CasesData) {
         val logoutDialog = AlertDialog.Builder(requireContext())
         logoutDialog.setTitle("UnPlan -> ${casesData.name}")
@@ -265,6 +271,45 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         d.getButton(AlertDialog.BUTTON_POSITIVE).isAllCaps = false
         d.getButton(AlertDialog.BUTTON_NEGATIVE).isAllCaps = false
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onPlanClick(isPlanned: Boolean, casesData: CasesData) {
+        if (isPlanned) {
+            showConfirmUnPlanDialog(casesData)
+        } else {
+            showPlanDialog(casesData)
+        }
+    }
+
+    override fun openDetailActivity(
+        loadId: String,
+        name: String,
+        dispositions: String,
+        isPlanned: Boolean
+    ) {
+        val intent = Intent(context, DetailsActivity::class.java)
+        intent.putExtra("loan_account_number", loadId)
+        intent.putExtra("status", dispositions)
+        intent.putExtra("name", name)
+        intent.putExtra("isPlanned", isPlanned)
+        intent.putExtra("isCaseDetail", true)
+        startDetailActivityForResult.launch(intent)
+    }
+
+    private val startDetailActivityForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = it.data
+                val status = data?.getBooleanExtra("hasChangedPlanStatus", false)
+                if (status == true) {
+                    getCaseList()
+                }
+            }
+        }
 
 
 }

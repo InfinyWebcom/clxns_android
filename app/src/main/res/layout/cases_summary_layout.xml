@@ -53,11 +53,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp12"
-        android:clickable="true"
-        android:focusable="true"
         app:cardCornerRadius="@dimen/dp8"
-        app:cardElevation="2dp"
-        app:rippleColor="@color/colorPrimary">
+        app:cardElevation="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,9 +64,9 @@
             android:padding="@dimen/dp8">
 
             <TextView
+                android:id="@+id/total_cases_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/total_cases_tv"
                 android:fontFamily="sans-serif-medium"
                 android:includeFontPadding="false"
                 android:text="@string/zero"
@@ -81,8 +78,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp4"
                 android:fontFamily="@font/gtwalsheimpromedium"
-                android:text="@string/TotalCases"
                 android:includeFontPadding="false"
+                android:text="@string/TotalCases"
                 android:textSize="@dimen/sp14" />
         </LinearLayout>
 
@@ -114,16 +111,17 @@
                 android:paddingVertical="@dimen/dp8">
 
                 <TextView
+                    android:id="@+id/ptp_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:id="@+id/ptp_tv"
                     android:text="@string/zero"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
                 <TextView
+                    android:id="@+id/ptp_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
@@ -156,22 +154,23 @@
                 android:paddingVertical="@dimen/dp8">
 
                 <TextView
+                    android:id="@+id/rtp_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
                     android:text="@string/zero"
-                    android:id="@+id/rtp_tv"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
                 <TextView
+                    android:id="@+id/rtp_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="@string/rtp"
                     android:includeFontPadding="false"
+                    android:text="@string/rtp"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
 
@@ -205,22 +204,23 @@
                 android:paddingVertical="@dimen/dp8">
 
                 <TextView
+                    android:id="@+id/broken_ptp_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
                     android:text="@string/zero"
-                    android:id="@+id/broken_ptp_tv"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
                 <TextView
+                    android:id="@+id/broken_ptp_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="@string/broken_ptp"
                     android:includeFontPadding="false"
+                    android:text="@string/broken_ptp"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
 
@@ -247,22 +247,23 @@
                 android:paddingVertical="@dimen/dp8">
 
                 <TextView
+                    android:id="@+id/dispute_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:id="@+id/dispute_tv"
                     android:text="@string/zero"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
                 <TextView
+                    android:id="@+id/dispute_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="@string/dispute"
                     android:includeFontPadding="false"
+                    android:text="@string/dispute"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
 
@@ -296,22 +297,23 @@
                 android:paddingVertical="@dimen/dp8">
 
                 <TextView
+                    android:id="@+id/customer_not_found_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
                     android:text="@string/zero"
-                    android:id="@+id/customer_not_found_tv"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
                 <TextView
+                    android:id="@+id/customer_not_found_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="@string/customer_not_found"
                     android:includeFontPadding="false"
+                    android:text="@string/customer_not_found"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
 
@@ -338,22 +340,23 @@
                 android:paddingVertical="@dimen/dp8">
 
                 <TextView
+                    android:id="@+id/call_back_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
+                    android:text="@string/zero"
+                    android:textColor="@color/text_black"
+                    android:textSize="26sp" />
+
+                <TextView
                     android:id="@+id/call_back_tv"
-                    android:text="@string/zero"
-                    android:textColor="@color/text_black"
-                    android:textSize="26sp" />
-
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
+                    android:includeFontPadding="false"
                     android:text="@string/call_back"
-                    android:includeFontPadding="false"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
 
@@ -367,9 +370,9 @@
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:id="@+id/case_summary_collect_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp12"
             android:layout_weight="1"
             android:clickable="true"
@@ -386,22 +389,23 @@
                 android:paddingVertical="@dimen/dp8">
 
                 <TextView
+                    android:id="@+id/collect_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
-                    android:id="@+id/collect_tv"
                     android:includeFontPadding="false"
                     android:text="@string/zero"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
                 <TextView
+                    android:id="@+id/collect_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="@string/Collect"
                     android:includeFontPadding="false"
+                    android:text="@string/Collect"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
 
@@ -409,9 +413,9 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/case_summary_partially_collect_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/case_summary_partially_collect_btn"
             android:layout_margin="@dimen/dp12"
             android:layout_weight="1"
             android:clickable="true"
@@ -428,23 +432,24 @@
                 android:paddingVertical="@dimen/dp8">
 
                 <TextView
+                    android:id="@+id/partially_collect_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:id="@+id/partially_collect_tv"
                     android:text="@string/zero"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
                 <TextView
+                    android:id="@+id/partially_collect_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="@string/partially_collect"
                     android:includeFontPadding="false"
-                    android:textSize="@dimen/sp14"/>
+                    android:text="@string/partially_collect"
+                    android:textSize="@dimen/sp14" />
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -457,9 +462,9 @@
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/case_summary_settlement_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/case_summary_settlement_btn"
             android:layout_margin="@dimen/dp12"
             android:layout_weight="1"
             android:clickable="true"
@@ -476,22 +481,23 @@
                 android:paddingVertical="@dimen/dp8">
 
                 <TextView
+                    android:id="@+id/settlement_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:id="@+id/settlement_tv"
                     android:text="@string/zero"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
                 <TextView
+                    android:id="@+id/settlement_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="@string/settlement_foreclosure"
                     android:includeFontPadding="false"
+                    android:text="@string/settlement_foreclosure"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
 
@@ -499,9 +505,9 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/case_summary_customer_deceased_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/case_summary_customer_deceased_btn"
             android:layout_margin="@dimen/dp12"
             android:layout_weight="1"
             android:clickable="true"
@@ -518,22 +524,23 @@
                 android:paddingVertical="@dimen/dp8">
 
                 <TextView
+                    android:id="@+id/customer_deceased_value_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:includeFontPadding="false"
-                    android:id="@+id/customer_deceased_tv"
                     android:text="@string/zero"
                     android:textColor="@color/text_black"
                     android:textSize="26sp" />
 
                 <TextView
+                    android:id="@+id/customer_deceased_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp4"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="@string/customer_deceased"
                     android:includeFontPadding="false"
+                    android:text="@string/customer_deceased"
                     android:textSize="@dimen/sp14" />
             </LinearLayout>
 

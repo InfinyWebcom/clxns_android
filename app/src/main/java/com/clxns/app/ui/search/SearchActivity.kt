@@ -1,9 +1,12 @@
 package com.clxns.app.ui.search
 
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.RelativeLayout
 import android.widget.SearchView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -16,9 +19,9 @@ import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivitySearchBinding
 import com.clxns.app.ui.main.cases.CasesAdapter
 import com.clxns.app.ui.main.cases.CasesViewModel
+import com.clxns.app.ui.main.cases.casedetails.DetailsActivity
 import com.clxns.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -43,6 +46,8 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
     private lateinit var searchRV: RecyclerView
     private lateinit var noDataLayout: RelativeLayout
 
+    private lateinit var planStatusIntent: Intent
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,8 +66,9 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                     searchRV.show()
                     noDataLayout.hide()
                     if (it.data?.error == false && it.data.casesDataList.isNotEmpty()) {
-                        casesDataList.addAll(it.data.casesDataList)
-                        casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
+                        val dataList = it.data.casesDataList
+                        casesDataList.addAll(dataList)
+                        casesAdapter.notifyItemRangeChanged(0, dataList.size)
                     } else {
                         binding.searchNoData.noDataTv.text = getString(R.string.no_data)
                         binding.searchNoData.retryBtn.hide()
@@ -85,8 +91,8 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         casesViewModel.responseAddToPlan.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-                    casesDataList.clear()
-                    casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
+                    setPlanStatus()
+                    clearAndNotifyAdapter()
                     casesViewModel.getCasesList(
                         token,
                         searchTxt,
@@ -108,8 +114,8 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                 is NetworkResult.Success -> {
                     binding.root.snackBar(it.data?.title!!)
                     if (!it.data.error) {
-                        casesDataList.clear()
-                        casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
+                        setPlanStatus()
+                        clearAndNotifyAdapter()
                         casesViewModel.getCasesList(
                             token,
                             searchTxt,
@@ -165,7 +171,7 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                 if (searchView.hasFocus()) {
                     searchView.clearFocus()
                 }
-                casesDataList.clear()
+                clearAndNotifyAdapter()
                 if (query != null) {
                     casesViewModel.getCasesList(
                         token, query, "", "",
@@ -178,8 +184,7 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
                     // Search
-                    casesDataList.clear()
-                    casesAdapter.notifyItemRangeChanged(0, casesDataList.size)
+                    clearAndNotifyAdapter()
                 } else {
                     searchTxt = newText
                 }
@@ -189,18 +194,12 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         })
     }
 
-    override fun onStart() {
-        super.onStart()
-        binding.searchView.requestFocus()
+    private fun clearAndNotifyAdapter() {
+        val size = casesDataList.size
+        casesDataList.clear()
+        casesAdapter.notifyItemRangeRemoved(0, size)
     }
 
-    override fun onPlanClick(isPlanned: Boolean, casesData: CasesData) {
-        if (isPlanned) {
-            showConfirmUnPlanDialog(casesData)
-        } else {
-            showPlanDialog(casesData)
-        }
-    }
 
     private fun showPlanDialog(casesData: CasesData) {
         val cal = Calendar.getInstance()
@@ -243,4 +242,55 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         d.getButton(AlertDialog.BUTTON_POSITIVE).isAllCaps = false
         d.getButton(AlertDialog.BUTTON_NEGATIVE).isAllCaps = false
     }
+
+    private fun setPlanStatus() {
+        planStatusIntent = Intent()
+        planStatusIntent.putExtra("hasChangedPlanStatus", true)
+        setResult(Activity.RESULT_OK, planStatusIntent)
+    }
+
+
+    override fun onStart() {
+        super.onStart()
+        binding.searchView.requestFocus()
+    }
+
+    override fun onPlanClick(isPlanned: Boolean, casesData: CasesData) {
+        if (isPlanned) {
+            showConfirmUnPlanDialog(casesData)
+        } else {
+            showPlanDialog(casesData)
+        }
+    }
+
+    override fun openDetailActivity(
+        loadId: String,
+        name: String,
+        dispositions: String,
+        isPlanned: Boolean
+    ) {
+        val intent = Intent(this, DetailsActivity::class.java)
+        intent.putExtra("loan_account_number", loadId)
+        intent.putExtra("status", dispositions)
+        intent.putExtra("name", name)
+        intent.putExtra("isPlanned", isPlanned)
+        intent.putExtra("isCaseDetail", true)
+        startDetailActivityForResult.launch(intent)
+    }
+
+    private val startDetailActivityForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = it.data
+                val status = data?.getBooleanExtra("hasChangedPlanStatus", false)
+                if (status == true) {
+                    clearAndNotifyAdapter()
+                    casesViewModel.getCasesList(
+                        token, searchTxt, "",
+                        "", "", ""
+                    )
+                }
+            }
+        }
+
 }

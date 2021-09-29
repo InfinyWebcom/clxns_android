@@ -4,18 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.clxns.app.R
 import com.clxns.app.data.model.home.SummaryData
 import com.clxns.app.databinding.CasesSummaryLayoutBinding
+import com.clxns.app.ui.main.cases.CasesViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
 
     lateinit var binding: CasesSummaryLayoutBinding
 
     private lateinit var summaryData: SummaryData
+
+    private val casesViewModel: CasesViewModel by viewModels()
+
 
     private val caseArgs by navArgs<CaseSummaryBottomSheetArgs>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +48,20 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
 
         setListeners()
 
+        subscribeObserver()
+    }
+
+    private fun subscribeObserver() {
+
+        casesViewModel.dispositionsIdResponse.observe(viewLifecycleOwner) {
+            if (it != 0) {
+                navigateToCasesScreen(it)
+            }
+        }
+    }
+
+    private fun getDispositionId(dispositionName: String) {
+        casesViewModel.getDispositionIdFromRoomDB(dispositionName)
     }
 
     private fun setListeners() {
@@ -49,49 +70,50 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
         }
 
         binding.caseSummaryPtpBtn.setOnClickListener {
-            navigateToCasesScreen(5)
+            getDispositionId(binding.ptpTv.text.toString())
         }
         binding.caseSummaryRtpBtn.setOnClickListener {
-            navigateToCasesScreen(5)
+            val rtp = "Denial/RTP (Refused to Pay)"
+            getDispositionId(rtp)
         }
         binding.caseSummaryBrokenPtpBtn.setOnClickListener {
-            navigateToCasesScreen(5)
+            getDispositionId(binding.brokenPtpTv.text.toString())
         }
         binding.caseSummaryDisputeBtn.setOnClickListener {
-            navigateToCasesScreen(5)
+            getDispositionId(binding.disputeTv.text.toString())
         }
         binding.caseSummaryCustomerNotFoundBtn.setOnClickListener {
-            navigateToCasesScreen(5)
+            getDispositionId(binding.customerNotFoundTv.text.toString())
         }
         binding.caseSummaryCallbackBtn.setOnClickListener {
-            navigateToCasesScreen(5)
+            getDispositionId(binding.callBackTv.text.toString())
         }
         binding.caseSummaryCollectBtn.setOnClickListener {
-            navigateToCasesScreen(5)
+            getDispositionId(binding.collectTv.text.toString())
         }
         binding.caseSummaryPartiallyCollectBtn.setOnClickListener {
-            navigateToCasesScreen(5)
+            getDispositionId(binding.partiallyCollectTv.text.toString())
         }
         binding.caseSummarySettlementBtn.setOnClickListener {
-            navigateToCasesScreen(5)
+            getDispositionId(binding.settlementTv.text.toString())
         }
         binding.caseSummaryCustomerDeceasedBtn.setOnClickListener {
-            navigateToCasesScreen(10)
+            getDispositionId(binding.customerDeceasedTv.text.toString())
         }
     }
 
     private fun updateUI() {
         binding.totalCasesTv.text = summaryData.totalCases.toString()
-        binding.ptpTv.text = summaryData.promiseToPay.toString()
-        binding.rtpTv.text = summaryData.denialRTP.toString()
-        binding.brokenPtpTv.text = summaryData.brokenPTP.toString()
-        binding.disputeTv.text = summaryData.dispute.toString()
-        binding.customerNotFoundTv.text = summaryData.customerNotFound.toString()
-        binding.callBackTv.text = summaryData.callBack.toString()
-        binding.collectTv.text = summaryData.collect.toString()
-        binding.partiallyCollectTv.text = summaryData.partiallyCollect.toString()
-        binding.settlementTv.text = summaryData.settlementForeclosure.toString()
-        binding.customerDeceasedTv.text = summaryData.customerDeceased.toString()
+        binding.ptpValueTv.text = summaryData.promiseToPay.toString()
+        binding.rtpValueTv.text = summaryData.denialRTP.toString()
+        binding.brokenPtpValueTv.text = summaryData.brokenPTP.toString()
+        binding.disputeValueTv.text = summaryData.dispute.toString()
+        binding.customerNotFoundValueTv.text = summaryData.customerNotFound.toString()
+        binding.callBackValueTv.text = summaryData.callBack.toString()
+        binding.collectValueTv.text = summaryData.collect.toString()
+        binding.partiallyCollectValueTv.text = summaryData.partiallyCollect.toString()
+        binding.settlementValueTv.text = summaryData.settlementForeclosure.toString()
+        binding.customerDeceasedValueTv.text = summaryData.customerDeceased.toString()
     }
 
     private fun navigateToCasesScreen(dispositionId: Int) {

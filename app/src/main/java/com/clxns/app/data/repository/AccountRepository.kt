@@ -17,7 +17,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @ActivityRetainedScoped
-class ProfileRepository @Inject constructor(
+class AccountRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) : BaseApiResponse() {

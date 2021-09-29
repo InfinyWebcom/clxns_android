@@ -1,5 +1,6 @@
 package com.clxns.app.data.model
 
+import com.clxns.app.data.model.cases.Disposition
 import com.clxns.app.data.model.cases.Fi
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -103,7 +104,7 @@ data class Lead(
     val coApplicantCity: String? = null,
 
     @Json(name = "dispositionId")
-    val dispositionId: Any? = null,
+    val dispositionId: Int? = null,
 
     @Json(name = "applicantAltAddressType")
     val applicantAltAddressType: String? = null,
@@ -298,7 +299,7 @@ data class Lead(
     val applicantPanNumber: Int? = null,
 
     @Json(name = "subDispositionId")
-    val subDispositionId: Any? = null,
+    val subDispositionId: Int? = null,
 
     @Json(name = "telecallerId")
     val telecallerId: Int? = null,
@@ -371,6 +372,10 @@ data class Lead(
 
     @Json(name = "chequeBank")
     val chequeBank: String? = null,
+    @Json(name = "disposition")
+    val dispositionData: Disposition?,
+    @Json(name = "subDisposition")
+    val subDispositionData: SubDispositionData?,
     @Json(name = "fi")
     val fiData: Fi? = null
 )

@@ -9,7 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="com.clxns.app.ui.main.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_navigation_home_summary"
             app:destination="@id/navigation_home_summary" />
@@ -19,14 +19,14 @@
         android:id="@+id/navigation_cases"
         android:name="com.clxns.app.ui.main.cases.CasesFragment"
         android:label="@string/title_cases"
-        tools:layout="@layout/fragment_cases" >
+        tools:layout="@layout/fragment_cases">
         <action
             android:id="@+id/action_navigation_cases_to_navigation_cases_filter"
             app:destination="@id/navigation_cases_filter" />
         <argument
             android:name="disposition_id"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
 
     <fragment
@@ -36,26 +36,25 @@
         tools:layout="@layout/fragment_my_plan" />
 
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.clxns.app.ui.main.account.ProfileFragment"
-        android:label="ProfileFragment"
-        tools:layout="@layout/fragment_my_profile" />
+        android:id="@+id/navigation_account"
+        android:name="com.clxns.app.ui.main.account.AccountFragment"
+        android:label="@string/Account"
+        tools:layout="@layout/fragment_account" />
     <dialog
         android:id="@+id/navigation_cases_filter"
         android:name="com.clxns.app.ui.main.cases.casedetails.bottomsheets.CasesFilterBS"
         android:label="CasesFilterBS"
-        tools:layout="@layout/bottom_sheet_cases_filter"
-        />
+        tools:layout="@layout/bottom_sheet_cases_filter" />
 
     <dialog
         android:id="@+id/navigation_home_summary"
         android:name="com.clxns.app.ui.main.cases.casedetails.bottomsheets.CaseSummaryBottomSheet"
         android:label="CasesFilterBS"
-        tools:layout="@layout/cases_summary_layout"
-        >
-        <argument app:nullable="true"
+        tools:layout="@layout/cases_summary_layout">
+        <argument
             android:name="summaryData"
-            app:argType="com.clxns.app.data.model.home.SummaryData"/>
+            app:argType="com.clxns.app.data.model.home.SummaryData"
+            app:nullable="true" />
         <action
             android:id="@+id/action_navigation_home_summary_to_navigation_cases"
             app:destination="@id/navigation_cases" />

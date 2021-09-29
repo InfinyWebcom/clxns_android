@@ -60,8 +60,6 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.responseBankList.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
-                    Timber.i("Bank List")
-                    Timber.i(it.data.toString())
                     if (it.data?.error == false) {
                         val bankList = arrayListOf<BankDetailsEntity>()
                         for (data in it.data.bankData) {

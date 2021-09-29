@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.clxns.app.data.model.MyPlanDataItem
 import com.clxns.app.databinding.PlanListItemsBinding
+import com.clxns.app.ui.main.cases.CasesAdapter
 import com.clxns.app.ui.main.cases.casedetails.DetailsActivity
 import com.clxns.app.utils.convertToCurrency
 import com.clxns.app.utils.copyToClipBoard
@@ -17,8 +18,18 @@ import com.clxns.app.utils.makeFirstLetterCapital
 
 class MyPlanAdapter(
     private val context: Context,
-    private val contactList: List<MyPlanDataItem?>?
+    private val contactList: List<MyPlanDataItem?>?,
+    private val onPlanItemClickListener: OnPlanItemClickListener
 ) : RecyclerView.Adapter<MyPlanAdapter.MyPlanVH>() {
+
+    interface OnPlanItemClickListener{
+        fun openDetailActivity(
+            loadId: String,
+            name: String,
+            dispositions: String,
+            isPlanned: Boolean
+        )
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyPlanVH {
         return MyPlanVH(PlanListItemsBinding.inflate(LayoutInflater.from(parent.context)))
@@ -40,10 +51,10 @@ class MyPlanAdapter(
 
         holder.contactItemBinding.planBankNameAndLoanId.text = bankNameAndLoanId
         var status = "New Lead"
-        if (details?.lead?.dispositionId != null) {
-            status = details.lead.dispositionId.toString()
-            if (details.lead.subDispositionId != null) {
-                status += "[" + details.lead.subDispositionId.toString() + "]"
+        if (details?.lead?.dispositionData != null) {
+            status = details.lead.dispositionData.name
+            if (details.lead.subDispositionData != null) {
+                status += "[" + details.lead.subDispositionData.name + "]"
             }
         }
         holder.contactItemBinding.planStatusBagde.text = status
@@ -75,12 +86,10 @@ class MyPlanAdapter(
         }
 
         holder.contactItemBinding.planCheckInBtn.setOnClickListener {
-            val intent = Intent(context, DetailsActivity::class.java)
-            intent.putExtra("loan_account_number", details?.lead?.loanAccountNo.toString())
-            intent.putExtra("isPlanned", true)
-            intent.putExtra("status", status)
-            intent.putExtra("name", name)
-            context.startActivity(intent)
+            onPlanItemClickListener.openDetailActivity(
+                details?.lead?.loanAccountNo.toString(),
+                name.toString(), status, true
+            )
         }
     }
 
