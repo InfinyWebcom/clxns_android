@@ -1,12 +1,10 @@
 package com.clxns.app.ui.main.cases.casedetails.casestatus.paymentcollection
 
 import android.Manifest
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -28,7 +26,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.clxns.app.R
@@ -333,86 +330,70 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
 
 
     private fun openFileUploadDialog() {
-        if (ActivityCompat.checkSelfPermission(
-                ctx,
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                (ctx as Activity?)!!,
-                arrayOf(
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                ),
-                REQUEST_IMAGE_CAPTURE
-            )
-        } else {
-            val items = arrayOf<CharSequence>("Camera", "Choose from gallery")
-            val builder = AlertDialog.Builder(ctx, R.style.AlertDialogCustom)
-            builder.setTitle("Add File ")
-            builder.setItems(items) { _: DialogInterface?, item: Int ->
-                when (items[item].toString()) {
-                    "Camera" -> {
-                        val permissions = arrayOf(
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        )
-                        val rationale = "Please provide camera permission"
-                        val options: Permissions.Options = Permissions.Options()
-                            .setRationaleDialogTitle("Info")
-                            .setSettingsDialogTitle("Warning")
-                        Permissions.check(this, permissions, rationale, options,
-                            object : PermissionHandler() {
-                                override fun onGranted() {
-                                    openCamera()
-                                }
+        val items = arrayOf<CharSequence>("Camera", "Choose from gallery")
+        val builder = AlertDialog.Builder(ctx, R.style.AlertDialogCustom)
+        builder.setTitle("Add File ")
+        builder.setItems(items) { _: DialogInterface?, item: Int ->
+            when (items[item].toString()) {
+                "Camera" -> {
+                    val permissions = arrayOf(
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                    val rationale = "Please provide camera permission"
+                    val options: Permissions.Options = Permissions.Options()
+                        .setRationaleDialogTitle("Info")
+                        .setSettingsDialogTitle("Warning")
+                    Permissions.check(this, permissions, rationale, options,
+                        object : PermissionHandler() {
+                            override fun onGranted() {
+                                openCamera()
+                            }
 
-                                override fun onDenied(
-                                    context: Context?,
-                                    deniedPermissions: ArrayList<String?>?
-                                ) {
-                                    // permission denied, block the feature.
-                                }
-                            })
-                    }
+                            override fun onDenied(
+                                context: Context?,
+                                deniedPermissions: ArrayList<String?>?
+                            ) {
+                                // permission denied, block the feature.
+                            }
+                        })
+                }
 
-                    "Choose from gallery" -> {
+                "Choose from gallery" -> {
 
-                        val permissions = arrayOf(
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        )
-                        val rationale = "Please provide storage permission"
-                        val options: Permissions.Options = Permissions.Options()
-                            .setRationaleDialogTitle("Info")
-                            .setSettingsDialogTitle("Warning")
-                        Permissions.check(this, permissions, rationale, options,
-                            object : PermissionHandler() {
-                                override fun onGranted() {
-                                    val intent = Intent(
-                                        Intent.ACTION_PICK,
-                                        MediaStore.Images.Media.INTERNAL_CONTENT_URI
-                                    )
-                                    // intent.setType("image/*");
-                                    //  Allows any image file type. Change * to specific extension to limit it
-                                    //**These following line is the important one!
-                                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
-                                    imageGalleryPickerLauncher!!.launch(intent)
-                                    //SELECT_PICTURES is simply a global int used to check the calling intent in onActivityResult
-                                }
+                    val permissions = arrayOf(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                    val rationale = "Please provide storage permission"
+                    val options: Permissions.Options = Permissions.Options()
+                        .setRationaleDialogTitle("Info")
+                        .setSettingsDialogTitle("Warning")
+                    Permissions.check(this, permissions, rationale, options,
+                        object : PermissionHandler() {
+                            override fun onGranted() {
+                                val intent = Intent(
+                                    Intent.ACTION_PICK,
+                                    MediaStore.Images.Media.INTERNAL_CONTENT_URI
+                                )
+                                // intent.setType("image/*");
+                                //  Allows any image file type. Change * to specific extension to limit it
+                                //**These following line is the important one!
+                                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                                imageGalleryPickerLauncher!!.launch(intent)
+                                //SELECT_PICTURES is simply a global int used to check the calling intent in onActivityResult
+                            }
 
-                                override fun onDenied(
-                                    context: Context?,
-                                    deniedPermissions: ArrayList<String?>?
-                                ) {
-                                    // permission denied, block the feature.
-                                }
-                            })
-                    }
+                            override fun onDenied(
+                                context: Context?,
+                                deniedPermissions: ArrayList<String?>?
+                            ) {
+                                // permission denied, block the feature.
+                            }
+                        })
                 }
             }
-            builder.show()
         }
+        builder.show()
     }
 
     private fun getResultFromActivity() {
