@@ -10,10 +10,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Environment
-import android.os.Looper
+import android.os.*
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Base64
@@ -42,13 +39,10 @@ import com.clxns.app.ui.main.cases.casedetails.bottomsheets.AddMobileOrAddressBo
 import com.clxns.app.ui.main.cases.casedetails.bottomsheets.SubStatusActionBottomSheet
 import com.clxns.app.ui.main.cases.casedetails.casestatus.paymentcollection.PaymentCollectionActivity
 import com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.AddImageAdapter
-import com.clxns.app.utils.Constants
-import com.clxns.app.utils.hide
-import com.clxns.app.utils.show
+import com.clxns.app.utils.*
 import com.clxns.app.utils.support.CropImageActivity
 import com.clxns.app.utils.support.FileUtils
 import com.clxns.app.utils.support.GridSpacingItemDecoration
-import com.clxns.app.utils.toast
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -324,8 +318,8 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         photoB64List.clear()
                         addedPhotosList.clear()
                         addImageAdapter.submitList(addedPhotosList)
-                        subDispositionId=""
-                        dispositionId=""
+                        subDispositionId = ""
+                        dispositionId = ""
 
 
                         toast(response.data.title!!)
@@ -397,26 +391,25 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 
         viewModel.dispositionsIdResponse.observe(this) {
             dispositionId = it.toString()
-//            if (!IS_SUB_DIS) {
-            saveCheckingData(
-                remark,
-                followUpDate,
-                followUpDate,
-                additionalFields
+
+            // adding delay to get both disposition and sub-disposition value from DB
+            Handler(Looper.getMainLooper()).postDelayed(
+                {
+                    saveCheckingData(
+                        remark,
+                        followUpDate,
+                        followUpDate,
+                        additionalFields
+                    )
+                },
+                1500
             )
-//            }
+
         }
 
         viewModel.subDispositionsIdResponse.observe(this) {
+            toast("SUBBB->${it.toString()}")
             subDispositionId = it.toString()
-//            if (IS_SUB_DIS) {
-//                saveCheckingData(
-//                    remark,
-//                    followUpDate,
-//                    "abcd",
-//                    ""
-//                )
-//            }
         }
     }
 
@@ -441,49 +434,60 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             builder.setTitle("Add File ")
             builder.setItems(items) { dialog: DialogInterface?, item: Int ->
                 when (items[item].toString()) {
-                    "Camera" ->
-                        if (ActivityCompat.checkSelfPermission(
-                                ctx!!,
-                                Manifest.permission.CAMERA
-                            ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            ActivityCompat.requestPermissions(
-                                (ctx as Activity?)!!,
-                                arrayOf(
-                                    Manifest.permission.CAMERA,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                                ), CAMERA_REQUEST_CODE
-                            )
-                        } else {
-                            openCamera()
-                        }
-                    "Choose from gallery" ->                         //ACTION_GET_CONTENT
+                    "Camera" -> {
+                        val permissions = arrayOf(
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                        val rationale = "Please provide camera permission"
+                        val options: Permissions.Options = Permissions.Options()
+                            .setRationaleDialogTitle("Info")
+                            .setSettingsDialogTitle("Warning")
+                        Permissions.check(this, permissions, rationale, options,
+                            object : PermissionHandler() {
+                                override fun onGranted() {
+                                    openCamera()
+                                }
 
-                        if (ActivityCompat.checkSelfPermission(
-                                ctx!!,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE
-                            ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            ActivityCompat.requestPermissions(
-                                (ctx as Activity?)!!,
-                                arrayOf(
-                                    Manifest.permission.CAMERA,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                    Manifest.permission.READ_EXTERNAL_STORAGE
-                                ), GALLERY_REQUEST_CODE
-                            )
-                        } else {
-                            val intent = Intent(
-                                Intent.ACTION_PICK,
-                                MediaStore.Images.Media.INTERNAL_CONTENT_URI
-                            )
-                            // intent.setType("image/*");
-                            //  Allows any image file type. Change * to specific extension to limit it
-                            //**These following line is the important one!
-                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
-                            imageGalleryPickerLauncher!!.launch(intent)
-                            //SELECT_PICTURES is simply a global int used to check the calling intent in onActivityResult
-                        }
+                                override fun onDenied(
+                                    context: Context?,
+                                    deniedPermissions: ArrayList<String?>?
+                                ) {
+                                    // permission denied, block the feature.
+                                }
+                            })
+                    }
+                    "Choose from gallery" -> {
+                        val permissions = arrayOf(
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                        val rationale = "Please provide storage permission"
+                        val options: Permissions.Options = Permissions.Options()
+                            .setRationaleDialogTitle("Info")
+                            .setSettingsDialogTitle("Warning")
+                        Permissions.check(this, permissions, rationale, options,
+                            object : PermissionHandler() {
+                                override fun onGranted() {
+                                    val intent = Intent(
+                                        Intent.ACTION_PICK,
+                                        MediaStore.Images.Media.INTERNAL_CONTENT_URI
+                                    )
+                                    // intent.setType("image/*");
+                                    //  Allows any image file type. Change * to specific extension to limit it
+                                    //**These following line is the important one!
+                                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                                    imageGalleryPickerLauncher!!.launch(intent)
+                                    //SELECT_PICTURES is simply a global int used to check the calling intent in onActivityResult
+                                }
+
+                                override fun onDenied(
+                                    context: Context?,
+                                    deniedPermissions: ArrayList<String?>?
+                                ) {
+                                    // permission denied, block the feature.
+                                }
+                            })
+                    }
                 }
             }
             builder.show()
@@ -491,58 +495,35 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     }
 
     private fun openCamera() {
-        when {
-            ActivityCompat.checkSelfPermission(
-                ctx!!,
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED -> {
-                ActivityCompat.requestPermissions(
-                    (ctx as AppCompatActivity?)!!,
-                    arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    CAMERA_REQUEST_CODE
-                )
-            }
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> {
-                intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                imageUri = FileProvider.getUriForFile(
-                    ctx!!, ctx!!.applicationContext.packageName
-                            + ".provider",
-                    createImageFile()!!
-                )
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-                imageCameraPickerLauncher!!.launch(intent)
-            }
-            else -> {
-                intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                imageUri = Uri.fromFile(createImageFile())
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-                imageCameraPickerLauncher!!.launch(intent)
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            imageUri = FileProvider.getUriForFile(
+                ctx, ctx!!.applicationContext.packageName
+                        + ".provider",
+                createImageFile()!!
+            )
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+            imageCameraPickerLauncher!!.launch(intent)
+        } else {
+            intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            imageUri = Uri.fromFile(createImageFile())
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+            imageCameraPickerLauncher!!.launch(intent)
         }
     }
 
     private fun createImageFile(): File? {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        // Create an image file name
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName = "JPEG_" + timeStamp + "_"
-        val storageDir = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera"
+        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(
+            imageFileName,  /* prefix */
+            ".jpg",  /* suffix */
+            storageDir /* directory */
         )
-        var image: File? = null
-
-        Log.i(javaClass.name, "storageDir---->$storageDir")
-        try {
-            image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",  /* suffix */
-                storageDir /* directory */
-            )
-            mCurrentPhotoPath = "file:" + image.absolutePath
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
         // Save a file: path for use with ACTION_VIEW intents
-        Log.i(javaClass.name, "createImage file log  $image")
+        val currentPhotoPath = image.absolutePath
         return image
     }
 
@@ -853,7 +834,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         if (viewModel.lat.isNullOrEmpty() || viewModel.long.isNullOrEmpty() ||
             viewModel.lat.isNullOrBlank() || viewModel.long.isNullOrBlank()
         ) {
-            toast("Please check in location")
+            binding.root.snackBar("Please verify location")
             return
         }
 

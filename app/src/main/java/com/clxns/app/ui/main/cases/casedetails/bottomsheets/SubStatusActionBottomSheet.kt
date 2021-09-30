@@ -277,6 +277,7 @@ class SubStatusActionBottomSheet(
                 }
             }, year, month, day)
 
+        datePickerDialog.datePicker.minDate=System.currentTimeMillis()
         datePickerDialog.show()
     }
 
