@@ -45,6 +45,8 @@ import com.clxns.app.utils.support.CropImageActivity
 import com.clxns.app.utils.support.FileUtils
 import com.clxns.app.utils.toast
 import com.google.gson.Gson
+import com.nabinbhandari.android.permissions.PermissionHandler
+import com.nabinbhandari.android.permissions.Permissions
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.*
 import java.net.URI
@@ -183,7 +185,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                             "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                             "dd-MM-yyyy"
                         )
-                        binding.txtBankName.text = nullSafeString(response.data.data?.chequeBank)
+                        binding.txtBankName.text = nullSafeString(response.data.data?.fiData?.name)
                         binding.collectableAmountEt.text =
                             "₹${nullSafeString(response.data.data?.totalDueAmount.toString())}"
                     } else {
@@ -251,7 +253,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     "${year}-${String.format("%02d", month + 1)}-${String.format("%02d", day)}"
 
             }, year, month, day)
-
+        datePickerDialog.datePicker.minDate=System.currentTimeMillis()
         datePickerDialog.show()
     }
 
@@ -351,58 +353,62 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
             builder.setTitle("Add File ")
             builder.setItems(items) { _: DialogInterface?, item: Int ->
                 when (items[item].toString()) {
-                    "Camera" ->
-                        if (ActivityCompat.checkSelfPermission(
-                                ctx,
-                                Manifest.permission.CAMERA
-                            ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            ActivityCompat.requestPermissions(
-                                (ctx as Activity?)!!,
-                                arrayOf(
-                                    Manifest.permission.CAMERA,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                                ), REQUEST_IMAGE_CAPTURE
-                            )
-                        } else {
-                            openCamera()
-                        }
-                    "Choose from gallery" ->                         //ACTION_GET_CONTENT
+                    "Camera" -> {
+                        val permissions = arrayOf(
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                        val rationale = "Please provide camera permission"
+                        val options: Permissions.Options = Permissions.Options()
+                            .setRationaleDialogTitle("Info")
+                            .setSettingsDialogTitle("Warning")
+                        Permissions.check(this, permissions, rationale, options,
+                            object : PermissionHandler() {
+                                override fun onGranted() {
+                                    openCamera()
+                                }
 
-                        if (ActivityCompat.checkSelfPermission(
-                                ctx,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE
-                            ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            ActivityCompat.requestPermissions(
-                                (ctx as Activity?)!!,
-                                arrayOf(
-                                    Manifest.permission.CAMERA,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                    Manifest.permission.READ_EXTERNAL_STORAGE
-                                ), REQUEST_IMAGE_CAPTURE
-                            )
-                            Log.i(
-                                javaClass.name,
-                                "Choose from gallery--->$imageGalleryPickerLauncher"
-                            )
+                                override fun onDenied(
+                                    context: Context?,
+                                    deniedPermissions: ArrayList<String?>?
+                                ) {
+                                    // permission denied, block the feature.
+                                }
+                            })
+                    }
 
-                        } else {
-                            val intent = Intent(
-                                Intent.ACTION_PICK,
-                                MediaStore.Images.Media.INTERNAL_CONTENT_URI
-                            )
-                            // intent.setType("image/*");
-                            //  Allows any image file type. Change * to specific extension to limit it
-                            //**These following line is the important one!
-                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
-                            Log.i(
-                                javaClass.name,
-                                "imagePickerLaucher--->$imageGalleryPickerLauncher"
-                            )
-                            imageGalleryPickerLauncher!!.launch(intent)
-                            //SELECT_PICTURES is simply a global int used to check the calling intent in onActivityResult
-                        }
+                    "Choose from gallery" -> {
+
+                        val permissions = arrayOf(
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                        val rationale = "Please provide storage permission"
+                        val options: Permissions.Options = Permissions.Options()
+                            .setRationaleDialogTitle("Info")
+                            .setSettingsDialogTitle("Warning")
+                        Permissions.check(this, permissions, rationale, options,
+                            object : PermissionHandler() {
+                                override fun onGranted() {
+                                    val intent = Intent(
+                                        Intent.ACTION_PICK,
+                                        MediaStore.Images.Media.INTERNAL_CONTENT_URI
+                                    )
+                                    // intent.setType("image/*");
+                                    //  Allows any image file type. Change * to specific extension to limit it
+                                    //**These following line is the important one!
+                                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                                    imageGalleryPickerLauncher!!.launch(intent)
+                                    //SELECT_PICTURES is simply a global int used to check the calling intent in onActivityResult
+                                }
+
+                                override fun onDenied(
+                                    context: Context?,
+                                    deniedPermissions: ArrayList<String?>?
+                                ) {
+                                    // permission denied, block the feature.
+                                }
+                            })
+                    }
                 }
             }
             builder.show()
@@ -510,44 +516,20 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
     }
 
     private fun openCamera() {
-        Log.i(
-            javaClass.name,
-            "openCamera--->" + (ActivityCompat.checkSelfPermission(
-                ctx,
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED)
-        )
-
-
-        when {
-            ActivityCompat.checkSelfPermission(
-                ctx,
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED -> {
-                ActivityCompat.requestPermissions(
-                    (ctx as AppCompatActivity?)!!,
-                    arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    REQUEST_IMAGE_CAPTURE
-                )
-            }
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> {
-                intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                imageUri = FileProvider.getUriForFile(
-                    ctx, ctx!!.applicationContext.packageName
-                            + ".provider",
-                    createImageFile()!!
-                )
-                Log.i(javaClass.name, "imageURI :$imageUri")
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-                imageCameraPickerLauncher!!.launch(intent)
-            }
-            else -> {
-                Log.i(javaClass.name, "Else----------------->")
-                intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                imageUri = Uri.fromFile(createImageFile())
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-                imageCameraPickerLauncher!!.launch(intent)
-            }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ){
+            intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            imageUri = FileProvider.getUriForFile(
+                ctx, ctx!!.applicationContext.packageName
+                        + ".provider",
+                createImageFile()!!
+            )
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+            imageCameraPickerLauncher!!.launch(intent)
+        }else{
+            intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            imageUri = Uri.fromFile(createImageFile())
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+            imageCameraPickerLauncher!!.launch(intent)
         }
     }
 
@@ -564,29 +546,6 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         // Save a file: path for use with ACTION_VIEW intents
         val currentPhotoPath = image.absolutePath
         return image
-
-//        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
-//        val imageFileName = "JPEG_" + timeStamp + "_"
-//        val storageDir = File(
-//            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera"
-//        )
-//        var image: File? = null
-//
-//        Log.i(javaClass.name, "storageDir---->" + storageDir)
-//        try {
-//            image = File.createTempFile(
-//                imageFileName,  /* prefix */
-//                ".jpg",  /* suffix */
-//                storageDir /* directory */
-//            )
-//            mCurrentPhotoPath = "file:" + image.absolutePath
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-//
-//        // Save a file: path for use with ACTION_VIEW intents
-//        Log.i(javaClass.name, "createImage file log  $image")
-//        return image
     }
 
     override fun removePhoto(uri: Uri) {

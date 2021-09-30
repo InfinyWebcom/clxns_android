@@ -97,7 +97,7 @@ interface ApiService {
         @Field("nextAction") nextAction: String,
         @Field("additionalField") additionalField: String,
         @Field("location") location: String,
-        @Field("supporting") supporting: List<String>
+        @Field("supporting[]") supporting: List<String>
     ): Response<MyPlanModel>
 
     @POST("fos/getUserDetails")
@@ -129,7 +129,7 @@ interface ApiService {
         @Field("refNo") refNo: String,
         @Field("chequeNo") chequeNo: String,
         @Field("remark") remark: String,
-        @Field("supporting") supporting: Array<String>
+        @Field("supporting[]") supporting: Array<String>
     ): Response<HomeStatisticsResponse>
 
     @FormUrlEncoded
