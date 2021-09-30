@@ -408,7 +408,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         }
 
         viewModel.subDispositionsIdResponse.observe(this) {
-            toast("SUBBB->${it.toString()}")
             subDispositionId = it.toString()
         }
     }
