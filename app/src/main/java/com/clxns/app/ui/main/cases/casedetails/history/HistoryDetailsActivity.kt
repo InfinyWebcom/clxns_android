@@ -11,10 +11,7 @@ import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.HistoryData
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityHistoryDetailsBinding
-import com.clxns.app.utils.Constants
-import com.clxns.app.utils.hide
-import com.clxns.app.utils.show
-import com.clxns.app.utils.snackBar
+import com.clxns.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -32,6 +29,8 @@ class HistoryDetailsActivity : AppCompatActivity() {
     private lateinit var historyRV: RecyclerView
     private lateinit var loanAccountNo: String
     private var historyDataList: ArrayList<HistoryData> = arrayListOf()
+
+    private var dueAmount : String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,10 +69,17 @@ class HistoryDetailsActivity : AppCompatActivity() {
 
         loanAccountNo = intent.getStringExtra("loan_account_number").toString()
 
+        dueAmount = if (intent.getStringExtra("due_amount") != null){
+            intent.getStringExtra("due_amount")!!.toInt().convertToCurrency()
+        }else{
+            "-"
+        }
+        binding.dueAmountTv.append(dueAmount)
+
         if (intent.getStringExtra("name") != null) {
             binding.historyToolbarTitle.text = intent.getStringExtra("name")
         } else {
-            binding.userDetailsLin.show()
+            //binding.userDetailsLin.show()
             binding.historyToolbarTitle.text = getString(R.string.history)
         }
 

@@ -130,6 +130,13 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
         binding.homeNoData.retryBtn.setOnClickListener {
             getHomeStatistics()
         }
+
+        binding.visitPendingCard.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_navigation_cases)
+        }
+        binding.followUpCard.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_navigation_cases)
+        }
     }
 
     override fun onDestroyView() {

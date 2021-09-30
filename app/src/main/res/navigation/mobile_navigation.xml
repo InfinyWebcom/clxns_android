@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_home_summary"
             app:destination="@id/navigation_home_summary" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_cases"
+            app:destination="@id/navigation_cases" />
     </fragment>
 
     <fragment

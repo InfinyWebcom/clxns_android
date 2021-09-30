@@ -158,6 +158,7 @@
 
                 <RelativeLayout
                     android:layout_width="0dp"
+                    android:layout_marginStart="@dimen/dp4"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.7">
 
@@ -476,7 +477,7 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/txtDisbursementDate"
+                        android:id="@+id/txtDueDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp12"
@@ -486,10 +487,10 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/txtDisbursementDateValue"
+                        android:id="@+id/txtDueDateValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/txtDisbursementDate"
+                        android:layout_below="@+id/txtDueDate"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp12"
                         android:fontFamily="@font/gtwalsheimpromedium"
@@ -547,20 +548,20 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/txtProduct"
+                        android:id="@+id/txtLoanType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp12"
                         android:fontFamily="@font/gtwalsheimproregular"
-                        android:text="@string/Product"
+                        android:text="@string/loan_type"
                         android:textColor="@color/text_black"
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/txtProductValue"
+                        android:id="@+id/txtLoanTypeValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/txtProduct"
+                        android:layout_below="@+id/txtLoanType"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="@dimen/dp12"
                         android:fontFamily="@font/gtwalsheimpromedium"
