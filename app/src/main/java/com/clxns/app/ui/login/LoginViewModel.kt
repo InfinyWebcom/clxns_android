@@ -12,7 +12,10 @@ import com.clxns.app.utils.isValidEmail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 import javax.inject.Inject
+
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -32,16 +35,23 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun loginDataChanged(emailId: String) {
+    fun loginDataChanged(emailId: String, password: String) {
         if (!isEmailAddressValid(emailId)) {
             _loginForm.value =
                 LoginFormState(emailAddressError = R.string.invalid_email, isDataValid = false)
+        } else if (!isPasswordValid(password)) {
+            _loginForm.value =
+                LoginFormState(passwordError = R.string.empty_password, isDataValid = false)
         } else {
             _loginForm.value = LoginFormState(isDataValid = true)
         }
     }
 
-    // A placeholder username validation check
+
+    private fun isPasswordValid(password: String): Boolean {
+        return password.isNotBlank()
+    }
+
     private fun isEmailAddressValid(emailId: String): Boolean {
         return emailId.isValidEmail()
     }

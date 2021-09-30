@@ -22,7 +22,7 @@
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="submit">Submit</string>
-    <string name="error_password_not_match">Password does not matches</string>
+    <string name="error_password_not_match">New Password and Confirm Password does not match</string>
     <string name="welcome_back">Welcome Back,</string>
     <string name="my_statistics">My Statistics</string>
     <string name="today">Today</string>
@@ -165,7 +165,7 @@
     <string name="dispute">Dispute</string>
     <string name="customer_not_found">Customer Not Found</string>
     <string name="call_back">Call Back</string>
-    <string name="partially_collect">Partially Collect</string>
+    <string name="partially_collect">Partially Collected</string>
     <string name="settlement_foreclosure">Settlement/Foreclosure</string>
     <string name="customer_deceased">Customer Deceased</string>
     <string name="cases_toolbar_txt">Cases :&#160;</string>
@@ -191,6 +191,8 @@
     <string name="retry">Retry</string>
     <string name="something_went_wrong">Something went wrong.</string>
     <string name="no_data">There\'s no data available currently.</string>
+    <string name="empty_password">Password cannot be empty</string>
+    <string name="collected">Collected</string>
 
 
     <string-array name="yesNo">

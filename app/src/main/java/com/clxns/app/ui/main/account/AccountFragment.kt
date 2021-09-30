@@ -128,7 +128,7 @@ class AccountFragment : Fragment() {
     private fun showConfirmLogoutDialog() {
         val logoutDialog = AlertDialog.Builder(requireContext())
         logoutDialog.setTitle("Confirm Logout")
-        logoutDialog.setMessage("Are you sure want to logout?")
+        logoutDialog.setMessage("Are you sure you want to logout?")
 
         logoutDialog.setPositiveButton("Yes") { dialog, _ ->
             dialog.dismiss()

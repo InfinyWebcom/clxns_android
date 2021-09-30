@@ -21,6 +21,7 @@ class ForgotPasswordViewModel @Inject constructor(
         MutableLiveData()
     val responseGetOTP: LiveData<NetworkResult<ForgotPasswordResponse>> = _responseGetOTP
     fun getOTP(emailId: String) = viewModelScope.launch {
+        _responseGetOTP.value = NetworkResult.Loading()
         repository.getOTP(emailId).collect { values ->
             _responseGetOTP.value = values
         }
@@ -30,6 +31,7 @@ class ForgotPasswordViewModel @Inject constructor(
         MutableLiveData()
     val responseVerifyOTP: LiveData<NetworkResult<ForgotPasswordResponse>> = _responseVerifyOTP
     fun verifyOTP(token: String, otp: String, emailId: String) = viewModelScope.launch {
+        _responseVerifyOTP.value = NetworkResult.Loading()
         repository.verifyOTP(token, otp, emailId).collect { values ->
             _responseVerifyOTP.value = values
         }

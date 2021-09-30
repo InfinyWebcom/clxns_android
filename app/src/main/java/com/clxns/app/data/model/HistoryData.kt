@@ -7,25 +7,25 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class HistoryData(
     @Json(name = "additionalField")
-    val additionalField: String,
+    val additionalField: String?,
     @Json(name = "comments")
-    val comments: String,
+    val comments: String?,
     @Json(name = "createdAt")
     val createdAt: String,
     @Json(name = "dispositionId")
-    val dispositionId: Int,
+    val dispositionId: Int?,
     @Json(name = "fileName")
     val fileName: String?,
     @Json(name = "followUp")
-    val followUp: String,
+    val followUp: String?,
     @Json(name = "id")
     val id: Int,
     @Json(name = "leadId")
     val leadId: Int,
     @Json(name = "location")
-    val location: String,
+    val location: String?,
     @Json(name = "nextAction")
-    val nextAction: String,
+    val nextAction: String?,
     @Json(name = "subDispositionId")
     val subDispositionId: Int?,
     @Json(name = "updatedAt")

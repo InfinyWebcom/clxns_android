@@ -22,6 +22,7 @@ class DetailsViewModel @Inject constructor(
     val responseCaseDetail: LiveData<NetworkResult<CaseDetailsResponse>> = _responseCaseDetail
 
     fun getCaseDetails(token: String, loanAccountNumber: String) = viewModelScope.launch {
+        _responseCaseDetail.value = NetworkResult.Loading()
         detailsRepository.getCaseDetails(token, loanAccountNumber).collect { values ->
             _responseCaseDetail.value = values
         }

@@ -44,7 +44,7 @@ class CasesAdapter(
                     dispositions += " -> " + casesData.subDisposition.name
                 }
             }
-            val assignedDate = casesData.fosAssignedDate.convertServerDateToNormal("dd MMM, yyyy")
+            val assignedDate = casesData.fosAssignedDate?.convertServerDateToNormal("dd MMM, yyyy")
             contactBinding.casesStatusTv.text = dispositions
             val loanIdDatePinCode = casesData.loanAccountNo.toString() + " | " +
                     casesData.applicantPincode.toString() + " | " + assignedDate

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.Lead
@@ -23,6 +24,8 @@ import com.clxns.app.ui.main.cases.casedetails.casestatus.checkin.CheckInActivit
 import com.clxns.app.ui.main.cases.casedetails.history.HistoryDetailsActivity
 import com.clxns.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -51,6 +54,19 @@ class DetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        initView()
+
+        setListeners()
+
+        subscribeObserver()
+
+        getCaseDetail()
+
+        updatePlanButtonUI()
+    }
+
+    private fun initView() {
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -69,14 +85,6 @@ class DetailsActivity : AppCompatActivity() {
         if (isCaseDetail) {
             binding.btnCheckIn.visibility = View.GONE
         }
-
-        setListeners()
-
-        subscribeObserver()
-
-        getCaseDetail()
-
-        updatePlanButtonUI()
     }
 
 
@@ -128,6 +136,10 @@ class DetailsActivity : AppCompatActivity() {
                 binding.userDetailsContainer.visibility = View.GONE
             } else {
                 binding.userDetailsContainer.visibility = View.VISIBLE
+                lifecycleScope.launch {
+                    delay(100L)
+                    binding.detailsScrollView.fullScroll(View.FOCUS_DOWN)
+                }
             }
         }
 

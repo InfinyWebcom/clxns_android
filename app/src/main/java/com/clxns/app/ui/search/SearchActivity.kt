@@ -95,6 +95,7 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         casesViewModel.responseAddToPlan.observe(this) {
             when (it) {
                 is NetworkResult.Success -> {
+                    binding.root.snackBar(it.data?.title!!)
                     setPlanStatus()
                     casesViewModel.getCasesList(
                         token,

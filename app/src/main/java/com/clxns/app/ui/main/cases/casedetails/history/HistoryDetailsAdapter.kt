@@ -27,7 +27,8 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
     override fun onBindViewHolder(holder: HistoryVH, position: Int) {
         val data = dataList[position]
 
-        holder.historyItemBinding.followUpDateTv.text = data.followUp
+        holder.historyItemBinding.followUpDateTv.text =
+            data.updatedAt.convertServerDateToNormal("dd, MMM, yy")
         holder.historyItemBinding.itemTimeTv.text =
             data.updatedAt.convertServerDateToNormal("hh:mm a")
 
@@ -39,13 +40,13 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
             holder.historyItemBinding.tvSubStatus.text = data.subDisposition.name
         }
         holder.historyItemBinding.itemRemarksTv.text = data.comments
-        if (data.additionalField.contains("recoveredAmount")) {
+        if (data.additionalField?.contains("recoveredAmount") == true) {
             holder.historyItemBinding.itemAmountTv.show()
             val jsonParser = JsonParser()
             val asString = jsonParser.parse(data.additionalField).asString
             val amountAsObject = jsonParser.parse(asString).asJsonObject
             holder.historyItemBinding.itemAmountTv.text =
-                if (amountAsObject.get("recoveredAmount").asString == ""||amountAsObject.get("recoveredAmount").asString == null) "-" else
+                if (amountAsObject.get("recoveredAmount").asString == "" || amountAsObject.get("recoveredAmount").asString == null) "-" else
                     amountAsObject.get("recoveredAmount").asString.toInt().convertToCurrency()
         } else {
             holder.historyItemBinding.itemAmountTv.hide()

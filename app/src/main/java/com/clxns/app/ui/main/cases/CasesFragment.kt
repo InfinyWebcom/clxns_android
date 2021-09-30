@@ -1,5 +1,6 @@
 package com.clxns.app.ui.main.cases
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
@@ -128,6 +129,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun subscribeObserver() {
         viewModel.responseCaseList.observe(viewLifecycleOwner) { response ->
             binding.casesNoData.noDataTv.text = getString(R.string.something_went_wrong)
@@ -150,7 +152,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                                 clearAndNotifyAdapter()
                                 val dataList = response.data.casesDataList
                                 casesDataList.addAll(dataList)
-                                casesAdapter.notifyItemRangeChanged(0, dataList.size)
+                                casesAdapter.notifyDataSetChanged()
                             } else {
                                 binding.casesNoData.noDataTv.text = getString(R.string.no_data)
                                 binding.casesNoData.retryBtn.hide()
@@ -225,7 +227,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
     private fun clearAndNotifyAdapter() {
         val size = casesDataList.size
         casesDataList.clear()
-        casesAdapter.notifyItemRangeChanged(0,size)
+        casesAdapter.notifyItemRangeChanged(0, size)
     }
 
     private fun showPlanDialog(casesData: CasesData) {

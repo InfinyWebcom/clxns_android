@@ -85,24 +85,27 @@ class LoginActivity : AppCompatActivity() {
             emailET.removeFocus()
             passwordET.removeFocus()
 
-            if (!emailET.text.isNullOrEmpty() && !passwordET.text.isNullOrEmpty()) {
+            if (!emailET.text.isNullOrBlank() && !passwordET.text.isNullOrBlank()) {
                 loginViewModel.performLogin(
                     emailET.text.toString(),
                     passwordET.text.toString()
                 )
             }
+
         }
 
 
         emailET.afterTextChanged {
             loginViewModel.loginDataChanged(
-                emailET.text.toString()
+                emailET.text.toString(),
+                passwordET.text.toString()
             )
         }
 
         passwordET.afterTextChanged {
             loginViewModel.loginDataChanged(
-                emailET.text.toString()
+                emailET.text.toString(),
+                passwordET.text.toString()
             )
         }
 
@@ -184,6 +187,12 @@ class LoginActivity : AppCompatActivity() {
                 emailIL.error = getString(loginState.emailAddressError)
             } else {
                 emailIL.isErrorEnabled = false
+            }
+
+            if (loginState.passwordError != null) {
+                passwordIL.error = getString(loginState.passwordError)
+            } else {
+                passwordIL.isErrorEnabled = false
             }
         })
 

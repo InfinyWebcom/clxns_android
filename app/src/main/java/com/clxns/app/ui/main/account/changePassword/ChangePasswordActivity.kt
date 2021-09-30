@@ -56,7 +56,8 @@ class ChangePasswordActivity : AppCompatActivity() {
             this.hideKeyboard(binding.root)
             removeFocusFromAllET()
             if (oldPasswordIL.isVisible) {
-                if (!oldPasswordET.text.isNullOrEmpty() && !newPasswordET.text.isNullOrEmpty() && !confirmPasswordET.text.isNullOrEmpty()) {
+                if (!oldPasswordET.text.isNullOrBlank() && !newPasswordET.text.isNullOrBlank() &&
+                    !confirmPasswordET.text.isNullOrBlank()) {
                     if (newPasswordET.text.toString()
                             .contentEquals(confirmPasswordET.text.toString())
                     ) {
@@ -70,19 +71,25 @@ class ChangePasswordActivity : AppCompatActivity() {
                     } else {
                         binding.root.snackBar(getString(R.string.error_password_not_match))
                     }
+                }else{
+                    binding.root.snackBar("Fields cannot be empty")
                 }
-            } else if (!newPasswordET.text.isNullOrEmpty() && !confirmPasswordET.text.isNullOrEmpty()) {
-                if (newPasswordET.text.toString()
-                        .contentEquals(confirmPasswordET.text.toString())
-                ) {
-                    changePasswordViewModel.changePassword(
-                        token,
-                        newPasswordET.text.toString(),
-                        confirmPasswordET.text.toString(),
-                        ""
-                    )
-                } else {
-                    binding.root.snackBar(getString(R.string.error_password_not_match))
+            } else {
+                if (!newPasswordET.text.isNullOrBlank() && !confirmPasswordET.text.isNullOrBlank()) {
+                    if (newPasswordET.text.toString()
+                            .contentEquals(confirmPasswordET.text.toString())
+                    ) {
+                        changePasswordViewModel.changePassword(
+                            token,
+                            newPasswordET.text.toString(),
+                            confirmPasswordET.text.toString(),
+                            ""
+                        )
+                    } else {
+                        binding.root.snackBar(getString(R.string.error_password_not_match))
+                    }
+                }else{
+                    binding.root.snackBar("Fields cannot be empty")
                 }
             }
 

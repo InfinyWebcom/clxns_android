@@ -88,7 +88,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {
-                    toast(response.message!!)
+                    binding.root.snackBar(response.message!!)
                 }
                 is NetworkResult.Loading -> {
                     binding.root.snackBar("Verifying OTP...")

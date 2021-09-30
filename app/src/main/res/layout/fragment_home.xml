@@ -82,7 +82,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <RadioGroup
                 android:id="@+id/home_days_container"
@@ -327,9 +328,11 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp16"
+               android:layout_margin="@dimen/dp16"
                 app:cardCornerRadius="@dimen/dp8"
                 app:cardElevation="3dp"
+                android:layout_marginBottom="@dimen/dp32"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/summary_card_view">
@@ -352,9 +355,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?android:selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="@dimen/dp16">
@@ -392,9 +392,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?android:selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="@dimen/dp16">
