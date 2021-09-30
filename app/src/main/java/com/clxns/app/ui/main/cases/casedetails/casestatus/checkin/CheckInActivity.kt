@@ -849,6 +849,14 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 //    }
 
     override fun openSubStatusActionBottomSheet(isPTPAction: Boolean, dispositionType: String) {
+
+        if (viewModel.lat.isNullOrEmpty() || viewModel.long.isNullOrEmpty() ||
+            viewModel.lat.isNullOrBlank() || viewModel.long.isNullOrBlank()
+        ) {
+            toast("Please check in location")
+            return
+        }
+
         val openSubStatusAction =
             SubStatusActionBottomSheet.newInstance(caseDetails,
                 object : SubStatusActionBottomSheet.OnClick {
@@ -980,12 +988,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         remark: String,
         additionalFields: String
     ) {
-        if (viewModel.lat.isNullOrEmpty() || viewModel.long.isNullOrEmpty() ||
-            viewModel.lat.isNullOrBlank() || viewModel.long.isNullOrBlank()
-        ) {
-            toast("Please check in location")
-            return
-        }
         this.remark = remark
         this.followUpDate = followUpDate
         this.additionalFields = additionalFields
@@ -996,7 +998,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 viewModel.getDispositionIdFromRoomDB("Promise to Pay")
             }
             "RTP" -> {
-                viewModel.getDispositionIdFromRoomDB("Denial/RTP")
+                viewModel.getDispositionIdFromRoomDB("Denial/RTP (Refused to Pay)")
             }
             "Broken PTP" -> {
                 viewModel.getDispositionIdFromRoomDB(dispositionType)

@@ -21,7 +21,7 @@ data class UserData(
     @Json(name = "pincode")
     val pinCode: Int,
     val employeeId: String,
-    val language: String,
+    val language: String?,
     val otp: String?,
     val otpExpired: String?,
     @Json(name = "profileImg")

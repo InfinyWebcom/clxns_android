@@ -109,7 +109,7 @@ class SubStatusActionBottomSheet(
                 callback.onClick(
                     dispositionType,
                     subDispositionType,
-                    if (dateFormatted == "") "" else "$dateFormatted T $timeFormatted",
+                    if (dateFormatted == "") "" else "${dateFormatted}T${timeFormatted}",
                 actionBinding.statusActionRemarkET.text.toString(),
                 if (subDispositionType == "Active PTP"
                     || subDispositionType == "Future PTP"
