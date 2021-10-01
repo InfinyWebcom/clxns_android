@@ -123,7 +123,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 
 
         binding.txtLocationCheckIn.setOnClickListener {
-            if (binding.txtLocationCheckIn.text.equals("Verify")) {
+            if (binding.txtLocationCheckIn.text.equals("Check In")) {
 
                 val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
                 val rationale = "Please provide location permission"
@@ -658,6 +658,17 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                     override fun onComplete(task: Task<Location>) {
                         val location = task.result
                         if (location == null) {
+                            toast("Error while fetching location try again")
+                            binding.txtLocationCheckIn.text = "Verify"
+                            binding.txtLocationVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                                ContextCompat.getDrawable(
+                                    this@CheckInActivity,
+                                    R.mipmap.ic_delete
+                                ),
+                                null,
+                                null,
+                                null
+                            )
                             requestNewLocationData()
                         } else {
                             Log.i(javaClass.name, "lat---->" + location.latitude + "")
@@ -816,6 +827,16 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         if (viewModel.lat.isNullOrEmpty() || viewModel.long.isNullOrEmpty() ||
             viewModel.lat.isNullOrBlank() || viewModel.long.isNullOrBlank()
         ) {
+            binding.txtLocationCheckIn.text = "Verify"
+            binding.txtLocationVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                ContextCompat.getDrawable(
+                    this@CheckInActivity,
+                    R.mipmap.ic_delete
+                ),
+                null,
+                null,
+                null
+            )
             binding.root.snackBar("Please verify location")
             return
         }

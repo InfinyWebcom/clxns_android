@@ -98,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp8"
                 >
+
                 <TextView
                     android:id="@+id/txtLocationVerification"
                     android:layout_width="match_parent"
@@ -119,7 +120,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/dp8"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Verify"
+                    android:text="Check In"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp" />
@@ -140,7 +141,7 @@
                     android:layout_toStartOf="@id/txtImageVerify"
                     android:drawablePadding="@dimen/dp8"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Image Verification"
+                    android:text="Image Upload"
                     android:textAllCaps="false"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/sp16"
