@@ -52,6 +52,8 @@ class DetailsActivity : AppCompatActivity() {
 
     private lateinit var planStatusIntent: Intent
 
+    private lateinit var dueAmount: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -108,6 +110,7 @@ class DetailsActivity : AppCompatActivity() {
         binding.txtHistory.setOnClickListener {
             val intent = Intent(this, HistoryDetailsActivity::class.java)
             intent.putExtra("loan_account_number", loanAccountNo)
+            intent.putExtra("due_amount", dueAmount)
             intent.putExtra("name", name)
             startActivity(intent)
         }
@@ -133,8 +136,10 @@ class DetailsActivity : AppCompatActivity() {
         }
         binding.showMoreTxt.setOnClickListener {
             if (binding.userDetailsContainer.isVisible) {
+                binding.showMoreTxt.text = getString(R.string.show_more)
                 binding.userDetailsContainer.visibility = View.GONE
             } else {
+                binding.showMoreTxt.text = getString(R.string.show_less)
                 binding.userDetailsContainer.visibility = View.VISIBLE
                 lifecycleScope.launch {
                     delay(100L)
@@ -153,6 +158,7 @@ class DetailsActivity : AppCompatActivity() {
                     binding.progressBar.hide()
                     if (response.data?.error == false && response.data.data != null) {
                         mobileNo = response.data.data.phone
+                        dueAmount = response.data.data.totalDueAmount.toString()
                         updateUI(response.data.data)
                     } else {
                         toast("Failed to fetch details")
@@ -238,9 +244,10 @@ class DetailsActivity : AppCompatActivity() {
 
         binding.DPDValue.text = nullSafeString(data.allocationDpd.toString())
 
-        binding.txtDisbursementDateValue.text = data.disbursementDate?.convertServerDateToNormal("dd MMM, yyyy")
+        binding.txtDueDateValue.text =
+            data.dateOfDefault?.convertServerDateToNormal("dd MMM, yyyy")
 
-        binding.txtProductValue.text = nullSafeString(data.productTypeId.toString())
+        binding.txtLoanTypeValue.text = nullSafeString(data.loanType.toString())
         binding.txtPinCodeValue.text = nullSafeString(data.applicantPincode.toString())
 
         //These details get visible on click of Show More
@@ -288,7 +295,7 @@ class DetailsActivity : AppCompatActivity() {
     private fun showConfirmUnPlanDialog(loanId: String, name: String) {
         val logoutDialog = AlertDialog.Builder(this)
         logoutDialog.setTitle("UnPlan -> $name")
-        logoutDialog.setMessage("Are you sure want to un-plan this case?")
+        logoutDialog.setMessage("Are you sure you want to un-plan this case?")
 
         logoutDialog.setPositiveButton("Yes") { dialog, _ ->
             casesViewModel.removePlan(

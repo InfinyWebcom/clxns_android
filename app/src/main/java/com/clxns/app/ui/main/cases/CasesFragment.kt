@@ -260,7 +260,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
     private fun showConfirmUnPlanDialog(casesData: CasesData) {
         val logoutDialog = AlertDialog.Builder(requireContext())
         logoutDialog.setTitle("UnPlan -> ${casesData.name}")
-        logoutDialog.setMessage("Are you sure want to un-plan this case?")
+        logoutDialog.setMessage("Are you sure you want to un-plan this case?")
 
         logoutDialog.setPositiveButton("Yes") { dialog, _ ->
             viewModel.removePlan(

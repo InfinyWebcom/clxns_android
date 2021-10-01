@@ -1,104 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/follow_up_date_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp8"
-        android:text="@string/dash"
-        app:layout_constraintEnd_toStartOf="@+id/item_track_layout"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/item_time_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp8"
-        android:text="@string/dash"
-        app:layout_constraintEnd_toStartOf="@+id/item_track_layout"
-        app:layout_constraintTop_toBottomOf="@+id/follow_up_date_tv" />
-
-    <TextView
-        android:id="@+id/item_amount_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp8"
-        android:text="@string/dash"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/item_track_layout"
-        app:layout_constraintTop_toBottomOf="@+id/item_time_tv" />
-
-
-    <RelativeLayout
-        android:id="@+id/item_track_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/dp128"
-        android:layout_toEndOf="@+id/follow_up_date_tv"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/view_track"
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:background="@color/colorPrimary"
+            android:id="@+id/follow_up_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp8"
+            android:text="@string/dash"
+            app:layout_constraintEnd_toStartOf="@+id/item_track_layout"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/item_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp8"
+            android:text="@string/dash"
+            app:layout_constraintEnd_toStartOf="@+id/item_track_layout"
+            app:layout_constraintTop_toBottomOf="@+id/follow_up_date_tv" />
+
+
+        <RelativeLayout
+            android:id="@+id/item_track_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dp100"
+            android:layout_toEndOf="@+id/follow_up_date_tv"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/view_track"
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="@color/colorPrimary"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/image_track"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="false"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_oval_line"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/green" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_status_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp8"
+            android:drawablePadding="@dimen/dp8"
+            android:text="@string/dash"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/item_track_layout"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/image_track"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_centerVertical="false"
+            android:id="@+id/ptp_probability_dot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp8"
             android:importantForAccessibility="no"
-            android:src="@drawable/ic_oval_line"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/green" />
-    </RelativeLayout>
+            android:src="@drawable/ic_baseline_circle_24"
+            app:layout_constraintBottom_toBottomOf="@id/tv_status_title"
+            app:layout_constraintStart_toEndOf="@id/tv_status_title"
+            app:layout_constraintTop_toTopOf="@id/tv_status_title" />
 
-    <TextView
-        android:id="@+id/tv_status_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp8"
-        android:textStyle="bold"
-        android:text="@string/dash"
-        android:textAllCaps="true"
-        app:layout_constraintStart_toEndOf="@id/item_track_layout"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_sub_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_status_title"
+            android:layout_marginStart="@dimen/dp8"
+            android:text="@string/dash"
+            android:textSize="@dimen/sp12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/item_track_layout"
+            app:layout_constraintTop_toBottomOf="@+id/tv_status_title" />
 
-    <TextView
-        android:id="@+id/tv_sub_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_status_title"
-        android:layout_marginStart="@dimen/dp8"
-        android:text="@string/dash"
-        android:textSize="@dimen/sp12"
-        app:layout_constraintStart_toEndOf="@+id/item_track_layout"
-        app:layout_constraintTop_toBottomOf="@+id/tv_status_title" />
-
-    <TextView
-        android:id="@+id/item_remarks_tv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_sub_status"
-        android:layout_marginStart="@dimen/dp8"
-        android:paddingBottom="@dimen/dp8"
-        android:text="@string/dash"
-        android:textSize="@dimen/sp12"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/item_track_layout"
-        app:layout_constraintTop_toBottomOf="@+id/tv_sub_status" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/item_remarks_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_sub_status"
+            android:layout_marginStart="@dimen/dp8"
+            android:layout_marginTop="@dimen/dp4"
+            android:paddingBottom="@dimen/dp4"
+            android:text="@string/dash"
+            android:textSize="@dimen/sp12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/item_track_layout"
+            app:layout_constraintTop_toBottomOf="@+id/tv_sub_status" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

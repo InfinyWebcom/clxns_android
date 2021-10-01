@@ -19,7 +19,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackgroundBorderless"
-            android:padding="@dimen/dp16"
+            android:paddingTop="@dimen/dp16"
+            android:paddingBottom="@dimen/dp16"
+            android:paddingStart="@dimen/dp16"
+            android:paddingEnd="@dimen/dp8"
             android:src="@drawable/ic_arrow_back_24"
             app:tint="@color/white" />
 
@@ -28,14 +31,38 @@
             android:id="@+id/history_toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/due_amount_card"
             android:layout_toEndOf="@id/imgBack"
+            android:ellipsize="end"
             android:fontFamily="@font/gtwalsheimprobold"
+            android:maxLines="1"
             android:paddingTop="@dimen/dp16"
             android:paddingBottom="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp4"
             android:text="@string/history"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/sp18" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/due_amount_card"
+            app:cardCornerRadius="@dimen/dp32"
+            android:layout_marginTop="@dimen/dp12"
+            android:layout_marginEnd="@dimen/dp16"
+            app:cardBackgroundColor="@color/quantum_grey100"
+            android:layout_alignParentEnd="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/due_amount_tv"
+                android:text="@string/due_amount"
+                android:paddingHorizontal="@dimen/dp12"
+                android:paddingVertical="@dimen/dp8"
+                android:textSize="@dimen/sp14"/>
+        </com.google.android.material.card.MaterialCardView>
 
     </RelativeLayout>
 
@@ -84,10 +111,9 @@
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:padding="185dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_centerInParent="true"
         />
 </RelativeLayout>

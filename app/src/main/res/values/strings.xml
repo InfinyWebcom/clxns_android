@@ -176,6 +176,7 @@
     <string name="loan_id">Loan ID</string>
     <string name="payment_status">Payment Status</string>
     <string name="show_more">Show more</string>
+    <string name="show_less">Show less</string>
     <string name="history">History</string>
     <string name="contact_no">Contact No.</string>
     <string name="pan_card">PAN Card</string>
@@ -193,6 +194,8 @@
     <string name="no_data">There\'s no data available currently.</string>
     <string name="empty_password">Password cannot be empty</string>
     <string name="collected">Collected</string>
+    <string name="due_amount">Due amount :&#160;</string>
+    <string name="loan_type">Loan Type</string>
 
 
     <string-array name="yesNo">
