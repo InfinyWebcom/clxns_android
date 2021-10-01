@@ -30,6 +30,15 @@
             android:name="disposition_id"
             android:defaultValue="0"
             app:argType="integer" />
+
+        <argument
+            android:name="visit_pending"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="follow_ups"
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
 
     <fragment

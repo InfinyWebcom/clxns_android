@@ -40,6 +40,15 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
             followUpDateTime =
                 "Date : " + data.followUp.convertServerDateToNormal("dd, MMM yyyy") + ", Time : " +
                         data.followUp.convertServerDateToNormal("hh:mm a")
+            if (data.dispositions != null && (data.dispositions.name == "Collected" ||
+                        data.dispositions.name == "Partially Collected" ||
+                        data.dispositions.name == "Settlement/Foreclosure")){
+
+//                followUpDateTime =
+//                    "Date : " + data.dispositions..convertServerDateToNormal("dd, MMM yyyy") + ", Time : " +
+//                            data.followUp.convertServerDateToNormal("hh:mm a")
+
+            }
         }
         if (data.subDisposition != null) {
             var subStatus = data.subDisposition.name
@@ -47,7 +56,7 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
                 subStatus += " -> $followUpDateTime"
             }
             holder.historyItemBinding.tvSubStatus.text = subStatus
-        }else{
+        } else {
             holder.historyItemBinding.tvSubStatus.text = followUpDateTime
         }
         holder.historyItemBinding.itemRemarksTv.text = data.comments

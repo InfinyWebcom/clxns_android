@@ -1,6 +1,8 @@
 package com.clxns.app.data.api.helper
 
 import com.clxns.app.data.api.ApiService
+import com.clxns.app.data.model.PaymentModel
+import com.clxns.app.data.model.cases.CaseCheckInBody
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
@@ -35,7 +37,9 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         dispositionId: String,
         subDispositionId: String,
         fromDate: String,
-        toDate: String
+        toDate: String,
+        visitPending: String,
+        followUp: String
     ) =
         apiService.getCasesList(
             token,
@@ -44,7 +48,9 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             dispositionId,
             subDispositionId,
             fromDate,
-            toDate
+            toDate,
+            visitPending,
+            followUp
         )
 
     suspend fun getMyPlanList(token: String, planDate: String) =
@@ -68,10 +74,18 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         nextAction: String,
         additionalField: String,
         location: String,
-        supporting: List<String>
+        supporting: List<String>,
+        payment: PaymentModel?
     ) = apiService.saveCheckInData(
         token, loanAccountNo, dispositionId, subDispositionId,
-        comments, followUp, nextAction, additionalField, location, supporting
+        comments, followUp, nextAction, additionalField, location, supporting, payment
+    )
+
+    suspend fun saveCheckInData2(
+        token: String,
+        body: CaseCheckInBody
+    ) = apiService.saveCheckInData2(
+        token, body
     )
 
     suspend fun addToPlan(token: String, leadId: String, planDate: String) =
@@ -105,7 +119,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     ) = apiService.leadContactUpdate(
         token, leadId, type, content
     )
-    
+
     suspend fun removePlan(
         token: String,
         leadId: String

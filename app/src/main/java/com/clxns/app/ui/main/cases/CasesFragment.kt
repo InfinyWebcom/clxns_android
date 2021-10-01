@@ -81,7 +81,25 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
             filterBtn.text = getString(R.string.reset)
             viewModel.getCasesList(
                 token, "", casesArgs.dispositionId.toString(),
-                "", "", ""
+                "", "", "",
+                "",
+                ""
+            )
+        } else if (casesArgs.visitPending != 0) {
+            filterBtn.text = getString(R.string.reset)
+            viewModel.getCasesList(
+                token, "", "",
+                "", "", "",
+                "1",
+                ""
+            )
+        } else if (casesArgs.followUps!= 0) {
+            filterBtn.text = getString(R.string.reset)
+            viewModel.getCasesList(
+                token, "", "",
+                "", "", "",
+                "",
+                "1"
             )
         } else {
             getCaseList()
@@ -91,7 +109,9 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
     private fun getCaseList() {
         viewModel.getCasesList(
             token,
-            "", "", "", "", ""
+            "", "", "", "", "",
+            "",
+            ""
         )
     }
 

@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.CaseDetailsResponse
+import com.clxns.app.data.model.MyPlanModel
+import com.clxns.app.data.model.PaymentModel
+import com.clxns.app.data.model.cases.CaseCheckInBody
 import com.clxns.app.data.model.home.HomeStatisticsResponse
 import com.clxns.app.data.repository.PaymentCollectionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +22,9 @@ class PaymentCollectionViewModel @Inject constructor(
 ) : ViewModel() {
 
     var loanAccountNumber: String? = null
+    var dispositionId: String? = null
+    var location: String? = null
+    lateinit var mainSupporting: ArrayList<String>
 
     private val _responseCaseDetails: MutableLiveData<NetworkResult<CaseDetailsResponse>> =
         MutableLiveData()
@@ -54,4 +60,39 @@ class PaymentCollectionViewModel @Inject constructor(
         }
     }
 
+    private val _responseSaveCheckIn: MutableLiveData<NetworkResult<MyPlanModel>> =
+        MutableLiveData()
+    val responseSaveCheckIn: LiveData<NetworkResult<MyPlanModel>> = _responseSaveCheckIn
+
+    fun saveCheckInData(
+        token: String,
+        loanAccountNo: String,
+        dispositionId: String,
+        subDispositionId: String?,
+        comments: String,
+        followUp: String,
+        nextAction: String,
+        additionalField: String,
+        location: String,
+        supporting: List<String>,
+        payment: PaymentModel?
+    ) = viewModelScope.launch {
+        repository.saveCheckInData(
+            token, loanAccountNo, dispositionId, subDispositionId,
+            comments, followUp, nextAction, additionalField, location, supporting,payment
+        ).collect { values ->
+            _responseSaveCheckIn.value = values
+        }
+    }
+
+    fun saveCheckInData2(
+        token: String,
+        body: CaseCheckInBody
+    ) = viewModelScope.launch {
+        repository.saveCheckInData2(
+            token, body
+        ).collect { values ->
+            _responseSaveCheckIn.value = values
+        }
+    }
 }

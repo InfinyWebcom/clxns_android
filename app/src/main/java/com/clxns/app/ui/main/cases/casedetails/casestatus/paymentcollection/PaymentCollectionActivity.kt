@@ -31,6 +31,8 @@ import androidx.core.content.FileProvider
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.CaseDetailsResponse
+import com.clxns.app.data.model.PaymentModel
+import com.clxns.app.data.model.home.DemoCap
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityPaymentCollectionBinding
 import com.clxns.app.ui.main.MainActivity
@@ -42,6 +44,7 @@ import com.clxns.app.utils.support.CropImageActivity
 import com.clxns.app.utils.support.FileUtils
 import com.clxns.app.utils.toast
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 import dagger.hilt.android.AndroidEntryPoint
@@ -108,6 +111,23 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         getResultFromActivity()
         setObserver()
         viewModel.loanAccountNumber = intent.getStringExtra("loan_account_number")
+        viewModel.dispositionId = intent.getStringExtra("disposition_id")
+        viewModel.location = intent.getStringExtra("location")
+        if (sessionManager.getString("main_supporting") != null) {
+            val myType = object : TypeToken<ArrayList<String>>() {}.type
+            val mainSupporting =
+                Gson().fromJson(sessionManager.getString("main_supporting"), DemoCap::class.java)
+
+            viewModel.mainSupporting = mainSupporting.mainSupporting!!
+        }
+
+//        val b = this.intent.extras
+//        viewModel.mainSupporting = b!!.getStringArray("main_supporting") as Array<String>
+        Log.d(
+            "sdvsdv",
+            "onCreate: " + "${viewModel.location}   " + viewModel.dispositionId + "--" + viewModel.loanAccountNumber + "--"
+                    + Gson().toJson(viewModel.mainSupporting)
+        )
         if (viewModel.loanAccountNumber != null) {
             viewModel.getCaseDetails(
                 sessionManager.getString(Constants.TOKEN)!!,
@@ -147,18 +167,50 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
             } else {
                 if (validate()) {
                     binding.progressBar.show()
-                    viewModel.addPayment(
+                    var payment = PaymentModel()
+                    payment.leadId = viewModel.loanAccountNumber
+                    payment.loanNo = viewModel.loanAccountNumber
+                    payment.amtType = binding.spAmount.selectedItem.toString()
+                    payment.paymentMode = paymentType
+                    payment.recoveryDate = recoveryDate
+                    payment.refNo =
+                        if (paymentType == "ONLINE") binding.edtReferenceType.text.toString() else ""
+                    payment.chequeNo =
+                        if (paymentType == "CHEQUE") binding.edtReferenceType.text.toString() else ""
+                    payment.remark = binding.remarksET.text.toString()
+                    payment.supporting = photoB64List
+                    payment.collectedAmt = binding.paymentAmountEt.text.toString().toLong()
+
+//                    var body = CaseCheckInBody()
+//                    body.loanAccountNo = viewModel.loanAccountNumber!!
+//                    body.dispositionId = viewModel.dispositionId!!
+//                    body.subDispositionId = null
+//                    body.comments = ""
+//                    body.followUp = ""
+//                    body.nextAction = ""
+//                    body.additionalField = ""
+//                    body.location = viewModel.location!!
+//                    body.supporting = viewModel.mainSupporting
+//                    body.payment = payment
+
+                    viewModel.saveCheckInData(
                         sessionManager.getString(Constants.TOKEN)!!,
                         viewModel.loanAccountNumber!!,
-                        caseDetails?.data?.loanAccountNo.toString(),
-                        binding.spAmount.selectedItem.toString(),
-                        paymentType,
-                        recoveryDate,
-                        if (paymentType == "ONLINE") binding.edtReferenceType.text.toString() else "",
-                        if (paymentType == "CHEQUE") binding.edtReferenceType.text.toString() else "",
+                        viewModel.dispositionId!!,
+                        null,
                         binding.remarksET.text.toString(),
-                        photoB64List.toTypedArray()
+                        recoveryDate,
+                        recoveryDate,
+                        "",
+                        viewModel.location!!,
+                        viewModel.mainSupporting,
+                        payment
                     )
+
+//                    viewModel.saveCheckInData2(
+//                        sessionManager.getString(Constants.TOKEN)!!,
+//                        body
+//                    )
                 }
             }
 
@@ -203,19 +255,19 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
             }
         }
 
-        viewModel.responseAddPayment.observe(this) { response ->
+        viewModel.responseSaveCheckIn.observe(this) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.hide()
                     if (!response.data?.error!!) {
-                        toast(response.data.title)
+                        toast(response.data.title!!)
                         val l: LinearLayout = findViewById(R.id.mainLinearLayout)
                         l.forEachChildView {
                             it.isEnabled = false
                         }
                         binding.generateReceiptBtn.text = "back to my plan"
                     } else {
-                        toast(response.data.title)
+                        toast(response.data.title!!)
                     }
                 }
                 is NetworkResult.Error -> {
@@ -250,7 +302,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     "${year}-${String.format("%02d", month + 1)}-${String.format("%02d", day)}"
 
             }, year, month, day)
-        datePickerDialog.datePicker.minDate=System.currentTimeMillis()
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
         datePickerDialog.show()
     }
 
@@ -497,7 +549,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
     }
 
     private fun openCamera() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N ){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             imageUri = FileProvider.getUriForFile(
                 ctx, ctx!!.applicationContext.packageName
@@ -506,7 +558,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
             )
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
             imageCameraPickerLauncher!!.launch(intent)
-        }else{
+        } else {
             intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             imageUri = Uri.fromFile(createImageFile())
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)

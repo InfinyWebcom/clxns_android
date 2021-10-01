@@ -158,14 +158,18 @@ class CasesFilterBS : BottomSheetDialogFragment() {
                 dispositionId,
                 subDispositionId,
                 fromDate,
-                toDate
+                toDate,
+                "",
+                ""
             )
             dismiss()
         }
 
         binding.filterResetBtn.setOnClickListener {
             casesViewModel.getCasesList(
-                token, "", "", "", "", ""
+                token, "", "", "", "", "",
+                "",
+                ""
             )
             dismiss()
         }
