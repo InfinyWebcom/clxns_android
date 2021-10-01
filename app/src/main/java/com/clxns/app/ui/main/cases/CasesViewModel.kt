@@ -49,9 +49,11 @@ class CasesViewModel @Inject constructor(
         dispositionId: String,
         subDispositionId: String,
         fromDate: String,
-        toDate: String
+        toDate: String,
+        visitPending: String,
+        followUp: String
     ) = viewModelScope.launch {
-        repository.getCasesList(token, searchTxt, dispositionId, subDispositionId, fromDate, toDate)
+        repository.getCasesList(token, searchTxt, dispositionId, subDispositionId, fromDate, toDate,visitPending,followUp)
             .collect { values ->
                 _responseCaseList.value = values
             }

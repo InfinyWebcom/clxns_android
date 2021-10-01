@@ -9,6 +9,7 @@ import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.data.model.LeadContactUpdateResponse
 import com.clxns.app.data.model.MyPlanModel
+import com.clxns.app.data.model.PaymentModel
 import com.clxns.app.data.repository.CheckInRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -37,11 +38,12 @@ class CheckInViewModel @Inject constructor(
         nextAction: String,
         additionalField: String,
         location: String,
-        supporting: List<String>
+        supporting: List<String>,
+        payment: PaymentModel?
     ) = viewModelScope.launch {
         repository.saveCheckInData(
             token, loanAccountNo, dispositionId, subDispositionId,
-            comments, followUp, nextAction, additionalField, location, supporting
+            comments, followUp, nextAction, additionalField, location, supporting,payment
         ).collect { values ->
             _responseSaveCheckIn.value = values
         }

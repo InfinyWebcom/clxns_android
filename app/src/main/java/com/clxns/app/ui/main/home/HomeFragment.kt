@@ -18,11 +18,9 @@ import com.clxns.app.data.model.home.StatsData
 import com.clxns.app.data.model.home.SummaryData
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentHomeBinding
-import com.clxns.app.databinding.NoDataLayoutBinding
 import com.clxns.app.ui.notification.NotificationActivity
 import com.clxns.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -46,7 +44,7 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
     private lateinit var weekData: HomeStatsData
     private lateinit var monthData: HomeStatsData
 
-    private lateinit var noDataLayout : RelativeLayout
+    private lateinit var noDataLayout: RelativeLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,7 +88,7 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                         //Updating UI for Today
                         summaryData = todayData.summaryData!!
                         updateHomeStatsUI(todayData.actionsData!!, todayData.stats!!)
-                    }else{
+                    } else {
                         noDataLayout.show()
                         binding.homeScrollView.hide()
                     }
@@ -132,10 +130,19 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
         }
 
         binding.visitPendingCard.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_home_to_navigation_cases)
+            val actions = HomeFragmentDirections.actionNavigationHomeToNavigationCases(
+                0,
+                1, 0
+            )
+            findNavController().navigate(actions)
         }
         binding.followUpCard.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_home_to_navigation_cases)
+            val actions = HomeFragmentDirections.actionNavigationHomeToNavigationCases(
+                0,
+                0, 1
+            )
+            findNavController().navigate(actions)
+//            findNavController().navigate(R.id.action_navigation_home_to_navigation_cases)
         }
     }
 

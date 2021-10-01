@@ -68,6 +68,12 @@ class AddMobileOrAddressBottomSheet(private val listener: OnClick) : BottomSheet
                 context?.toast("Please enter mobile number")
                 return false
             }
+
+            if (sheetDialogBinding.edtNewMobileNo.text.toString().length!=10
+            ) {
+                context?.toast("Please enter valid mobile number")
+                return false
+            }
         } else {
             if (sheetDialogBinding.edtNewAddress.text.toString().isEmpty() ||
                 sheetDialogBinding.edtNewAddress.text.toString().isBlank()

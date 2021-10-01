@@ -162,7 +162,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp10"
                             android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="Collected Amount"
+                            android:text="Collectable Amount"
                             android:textAllCaps="false"
                             android:textColor="@color/text_black"
                             android:textSize="@dimen/sp12" />

@@ -68,6 +68,13 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
         binding.caseSummaryCloseBtn.setOnClickListener {
             dismiss()
         }
+        binding.caseSummaryTotalCaseBtn.setOnClickListener {
+            val actions = CaseSummaryBottomSheetDirections.actionNavigationHomeSummaryToNavigationCases(
+                0
+            )
+            findNavController().navigate(actions)
+            dismiss()
+        }
 
         binding.caseSummaryPtpBtn.setOnClickListener {
             getDispositionId(binding.ptpTv.text.toString())

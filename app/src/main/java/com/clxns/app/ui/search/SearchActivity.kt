@@ -103,6 +103,8 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                         "",
                         "",
                         "",
+                        "",
+                        "",
                         ""
                     )
                 }
@@ -122,6 +124,8 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                         casesViewModel.getCasesList(
                             token,
                             searchTxt,
+                            "",
+                            "",
                             "",
                             "",
                             "",
@@ -177,7 +181,9 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                 if (query != null) {
                     casesViewModel.getCasesList(
                         token, query, "", "",
-                        "", ""
+                        "", "",
+                        "",
+                        ""
                     )
                 }
                 return false
@@ -290,7 +296,9 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                 if (status == true) {
                     casesViewModel.getCasesList(
                         token, searchTxt, "",
-                        "", "", ""
+                        "", "", "",
+                        "",
+                        ""
                     )
                 }
             }

@@ -32,6 +32,7 @@ import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.data.model.StatusModel
+import com.clxns.app.data.model.home.DemoCap
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityCheckInBinding
 import com.clxns.app.ui.main.cases.casedetails.bottomsheets.AddMobileOrAddressBottomSheet
@@ -304,7 +305,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             nextAction,
             additionalField,
             "${viewModel.lat},${viewModel.long}",
-            photoB64List
+            photoB64List, null
         )
     }
 
@@ -319,11 +320,24 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         addImageAdapter.submitList(addedPhotosList)
                         subDispositionId = ""
                         dispositionId = ""
+                        binding.txtLocationVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                            ContextCompat.getDrawable(
+                                this@CheckInActivity,
+                                R.mipmap.ic_delete
+                            ),
+                            null,
+                            null,
+                            null
+                        )
+                        viewModel.lat=""
+                        viewModel.long=""
 
 
                         toast(response.data.title!!)
 
                     } else {
+                        subDispositionId = ""
+                        dispositionId = ""
                         toast(response.data.title!!)
                     }
                 }
@@ -394,12 +408,33 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             // adding delay to get both disposition and sub-disposition value from DB
             Handler(Looper.getMainLooper()).postDelayed(
                 {
-                    saveCheckingData(
-                        remark,
-                        followUpDate,
-                        followUpDate,
-                        additionalFields
-                    )
+                    if (PAYMENT_MODE) {
+                        PAYMENT_MODE = false
+                        var democap = DemoCap()
+                        democap.mainSupporting = photoB64List
+                        sessionManager.saveAnyData("main_supporting", Gson().toJson(democap))
+                        val intent =
+                            Intent(this, PaymentCollectionActivity::class.java)
+                        intent.putExtra("loan_account_number", viewModel.leadId)
+                        intent.putExtra("disposition_id", dispositionId)
+                        intent.putExtra("location", "${viewModel.lat},${viewModel.long}")
+                        //intent.putExtra("main_supporting", Gson().toJson(photoB64List))
+                        //sessionManager.saveAnyData("main_supporting",Gson().toJson(photoB64List))
+//                        val b = Bundle()
+//                        b.putStringArray("main_supporting", photoB64List.toTypedArray())
+//                        intent.putExtras(b)
+                        startActivity(intent)
+                        binding.progressBar.hide()
+                    } else {
+                        saveCheckingData(
+                            remark,
+                            followUpDate,
+                            followUpDate,
+                            additionalFields
+                        )
+                    }
+
+
                 },
                 1500
             )
@@ -659,7 +694,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         val location = task.result
                         if (location == null) {
                             toast("Error while fetching location try again")
-                            binding.txtLocationCheckIn.text = "Verify"
+                            binding.txtLocationCheckIn.text = "Check In"
                             binding.txtLocationVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
                                 ContextCompat.getDrawable(
                                     this@CheckInActivity,
@@ -827,7 +862,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         if (viewModel.lat.isNullOrEmpty() || viewModel.long.isNullOrEmpty() ||
             viewModel.lat.isNullOrBlank() || viewModel.long.isNullOrBlank()
         ) {
-            binding.txtLocationCheckIn.text = "Verify"
+            binding.txtLocationCheckIn.text = "Check In"
             binding.txtLocationVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 ContextCompat.getDrawable(
                     this@CheckInActivity,
@@ -837,7 +872,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 null,
                 null
             )
-            binding.root.snackBar("Please verify location")
+            binding.root.snackBar("Please check in location")
             return
         }
 
@@ -867,11 +902,38 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         openSubStatusAction.show(supportFragmentManager, SubStatusActionBottomSheet.TAG)
     }
 
-    override fun openPaymentScreen() {
-        val intent =
-            Intent(this, PaymentCollectionActivity::class.java)
-        intent.putExtra("loan_account_number", viewModel.leadId)
-        startActivity(intent)
+    var PAYMENT_MODE = false
+    override fun openPaymentScreen(dispositionType: String) {
+        if (viewModel.lat.isNullOrEmpty() || viewModel.long.isNullOrEmpty() ||
+            viewModel.lat.isNullOrBlank() || viewModel.long.isNullOrBlank()
+        ) {
+            binding.txtLocationCheckIn.text = "Check In"
+            binding.txtLocationVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                ContextCompat.getDrawable(
+                    this@CheckInActivity,
+                    R.mipmap.ic_delete
+                ),
+                null,
+                null,
+                null
+            )
+            binding.root.snackBar("Please check in location")
+            return
+        }
+        PAYMENT_MODE = true
+        binding.progressBar.show()
+        when (dispositionType) {
+            "Collect" -> {
+                viewModel.getDispositionIdFromRoomDB("Collected")
+            }
+            "Partially Collect" -> {
+                viewModel.getDispositionIdFromRoomDB("Partially Collected")
+            }
+            else -> {
+                viewModel.getDispositionIdFromRoomDB(dispositionType)
+            }
+
+        }
     }
 
     override fun removePhoto(uri: Uri) {

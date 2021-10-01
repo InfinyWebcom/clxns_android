@@ -19,7 +19,7 @@ class StatusAdapter(
         fun openAddDetailsBottomSheet(isMobile: Boolean)
 //        fun openSubStatusBottomSheet()
         fun openSubStatusActionBottomSheet(isPTPAction: Boolean, dispositionType: String)
-        fun openPaymentScreen()
+        fun openPaymentScreen(dispositionType: String)
     }
 
     class StatusVH(itemView: StatusItemsBinding) : RecyclerView.ViewHolder(itemView.root) {
@@ -62,7 +62,7 @@ class StatusAdapter(
                         holder.itemsBinding.statusTxt.text.equals("Partially Collect") ||
                         holder.itemsBinding.statusTxt.text.equals("Settlement/Foreclosure")
                 -> {
-                    onStatusListener.openPaymentScreen()
+                    onStatusListener.openPaymentScreen(holder.itemsBinding.statusTxt.text.toString())
                 }
 //                holder.itemsBinding.statusTxt.text.equals("Customer Not Found") -> {
 //                    onStatusListener.openSubStatusBottomSheet()

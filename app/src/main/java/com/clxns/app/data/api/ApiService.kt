@@ -1,13 +1,11 @@
 package com.clxns.app.data.api
 
 import com.clxns.app.data.model.*
+import com.clxns.app.data.model.cases.CaseCheckInBody
 import com.clxns.app.data.model.cases.CasesResponse
 import com.clxns.app.data.model.home.HomeStatisticsResponse
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ApiService {
     @POST("fos/login")
@@ -56,7 +54,9 @@ interface ApiService {
         @Field("dispositionId") dispositionId: String,
         @Field("subdispositionId") subDispositionId: String,
         @Field("fromDate") fromDate: String,
-        @Field("toDate") toDate: String
+        @Field("toDate") toDate: String,
+        @Field("viewPending") visitPending: String,
+        @Field("followUp") followUp: String
     ): Response<CasesResponse>
 
 
@@ -97,7 +97,14 @@ interface ApiService {
         @Field("nextAction") nextAction: String,
         @Field("additionalField") additionalField: String,
         @Field("location") location: String,
-        @Field("supporting[]") supporting: List<String>
+        @Field("supporting[]") supporting: List<String>,
+        @Field("payment()") payment: PaymentModel?
+    ): Response<MyPlanModel>
+
+    @POST("fos/saveCheckinData")
+    suspend fun saveCheckInData2(
+        @Header("token") token: String,
+        @Body() body: CaseCheckInBody
     ): Response<MyPlanModel>
 
     @POST("fos/getUserDetails")
@@ -140,7 +147,7 @@ interface ApiService {
         @Field("type") type: String,
         @Field("content") content: String
     ): Response<LeadContactUpdateResponse>
-    
+
     @POST("fos/deletePlan")
     @FormUrlEncoded
     suspend fun removePlan(

@@ -27,7 +27,9 @@ class CasesRepository @Inject constructor(
         dispositionId: String,
         subDispositionId: String,
         fromDate: String,
-        toDate: String
+        toDate: String,
+        visitPending: String,
+        followUp: String
     ): Flow<NetworkResult<CasesResponse>> {
         return flow {
             emit(safeApiCall {
@@ -37,7 +39,9 @@ class CasesRepository @Inject constructor(
                     dispositionId,
                     subDispositionId,
                     fromDate,
-                    toDate
+                    toDate,
+                    visitPending,
+                    followUp
                 )
             })
         }.flowOn(Dispatchers.IO)

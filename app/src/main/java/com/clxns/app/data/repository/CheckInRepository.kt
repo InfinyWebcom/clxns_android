@@ -7,6 +7,7 @@ import com.clxns.app.data.database.LocalDataSource
 import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.data.model.LeadContactUpdateResponse
 import com.clxns.app.data.model.MyPlanModel
+import com.clxns.app.data.model.PaymentModel
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -32,13 +33,14 @@ class CheckInRepository @Inject constructor(
         nextAction: String,
         additionalField: String,
         location: String,
-        supporting: List<String>
+        supporting: List<String>,
+        payment: PaymentModel?
     ): Flow<NetworkResult<MyPlanModel>> {
         return flow {
             emit(safeApiCall {
                 remoteDataSource.saveCheckInData(
                     token, loanAccountNo, dispositionId, subDispositionId,
-                    comments, followUp, nextAction, additionalField, location, supporting
+                    comments, followUp, nextAction, additionalField, location, supporting,payment
                 )
             })
         }.flowOn(Dispatchers.IO)
