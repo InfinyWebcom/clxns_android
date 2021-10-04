@@ -8,7 +8,6 @@ import android.graphics.Bitmap.CompressFormat
 import android.graphics.RectF
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -117,6 +116,7 @@ class CropImageActivity : AppCompatActivity() {
             try {
                 activityCropImageBinding!!.cropImageView.save(cropped)
                     .compressFormat(mCompressFormat)
+                    .compressQuality(40)
                     .execute(createSaveUri(), mSaveCallback)
             } catch (e: RejectedExecutionException) {
             }
@@ -157,9 +157,9 @@ class CropImageActivity : AppCompatActivity() {
     private fun getDirPath(): String {
         var dirPath = ""
         var imageDir: File? = null
-        val extStorageDir = Environment.getExternalStorageDirectory()
-        if (extStorageDir.canWrite()) {
-            imageDir = File(extStorageDir.path + "/simplecropview")
+        val extStorageDir = externalCacheDir
+        if (extStorageDir!!.canWrite()) {
+            imageDir = File(extStorageDir?.path + "/simplecropview")
         }
         if (imageDir != null) {
             if (!imageDir.exists()) {

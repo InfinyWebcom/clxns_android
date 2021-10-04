@@ -15,7 +15,6 @@ import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.databinding.SubStatusActionBottomSheetBinding
 import com.clxns.app.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.gson.Gson
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -114,7 +113,7 @@ class SubStatusActionBottomSheet(
                     if (subDispositionType == "Active PTP"
                         || subDispositionType == "Future PTP"
                         || subDispositionType == "Already Paid"
-                    ) Gson().toJson(additionalFields) else ""
+                    ) additionalFields else null
                 )
                 this.dismiss()
             }
@@ -235,7 +234,12 @@ class SubStatusActionBottomSheet(
             requireContext(),
             { _, selectedHour, selectedMinute ->
 
-                val time = "${String.format("%02d", selectedHour)}:${String.format("%02d", selectedMinute)}"
+                val time = "${String.format("%02d", selectedHour)}:${
+                    String.format(
+                        "%02d",
+                        selectedMinute
+                    )
+                }"
                 timeFormatted = "$time:00.000Z"
                 val fmt = SimpleDateFormat("HH:mm", Locale.getDefault())
                 var date: Date? = null
@@ -281,7 +285,7 @@ class SubStatusActionBottomSheet(
                         val hours = c.get(Calendar.HOUR)
                         val minutes = c.get(Calendar.MINUTE)
 
-                        timeFormatted = "${String.format("%02d", hours+12)}:${
+                        timeFormatted = "${String.format("%02d", hours + 12)}:${
                             String.format(
                                 "%02d",
                                 minutes
@@ -385,7 +389,7 @@ class SubStatusActionBottomSheet(
             subDispositionType: String,
             followUpDate: String,
             remark: String,
-            additionalFields: String
+            additionalFields: AdditionalFieldModel?
         )
     }
 

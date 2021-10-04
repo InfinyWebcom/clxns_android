@@ -30,6 +30,7 @@ import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
+import com.clxns.app.data.model.AdditionalFieldModel
 import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.data.model.StatusModel
 import com.clxns.app.data.model.cases.CaseCheckInBody
@@ -70,7 +71,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     var IS_SET_RESULT: Boolean = false
     var remark: String = ""
     var followUpDate: String = ""
-    var additionalFields: String = ""
+    var additionalFields: AdditionalFieldModel? = null
     lateinit var binding: ActivityCheckInBinding
     lateinit var ctx: Context
     val viewModel: CheckInViewModel by viewModels()
@@ -154,7 +155,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                             )
                             Snackbar.make(
                                 binding.root,
-                                "Location has been verified",
+                                "Location has been checked in",
                                 Snackbar.LENGTH_LONG
                             ).show()
 //                            } else {
@@ -294,7 +295,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         comments: String,
         followUp: String,
         nextAction: String,
-        additionalField: String
+        additionalField: AdditionalFieldModel?
     ) {
         binding.progressBar.show()
 
@@ -379,6 +380,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 is NetworkResult.Success -> {
                     binding.progressBar.hide()
                     toast(response.data?.title!!)
+                    IS_SET_RESULT = true
                 }
                 is NetworkResult.Error -> {
                     binding.progressBar.hide()
@@ -557,7 +559,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         // Create an image file name
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName = "JPEG_" + timeStamp + "_"
-        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val storageDir = externalCacheDir//getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val image = File.createTempFile(
             imageFileName,  /* prefix */
             ".jpg",  /* suffix */
@@ -908,7 +910,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         subDispositionType: String,
                         followUpDate: String,
                         remark: String,
-                        additionalFields: String
+                        additionalFields: AdditionalFieldModel?
                     ) {
                         prepareDataForCheckIn(
                             dispositionType,
@@ -1056,7 +1058,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         subDispositionType: String,
         followUpDate: String,
         remark: String,
-        additionalFields: String
+        additionalFields: AdditionalFieldModel?
     ) {
         this.remark = remark
         this.followUpDate = followUpDate
@@ -1093,7 +1095,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     }
 
     override fun onBackPressed() {
-        if (IS_SET_RESULT){
+        if (IS_SET_RESULT) {
             setResult(RESULT_OK)
         }
         super.onBackPressed()
