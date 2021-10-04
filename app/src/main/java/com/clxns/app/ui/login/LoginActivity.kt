@@ -26,6 +26,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -90,6 +91,8 @@ class LoginActivity : AppCompatActivity() {
                     emailET.text.toString(),
                     passwordET.text.toString()
                 )
+            }else{
+                binding.root.snackBar("Fields cannot be empty")
             }
 
         }

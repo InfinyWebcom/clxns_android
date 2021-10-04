@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/due_amount_card"
-            app:cardCornerRadius="@dimen/dp32"
+            app:cardCornerRadius="@dimen/dp64"
             android:layout_marginTop="@dimen/dp12"
             android:layout_marginEnd="@dimen/dp16"
             app:cardBackgroundColor="@color/quantum_grey100"

@@ -52,8 +52,8 @@
             android:background="?android:selectableItemBackgroundBorderless"
             android:importantForAccessibility="no"
             android:src="@drawable/ic_notifications_24"
-            app:tint="@color/white"
             android:visibility="gone"
+            app:tint="@color/white"
             tools:ignore="ImageContrastCheck" />
 
 
@@ -68,375 +68,380 @@
 
     <include
         android:id="@+id/home_no_data"
-        android:visibility="gone"
-        layout="@layout/no_data_layout" />
+        layout="@layout/no_data_layout"
+        android:visibility="gone" />
 
-    <ScrollView
-        android:id="@+id/home_scroll_view"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/home_custom_toolbar"
-        android:fillViewport="true"
-        android:visibility="visible"
-        tools:ignore="SpeakableTextPresentCheck">
+        android:id="@+id/home_swipe_refresh"
+        android:layout_below="@id/home_custom_toolbar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
+            android:id="@+id/home_scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="visible"
+            tools:ignore="SpeakableTextPresentCheck">
 
-            <RadioGroup
-                android:id="@+id/home_days_container"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/dp48"
-                android:layout_margin="@dimen/dp12"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <RadioButton
-                    android:id="@+id/rbToday"
+                <RadioGroup
+                    android:id="@+id/home_days_container"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp4"
-                    android:layout_weight="1"
-                    android:background="@drawable/home_rb_state_background"
-                    android:button="@null"
-                    android:checked="true"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/today"
-                    android:textAllCaps="true"
-                    android:textColor="@drawable/radio_text_color_state"
-                    android:textSize="@dimen/sp12"
-                    android:textStyle="bold" />
-
-                <RadioButton
-                    android:id="@+id/rbWeek"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp4"
-                    android:layout_weight="1"
-                    android:background="@drawable/home_rb_state_background"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/this_week"
-                    android:textAllCaps="true"
-                    android:textColor="@drawable/radio_text_color_state"
-                    android:textSize="@dimen/sp12"
-                    android:textStyle="bold" />
-
-                <RadioButton
-                    android:id="@+id/rbMonth"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp4"
-                    android:layout_weight="1"
-                    android:background="@drawable/home_rb_state_background"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:text="@string/this_month"
-                    android:textAllCaps="true"
-                    android:textColor="@drawable/radio_text_color_state"
-                    android:textSize="@dimen/sp12"
-                    android:textStyle="bold" />
-
-            </RadioGroup>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/my_stats_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp16"
-                app:cardCornerRadius="@dimen/dp8"
-                app:cardElevation="3dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/home_days_container">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingStart="@dimen/dp24"
-                    android:paddingTop="@dimen/dp16"
-                    android:paddingEnd="@dimen/dp24"
-                    android:paddingBottom="@dimen/dp16">
-
-                    <TextView
-                        android:id="@+id/my_stats_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/gtwalsheimpromedium"
-                        android:gravity="center"
-                        android:text="@string/my_statistics"
-                        android:textSize="@dimen/sp18"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp8"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="@string/cases_allocated"
-                            android:textSize="@dimen/sp16"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
-
-                        <TextView
-                            android:id="@+id/cases_allocated_count_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-medium"
-                            android:gravity="end"
-                            android:text="@string/zero"
-                            android:textColor="@color/green"
-                            android:textSize="@dimen/sp30" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp8"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="@string/total_pos"
-                            android:textSize="@dimen/sp16"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
-
-                        <TextView
-                            android:id="@+id/total_pos_amount_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-medium"
-                            android:gravity="end"
-                            android:text="@string/zero"
-                            android:textColor="@color/green"
-                            android:textSize="@dimen/sp30" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp8"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="@string/total_due"
-                            android:textSize="@dimen/sp16"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
-
-                        <TextView
-                            android:id="@+id/total_due_amount_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-medium"
-                            android:gravity="end"
-                            android:text="@string/zero"
-                            android:textColor="@color/red_orange"
-                            android:textSize="@dimen/sp30" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp8"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="@string/amount_recovered"
-                            android:textSize="@dimen/sp16"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
-
-                        <TextView
-                            android:id="@+id/amount_collected_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-medium"
-                            android:gravity="end"
-                            android:text="@string/zero"
-                            android:textColor="@color/red_orange"
-                            android:textSize="@dimen/sp30" />
-                    </LinearLayout>
-                </LinearLayout>
-
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/summary_card_view"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp16"
-                android:backgroundTint="@color/colorPrimary"
-                app:cardCornerRadius="@dimen/dp24"
-                app:cardElevation="3dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/my_stats_container"
-                app:rippleColor="@color/colorSecondaryVariant">
-
-                <TextView
-                    android:id="@+id/summary_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/dp48"
                     android:layout_margin="@dimen/dp12"
-                    android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="@string/summary"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp20"
-                    app:drawableEndCompat="@drawable/ic_arrow_forward_20"
-                    app:drawableTint="@color/white" />
-            </com.google.android.material.card.MaterialCardView>
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/rbToday"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp4"
+                        android:layout_weight="1"
+                        android:background="@drawable/home_rb_state_background"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/today"
+                        android:textAllCaps="true"
+                        android:textColor="@drawable/radio_text_color_state"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/rbWeek"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp4"
+                        android:layout_weight="1"
+                        android:background="@drawable/home_rb_state_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/this_week"
+                        android:textAllCaps="true"
+                        android:textColor="@drawable/radio_text_color_state"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/rbMonth"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp4"
+                        android:layout_weight="1"
+                        android:background="@drawable/home_rb_state_background"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/this_month"
+                        android:textAllCaps="true"
+                        android:textColor="@drawable/radio_text_color_state"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+                </RadioGroup>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/my_stats_container"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp16"
+                    app:cardCornerRadius="@dimen/dp8"
+                    app:cardElevation="3dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_days_container">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingStart="@dimen/dp24"
+                        android:paddingTop="@dimen/dp16"
+                        android:paddingEnd="@dimen/dp24"
+                        android:paddingBottom="@dimen/dp16">
+
+                        <TextView
+                            android:id="@+id/my_stats_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:gravity="center"
+                            android:text="@string/my_statistics"
+                            android:textSize="@dimen/sp18"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp8"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/gtwalsheimproregular"
+                                android:text="@string/cases_allocated"
+                                android:textSize="@dimen/sp16"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
+
+                            <TextView
+                                android:id="@+id/cases_allocated_count_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="end"
+                                android:text="@string/zero"
+                                android:textColor="@color/green"
+                                android:textSize="@dimen/sp30" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp8"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/gtwalsheimproregular"
+                                android:text="@string/total_pos"
+                                android:textSize="@dimen/sp16"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
+
+                            <TextView
+                                android:id="@+id/total_pos_amount_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="end"
+                                android:text="@string/zero"
+                                android:textColor="@color/green"
+                                android:textSize="@dimen/sp30" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp8"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/gtwalsheimproregular"
+                                android:text="@string/total_due"
+                                android:textSize="@dimen/sp16"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
+
+                            <TextView
+                                android:id="@+id/total_due_amount_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="end"
+                                android:text="@string/zero"
+                                android:textColor="@color/red_orange"
+                                android:textSize="@dimen/sp30" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp8"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/gtwalsheimproregular"
+                                android:text="@string/amount_recovered"
+                                android:textSize="@dimen/sp16"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
+
+                            <TextView
+                                android:id="@+id/amount_collected_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="end"
+                                android:text="@string/zero"
+                                android:textColor="@color/red_orange"
+                                android:textSize="@dimen/sp30" />
+                        </LinearLayout>
+                    </LinearLayout>
 
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-               android:layout_margin="@dimen/dp16"
-                app:cardCornerRadius="@dimen/dp8"
-                app:cardElevation="3dp"
-                android:layout_marginBottom="@dimen/dp32"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/summary_card_view">
+                </com.google.android.material.card.MaterialCardView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/summary_card_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp16"
+                    android:backgroundTint="@color/colorPrimary"
+                    app:cardCornerRadius="@dimen/dp24"
+                    app:cardElevation="3dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/my_stats_container"
+                    app:rippleColor="@color/colorSecondaryVariant">
 
                     <TextView
-                        android:id="@+id/action_pending_tv"
+                        android:id="@+id/summary_tv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp12"
                         android:fontFamily="@font/gtwalsheimpromedium"
-                        android:gravity="center"
-                        android:padding="@dimen/dp8"
-                        android:text="@string/actions_pending"
-                        android:textSize="@dimen/sp18" />
+                        android:text="@string/summary"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp20"
+                        app:drawableEndCompat="@drawable/ic_arrow_forward_20"
+                        app:drawableTint="@color/white" />
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp16"
+                    android:layout_marginBottom="@dimen/dp32"
+                    app:cardCornerRadius="@dimen/dp8"
+                    app:cardElevation="3dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/summary_card_view">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:id="@+id/visit_pending_card"
-                        android:background="@drawable/button_ripple"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/dp16">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="0dp"
+                            android:id="@+id/action_pending_tv"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="@string/visit_pending"
-                            android:textSize="@dimen/sp16" />
+                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:gravity="center"
+                            android:padding="@dimen/dp8"
+                            android:text="@string/actions_pending"
+                            android:textSize="@dimen/sp18" />
 
-                        <TextView
-                            android:id="@+id/visit_pending_tv"
-                            android:layout_width="0dp"
+                        <LinearLayout
+                            android:id="@+id/visit_pending_card"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-medium"
-                            android:gravity="end"
-                            android:paddingStart="@dimen/dp8"
-                            android:paddingEnd="@dimen/dp8"
-                            android:text="@string/zero"
-                            android:textColor="@color/red_orange"
-                            android:textSize="@dimen/sp30" />
+                            android:background="@drawable/button_ripple"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp16">
 
-                        <ImageView
-                            android:layout_width="0dp"
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/gtwalsheimproregular"
+                                android:text="@string/visit_pending"
+                                android:textSize="@dimen/sp16" />
+
+                            <TextView
+                                android:id="@+id/visit_pending_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="end"
+                                android:paddingStart="@dimen/dp8"
+                                android:paddingEnd="@dimen/dp8"
+                                android:text="@string/zero"
+                                android:textColor="@color/red_orange"
+                                android:textSize="@dimen/sp30" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".2"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_arrow_forward_20" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/follow_up_card"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight=".2"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_arrow_forward_20" />
+                            android:background="@drawable/button_ripple"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp16">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/gtwalsheimproregular"
+                                android:text="@string/follow_ups"
+                                android:textSize="@dimen/sp16" />
+
+                            <TextView
+                                android:id="@+id/follow_up_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="end"
+                                android:paddingStart="@dimen/dp8"
+                                android:paddingEnd="@dimen/dp8"
+                                android:text="@string/zero"
+                                android:textColor="@color/red_orange"
+                                android:textSize="@dimen/sp30" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".2"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_arrow_forward_20" />
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:id="@+id/follow_up_card"
-                        android:background="@drawable/button_ripple"
-                        android:padding="@dimen/dp16">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="@string/follow_ups"
-                            android:textSize="@dimen/sp16" />
-
-                        <TextView
-                            android:id="@+id/follow_up_tv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="sans-serif-medium"
-                            android:gravity="end"
-                            android:paddingStart="@dimen/dp8"
-                            android:paddingEnd="@dimen/dp8"
-                            android:text="@string/zero"
-                            android:textColor="@color/red_orange"
-                            android:textSize="@dimen/sp30" />
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".2"
-                            android:importantForAccessibility="no"
-                            android:src="@drawable/ic_arrow_forward_20" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </RelativeLayout>

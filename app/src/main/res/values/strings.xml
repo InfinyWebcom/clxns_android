@@ -193,9 +193,12 @@
     <string name="something_went_wrong">Something went wrong.</string>
     <string name="no_data">There\'s no data available currently.</string>
     <string name="empty_password">Password cannot be empty</string>
+    <string name="password_with_space">Password should not contain spaces.</string>
     <string name="collected">Collected</string>
     <string name="due_amount">Due amount :&#160;</string>
     <string name="loan_type">Loan Type</string>
+    <string name="arrow_forward">&#160;➜&#160;</string>
+    <string name="additional_details">Additional Details</string>
 
 
     <string-array name="yesNo">

@@ -21,10 +21,28 @@ class DetailsViewModel @Inject constructor(
         MutableLiveData()
     val responseCaseDetail: LiveData<NetworkResult<CaseDetailsResponse>> = _responseCaseDetail
 
+    private val _responseDispositionName: MutableLiveData<String> = MutableLiveData()
+    val responseDispositionName: LiveData<String> = _responseDispositionName
+
+    private val _responseSubDispositionName: MutableLiveData<String> = MutableLiveData()
+    val responseSubDispositionName: LiveData<String> = _responseSubDispositionName
+
     fun getCaseDetails(token: String, loanAccountNumber: String) = viewModelScope.launch {
         _responseCaseDetail.value = NetworkResult.Loading()
         detailsRepository.getCaseDetails(token, loanAccountNumber).collect { values ->
             _responseCaseDetail.value = values
+        }
+    }
+
+    fun getDispositionName(dispositionId: Int) = viewModelScope.launch {
+        detailsRepository.getDispositionName(dispositionId).collect {
+            _responseDispositionName.value = it
+        }
+    }
+
+    fun getSubDispositionName(subDispositionId: Int) = viewModelScope.launch {
+        detailsRepository.getSubDispositionName(subDispositionId).collect {
+            _responseSubDispositionName.value = it
         }
     }
 }

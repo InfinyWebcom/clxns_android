@@ -99,7 +99,7 @@
             android:layout_below="@+id/tv_sub_status"
             android:layout_marginStart="@dimen/dp8"
             android:layout_marginTop="@dimen/dp4"
-            android:paddingBottom="@dimen/dp4"
+            android:paddingBottom="@dimen/dp10"
             android:text="@string/dash"
             android:textSize="@dimen/sp12"
             app:layout_constraintBottom_toBottomOf="parent"

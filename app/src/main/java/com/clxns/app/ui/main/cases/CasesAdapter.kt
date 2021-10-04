@@ -41,7 +41,8 @@ class CasesAdapter(
             if (casesData.disposition != null) {
                 dispositions = casesData.disposition.name
                 if (casesData.subDisposition != null) {
-                    dispositions += " -> " + casesData.subDisposition.name
+                    dispositions += context.getString(R.string.arrow_forward) +
+                            casesData.subDisposition.name
                 }
             }
             val assignedDate = casesData.fosAssignedDate?.convertServerDateToNormal("dd MMM, yyyy")
@@ -49,7 +50,9 @@ class CasesAdapter(
             val loanIdDatePinCode = casesData.loanAccountNo.toString() + " | " +
                     casesData.applicantPincode.toString() + " | " + assignedDate
             contactBinding.loanIdDatePincodeTv.text = loanIdDatePinCode
-            contactBinding.casesAmountTv.text = casesData.totalDueAmount.convertToCurrency()
+
+            val amount = casesData.totalDueAmount - casesData.amountCollected
+            contactBinding.casesAmountTv.text = amount.convertToCurrency()
             if (!casesData.fi?.fiImage.isNullOrEmpty()) {
                 val url = Constants.BANK_LOGO_URL + casesData.fi?.fiImage
                 contactBinding.casesImage.loadImage(url)

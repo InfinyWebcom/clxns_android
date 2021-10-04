@@ -35,5 +35,7 @@ data class HistoryData(
     @Json(name = "dispositions")
     val dispositions:Disposition?,
     @Json(name = "subDisposition")
-    val subDisposition:SubDispositionData?
+    val subDisposition:SubDispositionData?,
+    @Json(name="payments")
+    val paymentData:List<HistoryPaymentData>
 )

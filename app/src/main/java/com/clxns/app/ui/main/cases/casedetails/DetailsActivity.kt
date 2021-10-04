@@ -46,7 +46,7 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var token: String
     private lateinit var loanAccountNo: String
     private lateinit var name: String
-    private lateinit var status: String
+    private var status = ""
     private var isPlanned = false
     private var isCaseDetail = false
 
@@ -54,7 +54,8 @@ class DetailsActivity : AppCompatActivity() {
 
     private lateinit var planStatusIntent: Intent
 
-    private lateinit var dueAmount: String
+    private var totalDueAmount = 0
+    private var collectedAmount = 0
     var checkInLauncher: ActivityResultLauncher<Intent>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,13 +109,13 @@ class DetailsActivity : AppCompatActivity() {
             intent.putExtra("loan_account_number", loanAccountNo)
             intent.putExtra("name", intent.getStringExtra("name"))
             checkInLauncher!!.launch(intent)
-//            startActivity(intent)
         }
 
         binding.txtHistory.setOnClickListener {
             val intent = Intent(this, HistoryDetailsActivity::class.java)
             intent.putExtra("loan_account_number", loanAccountNo)
-            intent.putExtra("due_amount", dueAmount)
+            intent.putExtra("total_due_amount", totalDueAmount)
+            intent.putExtra("collected_amount", collectedAmount)
             intent.putExtra("name", name)
             startActivity(intent)
         }
@@ -141,10 +142,30 @@ class DetailsActivity : AppCompatActivity() {
         binding.showMoreTxt.setOnClickListener {
             if (binding.userDetailsContainer.isVisible) {
                 binding.showMoreTxt.text = getString(R.string.show_more)
-                binding.userDetailsContainer.visibility = View.GONE
+                binding.userDetailsContainer.hide()
             } else {
                 binding.showMoreTxt.text = getString(R.string.show_less)
-                binding.userDetailsContainer.visibility = View.VISIBLE
+                binding.userDetailsContainer.show()
+                lifecycleScope.launch {
+                    delay(100L)
+                    binding.detailsScrollView.fullScroll(View.FOCUS_DOWN)
+                }
+            }
+        }
+
+        binding.additionalDetailTV.setOnClickListener {
+            if (binding.additionalInfoRV.isVisible) {
+                binding.additionalInfoRV.hide()
+                binding.additionalDetailTV.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    null, null,
+                    ContextCompat.getDrawable(this, R.drawable.ic_round_arrow_drop_down), null
+                )
+            } else {
+                binding.additionalDetailTV.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    null, null,
+                    ContextCompat.getDrawable(this, R.drawable.ic_round_arrow_drop_up_24), null
+                )
+                binding.additionalInfoRV.show()
                 lifecycleScope.launch {
                     delay(100L)
                     binding.detailsScrollView.fullScroll(View.FOCUS_DOWN)
@@ -156,11 +177,13 @@ class DetailsActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                binding.progressBar.show()
+                //Refresh detail screen if user has checked in
                 detailsViewModel.getCaseDetails(
                     token,
                     loanAccountNo
                 )
+                //To refresh my plan fragment
+                setPlanStatus()
             }
         }
 
@@ -173,7 +196,24 @@ class DetailsActivity : AppCompatActivity() {
                     binding.progressBar.hide()
                     if (response.data?.error == false && response.data.data != null) {
                         mobileNo = response.data.data.phone
-                        dueAmount = response.data.data.totalDueAmount.toString()
+
+                        totalDueAmount = response.data.data.totalDueAmount!!
+                        collectedAmount = response.data.data.amountCollected!!
+                        //Fetching Dispositions from Local DB
+                        if (response.data.data.dispositionId != null) {
+                            detailsViewModel.getDispositionName(response.data.data.dispositionId)
+                            if (response.data.data.subDispositionId != null) {
+                                detailsViewModel.getSubDispositionName(response.data.data.subDispositionId)
+                            }
+                        }
+                        //Addition Details if available only then show it
+                        if (response.data.contactDataList.isNotEmpty()) {
+                            binding.additionalInfoRV.apply {
+                                adapter = UpdatedContactAdapter(response.data.contactDataList)
+                            }
+                        }else{
+                            binding.additionalLL.hide()
+                        }
                         updateUI(response.data.data)
                     } else {
                         toast("Failed to fetch details")
@@ -231,6 +271,22 @@ class DetailsActivity : AppCompatActivity() {
                 }
             }
         }
+
+        detailsViewModel.responseDispositionName.observe(this) {
+            if (!it.isNullOrEmpty()) {
+                status = it
+                binding.txtStatusValue.text = status
+            }
+        }
+
+        detailsViewModel.responseSubDispositionName.observe(this) {
+            if (!it.isNullOrEmpty()) {
+                status += getString(R.string.arrow_forward) + it
+                binding.txtStatusValue.text = status
+            }
+        }
+
+
     }
 
     private fun setPlanStatus() {
@@ -277,15 +333,6 @@ class DetailsActivity : AppCompatActivity() {
         binding.txtAddressValue.text = nullSafeString(data.address.toString())
         binding.txtNewAddressValue.text = nullSafeString(data.applicantAddress.toString())
         binding.txtNewMobileValue.text = nullSafeString(data.applicantAlternateMobile1.toString())
-      //  binding.txtStatusValue.text = nullSafeString(data.paymentStatus.toString())
-
-        var status = "New Lead"
-//        if (data?.lead?.dispositionData != null) {
-//            status = data.lead.dispositionData.name
-//            if (details.lead.subDispositionData != null) {
-//                status += "[" + data.lead.subDispositionData.name + "]"
-//            }
-//        }
 
     }
 
@@ -318,7 +365,8 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun showConfirmUnPlanDialog(loanId: String, name: String) {
         val logoutDialog = AlertDialog.Builder(this)
-        logoutDialog.setTitle("UnPlan -> $name")
+        val title = "UnPlan" + getString(R.string.arrow_forward) + name
+        logoutDialog.setTitle(title)
         logoutDialog.setMessage("Are you sure you want to un-plan this case?")
 
         logoutDialog.setPositiveButton("Yes") { dialog, _ ->

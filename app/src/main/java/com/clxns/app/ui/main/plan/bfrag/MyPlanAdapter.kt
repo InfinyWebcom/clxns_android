@@ -8,10 +8,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.clxns.app.R
 import com.clxns.app.data.model.MyPlanDataItem
 import com.clxns.app.databinding.PlanListItemsBinding
-import com.clxns.app.ui.main.cases.CasesAdapter
-import com.clxns.app.ui.main.cases.casedetails.DetailsActivity
 import com.clxns.app.utils.convertToCurrency
 import com.clxns.app.utils.copyToClipBoard
 import com.clxns.app.utils.makeFirstLetterCapital
@@ -22,7 +21,7 @@ class MyPlanAdapter(
     private val onPlanItemClickListener: OnPlanItemClickListener
 ) : RecyclerView.Adapter<MyPlanAdapter.MyPlanVH>() {
 
-    interface OnPlanItemClickListener{
+    interface OnPlanItemClickListener {
         fun openDetailActivity(
             loadId: String,
             name: String,
@@ -40,8 +39,15 @@ class MyPlanAdapter(
 
         val name = details?.lead?.name?.lowercase()?.makeFirstLetterCapital()
         holder.contactItemBinding.planItemNameTxt.text = name
-        val amount = details?.lead?.totalDueAmount?.convertToCurrency()
-        holder.contactItemBinding.planItemAmountTxt.text = amount
+
+        var amount = 0
+        if (details?.lead?.totalDueAmount != null){
+            amount = details.lead.totalDueAmount
+            if (details.lead.amountCollected != null){
+                amount -= details.lead.amountCollected
+            }
+        }
+        holder.contactItemBinding.planItemAmountTxt.text = amount.convertToCurrency()
         var bankNameAndLoanId = " | " + details?.lead?.loanAccountNo.toString()
         bankNameAndLoanId = if (!details?.lead?.fiData?.name.isNullOrEmpty()) {
             details?.lead?.fiData?.name + bankNameAndLoanId
@@ -54,7 +60,7 @@ class MyPlanAdapter(
         if (details?.lead?.dispositionData != null) {
             status = details.lead.dispositionData.name
             if (details.lead.subDispositionData != null) {
-                status += "[" + details.lead.subDispositionData.name + "]"
+                status += context.getString(R.string.arrow_forward) + details.lead.subDispositionData.name
             }
         }
         holder.contactItemBinding.planStatusBagde.text = status

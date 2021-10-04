@@ -30,8 +30,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
     private lateinit var loanAccountNo: String
     private var historyDataList: ArrayList<HistoryData> = arrayListOf()
 
-    private var dueAmount : String = ""
-
+    private var dueAmount: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,11 +68,11 @@ class HistoryDetailsActivity : AppCompatActivity() {
 
         loanAccountNo = intent.getStringExtra("loan_account_number").toString()
 
-        dueAmount = if (intent.getStringExtra("due_amount") != null){
-            intent.getStringExtra("due_amount")!!.toInt().convertToCurrency()
-        }else{
-            "-"
-        }
+        val totalAmount = intent.getIntExtra("total_due_amount", 0)
+        val collectAmount = intent.getIntExtra("collected_amount", 0)
+
+        dueAmount = (totalAmount - collectAmount).convertToCurrency()
+
         binding.dueAmountTv.append(dueAmount)
 
         if (intent.getStringExtra("name") != null) {
@@ -100,15 +99,15 @@ class HistoryDetailsActivity : AppCompatActivity() {
             binding.historyNoData.noDataTv.text = getString(R.string.something_went_wrong)
             when (it) {
                 is NetworkResult.Success -> {
-                    clearAndNotify()
                     binding.progressBar.hide()
                     noDataLayout.hide()
                     historyRV.show()
                     if (!it.data?.error!!) {
                         if (!it.data.historyData.isNullOrEmpty()) {
+                            clearAndNotify()
                             val list = it.data.historyData
                             historyDataList.addAll(list)
-                            historyDetailsAdapter.notifyItemRangeChanged(0, historyDataList.size)
+                            historyDetailsAdapter.notifyItemRangeChanged(0, list.size)
                         } else {
                             binding.historyNoData.retryBtn.hide()
                             binding.historyNoData.noDataTv.text = getString(R.string.no_data)
@@ -126,7 +125,6 @@ class HistoryDetailsActivity : AppCompatActivity() {
                     binding.progressBar.hide()
                     noDataLayout.show()
                     binding.root.snackBar(it.message!!)
-                    clearAndNotify()
                     // show error message
                 }
                 is NetworkResult.Loading -> {

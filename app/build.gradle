@@ -119,6 +119,8 @@ dependencies {
 
     //runtime permission
     implementation 'com.nabinbhandari.android:permissions:3.8'
+
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }
 
 // Allow references to generated code

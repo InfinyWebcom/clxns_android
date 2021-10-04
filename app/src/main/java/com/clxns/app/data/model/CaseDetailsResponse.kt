@@ -1,5 +1,6 @@
 package com.clxns.app.data.model
 
+import com.clxns.app.data.model.cases.UpdatedContactData
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -13,5 +14,8 @@ data class CaseDetailsResponse(
 	val title: String? = null,
 
 	@Json(name="error")
-	val error: Boolean? = null
+	val error: Boolean? = null,
+
+	@Json(name = "updatedContact")
+	val contactDataList: List<UpdatedContactData>
 )

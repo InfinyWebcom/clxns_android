@@ -115,6 +115,11 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
     }
 
     private fun setListeners() {
+
+        binding.homeSwipeRefresh.setOnRefreshListener {
+            binding.homeSwipeRefresh.isRefreshing = false
+            getHomeStatistics()
+        }
         binding.notificationBtn.setOnClickListener {
             startActivity(Intent(context, NotificationActivity::class.java))
         }
@@ -142,7 +147,6 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                 0, 1
             )
             findNavController().navigate(actions)
-//            findNavController().navigate(R.id.action_navigation_home_to_navigation_cases)
         }
     }
 

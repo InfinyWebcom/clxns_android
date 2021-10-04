@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.clxns.app.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import java.text.NumberFormat
@@ -74,7 +75,7 @@ fun String.makeFirstLetterCapital(): String {
     return String(arr)
 }
 
-fun String.convertServerDateToNormal(newFormat:String): String? {
+fun String.convertServerDateToNormal(newFormat: String): String? {
     var date = this
     var spf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
     spf.timeZone = TimeZone.getTimeZone("GMT")
@@ -89,7 +90,7 @@ fun String.convertServerDateToNormal(newFormat:String): String? {
     return date
 }
 
-fun String.convertServerDateToNormalGMT530(newFormat:String): String? {
+fun String.convertServerDateToNormalGMT530(newFormat: String): String? {
     var date = this
     var spf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
     spf.timeZone = TimeZone.getTimeZone("GMT+5:30")
@@ -105,7 +106,9 @@ fun String.convertServerDateToNormalGMT530(newFormat:String): String? {
 }
 
 fun ImageView.loadImage(url: String) {
-    Glide.with(this).load(url).into(this)
+    Glide.with(this).load(url)
+        .error(R.drawable.ic_logo_x)
+        .into(this)
 }
 
 fun Int.convertToCurrency(): String {

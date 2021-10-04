@@ -239,7 +239,8 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
 
     private fun showConfirmUnPlanDialog(casesData: CasesData) {
         val logoutDialog = AlertDialog.Builder(this)
-        logoutDialog.setTitle("UnPlan -> ${casesData.name}")
+        val title = "UnPlan" + getString(R.string.arrow_forward) + casesData.name
+        logoutDialog.setTitle(title)
         logoutDialog.setMessage("Are you sure you want to un-plan this case?")
 
         logoutDialog.setPositiveButton("Yes") { dialog, _ ->

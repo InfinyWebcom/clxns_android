@@ -12,6 +12,7 @@ import com.clxns.app.utils.isValidEmail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import javax.inject.Inject
@@ -39,17 +40,19 @@ class LoginViewModel @Inject constructor(
         if (!isEmailAddressValid(emailId)) {
             _loginForm.value =
                 LoginFormState(emailAddressError = R.string.invalid_email, isDataValid = false)
-        } else if (!isPasswordValid(password)) {
+        } else if (password.isEmpty()) {
             _loginForm.value =
                 LoginFormState(passwordError = R.string.empty_password, isDataValid = false)
+        } else if (!isValidPassword(password)) {
+            _loginForm.value =
+                LoginFormState(passwordError = R.string.password_with_space, isDataValid = false)
         } else {
             _loginForm.value = LoginFormState(isDataValid = true)
         }
     }
 
-
-    private fun isPasswordValid(password: String): Boolean {
-        return password.isNotBlank()
+    private fun isValidPassword(password: String): Boolean {
+        return password.contains(Regex("^(?=\\S+$).{0,50}$"))
     }
 
     private fun isEmailAddressValid(emailId: String): Boolean {

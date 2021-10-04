@@ -51,6 +51,8 @@ class MainActivity : AppCompatActivity() {
         //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        //Will be removed
+        Timber.i(sessionManager.getString(Constants.TOKEN)!!)
 
         mainViewModel.getAllDispositions()
         mainViewModel.getBankList(token)

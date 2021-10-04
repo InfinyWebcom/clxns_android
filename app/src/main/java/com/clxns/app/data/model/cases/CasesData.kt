@@ -26,5 +26,7 @@ data class CasesData(
     @Json(name = "subDisposition")
     val subDisposition: SubDispositionData? = null,
     @Json(name = "totalDueAmount")
-    val totalDueAmount: Int
+    val totalDueAmount: Int,
+    @Json(name = "amountCollected")
+    val amountCollected: Int
 )
