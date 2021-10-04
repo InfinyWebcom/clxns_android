@@ -98,6 +98,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
             "Nov",
             "Dec"
         )
+        private var IS_PAYMENT_DONE: Boolean = false
     }
 
     private lateinit var datePickerDialog: DatePickerDialog
@@ -286,6 +287,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                         l.forEachChildView {
                             it.isEnabled = false
                         }
+                        IS_PAYMENT_DONE = true
                         binding.generateReceiptBtn.text = "back to my plan"
                     } else {
                         toast(response.data.title!!)
@@ -791,6 +793,13 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         txtTotalDue.text = "₹${totalAmount}"
         txtCollected.text = "₹${collected}"
         txtResult.text = "₹${totalAmount.minus(collected)}"
+    }
+
+    override fun onBackPressed() {
+        if (IS_PAYMENT_DONE) {
+            setResult(RESULT_OK)
+        }
+        super.onBackPressed()
     }
 
 }

@@ -15,5 +15,7 @@ data class HistoryPaymentData(
     @Json(name = "paymentMode")
     val paymentMode: String,
     @Json(name = "refNo")
-    val refNo: String
+    val refNo: String,
+    @Json(name = "recoveryDate")
+    val recoveryDate: String,
 )

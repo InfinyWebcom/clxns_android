@@ -10,6 +10,7 @@ import com.clxns.app.data.model.HistoryData
 import com.clxns.app.databinding.HistoryItemBinding
 import com.clxns.app.utils.convertServerDateToNormal
 import com.clxns.app.utils.convertToCurrency
+import com.clxns.app.utils.hide
 import timber.log.Timber
 
 class HistoryDetailsAdapter(private val context: Context, private val dataList: List<HistoryData>) :
@@ -48,12 +49,21 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
             }
             holder.historyItemBinding.tvSubStatus.text = subStatus
         } else {
-            holder.historyItemBinding.tvSubStatus.text = followUpDate
+            if (followUpDate.isEmpty()){
+                holder.historyItemBinding.tvSubStatus.hide()
+            }else {
+                holder.historyItemBinding.tvSubStatus.text = followUpDate
+            }
         }
         var additionalInfo = data.comments
         if (data.paymentData.isNotEmpty()) {
+//            if (data.paymentData[0].recoveryDate.isNotEmpty()) {
+//                val recoveryDate = "Recovery Date : " +
+//                        data.paymentData[0].recoveryDate.convertServerDateToNormal("dd, MMM yyyy")
+//                holder.historyItemBinding.tvSubStatus.text = recoveryDate
+//            }
             var refNo = "-"
-            if (data.paymentData[0].refNo.isNotEmpty()){
+            if (data.paymentData[0].refNo.isNotEmpty()) {
                 refNo = data.paymentData[0].refNo
             }
             additionalInfo += "\nReference No. : $refNo" +

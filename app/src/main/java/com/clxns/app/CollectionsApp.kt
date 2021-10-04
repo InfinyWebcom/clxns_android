@@ -23,6 +23,9 @@ class CollectionsApp : Application() {
          * Added Total Due amount minus collectd amount in Cases & My Plan, History Screen
          * Refresh my plan list & detail screen on check in updates
          * Different disposition & sub disposition issue - FIXED
+         * PTP Probability Issue & Crashing - FIXED
+         * Ref No. & amount in History screen
+         * Detail Screen & MY Plan on updating after payment - Fixed
          */
     }
 }

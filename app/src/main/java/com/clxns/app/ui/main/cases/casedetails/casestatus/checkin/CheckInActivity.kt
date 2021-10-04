@@ -2,6 +2,7 @@ package com.clxns.app.ui.main.cases.casedetails.casestatus.checkin
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -67,8 +68,8 @@ import kotlin.collections.ArrayList
 class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     AddImageAdapter.removePhoto {
 
-    var IS_SUB_DIS: Boolean = false
-    var IS_SET_RESULT: Boolean = false
+    private var IS_SUB_DIS: Boolean = false
+    private var IS_SET_RESULT: Boolean = false
     var remark: String = ""
     var followUpDate: String = ""
     var additionalFields: AdditionalFieldModel? = null
@@ -436,9 +437,9 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 {
                     if (PAYMENT_MODE) {
                         PAYMENT_MODE = false
-                        var democap = DemoCap()
-                        democap.mainSupporting = photoB64List
-                        sessionManager.saveAnyData("main_supporting", Gson().toJson(democap))
+                        val demoCap = DemoCap()
+                        demoCap.mainSupporting = photoB64List
+                        sessionManager.saveAnyData("main_supporting", Gson().toJson(demoCap))
                         val intent =
                             Intent(this, PaymentCollectionActivity::class.java)
                         intent.putExtra("loan_account_number", viewModel.leadId)
@@ -449,7 +450,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 //                        val b = Bundle()
 //                        b.putStringArray("main_supporting", photoB64List.toTypedArray())
 //                        intent.putExtras(b)
-                        startActivity(intent)
+                        paymentLauncher.launch(intent)
                         binding.progressBar.hide()
                     } else {
                         saveCheckingData(
@@ -471,6 +472,13 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             subDispositionId = it.toString()
         }
     }
+
+    private val paymentLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                IS_SET_RESULT = true
+            }
+        }
 
     private fun openFileUploadDialog() {
         val items = arrayOf<CharSequence>("Camera", "Choose from gallery")
