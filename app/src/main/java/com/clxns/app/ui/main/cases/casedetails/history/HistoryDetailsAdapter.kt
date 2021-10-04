@@ -52,7 +52,12 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
         }
         var additionalInfo = data.comments
         if (data.paymentData.isNotEmpty()) {
-            additionalInfo += "\n${data.paymentData[0].refNo} ${data.paymentData[0].collectedAmt.convertToCurrency()}"
+            var refNo = "-"
+            if (data.paymentData[0].refNo.isNotEmpty()){
+                refNo = data.paymentData[0].refNo
+            }
+            additionalInfo += "\nReference No. : $refNo" +
+                    " Amount : ${data.paymentData[0].collectedAmt.convertToCurrency()}"
         }
         holder.historyItemBinding.itemRemarksTv.text = additionalInfo
         if (data.additionalField != null) {

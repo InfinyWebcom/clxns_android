@@ -90,21 +90,6 @@ fun String.convertServerDateToNormal(newFormat: String): String? {
     return date
 }
 
-fun String.convertServerDateToNormalGMT530(newFormat: String): String? {
-    var date = this
-    var spf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-    spf.timeZone = TimeZone.getTimeZone("GMT+5:30")
-    var newDate: Date? = null
-    try {
-        newDate = spf.parse(date)
-    } catch (e: ParseException) {
-        e.printStackTrace()
-    }
-    spf = SimpleDateFormat(newFormat, Locale.getDefault())
-    date = spf.format(newDate)
-    return date
-}
-
 fun ImageView.loadImage(url: String) {
     Glide.with(this).load(url)
         .error(R.drawable.ic_logo_x)
