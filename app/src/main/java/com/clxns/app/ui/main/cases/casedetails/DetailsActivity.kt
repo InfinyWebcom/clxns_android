@@ -58,6 +58,9 @@ class DetailsActivity : AppCompatActivity() {
     private var collectedAmount = 0
     var checkInLauncher: ActivityResultLauncher<Intent>? = null
 
+    private var dispositionId: Int = 0
+    private var subDispositionId: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -184,6 +187,12 @@ class DetailsActivity : AppCompatActivity() {
                 )
                 //To refresh my plan fragment
                 setPlanStatus()
+                ///Fetching Dispositions from Local DB
+                detailsViewModel.getDispositionName(dispositionId)
+                lifecycleScope.launch {
+                    delay(100)
+                    detailsViewModel.getSubDispositionName(subDispositionId)
+                }
             }
         }
 
@@ -199,11 +208,12 @@ class DetailsActivity : AppCompatActivity() {
 
                         totalDueAmount = response.data.data.totalDueAmount!!
                         collectedAmount = response.data.data.amountCollected!!
-                        //Fetching Dispositions from Local DB
+
+                        //Setting Disposition & Sub Disposition Id to fetch latest from local db on check in update
                         if (response.data.data.dispositionId != null) {
-                            detailsViewModel.getDispositionName(response.data.data.dispositionId)
+                            dispositionId = response.data.data.dispositionId
                             if (response.data.data.subDispositionId != null) {
-                                detailsViewModel.getSubDispositionName(response.data.data.subDispositionId)
+                                subDispositionId = response.data.data.subDispositionId
                             }
                         }
                         //Addition Details if available only then show it
@@ -211,7 +221,7 @@ class DetailsActivity : AppCompatActivity() {
                             binding.additionalInfoRV.apply {
                                 adapter = UpdatedContactAdapter(response.data.contactDataList)
                             }
-                        }else{
+                        } else {
                             binding.additionalLL.hide()
                         }
                         updateUI(response.data.data)
