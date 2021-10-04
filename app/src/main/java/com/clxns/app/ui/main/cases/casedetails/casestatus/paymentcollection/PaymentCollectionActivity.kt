@@ -8,17 +8,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.util.Base64
 import android.util.Base64OutputStream
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -30,6 +27,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
+import com.clxns.app.data.model.AdditionalFieldModel
 import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.data.model.PaymentModel
 import com.clxns.app.data.model.cases.CaseCheckInBody
@@ -44,6 +42,7 @@ import com.clxns.app.utils.show
 import com.clxns.app.utils.support.CropImageActivity
 import com.clxns.app.utils.support.FileUtils
 import com.clxns.app.utils.toast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nabinbhandari.android.permissions.PermissionHandler
@@ -168,7 +167,19 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
             } else {
                 if (validate()) {
                     binding.progressBar.show()
-                    var payment = PaymentModel()
+
+                    //additional fields
+                    val additionalField = AdditionalFieldModel()
+                    additionalField.recoveryDate = recoveryDate
+                    additionalField.paymentMode = paymentType
+                    additionalField.recoveryType = binding.spAmount.selectedItem.toString()
+                    additionalField.refChequeNo =
+                        if (paymentType == "CHEQUE") binding.edtReferenceType.text.toString() else (if (paymentType == "ONLINE") binding.edtReferenceType.text.toString() else "")
+                    additionalField.recoveredAmount =
+                        binding.paymentAmountEt.text.toString().toString()
+
+                    //payment details
+                    val payment = PaymentModel()
                     payment.leadId = viewModel.loanAccountNumber
                     payment.loanNo = viewModel.loanAccountNumber
                     payment.amtType = binding.spAmount.selectedItem.toString()
@@ -182,19 +193,19 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     payment.supporting = photoB64List
                     payment.collectedAmt = binding.paymentAmountEt.text.toString().toLong()
 
-                    var body = CaseCheckInBody()
+                    //body
+                    val body = CaseCheckInBody()
                     body.loanAccountNo = viewModel.loanAccountNumber!!
                     body.dispositionId = viewModel.dispositionId!!
                     body.subDispositionId = null
                     body.comments = binding.remarksET.text.toString()
                     body.followUp = recoveryDate
                     body.nextAction = recoveryDate
-                    body.additionalField = ""
+                    body.additionalField = additionalField
                     body.location = viewModel.location!!
                     body.supporting = viewModel.mainSupporting
                     body.payment = payment
 
-                    Log.d("sdvsdv", "setListeners: " + Gson().toJson(payment))
 
 //                    viewModel.saveCheckInData(
 //                        sessionManager.getString(Constants.TOKEN)!!,
@@ -219,6 +230,9 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
 
         }
 
+        binding.collectableAmountEt.setOnClickListener {
+            showDialog(caseDetails?.data?.totalDueAmount!!, caseDetails?.data?.amountCollected!!)
+        }
 
     }
 
@@ -240,8 +254,10 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                             )
                         }
                         binding.txtBankName.text = nullSafeString(response.data.data?.fiData?.name)
+                        var amount =
+                            (response.data.data?.totalDueAmount?.minus(response.data.data?.amountCollected!!))
                         binding.collectableAmountEt.text =
-                            "₹${nullSafeString(response.data.data?.totalDueAmount.toString())}"
+                            "₹${nullSafeString(amount.toString())}"
                     } else {
                         toast(response.data.title!!)
                         finish()
@@ -317,7 +333,12 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                             "%02d",
                             day
                         )
-                    }T${String.format("%02d", hours+12)}:${String.format("%02d", minutes)}:00.000Z"
+                    }T${String.format("%02d", hours + 12)}:${
+                        String.format(
+                            "%02d",
+                            minutes
+                        )
+                    }:00.000Z"
 
             }, year, month, day)
         datePickerDialog.datePicker.minDate = System.currentTimeMillis()
@@ -588,7 +609,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         // Create an image file name
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName = "JPEG_" + timeStamp + "_"
-        val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val storageDir = externalCacheDir //getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val image = File.createTempFile(
             imageFileName,  /* prefix */
             ".jpg",  /* suffix */
@@ -747,6 +768,29 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
             return "-"
         }
         return value
+    }
+
+    fun showDialog(totalAmount: Int, collected: Int) {
+        var dialog = MaterialAlertDialogBuilder(this)
+        var customView = LayoutInflater.from(this)
+            .inflate(R.layout.dialog_collectable_amount, null, false)
+
+        var txtTotalDue = customView.findViewById<TextView>(R.id.txt_total_due)
+        var txtCollected = customView.findViewById<TextView>(R.id.txt_collectable)
+        var txtResult = customView.findViewById<TextView>(R.id.txt_result)
+        dialog.setView(customView)
+//            .setTitle("Details")
+//            .setMessage("Enter your basic details")
+            .setPositiveButton("OK") { dialog, _ ->
+
+
+                dialog.dismiss()
+            }
+            .show()
+
+        txtTotalDue.text = "₹${totalAmount}"
+        txtCollected.text = "₹${collected}"
+        txtResult.text = "₹${totalAmount.minus(collected)}"
     }
 
 }

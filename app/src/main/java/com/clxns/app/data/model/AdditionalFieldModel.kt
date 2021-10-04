@@ -1,7 +1,9 @@
 package com.clxns.app.data.model
 
 import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class AdditionalFieldModel(
 
     @field:SerializedName("recoveredAmount")
