@@ -1,7 +1,9 @@
 package com.clxns.app.ui.main.cases.casedetails.history
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +14,7 @@ import com.clxns.app.data.model.HistoryData
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityHistoryDetailsBinding
 import com.clxns.app.utils.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,6 +32,8 @@ class HistoryDetailsActivity : AppCompatActivity() {
     private lateinit var historyRV: RecyclerView
     private lateinit var loanAccountNo: String
     private var historyDataList: ArrayList<HistoryData> = arrayListOf()
+    private var totalAmount: Int = 0
+    private var collectAmount: Int = 0
 
     private var dueAmount: String = ""
 
@@ -50,6 +55,10 @@ class HistoryDetailsActivity : AppCompatActivity() {
         binding.historyNoData.retryBtn.setOnClickListener {
             getHistoryDetails()
         }
+
+        binding.dueAmountCard.setOnClickListener {
+            showDialog(totalAmount, collectAmount)
+        }
     }
 
     private fun getHistoryDetails() {
@@ -68,8 +77,8 @@ class HistoryDetailsActivity : AppCompatActivity() {
 
         loanAccountNo = intent.getStringExtra("loan_account_number").toString()
 
-        val totalAmount = intent.getIntExtra("total_due_amount", 0)
-        val collectAmount = intent.getIntExtra("collected_amount", 0)
+        totalAmount = intent.getIntExtra("total_due_amount", 0)
+        collectAmount = intent.getIntExtra("collected_amount", 0)
 
         dueAmount = (totalAmount - collectAmount).convertToCurrency()
 
@@ -139,6 +148,29 @@ class HistoryDetailsActivity : AppCompatActivity() {
     private fun clearAndNotify() {
         historyDataList.clear()
         historyDetailsAdapter.notifyItemRangeChanged(0, historyDataList.size)
+    }
+
+    fun showDialog(totalAmount: Int, collected: Int) {
+        var dialog = MaterialAlertDialogBuilder(this)
+        var customView = LayoutInflater.from(this)
+            .inflate(R.layout.dialog_collectable_amount, null, false)
+
+        var txtTotalDue = customView.findViewById<TextView>(R.id.txt_total_due)
+        var txtCollected = customView.findViewById<TextView>(R.id.txt_collectable)
+        var txtResult = customView.findViewById<TextView>(R.id.txt_result)
+        dialog.setView(customView)
+//            .setTitle("Details")
+//            .setMessage("Enter your basic details")
+            .setPositiveButton("OK") { dialog, _ ->
+
+
+                dialog.dismiss()
+            }
+            .show()
+
+        txtTotalDue.text = "₹${totalAmount}"
+        txtCollected.text = "₹${collected}"
+        txtResult.text = "₹${totalAmount.minus(collected)}"
     }
 
 

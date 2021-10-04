@@ -1,5 +1,6 @@
 package com.clxns.app.data.model.cases
 
+import com.clxns.app.data.model.AdditionalFieldModel
 import com.clxns.app.data.model.PaymentModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -14,7 +15,7 @@ data class CaseCheckInBody(
     var followUp: String? = null,
 
     @Json(name = "additionalField")
-    var additionalField: String? = null,
+    var additionalField: AdditionalFieldModel? = null,
 
     @Json(name = "comments")
     var comments: String? = null,

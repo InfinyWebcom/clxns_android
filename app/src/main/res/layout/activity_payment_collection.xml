@@ -159,7 +159,7 @@
                     android:layout_marginTop="5dp"
                     android:focusable="false"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:textColor="@color/text_black"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/sp16" />
 
             </LinearLayout>
@@ -370,7 +370,7 @@
                 android:background="@drawable/background_edittext_roundable"
                 android:fontFamily="@font/gtwalsheimproregular"
                 android:importantForAutofill="no"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:paddingVertical="@dimen/dp10"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp" />
@@ -429,5 +429,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal|center_vertical"
         android:clickable="true"
+        android:focusable="true"
+        android:elevation="10dp"
         android:padding="185dp" />
 </RelativeLayout>
