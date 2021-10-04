@@ -32,6 +32,7 @@ import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.data.model.PaymentModel
+import com.clxns.app.data.model.cases.CaseCheckInBody
 import com.clxns.app.data.model.home.DemoCap
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityPaymentCollectionBinding
@@ -181,36 +182,38 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     payment.supporting = photoB64List
                     payment.collectedAmt = binding.paymentAmountEt.text.toString().toLong()
 
-//                    var body = CaseCheckInBody()
-//                    body.loanAccountNo = viewModel.loanAccountNumber!!
-//                    body.dispositionId = viewModel.dispositionId!!
-//                    body.subDispositionId = null
-//                    body.comments = ""
-//                    body.followUp = ""
-//                    body.nextAction = ""
-//                    body.additionalField = ""
-//                    body.location = viewModel.location!!
-//                    body.supporting = viewModel.mainSupporting
-//                    body.payment = payment
+                    var body = CaseCheckInBody()
+                    body.loanAccountNo = viewModel.loanAccountNumber!!
+                    body.dispositionId = viewModel.dispositionId!!
+                    body.subDispositionId = null
+                    body.comments = binding.remarksET.text.toString()
+                    body.followUp = recoveryDate
+                    body.nextAction = recoveryDate
+                    body.additionalField = ""
+                    body.location = viewModel.location!!
+                    body.supporting = viewModel.mainSupporting
+                    body.payment = payment
+
+                    Log.d("sdvsdv", "setListeners: " + Gson().toJson(payment))
+
+//                    viewModel.saveCheckInData(
+//                        sessionManager.getString(Constants.TOKEN)!!,
+//                        viewModel.loanAccountNumber!!,
+//                        viewModel.dispositionId!!,
+//                        null,
+//                        binding.remarksET.text.toString(),
+//                        recoveryDate,
+//                        recoveryDate,
+//                        "",
+//                        viewModel.location!!,
+//                        viewModel.mainSupporting,
+//                        Gson().toJson(payment)
+//                    )
 
                     viewModel.saveCheckInData(
                         sessionManager.getString(Constants.TOKEN)!!,
-                        viewModel.loanAccountNumber!!,
-                        viewModel.dispositionId!!,
-                        null,
-                        binding.remarksET.text.toString(),
-                        recoveryDate,
-                        recoveryDate,
-                        "",
-                        viewModel.location!!,
-                        viewModel.mainSupporting,
-                        payment
+                        body
                     )
-
-//                    viewModel.saveCheckInData2(
-//                        sessionManager.getString(Constants.TOKEN)!!,
-//                        body
-//                    )
                 }
             }
 
@@ -229,11 +232,13 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                         binding.txtName.text = nullSafeString(response.data.data?.name)
                         binding.txtStatus.text = nullSafeString(response.data.data?.paymentStatus)
                         binding.txtProductValue.text = nullSafeString(response.data.data?.loanType)
-                        binding.txtDate.text = formatDate(
-                            response.data.data?.dateOfDefault.toString(),
-                            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-                            "dd-MM-yyyy"
-                        )
+                        if (response.data.data?.allocationDate != null) {
+                            binding.txtDate.text = formatDate(
+                                response.data.data?.allocationDate.toString(),
+                                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                                "dd-MM-yyyy"
+                            )
+                        }
                         binding.txtBankName.text = nullSafeString(response.data.data?.fiData?.name)
                         binding.collectableAmountEt.text =
                             "₹${nullSafeString(response.data.data?.totalDueAmount.toString())}"
@@ -296,10 +301,23 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         datePickerDialog =
             DatePickerDialog(ctx, { _, year, month, day ->
                 Log.i(javaClass.name, "month--->" + MONTHS[month])
+
+                //set current time as default time
+                var millis = System.currentTimeMillis()
+                var c = Calendar.getInstance()
+                c.timeInMillis = millis
+                val hours = c.get(Calendar.HOUR)
+                val minutes = c.get(Calendar.MINUTE)
+
                 binding.txtPaymentOrRecoveryDateValue.text =
                     "$day " + MONTHS[month] + " $year"
                 recoveryDate =
-                    "${year}-${String.format("%02d", month + 1)}-${String.format("%02d", day)}"
+                    "${year}-${String.format("%02d", month + 1)}-${
+                        String.format(
+                            "%02d",
+                            day
+                        )
+                    }T${String.format("%02d", hours+12)}:${String.format("%02d", minutes)}:00.000Z"
 
             }, year, month, day)
         datePickerDialog.datePicker.minDate = System.currentTimeMillis()

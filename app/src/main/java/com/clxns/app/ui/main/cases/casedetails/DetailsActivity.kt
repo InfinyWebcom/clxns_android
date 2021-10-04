@@ -8,6 +8,8 @@ import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -53,6 +55,7 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var planStatusIntent: Intent
 
     private lateinit var dueAmount: String
+    var checkInLauncher: ActivityResultLauncher<Intent>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,7 +107,8 @@ class DetailsActivity : AppCompatActivity() {
             intent.putExtra("status", intent.getStringExtra("status"))
             intent.putExtra("loan_account_number", loanAccountNo)
             intent.putExtra("name", intent.getStringExtra("name"))
-            startActivity(intent)
+            checkInLauncher!!.launch(intent)
+//            startActivity(intent)
         }
 
         binding.txtHistory.setOnClickListener {
@@ -148,6 +152,17 @@ class DetailsActivity : AppCompatActivity() {
             }
         }
 
+        checkInLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                binding.progressBar.show()
+                detailsViewModel.getCaseDetails(
+                    token,
+                    loanAccountNo
+                )
+            }
+        }
 
     }
 
@@ -262,6 +277,15 @@ class DetailsActivity : AppCompatActivity() {
         binding.txtAddressValue.text = nullSafeString(data.address.toString())
         binding.txtNewAddressValue.text = nullSafeString(data.applicantAddress.toString())
         binding.txtNewMobileValue.text = nullSafeString(data.applicantAlternateMobile1.toString())
+      //  binding.txtStatusValue.text = nullSafeString(data.paymentStatus.toString())
+
+        var status = "New Lead"
+//        if (data?.lead?.dispositionData != null) {
+//            status = data.lead.dispositionData.name
+//            if (details.lead.subDispositionData != null) {
+//                status += "[" + data.lead.subDispositionData.name + "]"
+//            }
+//        }
 
     }
 

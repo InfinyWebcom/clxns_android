@@ -28,10 +28,14 @@ interface AppDao {
     @Query("Select id from disposition_table where name=:dispositionName")
     fun getDispositionId(dispositionName: String) : Int
 
+    @Query("Select name from disposition_table where id=:dispositionID")
+    fun getDispositionName(dispositionID: Int) : String
 
     @Query("Select id from sub_disposition_table where name=:subDispositionName")
     fun getSubDispositionId(subDispositionName: String) : Int
 
+    @Query("Select name from sub_disposition_table where id=:subDispositionID")
+    fun getSubDispositionName(subDispositionID: Int) : String
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllBankDetails(bankDetailsEntity: BankDetailsEntity)

@@ -5,7 +5,6 @@ import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.api.helper.RemoteDataSource
 import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.data.model.MyPlanModel
-import com.clxns.app.data.model.PaymentModel
 import com.clxns.app.data.model.cases.CaseCheckInBody
 import com.clxns.app.data.model.home.HomeStatisticsResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
@@ -52,35 +51,35 @@ class PaymentCollectionRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+//    suspend fun saveCheckInData(
+//        token: String,
+//        loanAccountNo: String,
+//        dispositionId: String,
+//        subDispositionId: String?,
+//        comments: String,
+//        followUp: String,
+//        nextAction: String,
+//        additionalField: String,
+//        location: String,
+//        supporting: List<String>,
+//        payment: String
+//    ): Flow<NetworkResult<MyPlanModel>> {
+//        return flow {
+//            emit(safeApiCall {
+//                remoteDataSource.saveCheckInData(
+//                    token, loanAccountNo, dispositionId, subDispositionId,
+//                    comments, followUp, nextAction, additionalField, location, supporting,payment
+//                )
+//            })
+//        }.flowOn(Dispatchers.IO)
+//    }
     suspend fun saveCheckInData(
-        token: String,
-        loanAccountNo: String,
-        dispositionId: String,
-        subDispositionId: String?,
-        comments: String,
-        followUp: String,
-        nextAction: String,
-        additionalField: String,
-        location: String,
-        supporting: List<String>,
-        payment: PaymentModel?
-    ): Flow<NetworkResult<MyPlanModel>> {
-        return flow {
-            emit(safeApiCall {
-                remoteDataSource.saveCheckInData(
-                    token, loanAccountNo, dispositionId, subDispositionId,
-                    comments, followUp, nextAction, additionalField, location, supporting,payment
-                )
-            })
-        }.flowOn(Dispatchers.IO)
-    }
-    suspend fun saveCheckInData2(
         token: String,
         body: CaseCheckInBody
     ): Flow<NetworkResult<MyPlanModel>> {
         return flow {
             emit(safeApiCall {
-                remoteDataSource.saveCheckInData2(
+                remoteDataSource.saveCheckInData(
                     token, body
                 )
             })

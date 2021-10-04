@@ -85,24 +85,24 @@ interface ApiService {
         @Field("loanAccountNo") loanAccountNo: String
     ): Response<HistoryResponse>
 
-    @FormUrlEncoded
-    @POST("fos/saveCheckinData")
-    suspend fun saveCheckInData(
-        @Header("token") token: String,
-        @Field("loanAccountNo") loanAccountNo: String,
-        @Field("dispositionId") dispositionId: String,
-        @Field("subDispositionId") subDispositionId: String?,
-        @Field("comments") comments: String,
-        @Field("followUp") followUp: String,
-        @Field("nextAction") nextAction: String,
-        @Field("additionalField") additionalField: String,
-        @Field("location") location: String,
-        @Field("supporting[]") supporting: List<String>,
-        @Field("payment()") payment: PaymentModel?
-    ): Response<MyPlanModel>
+//    @FormUrlEncoded
+//    @POST("fos/saveCheckinData")
+//    suspend fun saveCheckInData(
+//        @Header("token") token: String,
+//        @Field("loanAccountNo") loanAccountNo: String,
+//        @Field("dispositionId") dispositionId: String,
+//        @Field("subDispositionId") subDispositionId: String?,
+//        @Field("comments") comments: String,
+//        @Field("followUp") followUp: String,
+//        @Field("nextAction") nextAction: String,
+//        @Field("additionalField") additionalField: String,
+//        @Field("location") location: String,
+//        @Field("supporting[]") supporting: List<String>,
+//        @Field("payment") payment: String
+//    ): Response<MyPlanModel>
 
     @POST("fos/saveCheckinData")
-    suspend fun saveCheckInData2(
+    suspend fun saveCheckInData(
         @Header("token") token: String,
         @Body() body: CaseCheckInBody
     ): Response<MyPlanModel>

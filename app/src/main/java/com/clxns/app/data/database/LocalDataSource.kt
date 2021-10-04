@@ -21,7 +21,11 @@ class LocalDataSource @Inject constructor(private val appDao: AppDao) {
 
     fun getDispositionId(dispositionName:String) = appDao.getDispositionId(dispositionName)
 
+    fun getDispositionName(dispositionID:Int) = appDao.getDispositionName(dispositionID)
+
     fun getSubDispositionId(subDispositionName: String) = appDao.getSubDispositionId(subDispositionName)
+
+    fun getSubDispositionName(subDispositionID:Int) = appDao.getSubDispositionName(subDispositionID)
 
     fun getAllSubDispositionsFromRoomDB(dispositionId:Int) = appDao.getAllSubDispositions(dispositionId)
 }

@@ -32,6 +32,7 @@ import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.data.model.StatusModel
+import com.clxns.app.data.model.cases.CaseCheckInBody
 import com.clxns.app.data.model.home.DemoCap
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityCheckInBinding
@@ -66,6 +67,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     AddImageAdapter.removePhoto {
 
     var IS_SUB_DIS: Boolean = false
+    var IS_SET_RESULT: Boolean = false
     var remark: String = ""
     var followUpDate: String = ""
     var additionalFields: String = ""
@@ -114,13 +116,13 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             )
         } else {
             toast("Error while fetching details")
-            finish()
+            onBackPressed()
         }
     }
 
     private fun setListeners() {
 
-        binding.imgBack.setOnClickListener { finish() }
+        binding.imgBack.setOnClickListener { onBackPressed() }
 
 
         binding.txtLocationCheckIn.setOnClickListener {
@@ -295,18 +297,37 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         additionalField: String
     ) {
         binding.progressBar.show()
+
+        var body = CaseCheckInBody()
+        body.loanAccountNo = viewModel.leadId!!
+        body.dispositionId = dispositionId
+        body.subDispositionId =
+            (if (subDispositionId.isEmpty() || subDispositionId.isBlank()) null else subDispositionId)
+        body.comments = comments
+        body.followUp = followUp
+        body.nextAction = nextAction
+        body.additionalField = additionalField
+        body.location = "${viewModel.lat},${viewModel.long}"
+        body.supporting = photoB64List
+        body.payment = null
+
         viewModel.saveCheckInData(
             sessionManager.getString(Constants.TOKEN)!!,
-            viewModel.leadId!!,
-            dispositionId,
-            (if (subDispositionId.isEmpty() || subDispositionId.isBlank()) null else subDispositionId),
-            comments,
-            followUp,
-            nextAction,
-            additionalField,
-            "${viewModel.lat},${viewModel.long}",
-            photoB64List, null
+            body
         )
+
+//        viewModel.saveCheckInData(
+//            sessionManager.getString(Constants.TOKEN)!!,
+//            viewModel.leadId!!,
+//            dispositionId,
+//            (if (subDispositionId.isEmpty() || subDispositionId.isBlank()) null else subDispositionId),
+//            comments,
+//            followUp,
+//            nextAction,
+//            additionalField,
+//            "${viewModel.lat},${viewModel.long}",
+//            photoB64List, ""
+//        )
     }
 
     private fun setObserver() {
@@ -329,12 +350,12 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                             null,
                             null
                         )
-                        viewModel.lat=""
-                        viewModel.long=""
+                        viewModel.lat = ""
+                        viewModel.long = ""
 
 
                         toast(response.data.title!!)
-
+                        IS_SET_RESULT = true
                     } else {
                         subDispositionId = ""
                         dispositionId = ""
@@ -379,14 +400,17 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         caseDetails = response.data
                         binding.txtCheckInName.text = response.data.data?.name
                         binding.txtCheckInStatus.text = response.data.data?.paymentStatus
-                        binding.txtDate.text = formatDate(
-                            response.data.data?.dateOfDefault.toString(),
-                            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-                            "dd-MM-yyyy"
-                        )
+                        if (response.data.data?.allocationDate != null) {
+                            binding.txtDate.text = formatDate(
+                                response.data.data?.allocationDate.toString(),
+                                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                                "dd-MM-yyyy"
+                            )
+                        }
+
                     } else {
                         toast(response.data.title!!)
-                        finish()
+                        onBackPressed()
                     }
                     // bind data to the view
                 }
@@ -1066,6 +1090,13 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             }
         }
         binding.progressBar.show()
+    }
+
+    override fun onBackPressed() {
+        if (IS_SET_RESULT){
+            setResult(RESULT_OK)
+        }
+        super.onBackPressed()
     }
 }
 
