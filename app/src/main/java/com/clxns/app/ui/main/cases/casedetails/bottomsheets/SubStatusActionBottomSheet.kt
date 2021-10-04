@@ -110,11 +110,11 @@ class SubStatusActionBottomSheet(
                     dispositionType,
                     subDispositionType,
                     if (dateFormatted == "") "" else "${dateFormatted}T${timeFormatted}",
-                actionBinding.statusActionRemarkET.text.toString(),
-                if (subDispositionType == "Active PTP"
-                    || subDispositionType == "Future PTP"
-                    || subDispositionType == "Already Paid"
-                ) Gson().toJson(additionalFields) else ""
+                    actionBinding.statusActionRemarkET.text.toString(),
+                    if (subDispositionType == "Active PTP"
+                        || subDispositionType == "Future PTP"
+                        || subDispositionType == "Already Paid"
+                    ) Gson().toJson(additionalFields) else ""
                 )
                 this.dismiss()
             }
@@ -235,7 +235,7 @@ class SubStatusActionBottomSheet(
             requireContext(),
             { _, selectedHour, selectedMinute ->
 
-                val time = "$selectedHour:$selectedMinute"
+                val time = "${String.format("%02d", selectedHour)}:${String.format("%02d", selectedMinute)}"
                 timeFormatted = "$time:00.000Z"
                 val fmt = SimpleDateFormat("HH:mm", Locale.getDefault())
                 var date: Date? = null
@@ -271,13 +271,30 @@ class SubStatusActionBottomSheet(
                         "${year}-${String.format("%02d", m)}-${String.format("%02d", day)}"
 
                 } else {
+                    if (actionBinding.revisitTimeTxt.text.toString().isEmpty()
+                        || actionBinding.revisitTimeTxt.text.toString().isBlank()
+                    ) {
+                        //set current time as default time
+                        var millis = System.currentTimeMillis()
+                        var c = Calendar.getInstance()
+                        c.timeInMillis = millis
+                        val hours = c.get(Calendar.HOUR)
+                        val minutes = c.get(Calendar.MINUTE)
+
+                        timeFormatted = "${String.format("%02d", hours+12)}:${
+                            String.format(
+                                "%02d",
+                                minutes
+                            )
+                        }:00.000Z"
+                    }
                     actionBinding.revisitDateTxt.text = "$day/$m/$year"
                     dateFormatted =
                         "${year}-${String.format("%02d", m)}-${String.format("%02d", day)}"
                 }
             }, year, month, day)
 
-        datePickerDialog.datePicker.minDate=System.currentTimeMillis()
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
         datePickerDialog.show()
     }
 

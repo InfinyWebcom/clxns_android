@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.data.model.MyPlanModel
-import com.clxns.app.data.model.PaymentModel
 import com.clxns.app.data.model.cases.CaseCheckInBody
 import com.clxns.app.data.model.home.HomeStatisticsResponse
 import com.clxns.app.data.repository.PaymentCollectionRepository
@@ -64,32 +63,32 @@ class PaymentCollectionViewModel @Inject constructor(
         MutableLiveData()
     val responseSaveCheckIn: LiveData<NetworkResult<MyPlanModel>> = _responseSaveCheckIn
 
-    fun saveCheckInData(
-        token: String,
-        loanAccountNo: String,
-        dispositionId: String,
-        subDispositionId: String?,
-        comments: String,
-        followUp: String,
-        nextAction: String,
-        additionalField: String,
-        location: String,
-        supporting: List<String>,
-        payment: PaymentModel?
-    ) = viewModelScope.launch {
-        repository.saveCheckInData(
-            token, loanAccountNo, dispositionId, subDispositionId,
-            comments, followUp, nextAction, additionalField, location, supporting,payment
-        ).collect { values ->
-            _responseSaveCheckIn.value = values
-        }
-    }
+//    fun saveCheckInData(
+//        token: String,
+//        loanAccountNo: String,
+//        dispositionId: String,
+//        subDispositionId: String?,
+//        comments: String,
+//        followUp: String,
+//        nextAction: String,
+//        additionalField: String,
+//        location: String,
+//        supporting: List<String>,
+//        payment: String
+//    ) = viewModelScope.launch {
+//        repository.saveCheckInData(
+//            token, loanAccountNo, dispositionId, subDispositionId,
+//            comments, followUp, nextAction, additionalField, location, supporting,payment
+//        ).collect { values ->
+//            _responseSaveCheckIn.value = values
+//        }
+//    }
 
-    fun saveCheckInData2(
+    fun saveCheckInData(
         token: String,
         body: CaseCheckInBody
     ) = viewModelScope.launch {
-        repository.saveCheckInData2(
+        repository.saveCheckInData(
             token, body
         ).collect { values ->
             _responseSaveCheckIn.value = values

@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackgroundBorderless"
             android:padding="@dimen/dp16"
-            app:tint="@color/white"
-            android:src="@drawable/ic_arrow_back_24" />
+            android:src="@drawable/ic_arrow_back_24"
+            app:tint="@color/white" />
 
 
         <TextView

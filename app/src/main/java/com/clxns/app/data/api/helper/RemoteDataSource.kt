@@ -1,7 +1,6 @@
 package com.clxns.app.data.api.helper
 
 import com.clxns.app.data.api.ApiService
-import com.clxns.app.data.model.PaymentModel
 import com.clxns.app.data.model.cases.CaseCheckInBody
 import javax.inject.Inject
 
@@ -64,27 +63,27 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getUserDetails(token: String) = apiService.getUserDetails(token)
 
+//    suspend fun saveCheckInData(
+//        token: String,
+//        loanAccountNo: String,
+//        dispositionId: String,
+//        subDispositionId: String?,
+//        comments: String,
+//        followUp: String,
+//        nextAction: String,
+//        additionalField: String,
+//        location: String,
+//        supporting: List<String>,
+//        payment: String
+//    ) = apiService.saveCheckInData(
+//        token, loanAccountNo, dispositionId, subDispositionId,
+//        comments, followUp, nextAction, additionalField, location, supporting, payment
+//    )
+
     suspend fun saveCheckInData(
         token: String,
-        loanAccountNo: String,
-        dispositionId: String,
-        subDispositionId: String?,
-        comments: String,
-        followUp: String,
-        nextAction: String,
-        additionalField: String,
-        location: String,
-        supporting: List<String>,
-        payment: PaymentModel?
-    ) = apiService.saveCheckInData(
-        token, loanAccountNo, dispositionId, subDispositionId,
-        comments, followUp, nextAction, additionalField, location, supporting, payment
-    )
-
-    suspend fun saveCheckInData2(
-        token: String,
         body: CaseCheckInBody
-    ) = apiService.saveCheckInData2(
+    ) = apiService.saveCheckInData(
         token, body
     )
 

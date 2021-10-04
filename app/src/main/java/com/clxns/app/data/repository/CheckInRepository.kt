@@ -7,7 +7,7 @@ import com.clxns.app.data.database.LocalDataSource
 import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.data.model.LeadContactUpdateResponse
 import com.clxns.app.data.model.MyPlanModel
-import com.clxns.app.data.model.PaymentModel
+import com.clxns.app.data.model.cases.CaseCheckInBody
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -23,24 +23,37 @@ class CheckInRepository @Inject constructor(
 ) : BaseApiResponse() {
 
 
+//    suspend fun saveCheckInData(
+//        token: String,
+//        loanAccountNo: String,
+//        dispositionId: String,
+//        subDispositionId: String?,
+//        comments: String,
+//        followUp: String,
+//        nextAction: String,
+//        additionalField: String,
+//        location: String,
+//        supporting: List<String>,
+//        payment: String
+//    ): Flow<NetworkResult<MyPlanModel>> {
+//        return flow {
+//            emit(safeApiCall {
+//                remoteDataSource.saveCheckInData(
+//                    token, loanAccountNo, dispositionId, subDispositionId,
+//                    comments, followUp, nextAction, additionalField, location, supporting,payment
+//                )
+//            })
+//        }.flowOn(Dispatchers.IO)
+//    }
+
     suspend fun saveCheckInData(
         token: String,
-        loanAccountNo: String,
-        dispositionId: String,
-        subDispositionId: String?,
-        comments: String,
-        followUp: String,
-        nextAction: String,
-        additionalField: String,
-        location: String,
-        supporting: List<String>,
-        payment: PaymentModel?
+        body: CaseCheckInBody
     ): Flow<NetworkResult<MyPlanModel>> {
         return flow {
             emit(safeApiCall {
                 remoteDataSource.saveCheckInData(
-                    token, loanAccountNo, dispositionId, subDispositionId,
-                    comments, followUp, nextAction, additionalField, location, supporting,payment
+                    token, body
                 )
             })
         }.flowOn(Dispatchers.IO)

@@ -9,6 +9,7 @@ import com.clxns.app.R
 import com.clxns.app.data.model.HistoryData
 import com.clxns.app.databinding.HistoryItemBinding
 import com.clxns.app.utils.convertServerDateToNormal
+import com.clxns.app.utils.convertServerDateToNormalGMT530
 import com.google.gson.JsonParser
 
 class HistoryDetailsAdapter(private val context: Context, private val dataList: List<HistoryData>) :
@@ -39,16 +40,7 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
         if (data.followUp != null) {
             followUpDateTime =
                 "Date : " + data.followUp.convertServerDateToNormal("dd, MMM yyyy") + ", Time : " +
-                        data.followUp.convertServerDateToNormal("hh:mm a")
-            if (data.dispositions != null && (data.dispositions.name == "Collected" ||
-                        data.dispositions.name == "Partially Collected" ||
-                        data.dispositions.name == "Settlement/Foreclosure")){
-
-//                followUpDateTime =
-//                    "Date : " + data.dispositions..convertServerDateToNormal("dd, MMM yyyy") + ", Time : " +
-//                            data.followUp.convertServerDateToNormal("hh:mm a")
-
-            }
+                        data.followUp.convertServerDateToNormalGMT530("hh:mm a")
         }
         if (data.subDisposition != null) {
             var subStatus = data.subDisposition.name
