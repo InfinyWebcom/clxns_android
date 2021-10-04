@@ -162,7 +162,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                         casesRV.show()
                         if (response.data?.error == false) {
                             val totalCases =
-                                getString(R.string.cases_toolbar_txt) + response.data.total.toString()
+                                getString(R.string.cases_toolbar_txt) + response.data.casesDataList.size.toString()
                             binding.casesAllottedTv.text = totalCases
                             val collectable =
                                 getString(R.string.cases_collectable_txt) + (response.data.collectable?.convertToCurrency()
