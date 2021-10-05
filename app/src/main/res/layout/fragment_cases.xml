@@ -54,7 +54,7 @@
             android:layout_marginEnd="@dimen/dp8"
             android:transitionName="search_bar"
             app:cardBackgroundColor="@color/quantum_grey100"
-            app:cardCornerRadius="@dimen/dp64"
+            app:cardCornerRadius="20dp"
             app:cardElevation="0dp">
 
 

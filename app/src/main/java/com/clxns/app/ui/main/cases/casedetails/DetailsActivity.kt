@@ -177,6 +177,16 @@ class DetailsActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
+                val data: Intent? = result.data
+                if (data != null) {
+                    val returnValue: Boolean = data!!.getBooleanExtra("close_app", false)
+                    if (returnValue) {
+                        planStatusIntent = Intent()
+                        planStatusIntent.putExtra("hasChangedPlanStatus", true)
+                        setResult(Activity.RESULT_OK, planStatusIntent)
+                        super.onBackPressed()
+                    }
+                }
                 //Refresh detail screen if user has checked in
                 detailsViewModel.getCaseDetails(
                     token,

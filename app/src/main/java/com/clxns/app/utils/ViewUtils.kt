@@ -93,6 +93,7 @@ fun String.convertServerDateToNormal(newFormat: String): String? {
 fun ImageView.loadImage(url: String) {
     Glide.with(this).load(url)
         .error(R.drawable.ic_logo_x)
+        .placeholder(R.drawable.ic_logo_x)
         .into(this)
 }
 

@@ -39,6 +39,7 @@
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/ic_follow_up.xml" value="0.18055555555555555" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/ic_location_on_24.xml" value="0.18055555555555555" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/ic_lock_24.xml" value="0.18888888888888888" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/ic_logo_x.xml" value="0.20260416666666667" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/ic_phone_call.xml" value="0.18055555555555555" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable/icon_dropdown.xml" value="0.18055555555555555" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_asset_repossesion.xml" value="0.14629629629629629" />
@@ -47,11 +48,11 @@
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_crop_image.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_details.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_forgot_password.xml" value="0.18645833333333334" />
-        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_history_details.xml" value="0.14629629629629629" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_history_details.xml" value="0.33" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_login.xml" value="0.16" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_main.xml" value="0.18645833333333334" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_my_profile.xml" value="0.18645833333333334" />
-        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_payment_collection.xml" value="0.14629629629629629" />
+        <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_payment_collection.xml" value="0.2" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_reposseion_map.xml" value="0.14629629629629629" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/activity_repossessions_submit.xml" value="0.14629629629629629" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/layout/added_image.xml" value="0.18645833333333334" />
