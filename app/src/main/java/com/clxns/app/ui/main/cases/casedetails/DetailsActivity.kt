@@ -210,6 +210,12 @@ class DetailsActivity : AppCompatActivity() {
                         totalDueAmount = response.data.data.totalDueAmount!!
                         collectedAmount = response.data.data.amountCollected!!
 
+                        if (((response.data.data?.totalDueAmount!!.minus(response.data.data?.amountCollected!!)) <= 0)||isCaseDetail) {
+                            binding.btnCheckIn.visibility = View.GONE
+                        } else {
+                            binding.btnCheckIn.visibility = View.VISIBLE
+                        }
+
                         //Fetching Dispositions from Local DB
                         if (response.data.data.dispositionId != null) {
                             detailsViewModel.getDispositionName(response.data.data.dispositionId)

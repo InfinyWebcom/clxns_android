@@ -167,7 +167,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
 
                 val resultIntent = Intent()
                 resultIntent.putExtra("close_app", true)
-                setResult(RESULT_OK,resultIntent)
+                setResult(RESULT_OK, resultIntent)
                 super.onBackPressed()
 
             } else {
@@ -661,6 +661,14 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
             toast("Please enter payment amount")
             return false
         }
+        if (binding.paymentAmountEt.text.toString()
+                .toInt() > (caseDetails!!.data?.totalDueAmount!!.minus(caseDetails!!.data?.amountCollected!!)
+                    )
+        ) {
+            toast("Amount cannot be greater than collectable amount")
+            return false
+        }
+
         if (binding.txtPaymentOrRecoveryDateValue.text.toString().isBlank()
             || binding.txtPaymentOrRecoveryDateValue.text.toString().isEmpty()
         ) {
