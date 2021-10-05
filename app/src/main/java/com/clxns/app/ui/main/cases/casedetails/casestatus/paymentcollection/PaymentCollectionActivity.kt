@@ -34,7 +34,6 @@ import com.clxns.app.data.model.cases.CaseCheckInBody
 import com.clxns.app.data.model.home.DemoCap
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityPaymentCollectionBinding
-import com.clxns.app.ui.main.MainActivity
 import com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.AddImageAdapter
 import com.clxns.app.utils.Constants
 import com.clxns.app.utils.hide
@@ -154,7 +153,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
             showDatePickerDialog()
         }
 
-        binding.imgBack.setOnClickListener { finish() }
+        binding.imgBack.setOnClickListener { onBackPressed() }
 
         binding.txtUploadScreenShot.setOnClickListener {
             openFileUploadDialog()
@@ -162,9 +161,15 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
 
         binding.generateReceiptBtn.setOnClickListener {
             if (binding.generateReceiptBtn.text.equals("back to my plan")) {
-                val finishAllActivitiesExceptMain = Intent(this, MainActivity::class.java)
-                finishAllActivitiesExceptMain.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(finishAllActivitiesExceptMain)
+//                val finishAllActivitiesExceptMain = Intent(this, MainActivity::class.java)
+//                finishAllActivitiesExceptMain.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                startActivity(finishAllActivitiesExceptMain)
+
+                val resultIntent = Intent()
+                resultIntent.putExtra("close_app", true)
+                setResult(RESULT_OK,resultIntent)
+                super.onBackPressed()
+
             } else {
                 if (validate()) {
                     binding.progressBar.show()
@@ -258,7 +263,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                         var amount =
                             (response.data.data?.totalDueAmount?.minus(response.data.data?.amountCollected!!))
                         binding.collectableAmountEt.text =
-                            "₹${nullSafeString(amount.toString())}"
+                            "₹${amount}"/*{nullSafeString(amount.toString())}*/
                     } else {
                         toast(response.data.title!!)
                         finish()
@@ -327,6 +332,13 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                 val hours = c.get(Calendar.HOUR)
                 val minutes = c.get(Calendar.MINUTE)
 
+//                T${String.format("%02d", hours + 12)}:${
+//                String.format(
+//                    "%02d",
+//                    minutes
+//                )
+//            }:00.000Z
+
                 binding.txtPaymentOrRecoveryDateValue.text =
                     "$day " + MONTHS[month] + " $year"
                 recoveryDate =
@@ -335,12 +347,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                             "%02d",
                             day
                         )
-                    }T${String.format("%02d", hours + 12)}:${
-                        String.format(
-                            "%02d",
-                            minutes
-                        )
-                    }:00.000Z"
+                    }"
 
             }, year, month, day)
         datePickerDialog.datePicker.minDate = System.currentTimeMillis()

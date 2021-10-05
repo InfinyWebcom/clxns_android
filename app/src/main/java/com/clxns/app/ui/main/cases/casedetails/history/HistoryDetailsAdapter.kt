@@ -66,7 +66,10 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
             if (data.paymentData[0].refNo.isNotEmpty()) {
                 refNo = data.paymentData[0].refNo
             }
-            additionalInfo += "\nReference No. : $refNo" +
+            if (data.paymentData[0].chequeNo.isNotEmpty()) {
+                refNo = data.paymentData[0].chequeNo
+            }
+            additionalInfo += "\nRef/Cheque No: $refNo" +
                     " Amount : ${data.paymentData[0].collectedAmt.convertToCurrency()}"
         }
         holder.historyItemBinding.itemRemarksTv.text = additionalInfo

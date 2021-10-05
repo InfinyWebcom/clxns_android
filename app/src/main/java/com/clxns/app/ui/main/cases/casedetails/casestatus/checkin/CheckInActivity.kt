@@ -477,6 +477,16 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 IS_SET_RESULT = true
+                val data: Intent? = it.data
+                if (data != null) {
+                    val returnValue: Boolean = data!!.getBooleanExtra("close_app", false)
+                    if (returnValue) {
+                        val resultIntent = Intent()
+                        resultIntent.putExtra("close_app", true)
+                        setResult(RESULT_OK, resultIntent)
+                        super.onBackPressed()
+                    }
+                }
             }
         }
 

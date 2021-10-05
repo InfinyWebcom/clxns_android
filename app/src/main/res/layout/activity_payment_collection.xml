@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackgroundBorderless"
             android:padding="@dimen/dp16"
-            app:tint="@color/white"
-            android:src="@drawable/ic_arrow_back_24" />
+            android:src="@drawable/ic_arrow_back_24"
+            app:tint="@color/white" />
 
 
         <TextView
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
                 android:fontFamily="@font/gtwalsheimproregular"
-                android:text="Product"
+                android:text="Loan Type"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
@@ -207,7 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/gtwalsheimproregular"
-                    android:text="Collected Amount"
+                    android:text="Amount"
                     android:textAllCaps="false"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/sp14" />
