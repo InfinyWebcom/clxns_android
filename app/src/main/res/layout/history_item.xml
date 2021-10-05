@@ -10,7 +10,7 @@
 
 
         <TextView
-            android:id="@+id/follow_up_date_tv"
+            android:id="@+id/updated_at_date_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp8"
@@ -25,7 +25,7 @@
             android:layout_marginEnd="@dimen/dp8"
             android:text="@string/dash"
             app:layout_constraintEnd_toStartOf="@+id/item_track_layout"
-            app:layout_constraintTop_toBottomOf="@+id/follow_up_date_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/updated_at_date_tv" />
 
 
         <RelativeLayout
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/dp100"
-            android:layout_toEndOf="@+id/follow_up_date_tv"
+            android:layout_toEndOf="@+id/updated_at_date_tv"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

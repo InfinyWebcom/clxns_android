@@ -28,7 +28,7 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
     override fun onBindViewHolder(holder: HistoryVH, position: Int) {
         val data = dataList[position]
 
-        holder.historyItemBinding.followUpDateTv.text =
+        holder.historyItemBinding.updatedAtDateTv.text =
             data.updatedAt.convertServerDateToNormal("dd, MMM, yy")
         holder.historyItemBinding.itemTimeTv.text =
             data.updatedAt.convertServerDateToNormal("hh:mm a")
@@ -57,11 +57,11 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
         }
         var additionalInfo = data.comments
         if (data.paymentData.isNotEmpty()) {
-//            if (data.paymentData[0].recoveryDate.isNotEmpty()) {
-//                val recoveryDate = "Recovery Date : " +
-//                        data.paymentData[0].recoveryDate.convertServerDateToNormal("dd, MMM yyyy")
-//                holder.historyItemBinding.tvSubStatus.text = recoveryDate
-//            }
+            if (data.paymentData[0].recoveryDate.isNotEmpty()) {
+                val recoveryDate = "Recovery Date : " +
+                        data.paymentData[0].recoveryDate.convertServerDateToNormal("dd, MMM yyyy")
+                holder.historyItemBinding.tvSubStatus.text = recoveryDate
+            }
             var refNo = "-"
             if (data.paymentData[0].refNo.isNotEmpty()) {
                 refNo = data.paymentData[0].refNo
@@ -70,7 +70,7 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
                 refNo = data.paymentData[0].chequeNo
             }
             additionalInfo += "\nRef/Cheque No: $refNo" +
-                    " Amount : ${data.paymentData[0].collectedAmt.convertToCurrency()}"
+                    ", Amount : ${data.paymentData[0].collectedAmt.convertToCurrency()}"
         }
         holder.historyItemBinding.itemRemarksTv.text = additionalInfo
         if (data.additionalField != null) {
