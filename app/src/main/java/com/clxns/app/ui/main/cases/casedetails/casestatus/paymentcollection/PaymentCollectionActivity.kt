@@ -350,7 +350,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     }"
 
             }, year, month, day)
-        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+        //datePickerDialog.datePicker.minDate = System.currentTimeMillis()
         datePickerDialog.show()
     }
 

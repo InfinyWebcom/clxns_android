@@ -7,6 +7,8 @@ import android.content.Intent
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -184,7 +186,8 @@ class DetailsActivity : AppCompatActivity() {
                         planStatusIntent = Intent()
                         planStatusIntent.putExtra("hasChangedPlanStatus", true)
                         setResult(Activity.RESULT_OK, planStatusIntent)
-                        super.onBackPressed()
+                        val uiHandler = Handler(Looper.getMainLooper())
+                        uiHandler.postDelayed(Runnable { super.onBackPressed() }, 50)
                     }
                 }
                 //Refresh detail screen if user has checked in

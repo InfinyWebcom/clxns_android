@@ -484,7 +484,10 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         val resultIntent = Intent()
                         resultIntent.putExtra("close_app", true)
                         setResult(RESULT_OK, resultIntent)
-                        super.onBackPressed()
+
+                        val uiHandler = Handler(Looper.getMainLooper())
+                        uiHandler.postDelayed(Runnable { super.onBackPressed() }, 50)
+
                     }
                 }
             }
