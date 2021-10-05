@@ -5,6 +5,8 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id("androidx.navigation.safeargs.kotlin")
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -121,6 +123,11 @@ dependencies {
     implementation 'com.nabinbhandari.android:permissions:3.8'
 
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:28.4.1')
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }
 
 // Allow references to generated code

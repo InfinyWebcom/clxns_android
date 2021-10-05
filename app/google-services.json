@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "554483952310",
+    "project_id": "clxns-62eff",
+    "storage_bucket": "clxns-62eff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554483952310:android:c0ff4b25d76ea37f051417",
+        "android_client_info": {
+          "package_name": "com.clxns.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554483952310-rn863b9dorcsdj52f45hn2ts93dbjipu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.clxns.app",
+            "certificate_hash": "6b13ff0d81c301d2f8a4c7ceafa784796cbf4a7d"
+          }
+        },
+        {
+          "client_id": "554483952310-p0jf9tjeag19ud9sc20qn9065v152ia1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9RVJi_CfOclYMFOg3fcZWmwqPDUnW3nc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "554483952310-p0jf9tjeag19ud9sc20qn9065v152ia1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
