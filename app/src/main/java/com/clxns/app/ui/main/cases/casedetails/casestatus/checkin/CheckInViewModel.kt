@@ -1,6 +1,5 @@
 package com.clxns.app.ui.main.cases.casedetails.casestatus.checkin
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,27 +26,6 @@ class CheckInViewModel @Inject constructor(
     private val _responseSaveCheckIn: MutableLiveData<NetworkResult<MyPlanModel>> =
         MutableLiveData()
     val responseSaveCheckIn: LiveData<NetworkResult<MyPlanModel>> = _responseSaveCheckIn
-
-//    fun saveCheckInData(
-//        token: String,
-//        loanAccountNo: String,
-//        dispositionId: String,
-//        subDispositionId: String?,
-//        comments: String,
-//        followUp: String,
-//        nextAction: String,
-//        additionalField: String,
-//        location: String,
-//        supporting: List<String>,
-//        payment: String
-//    ) = viewModelScope.launch {
-//        repository.saveCheckInData(
-//            token, loanAccountNo, dispositionId, subDispositionId,
-//            comments, followUp, nextAction, additionalField, location, supporting,payment
-//        ).collect { values ->
-//            _responseSaveCheckIn.value = values
-//        }
-//    }
 
     fun saveCheckInData(
         token: String,
@@ -110,8 +88,6 @@ class CheckInViewModel @Inject constructor(
     fun setLocation(latitude: Double, longitude: Double) {
         lat = latitude.toString()
         long=longitude.toString()
-        Log.i(javaClass.name, "latitude--->" + latitude)
-        Log.i(javaClass.name, "longitude--->" + longitude)
     }
 
 

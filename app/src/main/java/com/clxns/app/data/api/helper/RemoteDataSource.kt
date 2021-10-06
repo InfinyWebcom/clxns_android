@@ -63,23 +63,6 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
     suspend fun getUserDetails(token: String) = apiService.getUserDetails(token)
 
-//    suspend fun saveCheckInData(
-//        token: String,
-//        loanAccountNo: String,
-//        dispositionId: String,
-//        subDispositionId: String?,
-//        comments: String,
-//        followUp: String,
-//        nextAction: String,
-//        additionalField: String,
-//        location: String,
-//        supporting: List<String>,
-//        payment: String
-//    ) = apiService.saveCheckInData(
-//        token, loanAccountNo, dispositionId, subDispositionId,
-//        comments, followUp, nextAction, additionalField, location, supporting, payment
-//    )
-
     suspend fun saveCheckInData(
         token: String,
         body: CaseCheckInBody

@@ -23,29 +23,6 @@ class CheckInRepository @Inject constructor(
 ) : BaseApiResponse() {
 
 
-//    suspend fun saveCheckInData(
-//        token: String,
-//        loanAccountNo: String,
-//        dispositionId: String,
-//        subDispositionId: String?,
-//        comments: String,
-//        followUp: String,
-//        nextAction: String,
-//        additionalField: String,
-//        location: String,
-//        supporting: List<String>,
-//        payment: String
-//    ): Flow<NetworkResult<MyPlanModel>> {
-//        return flow {
-//            emit(safeApiCall {
-//                remoteDataSource.saveCheckInData(
-//                    token, loanAccountNo, dispositionId, subDispositionId,
-//                    comments, followUp, nextAction, additionalField, location, supporting,payment
-//                )
-//            })
-//        }.flowOn(Dispatchers.IO)
-//    }
-
     suspend fun saveCheckInData(
         token: String,
         body: CaseCheckInBody

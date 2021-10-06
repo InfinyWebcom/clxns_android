@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
                 android:fontFamily="@font/gtwalsheimproregular"
-                android:text="Loan Type"
+                android:text="@string/loan_type"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
@@ -147,7 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/gtwalsheimproregular"
-                    android:text="Collectable Amount"
+                    android:text="@string/collectable_amount"
                     android:textAllCaps="false"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/sp14" />
@@ -170,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
                 android:fontFamily="@font/gtwalsheimproregular"
-                android:text="Amount Type"
+                android:text="@string/amount_type"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
@@ -207,7 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/gtwalsheimproregular"
-                    android:text="Amount"
+                    android:text="@string/amount"
                     android:textAllCaps="false"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/sp14" />
@@ -217,7 +217,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:hint="Enter amount"
+                    android:hint="@string/enter_amount"
                     android:importantForAutofill="no"
                     android:inputType="numberDecimal"
                     android:paddingVertical="@dimen/dp8" />
@@ -230,7 +230,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
                 android:fontFamily="@font/gtwalsheimpromedium"
-                android:text="Payment Mode"
+                android:text="@string/payment_mode"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/sp16" />
@@ -307,7 +307,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
                 android:fontFamily="@font/gtwalsheimproregular"
-                android:text="Payment/Recovery Date"
+                android:text="@string/payment_recovery_date"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
@@ -330,7 +330,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
                 android:fontFamily="@font/gtwalsheimproregular"
-                android:text="Reference No."
+                android:text="@string/reference_no"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
                 android:textSize="14sp"
@@ -357,7 +357,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
                 android:fontFamily="@font/gtwalsheimproregular"
-                android:text="Remarks"
+                android:text="@string/remarks"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
@@ -382,7 +382,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/gtwalsheimpromedium"
-                android:text="Upload Supporting"
+                android:text="@string/upload_supporting"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
                 android:textSize="12sp" />

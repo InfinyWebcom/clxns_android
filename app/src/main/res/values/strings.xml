@@ -199,6 +199,18 @@
     <string name="loan_type">Loan Type</string>
     <string name="arrow_forward">&#160;➜&#160;</string>
     <string name="additional_details">Additional Details</string>
+    <string name="image_upload">Image Upload</string>
+    <string name="upload">Upload</string>
+    <string name="collectable_amount">Collectable Amount</string>
+    <string name="amount_type">Amount Type</string>
+    <string name="amount">Amount</string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="payment_mode">Payment Mode</string>
+    <string name="payment_recovery_date">Payment/Recovery Date</string>
+    <string name="reference_no">Reference No.</string>
+    <string name="remarks">Remarks</string>
+    <string name="upload_supporting">Upload Supporting</string>
+    <string name="plan_list_is_empty">Plan list is empty</string>
 
 
     <string-array name="yesNo">
