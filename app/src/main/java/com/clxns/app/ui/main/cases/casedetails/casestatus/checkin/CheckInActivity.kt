@@ -13,9 +13,6 @@ import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Base64
-import android.util.Base64OutputStream
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
@@ -44,7 +41,6 @@ import com.clxns.app.ui.main.cases.casedetails.casestatus.paymentcollection.Paym
 import com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.AddImageAdapter
 import com.clxns.app.utils.*
 import com.clxns.app.utils.support.CropImageActivity
-import com.clxns.app.utils.support.FileUtils
 import com.clxns.app.utils.support.GridSpacingItemDecoration
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
@@ -55,10 +51,6 @@ import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.*
-import java.net.URI
-import java.net.URISyntaxException
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -209,7 +201,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         binding.txtCheckInStatus.text = intent.getStringExtra("status")
         binding.txtCheckInName.text = intent.getStringExtra("name")
 
-        //getLastLocation()
         getResultFromActivity()
 
         val statusList = ArrayList<StatusModel>()
@@ -318,18 +309,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             body
         )
 
-//        viewModel.saveCheckInData(
-//            sessionManager.getString(Constants.TOKEN)!!,
-//            viewModel.leadId!!,
-//            dispositionId,
-//            (if (subDispositionId.isEmpty() || subDispositionId.isBlank()) null else subDispositionId),
-//            comments,
-//            followUp,
-//            nextAction,
-//            additionalField,
-//            "${viewModel.lat},${viewModel.long}",
-//            photoB64List, ""
-//        )
     }
 
     private fun setObserver() {
@@ -404,11 +383,8 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         binding.txtCheckInName.text = response.data.data?.name
                         binding.txtCheckInStatus.text = response.data.data?.paymentStatus
                         if (response.data.data?.allocationDate != null) {
-                            binding.txtDate.text = formatDate(
-                                response.data.data?.allocationDate.toString(),
-                                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-                                "dd-MM-yyyy"
-                            )
+                            binding.txtDate.text = response.data.data?.allocationDate.toString()
+                                .formatDate("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "dd-MM-yyyy")
                         }
 
                     } else {
@@ -445,11 +421,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         intent.putExtra("loan_account_number", viewModel.leadId)
                         intent.putExtra("disposition_id", dispositionId)
                         intent.putExtra("location", "${viewModel.lat},${viewModel.long}")
-                        //intent.putExtra("main_supporting", Gson().toJson(photoB64List))
-                        //sessionManager.saveAnyData("main_supporting",Gson().toJson(photoB64List))
-//                        val b = Bundle()
-//                        b.putStringArray("main_supporting", photoB64List.toTypedArray())
-//                        intent.putExtras(b)
+
                         paymentLauncher.launch(intent)
                         binding.progressBar.hide()
                     } else {
@@ -460,8 +432,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                             additionalFields
                         )
                     }
-
-
                 },
                 1500
             )
@@ -576,21 +546,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         }
     }
 
-    private fun createImageFile(): File? {
-        // Create an image file name
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "JPEG_" + timeStamp + "_"
-        val storageDir = externalCacheDir//getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val image = File.createTempFile(
-            imageFileName,  /* prefix */
-            ".jpg",  /* suffix */
-            storageDir /* directory */
-        )
-        // Save a file: path for use with ACTION_VIEW intents
-        val currentPhotoPath = image.absolutePath
-        return image
-    }
-
     private fun getResultFromActivity() {
         imageCameraPickerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
@@ -616,102 +571,31 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 }
             }
 
-        cropImageLaucher =
-//            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//                if (result.resultCode == RESULT_OK) {
-//                    // There are no request codes
-//                    val data = result.data
-//                    if (data != null) {
-//                        val imageUri = data.getParcelableExtra<Uri>("sourceUri")
-//                        // Uri imageUri = data.getData();
-//                        if (imageUri != null) {
-//                            try {
-//                                val bitmap = MediaStore.Images.Media.getBitmap(
-//                                    ctx.contentResolver,
-//                                    imageUri
-//                                )
-//                                val file = FileUtils.getFile(this, imageUri)
-//                                checkInBinding.txtImageVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
-//                                    ContextCompat.getDrawable(this, R.drawable.ic_verified_24),
-//                                    null,
-//                                    null,
-//                                    null
-//                                )
-//                                checkInBinding.verifiedImageUpload.visibility = View.VISIBLE
-//                                checkInBinding.verifiedImageUpload.setImageBitmap(bitmap)
-//                                checkInBinding.txtImageVerify.text = "Remove"
-//                                checkInBinding.txtImageVerify.setTextColor(
-//                                    ContextCompat.getColor(
-//                                        this,
-//                                        R.color.light_red
-//                                    )
-//                                )
-//
-//                            } catch (e: IOException) {
-//                                e.printStackTrace()
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        cropImageLaucher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
                     // There are no request codes
                     val data = result.data
                     if (data != null) {
                         val imageUri = data.getParcelableExtra<Uri>("sourceUri")
-                        // Uri imageUri = data.getData();
-                        Log.i("CROP_ACTIVITY", " CROP_ACTIVITY bitmap ==> $imageUri")
                         if (imageUri != null) {
                             try {
-                                val bitmap = MediaStore.Images.Media.getBitmap(
-                                    ctx!!.contentResolver,
-                                    imageUri
-                                )
-                                val file: File? = FileUtils.getFile(ctx, imageUri)
-                                Log.i(
-                                    "CROP_ACTIVITY",
-                                    " CROP_ACTIVITY bitmap ==> $imageUri Bitmap  $bitmap"
-                                )
-
                                 addedPhotosList.add(imageUri)
-                                Log.i(javaClass.name, "addedphotosList---" + addedPhotosList.size)
-
-                                var newArraylist = ArrayList<Uri>();
-                                newArraylist.addAll(addedPhotosList)
-
-
                                 addImageAdapter.submitList(addedPhotosList)
-
-
                                 //Convert Base64
                                 var filepathString: String? = null
-                                val filePath: File
                                 try {
-                                    filepathString = getFileNameByUri(ctx, imageUri)
+                                    filepathString = imageUri.getFileNameFromUri(ctx)
                                 } catch (e: Exception) {
                                     e.printStackTrace()
-                                    Toast.makeText(
-                                        ctx,
-                                        "Error loading file",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                   toast("Error loading file")
                                 }
                                 if (filepathString != null) {
-                                    filePath = File(filepathString)
                                     try {
-                                        val fileString: String = getStringFile(filePath)!!
-                                        photoB64List.add("data:image/jpeg;base64,$fileString")
-
-                                        Log.d(
-                                            "dvsdvsdvsv",
-                                            "getResultFromActivity: " + Gson().toJson(photoB64List)
-                                        )
+                                        photoB64List.add("data:image/jpeg;base64,${File(filepathString).getBase64StringFile()}")
                                     } catch (e: IOException) {
                                         e.printStackTrace()
                                     }
                                 }
-
                             } catch (e: IOException) {
                                 e.printStackTrace()
                             }
@@ -723,7 +607,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 
     private fun startCropActivity(uri: Uri) {
         val intent = Intent(ctx, CropImageActivity::class.java)
-        // Log.i(TAG,"startCropActivity  -- > "+uri.toString());
         intent.putExtra("sourceUri", uri.toString())
         intent.putExtra("cropping", "disable")
         cropImageLaucher!!.launch(intent)
@@ -753,9 +636,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                             )
                             requestNewLocationData()
                         } else {
-                            Log.i(javaClass.name, "lat---->" + location.latitude + "")
-                            Log.i(javaClass.name, "getLongitude---->" + location.longitude + "")
-
                             viewModel.setLocation(location.latitude, location.longitude)
                         }
 
@@ -770,7 +650,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 startActivity(intent)
             }
 
-
         } else {
             requestPermission()
         }
@@ -779,9 +658,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 
     @SuppressLint("MissingPermission")
     private fun requestNewLocationData() {
-
         val mLocationRequest = LocationRequest.create().apply {
-
             interval = 5
             fastestInterval = 0
             numUpdates = 1
@@ -826,22 +703,8 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     }
 
     object mLocationCallback : LocationCallback() {
-
         override fun onLocationResult(locationRequest: LocationResult) {
             super.onLocationResult(locationRequest)
-//            viewModel.setLocation(
-//                locationRequest.lastLocation.latitude,
-//                locationRequest.lastLocation.longitude
-//            )
-            Log.i(
-                javaClass.name,
-                "locationRequest----latitude---" + locationRequest.lastLocation.latitude
-            )
-            Log.i(
-                javaClass.name,
-                "locationRequest----longitude---" + locationRequest.lastLocation.longitude
-            )
-
 
         }
     }
@@ -879,30 +742,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         )
     }
 
-//    override fun openSubStatusBottomSheet() {
-//        val openSubStatus =
-//            SubStatusBottomSheet.newInstance(object : SubStatusActionBottomSheet.OnClick {
-//                override fun onClick(
-//                    dispositionType: String,
-//                    followUpDate: String,
-//                    remark: String,
-//                    assignTracker: Boolean,
-//                    customNotFoundReason: String
-//                ) {
-//                    prepareDataForCheckIn(
-//                        dispositionType,
-//                        followUpDate,
-//                        remark,
-//                        assignTracker,
-//                        customNotFoundReason
-//                    )
-//                }
-//            })
-//        openSubStatus.show(
-//            supportFragmentManager,
-//            SubStatusBottomSheet.TAG
-//        )
-//    }
 
     override fun openSubStatusActionBottomSheet(isPTPAction: Boolean, dispositionType: String) {
 
@@ -984,94 +823,13 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     }
 
     override fun removePhoto(uri: Uri) {
-        Log.i(javaClass.name, "removePhoto----->" + uri.path)
-        Log.i(javaClass.name, "addedphotosList----->" + addedPhotosList.size)
-
         photoB64List.removeAt(addedPhotosList.indexOf(uri))
         addedPhotosList.remove(uri)
-        Log.i(javaClass.name, "addedphotosList--afterremove--->" + addedPhotosList.size)
         addImageAdapter.submitList(addedPhotosList)
     }
 
     override fun addPhoto() {
         openFileUploadDialog()
-    }
-
-    private fun formatDate(dateString: String, format: String, newFormat: String): String {
-        var date: String = dateString
-        var spf = SimpleDateFormat(format, Locale.getDefault())
-        spf.timeZone = TimeZone.getTimeZone("UTC")
-        var newDate: Date? = null
-        try {
-            newDate = spf.parse(date)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        spf = SimpleDateFormat(newFormat, Locale.getDefault())
-        date = spf.format(newDate)
-        return date
-    }
-
-    private fun getFileNameByUri(context: Context, uri: Uri): String? {
-        var filepath: String? = ""
-        if (uri.scheme.toString().compareTo("content") == 0) {
-            val contentResolver = context.contentResolver ?: return null
-            // Create file path inside app's data dir
-            val filePath = (context.applicationInfo.dataDir + File.separator
-                    + System.currentTimeMillis())
-            val file = File(filePath)
-            try {
-                val inputStream = contentResolver.openInputStream(uri) ?: return null
-                val outputStream: OutputStream = FileOutputStream(file)
-                val buf = ByteArray(1024)
-                var len: Int
-                while (inputStream.read(buf).also { len = it } > 0) outputStream.write(
-                    buf,
-                    0,
-                    len
-                )
-                outputStream.close()
-                inputStream.close()
-            } catch (ignore: IOException) {
-                return null
-            }
-            filepath = file.absolutePath
-        } else if (uri.scheme!!.compareTo("file") == 0) {
-            try {
-                val file = File(URI(uri.toString()))
-                if (file.exists()) filepath = file.absolutePath
-            } catch (e: URISyntaxException) {
-                e.printStackTrace()
-            }
-        } else {
-            filepath = uri.path
-        }
-        return filepath
-    }
-
-    @Throws(IOException::class)
-    fun getStringFile(f: File): String? {
-        var inputStream: InputStream? = null
-        var encodedFile = ""
-        val lastVal: String
-        try {
-            inputStream = FileInputStream(f.absolutePath)
-            val buffer = ByteArray(10240) //specify the size to allow
-            var bytesRead: Int
-            val output = ByteArrayOutputStream()
-            val output64 = Base64OutputStream(output, Base64.DEFAULT)
-            while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-                output64.write(buffer, 0, bytesRead)
-            }
-            output64.close()
-            encodedFile = output.toString()
-        } catch (e1: IOException) {
-            e1.printStackTrace()
-        } finally {
-            inputStream?.close()
-        }
-        lastVal = encodedFile
-        return lastVal
     }
 
     private fun prepareDataForCheckIn(

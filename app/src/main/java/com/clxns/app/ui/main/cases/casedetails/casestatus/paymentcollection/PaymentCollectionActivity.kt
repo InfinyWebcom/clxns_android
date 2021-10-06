@@ -9,13 +9,12 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Base64
-import android.util.Base64OutputStream
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -35,23 +34,15 @@ import com.clxns.app.data.model.home.DemoCap
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivityPaymentCollectionBinding
 import com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.AddImageAdapter
-import com.clxns.app.utils.Constants
-import com.clxns.app.utils.hide
-import com.clxns.app.utils.show
+import com.clxns.app.utils.*
 import com.clxns.app.utils.support.CropImageActivity
-import com.clxns.app.utils.support.FileUtils
-import com.clxns.app.utils.toast
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.*
-import java.net.URI
-import java.net.URISyntaxException
-import java.text.ParseException
-import java.text.SimpleDateFormat
+import java.io.File
+import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -121,13 +112,6 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
             viewModel.mainSupporting = mainSupporting.mainSupporting!!
         }
 
-//        val b = this.intent.extras
-//        viewModel.mainSupporting = b!!.getStringArray("main_supporting") as Array<String>
-        Log.d(
-            "sdvsdv",
-            "onCreate: " + "${viewModel.location}   " + viewModel.dispositionId + "--" + viewModel.loanAccountNumber + "--"
-                    + Gson().toJson(viewModel.mainSupporting)
-        )
         if (viewModel.loanAccountNumber != null) {
             viewModel.getCaseDetails(
                 sessionManager.getString(Constants.TOKEN)!!,
@@ -212,21 +196,6 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     body.supporting = viewModel.mainSupporting
                     body.payment = payment
 
-
-//                    viewModel.saveCheckInData(
-//                        sessionManager.getString(Constants.TOKEN)!!,
-//                        viewModel.loanAccountNumber!!,
-//                        viewModel.dispositionId!!,
-//                        null,
-//                        binding.remarksET.text.toString(),
-//                        recoveryDate,
-//                        recoveryDate,
-//                        "",
-//                        viewModel.location!!,
-//                        viewModel.mainSupporting,
-//                        Gson().toJson(payment)
-//                    )
-
                     viewModel.saveCheckInData(
                         sessionManager.getString(Constants.TOKEN)!!,
                         body
@@ -237,7 +206,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         }
 
         binding.collectableAmountEt.setOnClickListener {
-            showDialog(caseDetails?.data?.totalDueAmount!!, caseDetails?.data?.amountCollected!!)
+            it.showDialog(caseDetails?.data?.totalDueAmount!!, caseDetails?.data?.amountCollected!!)
         }
 
     }
@@ -253,8 +222,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                         binding.txtStatus.text = nullSafeString(response.data.data?.paymentStatus)
                         binding.txtProductValue.text = nullSafeString(response.data.data?.loanType)
                         if (response.data.data?.allocationDate != null) {
-                            binding.txtDate.text = formatDate(
-                                response.data.data?.allocationDate.toString(),
+                            binding.txtDate.text = response.data.data?.allocationDate.toString().formatDate(
                                 "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
                                 "dd-MM-yyyy"
                             )
@@ -542,42 +510,23 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                         val imageUri = data.getParcelableExtra<Uri>("sourceUri")
                         if (imageUri != null) {
                             try {
-                                val bitmap = MediaStore.Images.Media.getBitmap(
-                                    ctx.contentResolver,
-                                    imageUri
-                                )
-                                val file: File? = FileUtils.getFile(ctx, imageUri)
                                 addedPhotosList.add(imageUri)
                                 addImageAdapter.submitList(addedPhotosList)
-
                                 //Convert Base64
                                 var filepathString: String? = null
-                                val filePath: File
                                 try {
-                                    filepathString = getFileNameByUri(ctx, imageUri)
+                                    filepathString = imageUri.getFileNameFromUri(ctx)
                                 } catch (e: Exception) {
                                     e.printStackTrace()
-                                    Toast.makeText(
-                                        ctx,
-                                        "Error loading file",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                   toast("Error loading file")
                                 }
                                 if (filepathString != null) {
-                                    filePath = File(filepathString)
                                     try {
-                                        val fileString: String = getStringFile(filePath)!!
-                                        photoB64List.add("data:image/jpeg;base64,$fileString")
-
-                                        Log.d(
-                                            "dvsdvsdvsv",
-                                            "getResultFromActivity: " + Gson().toJson(photoB64List)
-                                        )
+                                        photoB64List.add("data:image/jpeg;base64,${File(filepathString).getBase64StringFile()}")
                                     } catch (e: IOException) {
                                         e.printStackTrace()
                                     }
                                 }
-
                             } catch (e: IOException) {
                                 e.printStackTrace()
                             }
@@ -614,29 +563,9 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         }
     }
 
-    private fun createImageFile(): File? {
-        // Create an image file name
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "JPEG_" + timeStamp + "_"
-        val storageDir = externalCacheDir //getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val image = File.createTempFile(
-            imageFileName,  /* prefix */
-            ".jpg",  /* suffix */
-            storageDir /* directory */
-        )
-        // Save a file: path for use with ACTION_VIEW intents
-        val currentPhotoPath = image.absolutePath
-        return image
-    }
-
     override fun removePhoto(uri: Uri) {
-        Log.i(javaClass.name, "removePhoto----->" + uri.path)
-        Log.i(javaClass.name, "addedphotosList----->" + addedPhotosList.size)
-
         photoB64List.removeAt(addedPhotosList.indexOf(uri))
         addedPhotosList.remove(uri)
-        Log.d("dvsdvsdvsv", "getResultFromActivity: " + Gson().toJson(photoB64List))
-        Log.i(javaClass.name, "addedphotosList--afterremove--->" + addedPhotosList.size)
         addImageAdapter.submitList(addedPhotosList)
     }
 
@@ -652,9 +581,6 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
             toast("Please select amount type")
             return false
         }
-
-        Log.d("svjsdvsdv", "validate: " + binding.paymentAmountEt.text.toString())
-
         if (binding.paymentAmountEt.text.toString().isBlank()
             || binding.paymentAmountEt.text.toString().isEmpty()
         ) {
@@ -703,111 +629,11 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         return true
     }
 
-    private fun formatDate(dateString: String, format: String, newFormat: String): String {
-        var date: String = dateString
-        var spf = SimpleDateFormat(format, Locale.getDefault())
-        spf.timeZone = TimeZone.getTimeZone("UTC")
-        var newDate: Date? = null
-        try {
-            newDate = spf.parse(date)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        spf = SimpleDateFormat(newFormat, Locale.getDefault())
-        date = spf.format(newDate)
-        return date
-    }
-
-    private fun getFileNameByUri(context: Context, uri: Uri): String? {
-        var filepath: String? = ""
-        if (uri.scheme.toString().compareTo("content") == 0) {
-            val contentResolver = context.contentResolver ?: return null
-            // Create file path inside app's data dir
-            val filePath = (context.applicationInfo.dataDir + File.separator
-                    + System.currentTimeMillis())
-            val file = File(filePath)
-            try {
-                val inputStream = contentResolver.openInputStream(uri) ?: return null
-                val outputStream: OutputStream = FileOutputStream(file)
-                val buf = ByteArray(1024)
-                var len: Int
-                while (inputStream.read(buf).also { len = it } > 0) outputStream.write(
-                    buf,
-                    0,
-                    len
-                )
-                outputStream.close()
-                inputStream.close()
-            } catch (ignore: IOException) {
-                return null
-            }
-            filepath = file.absolutePath
-        } else if (uri.scheme!!.compareTo("file") == 0) {
-            try {
-                val file = File(URI(uri.toString()))
-                if (file.exists()) filepath = file.absolutePath
-            } catch (e: URISyntaxException) {
-                e.printStackTrace()
-            }
-        } else {
-            filepath = uri.path
-        }
-        return filepath
-    }
-
-    @Throws(IOException::class)
-    fun getStringFile(f: File): String? {
-        var inputStream: InputStream? = null
-        var encodedFile = ""
-        val lastVal: String
-        try {
-            inputStream = FileInputStream(f.absolutePath)
-            val buffer = ByteArray(10240) //specify the size to allow
-            var bytesRead: Int
-            val output = ByteArrayOutputStream()
-            val output64 = Base64OutputStream(output, Base64.DEFAULT)
-            while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-                output64.write(buffer, 0, bytesRead)
-            }
-            output64.close()
-            encodedFile = output.toString()
-        } catch (e1: IOException) {
-            e1.printStackTrace()
-        } finally {
-            inputStream?.close()
-        }
-        lastVal = encodedFile
-        return lastVal
-    }
-
     private fun nullSafeString(value: String?): String {
         if (value.isNullOrEmpty() || value.isNullOrBlank() || value == "null" || value == "0") {
             return "-"
         }
         return value
-    }
-
-    fun showDialog(totalAmount: Int, collected: Int) {
-        var dialog = MaterialAlertDialogBuilder(this)
-        var customView = LayoutInflater.from(this)
-            .inflate(R.layout.dialog_collectable_amount, null, false)
-
-        var txtTotalDue = customView.findViewById<TextView>(R.id.txt_total_due)
-        var txtCollected = customView.findViewById<TextView>(R.id.txt_collectable)
-        var txtResult = customView.findViewById<TextView>(R.id.txt_result)
-        dialog.setView(customView)
-//            .setTitle("Details")
-//            .setMessage("Enter your basic details")
-            .setPositiveButton("OK") { dialog, _ ->
-
-
-                dialog.dismiss()
-            }
-            .show()
-
-        txtTotalDue.text = "₹${totalAmount}"
-        txtCollected.text = "₹${collected}"
-        txtResult.text = "₹${totalAmount.minus(collected)}"
     }
 
     override fun onBackPressed() {

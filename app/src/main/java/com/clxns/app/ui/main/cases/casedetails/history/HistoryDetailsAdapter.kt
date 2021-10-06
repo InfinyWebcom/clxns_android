@@ -74,7 +74,6 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
         }
         holder.historyItemBinding.itemRemarksTv.text = additionalInfo
         if (data.additionalField != null) {
-
             //Removing all the occurrences of backslash
             val prob = data.additionalField.replace("\\", "")
             Timber.i(prob)

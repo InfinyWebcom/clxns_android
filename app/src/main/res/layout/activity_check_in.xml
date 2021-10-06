@@ -120,7 +120,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/dp8"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Check In"
+                    android:text="@string/check_in"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp" />
@@ -141,7 +141,7 @@
                     android:layout_toStartOf="@id/txtImageVerify"
                     android:drawablePadding="@dimen/dp8"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Image Upload"
+                    android:text="@string/image_upload"
                     android:textAllCaps="false"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/sp16"
@@ -155,7 +155,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/dp8"
                     android:fontFamily="@font/gtwalsheimpromedium"
-                    android:text="Upload"
+                    android:text="@string/upload"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp" />
