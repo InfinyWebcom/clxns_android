@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.clxns.app.R
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.BottomSheetCasesFilterBinding
@@ -162,7 +163,10 @@ class CasesFilterBS : BottomSheetDialogFragment() {
                 "",
                 ""
             )
-            dismiss()
+            val actions = CasesFilterBSDirections.actionNavigationCasesFilterToNavigationCases(
+                0,0,0,"","",true
+            )
+            findNavController().navigate(actions)
         }
 
         binding.filterResetBtn.setOnClickListener {

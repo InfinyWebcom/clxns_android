@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.clxns.app.R
+import com.clxns.app.data.model.cases.CaseFilterModel
 import com.clxns.app.data.model.home.SummaryData
 import com.clxns.app.databinding.CasesSummaryLayoutBinding
 import com.clxns.app.ui.main.cases.CasesViewModel
@@ -22,6 +23,9 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
     private lateinit var summaryData: SummaryData
 
     private val casesViewModel: CasesViewModel by viewModels()
+
+    private lateinit var fromDate:String
+    private lateinit var toDate:String
 
 
     private val caseArgs by navArgs<CaseSummaryBottomSheetArgs>()
@@ -70,7 +74,7 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
         }
         binding.caseSummaryTotalCaseBtn.setOnClickListener {
             val actions = CaseSummaryBottomSheetDirections.actionNavigationHomeSummaryToNavigationCases(
-                0
+                0,0,0,fromDate,toDate, false
             )
             findNavController().navigate(actions)
             dismiss()
@@ -110,6 +114,10 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun updateUI() {
+        //Date arguments received from Home Fragment according to selected Today, Week & Month Radio Button
+        fromDate = caseArgs.fromDate
+        toDate = caseArgs.toDate
+
         binding.totalCasesTv.text = summaryData.totalCases.toString()
         binding.ptpValueTv.text = summaryData.promiseToPay.toString()
         binding.rtpValueTv.text = summaryData.denialRTP.toString()
@@ -121,11 +129,12 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
         binding.partiallyCollectValueTv.text = summaryData.partiallyCollect.toString()
         binding.settlementValueTv.text = summaryData.settlementForeclosure.toString()
         binding.customerDeceasedValueTv.text = summaryData.customerDeceased.toString()
+
     }
 
     private fun navigateToCasesScreen(dispositionId: Int) {
         val actions = CaseSummaryBottomSheetDirections.actionNavigationHomeSummaryToNavigationCases(
-            dispositionId
+            dispositionId,0,0,fromDate,toDate, false
         )
         findNavController().navigate(actions)
         dismiss()

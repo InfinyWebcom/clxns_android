@@ -29,7 +29,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun Context.toast(message: String) {
+fun Context.toast(message : String) {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
 
@@ -47,18 +47,18 @@ fun TextInputEditText.removeFocus() {
     }
 }
 
-fun Context.hideKeyboard(view: View) {
+fun Context.hideKeyboard(view : View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun Context.copyToClipBoard(text: CharSequence) {
+fun Context.copyToClipBoard(text : CharSequence) {
     val clipboard = ContextCompat.getSystemService(this, ClipboardManager::class.java)
     val clip = ClipData.newPlainText("label", text)
     clipboard?.setPrimaryClip(clip)
 }
 
-fun View.snackBar(message: String) {
+fun View.snackBar(message : String) {
     Snackbar.make(this, message, Snackbar.LENGTH_LONG).also { snackBar ->
         snackBar.setAction("Ok") {
             snackBar.dismiss()
@@ -69,7 +69,7 @@ fun View.snackBar(message: String) {
 fun String.isValidEmail() =
     !TextUtils.isEmpty(this) && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
-fun String.makeFirstLetterCapital(): String {
+fun String.makeFirstLetterCapital() : String {
     // stores each characters to a char array
     var foundSpace = true
     val arr = this.toCharArray()
@@ -84,14 +84,14 @@ fun String.makeFirstLetterCapital(): String {
     return String(arr)
 }
 
-fun String.convertServerDateToNormal(newFormat: String): String? {
+fun String.convertServerDateToNormal(newFormat : String) : String? {
     var date = this
     var spf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
     spf.timeZone = TimeZone.getTimeZone("GMT")
-    var newDate: Date? = null
+    var newDate : Date? = null
     try {
         newDate = spf.parse(date)
-    } catch (e: ParseException) {
+    } catch (e : ParseException) {
         e.printStackTrace()
     }
     spf = SimpleDateFormat(newFormat, Locale.getDefault())
@@ -99,20 +99,20 @@ fun String.convertServerDateToNormal(newFormat: String): String? {
     return date
 }
 
-fun ImageView.loadImage(url: String) {
+fun ImageView.loadImage(url : String) {
     Glide.with(this).load(url)
         .error(R.drawable.ic_logo_x)
         .placeholder(R.drawable.ic_logo_x)
         .into(this)
 }
 
-fun Int.convertToCurrency(): String {
+fun Int.convertToCurrency() : String {
     val amount = NumberFormat.getCurrencyInstance(Locale("en", "in"))
         .format(this)
     return amount.substringBefore('.')
 }
 
-fun View.showDialog(totalAmount: Int, collected: Int) {
+fun View.showDialog(totalAmount : Int, collected : Int) {
     val dialog = MaterialAlertDialogBuilder(this.context)
     val customView = LayoutInflater.from(this.context)
         .inflate(R.layout.dialog_collectable_amount, null, false)
@@ -129,14 +129,14 @@ fun View.showDialog(totalAmount: Int, collected: Int) {
     txtResult.text = "₹${totalAmount.minus(collected)}"
 }
 
-fun String.formatDate(format: String, newFormat: String): String {
-    var date: String = this
+fun String.formatDate(format : String, newFormat : String) : String {
+    var date : String = this
     var spf = SimpleDateFormat(format, Locale.getDefault())
     spf.timeZone = TimeZone.getTimeZone("UTC")
-    var newDate: Date? = null
+    var newDate : Date? = null
     try {
         newDate = spf.parse(date)
-    } catch (e: ParseException) {
+    } catch (e : ParseException) {
         e.printStackTrace()
     }
     spf = SimpleDateFormat(newFormat, Locale.getDefault())
@@ -145,14 +145,14 @@ fun String.formatDate(format: String, newFormat: String): String {
 }
 
 @Throws(IOException::class)
-fun File.getBase64StringFile(): String {
-    var inputStream: InputStream? = null
+fun File.getBase64StringFile() : String {
+    var inputStream : InputStream? = null
     var encodedFile = ""
-    val lastVal: String
+    val lastVal : String
     try {
         inputStream = FileInputStream(this.absolutePath)
         val buffer = ByteArray(10240) //specify the size to allow
-        var bytesRead: Int
+        var bytesRead : Int
         val output = ByteArrayOutputStream()
         val output64 = Base64OutputStream(output, Base64.DEFAULT)
         while (inputStream.read(buffer).also { bytesRead = it } != -1) {
@@ -160,7 +160,7 @@ fun File.getBase64StringFile(): String {
         }
         output64.close()
         encodedFile = output.toString()
-    } catch (e1: IOException) {
+    } catch (e1 : IOException) {
         e1.printStackTrace()
     } finally {
         inputStream?.close()
@@ -169,8 +169,8 @@ fun File.getBase64StringFile(): String {
     return lastVal
 }
 
-fun Uri.getFileNameFromUri(context: Context): String? {
-    var filepath: String? = ""
+fun Uri.getFileNameFromUri(context : Context) : String? {
+    var filepath : String? = ""
     when {
         this.scheme.toString().compareTo("content") == 0 -> {
             val contentResolver = context.contentResolver ?: return null
@@ -180,9 +180,9 @@ fun Uri.getFileNameFromUri(context: Context): String? {
             val file = File(filePath)
             try {
                 val inputStream = contentResolver.openInputStream(this) ?: return null
-                val outputStream: OutputStream = FileOutputStream(file)
+                val outputStream : OutputStream = FileOutputStream(file)
                 val buf = ByteArray(1024)
-                var len: Int
+                var len : Int
                 while (inputStream.read(buf).also { len = it } > 0) outputStream.write(
                     buf,
                     0,
@@ -190,7 +190,7 @@ fun Uri.getFileNameFromUri(context: Context): String? {
                 )
                 outputStream.close()
                 inputStream.close()
-            } catch (ignore: IOException) {
+            } catch (ignore : IOException) {
                 return null
             }
             filepath = file.absolutePath
@@ -199,7 +199,7 @@ fun Uri.getFileNameFromUri(context: Context): String? {
             try {
                 val file = File(URI(this.toString()))
                 if (file.exists()) filepath = file.absolutePath
-            } catch (e: URISyntaxException) {
+            } catch (e : URISyntaxException) {
                 e.printStackTrace()
             }
         }
@@ -210,16 +210,22 @@ fun Uri.getFileNameFromUri(context: Context): String? {
     return filepath
 }
 
-fun Context.createImageFile(): File? {
+fun Context.createImageFile() : File? {
     // Create an image file name
     val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
     val imageFileName = "JPEG_" + timeStamp + "_"
     val storageDir = externalCacheDir //getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-    val image = File.createTempFile(
+    // Save a file: path for use with ACTION_VIEW intents
+    return File.createTempFile(
         imageFileName,  /* prefix */
         ".jpg",  /* suffix */
         storageDir /* directory */
     )
-    // Save a file: path for use with ACTION_VIEW intents
-    return image
+}
+
+fun getCalculatedDate(days : Int) : String {
+    val calendar = Calendar.getInstance()
+    val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    calendar.add(Calendar.DAY_OF_YEAR, days)
+    return formatter.format(Date(calendar.timeInMillis))
 }

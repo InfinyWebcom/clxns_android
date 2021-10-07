@@ -21,42 +21,46 @@ import com.clxns.app.databinding.FragmentHomeBinding
 import com.clxns.app.ui.notification.NotificationActivity
 import com.clxns.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
 
-    private val homeViewModel: HomeViewModel by viewModels()
-    private var _binding: FragmentHomeBinding? = null
+    private val homeViewModel : HomeViewModel by viewModels()
+    private var _binding : FragmentHomeBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var sessionManager: SessionManager
+    lateinit var sessionManager : SessionManager
 
-    private lateinit var actionsData: ActionsData
-    private lateinit var statsData: StatsData
-    private lateinit var summaryData: SummaryData
+    private lateinit var actionsData : ActionsData
+    private lateinit var statsData : StatsData
+    private lateinit var summaryData : SummaryData
 
-    private lateinit var todayData: HomeStatsData
-    private lateinit var weekData: HomeStatsData
-    private lateinit var monthData: HomeStatsData
+    private lateinit var todayData : HomeStatsData
+    private lateinit var weekData : HomeStatsData
+    private lateinit var monthData : HomeStatsData
 
-    private lateinit var noDataLayout: RelativeLayout
+    private lateinit var noDataLayout : RelativeLayout
+
+    private var fromDate : String = ""
+    private var toDate : String = ""
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater : LayoutInflater,
+        container : ViewGroup?,
+        savedInstanceState : Bundle?
+    ) : View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         getHomeStatistics()
@@ -67,6 +71,11 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
 
         subscribeObserver()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.rbToday.isChecked = true
     }
 
     private fun getHomeStatistics() {
@@ -112,6 +121,9 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
         binding.homeDaysContainer.setOnCheckedChangeListener(this)
         binding.usernameTv.text = sessionManager.getString(Constants.USER_NAME)
         noDataLayout = binding.homeNoData.root
+
+        fromDate = getCalculatedDate(0)
+        toDate = getCalculatedDate(0)
     }
 
     private fun setListeners() {
@@ -126,7 +138,11 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
 
         binding.summaryCardView.setOnClickListener {
             val actions =
-                HomeFragmentDirections.actionNavigationHomeToNavigationHomeSummary(summaryData)
+                HomeFragmentDirections.actionNavigationHomeToNavigationHomeSummary(
+                    summaryData,
+                    fromDate,
+                    toDate
+                )
             findNavController().navigate(actions)
         }
 
@@ -137,14 +153,14 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
         binding.visitPendingCard.setOnClickListener {
             val actions = HomeFragmentDirections.actionNavigationHomeToNavigationCases(
                 0,
-                1, 0
+                1, 0, fromDate, toDate, false
             )
             findNavController().navigate(actions)
         }
         binding.followUpCard.setOnClickListener {
             val actions = HomeFragmentDirections.actionNavigationHomeToNavigationCases(
                 0,
-                0, 1
+                0, 1, fromDate, toDate, false
             )
             findNavController().navigate(actions)
         }
@@ -155,30 +171,46 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
         _binding = null
     }
 
-    override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
+    override fun onCheckedChanged(group : RadioGroup?, checkedId : Int) {
         when (checkedId) {
             R.id.rbToday -> {
                 actionsData = todayData.actionsData!!
                 statsData = todayData.stats!!
                 summaryData = todayData.summaryData!!
+
+                fromDate = getCalculatedDate(0)
+                toDate = getCalculatedDate(0)
+                Timber.i(fromDate)
+                Timber.i(toDate)
                 updateHomeStatsUI(actionsData, statsData)
             }
             R.id.rbWeek -> {
                 actionsData = weekData.actionsData!!
                 statsData = weekData.stats!!
                 summaryData = weekData.summaryData!!
+
+                fromDate = getCalculatedDate(-7)
+                toDate = getCalculatedDate(0)
+                Timber.i(fromDate)
+                Timber.i(toDate)
                 updateHomeStatsUI(actionsData, statsData)
             }
             R.id.rbMonth -> {
                 actionsData = monthData.actionsData!!
                 statsData = monthData.stats!!
                 summaryData = monthData.summaryData!!
+
+                //
+                fromDate = getCalculatedDate(-31)
+                toDate = getCalculatedDate(0)
+                Timber.i(fromDate)
+                Timber.i(toDate)
                 updateHomeStatsUI(actionsData, statsData)
             }
         }
     }
 
-    private fun updateHomeStatsUI(actionsData: ActionsData, statsData: StatsData) {
+    private fun updateHomeStatsUI(actionsData : ActionsData, statsData : StatsData) {
         binding.casesAllocatedCountTv.text = statsData.cases.toString()
         binding.totalPosAmountTv.text = statsData.pos.convertToCurrency()
         binding.totalDueAmountTv.text = statsData.totalAmountDue.convertToCurrency()

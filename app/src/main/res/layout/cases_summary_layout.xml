@@ -64,7 +64,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp12"
                 app:cardCornerRadius="@dimen/dp8"
-                app:cardElevation="2dp">
+                app:cardElevation="2dp"
+                app:rippleColor="@color/colorPrimary"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"

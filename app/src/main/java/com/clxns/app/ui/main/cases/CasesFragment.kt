@@ -30,42 +30,43 @@ import com.clxns.app.ui.search.SearchActivity
 import com.clxns.app.utils.*
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
 
-    private val viewModel: CasesViewModel by activityViewModels()
-    private var _binding: FragmentCasesBinding? = null
+    private val viewModel : CasesViewModel by activityViewModels()
+    private var _binding : FragmentCasesBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var sessionManager: SessionManager
+    lateinit var sessionManager : SessionManager
 
-    private lateinit var noDataLayout: RelativeLayout
-    private lateinit var filterBtn: MaterialButton
+    private lateinit var noDataLayout : RelativeLayout
+    private lateinit var filterBtn : MaterialButton
 
-    private val casesArgs: CasesFragmentArgs by navArgs()
+    private val casesArgs : CasesFragmentArgs by navArgs()
 
-    private var casesDataList: ArrayList<CasesData> = arrayListOf()
-    private lateinit var casesAdapter: CasesAdapter
-    private lateinit var casesRV: RecyclerView
-    private lateinit var token: String
+    private var casesDataList : ArrayList<CasesData> = arrayListOf()
+    private lateinit var casesAdapter : CasesAdapter
+    private lateinit var casesRV : RecyclerView
+    private lateinit var token : String
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater : LayoutInflater,
+        container : ViewGroup?,
+        savedInstanceState : Bundle?
+    ) : View? {
         _binding = FragmentCasesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
@@ -75,43 +76,56 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         setListeners()
 
         binding.casesProgressBar.show()
-
         //If user is navigating from home case summary bottom sheet
-        if (casesArgs.dispositionId != 0) {
-            filterBtn.text = getString(R.string.reset)
-            viewModel.getCasesList(
-                token, "", casesArgs.dispositionId.toString(),
-                "", "", "",
-                "",
-                ""
-            )
-        } else if (casesArgs.visitPending != 0) {
-            filterBtn.text = getString(R.string.reset)
-            viewModel.getCasesList(
-                token, "", "",
-                "", "", "",
-                "1",
-                ""
-            )
-        } else if (casesArgs.followUps!= 0) {
-            filterBtn.text = getString(R.string.reset)
-            viewModel.getCasesList(
-                token, "", "",
-                "", "", "",
-                "",
-                "1"
-            )
-        } else {
-            getCaseList()
+        when {
+            casesArgs.dispositionId != 0 -> {
+                filterBtn.text = getString(R.string.reset)
+                Timber.i("Disposition Run")
+                Timber.i(casesArgs.fromDate)
+                Timber.i(casesArgs.toDate)
+                getCaseList(
+                    casesArgs.dispositionId.toString(),
+                    casesArgs.fromDate, casesArgs.toDate, "", ""
+                )
+            }
+            casesArgs.visitPending != 0 -> {
+                filterBtn.text = getString(R.string.reset)
+                Timber.i("Visit Pending Run")
+                Timber.i(casesArgs.fromDate)
+                Timber.i(casesArgs.toDate)
+                getCaseList(
+                    "", casesArgs.fromDate, casesArgs.toDate, "1", ""
+                )
+            }
+            casesArgs.followUps != 0 -> {
+                filterBtn.text = getString(R.string.reset)
+                Timber.i("Follow Up Run")
+                Timber.i(casesArgs.fromDate)
+                Timber.i(casesArgs.toDate)
+                getCaseList(
+                    "", casesArgs.fromDate, casesArgs.toDate, "", "1"
+                )
+            }
+            casesArgs.isFilterApplied -> {filterBtn.text = getString(R.string.reset)}
+            else -> {
+                getCaseList(
+                    "", "",
+                    "", "", ""
+                )
+            }
         }
     }
 
-    private fun getCaseList() {
+    private fun getCaseList(
+        dispositionId : String,
+        fromDate : String,
+        toDate : String,
+        visitPending : String,
+        followUp : String
+    ) {
         viewModel.getCasesList(
             token,
-            "", "", "", "", "",
-            "",
-            ""
+            "", dispositionId, "", fromDate, toDate, visitPending, followUp
         )
     }
 
@@ -133,7 +147,10 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                 findNavController().navigate(R.id.action_navigation_cases_to_navigation_cases_filter)
             } else {
                 filterBtn.text = getString(R.string.filter)
-                getCaseList()
+                getCaseList(
+                    "", "",
+                    "", "", ""
+                )
             }
         }
 
@@ -145,7 +162,10 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         }
 
         binding.casesNoData.retryBtn.setOnClickListener {
-            getCaseList()
+            getCaseList(
+                "", "",
+                "", "", ""
+            )
         }
     }
 
@@ -208,7 +228,10 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                 when (response) {
                     is NetworkResult.Success -> {
                         binding.root.snackBar(response.data?.title!!)
-                        getCaseList()
+                        getCaseList(
+                            "", "",
+                            "", "", ""
+                        )
                     }
                     is NetworkResult.Error -> {
                         binding.root.snackBar(response.message!!)
@@ -228,7 +251,10 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                     is NetworkResult.Success -> {
                         binding.root.snackBar(it.data?.title!!)
                         if (!it.data.error) {
-                            getCaseList()
+                            getCaseList(
+                                "", "",
+                                "", "", ""
+                            )
                         }
                     }
                     is NetworkResult.Error -> {
@@ -250,7 +276,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         casesAdapter.notifyItemRangeChanged(0, size)
     }
 
-    private fun showPlanDialog(casesData: CasesData) {
+    private fun showPlanDialog(casesData : CasesData) {
         val cal = Calendar.getInstance()
         val dateSetListener =
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
@@ -277,7 +303,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
 
     }
 
-    private fun showConfirmUnPlanDialog(casesData: CasesData) {
+    private fun showConfirmUnPlanDialog(casesData : CasesData) {
         val logoutDialog = AlertDialog.Builder(requireContext())
         val title = "UnPlan" + getString(R.string.arrow_forward) + casesData.name
         logoutDialog.setTitle(title)
@@ -302,7 +328,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         _binding = null
     }
 
-    override fun onPlanClick(isPlanned: Boolean, casesData: CasesData) {
+    override fun onPlanClick(isPlanned : Boolean, casesData : CasesData) {
         if (isPlanned) {
             showConfirmUnPlanDialog(casesData)
         } else {
@@ -311,10 +337,10 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
     }
 
     override fun openDetailActivity(
-        loadId: String,
-        name: String,
-        dispositions: String,
-        isPlanned: Boolean
+        loadId : String,
+        name : String,
+        dispositions : String,
+        isPlanned : Boolean
     ) {
         val intent = Intent(context, DetailsActivity::class.java)
         intent.putExtra("loan_account_number", loadId)
@@ -328,10 +354,13 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
     private val startDetailActivityForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = it.data
+                val data : Intent? = it.data
                 val status = data?.getBooleanExtra("hasChangedPlanStatus", false)
                 if (status == true) {
-                    getCaseList()
+                    getCaseList(
+                        "", "",
+                        "", "", ""
+                    )
                 }
             }
         }

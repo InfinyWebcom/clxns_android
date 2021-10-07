@@ -8,29 +8,29 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class SummaryData(
     @Json(name = "brokenPTP")
-    val brokenPTP: Int,
+    val brokenPTP : Int,
     @Json(name = "callBack")
-    val callBack: Int,
+    val callBack : Int,
     @Json(name = "collect")
-    val collect: Int,
+    val collect : Int,
     @Json(name = "customerDeceased")
-    val customerDeceased: Int,
+    val customerDeceased : Int,
     @Json(name = "customerNotFound")
-    val customerNotFound: Int,
+    val customerNotFound : Int,
     @Json(name = "denialRTP")
-    val denialRTP: Int,
+    val denialRTP : Int,
     @Json(name = "dispute")
-    val dispute: Int,
+    val dispute : Int,
     @Json(name = "partiallyCollect")
-    val partiallyCollect: Int,
+    val partiallyCollect : Int,
     @Json(name = "promiseToPay")
-    val promiseToPay: Int,
+    val promiseToPay : Int,
     @Json(name = "settlementForeclosure")
-    val settlementForeclosure: Int,
+    val settlementForeclosure : Int,
     @Json(name = "totalCases")
-    val totalCases: Int
+    val totalCases : Int
 ) : Parcelable {
-    constructor(parcel: Parcel) : this(
+    constructor(parcel : Parcel) : this(
         parcel.readInt(),
         parcel.readInt(),
         parcel.readInt(),
@@ -45,7 +45,7 @@ data class SummaryData(
     ) {
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
+    override fun writeToParcel(parcel : Parcel, flags : Int) {
         parcel.writeInt(brokenPTP)
         parcel.writeInt(callBack)
         parcel.writeInt(collect)
@@ -59,16 +59,16 @@ data class SummaryData(
         parcel.writeInt(totalCases)
     }
 
-    override fun describeContents(): Int {
+    override fun describeContents() : Int {
         return 0
     }
 
     companion object CREATOR : Parcelable.Creator<SummaryData> {
-        override fun createFromParcel(parcel: Parcel): SummaryData {
+        override fun createFromParcel(parcel : Parcel) : SummaryData {
             return SummaryData(parcel)
         }
 
-        override fun newArray(size: Int): Array<SummaryData?> {
+        override fun newArray(size : Int) : Array<SummaryData?> {
             return arrayOfNulls(size)
         }
     }

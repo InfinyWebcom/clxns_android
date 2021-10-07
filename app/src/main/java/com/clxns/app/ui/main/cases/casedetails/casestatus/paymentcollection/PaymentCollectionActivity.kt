@@ -50,28 +50,28 @@ import kotlin.collections.ArrayList
 @AndroidEntryPoint
 class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePhoto {
 
-    lateinit var binding: ActivityPaymentCollectionBinding
-    lateinit var ctx: Context
-    val viewModel: PaymentCollectionViewModel by viewModels()
+    lateinit var binding : ActivityPaymentCollectionBinding
+    lateinit var ctx : Context
+    val viewModel : PaymentCollectionViewModel by viewModels()
 
     @Inject
-    lateinit var sessionManager: SessionManager
+    lateinit var sessionManager : SessionManager
     private val REQUEST_IMAGE_CAPTURE = 854
-    private var imageUri: Uri? = null
-    private var mCurrentPhotoPath: String? = null
-    private var addedPhotosList: ArrayList<Uri> = ArrayList()
-    private var photoB64List: ArrayList<String> = ArrayList()
-    private var cropImageLauncher: ActivityResultLauncher<Intent>? = null
-    lateinit var addImageAdapter: AddImageAdapter
+    private var imageUri : Uri? = null
+    private var mCurrentPhotoPath : String? = null
+    private var addedPhotosList : ArrayList<Uri> = ArrayList()
+    private var photoB64List : ArrayList<String> = ArrayList()
+    private var cropImageLauncher : ActivityResultLauncher<Intent>? = null
+    lateinit var addImageAdapter : AddImageAdapter
     var recoveryDate = ""
     var paymentType = "ONLINE"
-    var caseDetails: CaseDetailsResponse? = null
+    var caseDetails : CaseDetailsResponse? = null
 
     private var year = 0
     private var month = 0
     private var day = 0
-    var imageCameraPickerLauncher: ActivityResultLauncher<Intent>? = null
-    var imageGalleryPickerLauncher: ActivityResultLauncher<Intent>? = null
+    var imageCameraPickerLauncher : ActivityResultLauncher<Intent>? = null
+    var imageGalleryPickerLauncher : ActivityResultLauncher<Intent>? = null
 
     companion object {
         private val MONTHS = arrayOf(
@@ -88,13 +88,13 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
             "Nov",
             "Dec"
         )
-        private var IS_PAYMENT_DONE: Boolean = false
+        private var IS_PAYMENT_DONE : Boolean = false
     }
 
-    private lateinit var datePickerDialog: DatePickerDialog
+    private lateinit var datePickerDialog : DatePickerDialog
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
         setInit()
@@ -222,10 +222,11 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                         binding.txtStatus.text = nullSafeString(response.data.data?.paymentStatus)
                         binding.txtProductValue.text = nullSafeString(response.data.data?.loanType)
                         if (response.data.data?.allocationDate != null) {
-                            binding.txtDate.text = response.data.data?.allocationDate.toString().formatDate(
-                                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-                                "dd-MM-yyyy"
-                            )
+                            binding.txtDate.text =
+                                response.data.data?.allocationDate.toString().formatDate(
+                                    "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+                                    "dd-MM-yyyy"
+                                )
                         }
                         binding.txtBankName.text = nullSafeString(response.data.data?.fiData?.name)
                         var amount =
@@ -256,7 +257,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     binding.progressBar.hide()
                     if (!response.data?.error!!) {
                         toast(response.data.title!!)
-                        val l: LinearLayout = findViewById(R.id.mainLinearLayout)
+                        val l : LinearLayout = findViewById(R.id.mainLinearLayout)
                         l.forEachChildView {
                             it.isEnabled = false
                         }
@@ -279,7 +280,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         }
     }
 
-    fun View.forEachChildView(closure: (View) -> Unit) {
+    private fun View.forEachChildView(closure : (View) -> Unit) {
         closure(this)
         val groupView = this as? ViewGroup ?: return
         val size = groupView.childCount - 1
@@ -294,8 +295,8 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                 Log.i(javaClass.name, "month--->" + MONTHS[month])
 
                 //set current time as default time
-                var millis = System.currentTimeMillis()
-                var c = Calendar.getInstance()
+                val millis = System.currentTimeMillis()
+                val c = Calendar.getInstance()
                 c.timeInMillis = millis
                 val hours = c.get(Calendar.HOUR)
                 val minutes = c.get(Calendar.MINUTE)
@@ -371,10 +372,10 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         binding.spAmount.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
+                    parent : AdapterView<*>?,
+                    view : View?,
+                    position : Int,
+                    id : Long
                 ) {
                     if (position == 1 || position == 2) {
                         binding.paymentAmountEt.isEnabled = false
@@ -389,7 +390,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     }
                 }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {
+                override fun onNothingSelected(parent : AdapterView<*>?) {
 
                 }
             }
@@ -401,7 +402,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         val items = arrayOf<CharSequence>("Camera", "Choose from gallery")
         val builder = AlertDialog.Builder(ctx, R.style.AlertDialogCustom)
         builder.setTitle("Add File ")
-        builder.setItems(items) { _: DialogInterface?, item: Int ->
+        builder.setItems(items) { _ : DialogInterface?, item : Int ->
             when (items[item].toString()) {
                 "Camera" -> {
                     val permissions = arrayOf(
@@ -409,7 +410,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                     )
                     val rationale = "Please provide camera permission"
-                    val options: Permissions.Options = Permissions.Options()
+                    val options : Permissions.Options = Permissions.Options()
                         .setRationaleDialogTitle("Info")
                         .setSettingsDialogTitle("Warning")
                     Permissions.check(this, permissions, rationale, options,
@@ -419,8 +420,8 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                             }
 
                             override fun onDenied(
-                                context: Context?,
-                                deniedPermissions: ArrayList<String?>?
+                                context : Context?,
+                                deniedPermissions : ArrayList<String?>?
                             ) {
                                 // permission denied, block the feature.
                             }
@@ -433,7 +434,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                     )
                     val rationale = "Please provide storage permission"
-                    val options: Permissions.Options = Permissions.Options()
+                    val options : Permissions.Options = Permissions.Options()
                         .setRationaleDialogTitle("Info")
                         .setSettingsDialogTitle("Warning")
                     Permissions.check(this, permissions, rationale, options,
@@ -452,8 +453,8 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                             }
 
                             override fun onDenied(
-                                context: Context?,
-                                deniedPermissions: ArrayList<String?>?
+                                context : Context?,
+                                deniedPermissions : ArrayList<String?>?
                             ) {
                                 // permission denied, block the feature.
                             }
@@ -468,7 +469,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         imageCameraPickerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
             object : ActivityResultCallback<ActivityResult> {
-                override fun onActivityResult(result: ActivityResult) {
+                override fun onActivityResult(result : ActivityResult) {
                     Log.i(javaClass.name, "getResultCode---->" + result.resultCode)
                     if (result.resultCode == RESULT_OK) {
                         // There are no request codes
@@ -487,7 +488,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         imageGalleryPickerLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult(), object :
                 ActivityResultCallback<ActivityResult> {
-                override fun onActivityResult(result: ActivityResult?) {
+                override fun onActivityResult(result : ActivityResult?) {
                     if (result?.resultCode == RESULT_OK) {
                         val data = result.data
                         Log.i(javaClass.name, "data-->$data")
@@ -513,21 +514,27 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                                 addedPhotosList.add(imageUri)
                                 addImageAdapter.submitList(addedPhotosList)
                                 //Convert Base64
-                                var filepathString: String? = null
+                                var filepathString : String? = null
                                 try {
                                     filepathString = imageUri.getFileNameFromUri(ctx)
-                                } catch (e: Exception) {
+                                } catch (e : Exception) {
                                     e.printStackTrace()
-                                   toast("Error loading file")
+                                    toast("Error loading file")
                                 }
                                 if (filepathString != null) {
                                     try {
-                                        photoB64List.add("data:image/jpeg;base64,${File(filepathString).getBase64StringFile()}")
-                                    } catch (e: IOException) {
+                                        photoB64List.add(
+                                            "data:image/jpeg;base64,${
+                                                File(
+                                                    filepathString
+                                                ).getBase64StringFile()
+                                            }"
+                                        )
+                                    } catch (e : IOException) {
                                         e.printStackTrace()
                                     }
                                 }
-                            } catch (e: IOException) {
+                            } catch (e : IOException) {
                                 e.printStackTrace()
                             }
                         }
@@ -536,7 +543,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
             }
     }
 
-    private fun startCropActivity(uri: Uri) {
+    private fun startCropActivity(uri : Uri) {
         val intent = Intent(ctx, CropImageActivity::class.java)
         // Log.i(TAG,"startCropActivity  -- > "+uri.toString());
         intent.putExtra("sourceUri", uri.toString())
@@ -563,7 +570,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         }
     }
 
-    override fun removePhoto(uri: Uri) {
+    override fun removePhoto(uri : Uri) {
         photoB64List.removeAt(addedPhotosList.indexOf(uri))
         addedPhotosList.remove(uri)
         addImageAdapter.submitList(addedPhotosList)
@@ -573,7 +580,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         openFileUploadDialog()
     }
 
-    private fun validate(): Boolean {
+    private fun validate() : Boolean {
         if (binding.spAmount.selectedItem.toString().isBlank() ||
             binding.spAmount.selectedItem.toString().isEmpty() ||
             binding.spAmount.selectedItem.toString() == "Select an Option"
@@ -629,7 +636,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         return true
     }
 
-    private fun nullSafeString(value: String?): String {
+    private fun nullSafeString(value : String?) : String {
         if (value.isNullOrEmpty() || value.isNullOrBlank() || value == "null" || value == "0") {
             return "-"
         }
