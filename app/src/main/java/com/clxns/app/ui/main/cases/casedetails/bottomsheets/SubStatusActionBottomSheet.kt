@@ -3,7 +3,6 @@ package com.clxns.app.ui.main.cases.casedetails.bottomsheets
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,8 @@ import com.clxns.app.R
 import com.clxns.app.data.model.AdditionalFieldModel
 import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.databinding.SubStatusActionBottomSheetBinding
+import com.clxns.app.utils.hide
+import com.clxns.app.utils.show
 import com.clxns.app.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.text.ParseException
@@ -21,10 +22,10 @@ import java.util.*
 
 
 class SubStatusActionBottomSheet(
-    private var caseDetails: CaseDetailsResponse?, private var callback: OnClick
+    private var caseDetails : CaseDetailsResponse?, private var callback : OnClick
 ) : BottomSheetDialogFragment() {
 
-    private lateinit var actionBinding: SubStatusActionBottomSheetBinding
+    private lateinit var actionBinding : SubStatusActionBottomSheetBinding
     private var isPTP = false
     private var dispositionType = ""
     private var subDispositionType = ""
@@ -35,7 +36,7 @@ class SubStatusActionBottomSheet(
 
     companion object {
         const val TAG = "SubStatusActionBottomSheet"
-        private var year: Int = 0
+        private var year : Int = 0
         var month = 0
         var day = 0
         private val MONTHS = arrayOf(
@@ -54,23 +55,23 @@ class SubStatusActionBottomSheet(
         )
 
         fun newInstance(
-            caseDetails: CaseDetailsResponse?,
-            callback: OnClick
-        ): SubStatusActionBottomSheet {
+            caseDetails : CaseDetailsResponse?,
+            callback : OnClick
+        ) : SubStatusActionBottomSheet {
             return SubStatusActionBottomSheet(caseDetails, callback)
         }
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+        inflater : LayoutInflater,
+        container : ViewGroup?,
+        savedInstanceState : Bundle?
+    ) : View {
         isPTP = arguments?.getBoolean("isPTPAction") ?: false
         dispositionType = arguments?.getString("dispositionType") ?: ""
         subDispositionType = arguments?.getString("customNotFoundReason") ?: ""
@@ -78,17 +79,17 @@ class SubStatusActionBottomSheet(
         return actionBinding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (isPTP) {
             actionBinding.revisitDateLabel.text = "Future"
-            actionBinding.assignToTracerCB.visibility = View.GONE
-            actionBinding.revisitTimeLable.visibility = View.GONE
-            actionBinding.revisitTimeTxt.visibility = View.GONE
+            actionBinding.assignToTracerCB.hide()
+            actionBinding.revisitTimeLabel.hide()
+            actionBinding.revisitTimeTxt.hide()
             actionBinding.revisitDateTxt.hint = "Set future date"
         } else {
-            actionBinding.statusActionActiveLabel.visibility = View.GONE
-            actionBinding.statusActionActiveRG.visibility = View.GONE
+            actionBinding.statusActionActiveLabel.hide()
+            actionBinding.statusActionActiveRG.hide()
         }
 
         actionBinding.revisitDateTxt.setOnClickListener {
@@ -126,8 +127,8 @@ class SubStatusActionBottomSheet(
             || dispositionType == "Dispute"
             || dispositionType == "Customer Not Found"
         ) {
-            actionBinding.spStatus.visibility = View.VISIBLE
-            actionBinding.txtStatus.visibility = View.VISIBLE
+            actionBinding.spStatus.show()
+            actionBinding.txtStatus.show()
 
             val dispositionAdapter = ArrayAdapter.createFromResource(
                 requireContext(),
@@ -142,43 +143,43 @@ class SubStatusActionBottomSheet(
             actionBinding.spStatus.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
+                        parent : AdapterView<*>?,
+                        view : View?,
+                        position : Int,
+                        id : Long
                     ) {
                         if (position == 0) {
                             subDispositionType = ""
-                            actionBinding.llPayment.visibility = View.GONE
-                            actionBinding.llPaymentDetails.visibility = View.GONE
+                            actionBinding.llPayment.hide()
+                            actionBinding.llPaymentDetails.hide()
                             resetFields()
                         } else {
                             subDispositionType = actionBinding.spStatus.selectedItem.toString()
                         }
                         if (dispositionType == "PTP") {
-                            actionBinding.llPaymentDetails.visibility = View.GONE
+                            actionBinding.llPaymentDetails.hide()
                             if (position == 1) {
-                                actionBinding.llPayment.visibility = View.VISIBLE
+                                actionBinding.llPayment.show()
                                 resetFields()
                             }
                             if (position == 2) {
-                                actionBinding.llPayment.visibility = View.GONE
+                                actionBinding.llPayment.hide()
                                 resetFields()
                             }
                         }
                         if (dispositionType == "Dispute") {
-                            actionBinding.llPaymentDetails.visibility = View.VISIBLE
+                            actionBinding.llPaymentDetails.show()
                             if (position == 1) {
                                 resetFields()
-                                actionBinding.llPayment.visibility = View.VISIBLE
+                                actionBinding.llPayment.show()
                             } else {
                                 resetFields()
-                                actionBinding.llPayment.visibility = View.GONE
+                                actionBinding.llPayment.hide()
                             }
                         }
                     }
 
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    override fun onNothingSelected(parent : AdapterView<*>?) {
 
                     }
                 }
@@ -195,10 +196,10 @@ class SubStatusActionBottomSheet(
             actionBinding.spAmount.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
+                        parent : AdapterView<*>?,
+                        view : View?,
+                        position : Int,
+                        id : Long
                     ) {
                         if (position == 1 || position == 2) {
                             actionBinding.paymentAmountEt.isEnabled = false
@@ -213,14 +214,14 @@ class SubStatusActionBottomSheet(
                         }
                     }
 
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    override fun onNothingSelected(parent : AdapterView<*>?) {
 
                     }
                 }
 
         } else {
-            actionBinding.spStatus.visibility = View.GONE
-            actionBinding.txtStatus.visibility = View.GONE
+            actionBinding.spStatus.hide()
+            actionBinding.txtStatus.hide()
         }
 
     }
@@ -242,10 +243,10 @@ class SubStatusActionBottomSheet(
                 }"
                 timeFormatted = "$time:00.000Z"
                 val fmt = SimpleDateFormat("HH:mm", Locale.getDefault())
-                var date: Date? = null
+                var date : Date? = null
                 try {
                     date = fmt.parse(time)
-                } catch (e: ParseException) {
+                } catch (e : ParseException) {
                     e.printStackTrace()
                 }
                 actionBinding.revisitTimeTxt.text = formatter.format(date)
@@ -259,7 +260,7 @@ class SubStatusActionBottomSheet(
         mTimePicker.show()
     }
 
-    private fun showDatePicker(isRecovery: Boolean) {
+    private fun showDatePicker(isRecovery : Boolean) {
         val calendar = Calendar.getInstance()
         year = calendar.get(Calendar.YEAR)
         day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -268,7 +269,7 @@ class SubStatusActionBottomSheet(
         val datePickerDialog =
             DatePickerDialog(requireContext(), { _, year, month, day ->
                 val m = month + 1
-                Log.i(javaClass.name, "month--->" + MONTHS[month])
+
                 if (isRecovery) {
                     actionBinding.txtPaymentOrRecoveryDateValue.text = "$day/$m/$year"
                     dateFormattedRecovery =
@@ -279,8 +280,8 @@ class SubStatusActionBottomSheet(
                         || actionBinding.revisitTimeTxt.text.toString().isBlank()
                     ) {
                         //set current time as default time
-                        var millis = System.currentTimeMillis()
-                        var c = Calendar.getInstance()
+                        val millis = System.currentTimeMillis()
+                        val c = Calendar.getInstance()
                         c.timeInMillis = millis
                         val hours = c.get(Calendar.HOUR)
                         val minutes = c.get(Calendar.MINUTE)
@@ -302,7 +303,7 @@ class SubStatusActionBottomSheet(
         datePickerDialog.show()
     }
 
-    private fun validate(): Boolean {
+    private fun validate() : Boolean {
         var success = true
         var message = ""
         if (isPTP && success && actionBinding.statusActionActiveRG.checkedRadioButtonId == -1) {
@@ -369,8 +370,11 @@ class SubStatusActionBottomSheet(
 
         additionalFields.ptpProbability =
             if (actionBinding.statusActionActiveRG.checkedRadioButtonId == actionBinding.rb80.id) "80% >" else
-                (if (actionBinding.statusActionActiveRG.checkedRadioButtonId == actionBinding.rb50.id) "50% - 80%" else
-                    if (actionBinding.statusActionActiveRG.checkedRadioButtonId == actionBinding.rb30.id) "50% <" else "")
+                (when (actionBinding.statusActionActiveRG.checkedRadioButtonId) {
+                    actionBinding.rb50.id -> "50% - 80%"
+                    actionBinding.rb30.id -> "50% <"
+                    else -> ""
+                })
 
         return true
     }
@@ -385,11 +389,11 @@ class SubStatusActionBottomSheet(
 
     interface OnClick {
         fun onClick(
-            dispositionType: String,
-            subDispositionType: String,
-            followUpDate: String,
-            remark: String,
-            additionalFields: AdditionalFieldModel?
+            dispositionType : String,
+            subDispositionType : String,
+            followUpDate : String,
+            remark : String,
+            additionalFields : AdditionalFieldModel?
         )
     }
 

@@ -112,7 +112,7 @@ class RepossessionsSubmitActivity : AppCompatActivity(), AddImageAdapter.removeP
             )
         } else {
             val items = arrayOf<CharSequence>("Camera", "Choose from gallery")
-            val builder = AlertDialog.Builder(ctx!!, R.style.AlertDialogCustom)
+            val builder = AlertDialog.Builder(ctx)
             builder.setTitle("Add File ")
             builder.setItems(items) { dialog: DialogInterface?, item: Int ->
                 when (items[item].toString()) {

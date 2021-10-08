@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bottomsheet_background"
+    android:background="@drawable/bottom_sheet_background"
     android:orientation="vertical"
     android:padding="@dimen/dp16">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/imgDash"
@@ -20,17 +22,17 @@
                 android:layout_height="@dimen/dp8"
                 android:layout_gravity="center"
                 android:background="@drawable/bottom_sheet_dash"
-                android:paddingHorizontal="24dp" />
+                android:paddingHorizontal="@dimen/dp18" />
 
             <TextView
                 android:id="@+id/statusActionActiveLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
-                android:fontFamily="@font/gtwalsheimpromedium"
-                android:text="Probability"
+                android:text="@string/probability"
                 android:textColor="@color/text_black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/sp18"
+                android:textStyle="bold" />
 
             <RadioGroup
                 android:id="@+id/statusActionActiveRG"
@@ -43,7 +45,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/green"
-                    android:fontFamily="@font/gtwalsheimproregular"
                     android:text="@string/greater_than_80"
                     android:textColor="@color/text_black" />
 
@@ -52,8 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/quantum_orange"
-                    android:fontFamily="@font/gtwalsheimproregular"
-                    android:text="50% - 80%"
+                    android:text="@string/between_50_80"
                     android:textColor="@color/text_black" />
 
                 <RadioButton
@@ -61,9 +61,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:buttonTint="@color/light_red"
-                    android:fontFamily="@font/gtwalsheimproregular"
                     android:text="@string/less_than_50"
-                    android:textColor="@color/text_black" />
+                    android:textColor="@color/text_black"
+                    tools:ignore="TextContrastCheck" />
             </RadioGroup>
 
 
@@ -72,35 +72,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp12"
-                android:fontFamily="@font/gtwalsheimpromedium"
-                android:text="Status"
+                android:text="@string/status"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/sp18"
+                android:textStyle="bold" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/dp6"
                 android:background="@drawable/background_spinner">
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spStatus"
-                    style="@style/spinner_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="@dimen/dp4"
+                    android:theme="@style/spinnerTheme"
                     android:overlapAnchor="false"
                     android:paddingVertical="@dimen/dp10"
                     android:spinnerMode="dialog"
-                    android:theme="@style/spinnerTheme" />
+                    tools:ignore="SpeakableTextPresentCheck" />
             </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/ll_payment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/dp10"
                 android:background="@drawable/background_spinner"
                 android:orientation="vertical">
 
@@ -108,7 +108,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:baselineAligned="false"
                     android:weightSum="2">
 
                     <LinearLayout
@@ -122,30 +123,29 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp10"
-                            android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="Amount Type"
+                            android:text="@string/amount_type"
                             android:textAllCaps="false"
                             android:textColor="@color/text_black"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp12" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/background_edittext_roundable">
+                            android:layout_marginTop="@dimen/dp4"
+                            android:layout_marginEnd="@dimen/dp30"
+                            android:background="@drawable/background_edittext_round">
 
                             <androidx.appcompat.widget.AppCompatSpinner
                                 android:id="@+id/spAmount"
-                                style="@style/spinner_style_2"
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp"
-                                android:elevation="@dimen/dp4"
+                                android:layout_height="@dimen/dp30"
+                                android:elevation="@dimen/dp3"
                                 android:overlapAnchor="false"
-                                android:padding="3dp"
+                                android:padding="@dimen/dp4"
                                 android:spinnerMode="dialog"
-                                android:textSize="10sp"
-                                android:theme="@style/spinnerTheme" />
+                                android:textSize="@dimen/sp10"
+                                android:theme="@style/spinnerTheme"
+                                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -161,8 +161,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp10"
-                            android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="Collectable Amount"
+                            android:labelFor="@id/payment_amount_et"
+                            android:text="@string/collectable_amount"
                             android:textAllCaps="false"
                             android:textColor="@color/text_black"
                             android:textSize="@dimen/sp12" />
@@ -170,16 +170,16 @@
                         <EditText
                             android:id="@+id/payment_amount_et"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/background_edittext_roundable"
-                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:layout_height="@dimen/dp30"
+                            android:layout_marginTop="@dimen/dp4"
+                            android:layout_marginEnd="@dimen/dp30"
+                            android:background="@drawable/background_edittext_round"
                             android:importantForAutofill="no"
                             android:inputType="number"
-                            android:padding="3dp"
-                            android:textSize="12sp"
-                            android:visibility="visible" />
+                            android:padding="@dimen/dp4"
+                            android:textSize="@dimen/sp12"
+                            android:visibility="visible"
+                            tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -188,47 +188,46 @@
                     android:id="@+id/txtPaymentMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="@dimen/dp10"
                     android:layout_marginTop="@dimen/dp16"
-                    android:fontFamily="@font/gtwalsheimproregular"
-                    android:text="Payment Mode"
+                    android:text="@string/payment_mode"
                     android:textAllCaps="false"
                     android:textColor="@color/text_black"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/sp12" />
 
                 <RadioGroup
                     android:id="@+id/rgPayment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="@dimen/dp10"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/rbOnline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gtwalsheimproregular"
                         android:text="@string/online"
                         android:textColor="@color/text_black"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/sp12"
+                        tools:ignore="TextContrastCheck" />
 
                     <RadioButton
                         android:id="@+id/rbCheque"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gtwalsheimproregular"
                         android:text="@string/cheque"
                         android:textColor="@color/text_black"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/sp12"
+                        tools:ignore="TextContrastCheck" />
 
                     <RadioButton
                         android:id="@+id/rbCash"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gtwalsheimproregular"
                         android:text="@string/cash"
                         android:textColor="@color/text_black"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/sp12"
+                        tools:ignore="TextContrastCheck" />
                 </RadioGroup>
 
 
@@ -236,7 +235,8 @@
                     android:id="@+id/ll_payment_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:baselineAligned="false"
                     android:weightSum="2">
 
                     <LinearLayout
@@ -250,26 +250,25 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp16"
-                            android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="Payment/Recovery Date"
+                            android:text="@string/payment_recovery_date"
                             android:textAllCaps="false"
                             android:textColor="@color/text_black"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp12" />
 
                         <TextView
                             android:id="@+id/txtPaymentOrRecoveryDateValue"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="30dp"
+                            android:layout_height="@dimen/dp30"
+                            android:layout_marginTop="@dimen/dp4"
+                            android:layout_marginEnd="@dimen/dp30"
+                            android:background="@drawable/background_edittext_round"
                             android:gravity="center_vertical"
-                            android:background="@drawable/background_edittext_roundable"
-                            android:fontFamily="@font/gtwalsheimpromedium"
-                            android:padding="3dp"
+                            android:padding="@dimen/dp3"
                             android:paddingHorizontal="@dimen/dp8"
                             android:paddingVertical="@dimen/dp10"
                             android:textColor="@color/text_black"
-                            android:textSize="12sp" />
+                            android:textSize="@dimen/sp12"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -283,32 +282,31 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp16"
-                            android:fontFamily="@font/gtwalsheimproregular"
-                            android:text="Reference/Cheque No."
+                            android:text="@string/reference_cheque_no"
                             android:textAllCaps="false"
                             android:textColor="@color/text_black"
-                            android:textSize="12sp"
+                            android:textSize="@dimen/sp12"
                             android:visibility="visible" />
 
                         <EditText
                             android:id="@+id/edtReferenceType"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginEnd="30dp"
-                            android:background="@drawable/background_edittext_roundable"
-                            android:fontFamily="@font/gtwalsheimproregular"
+                            android:layout_height="@dimen/dp30"
+                            android:layout_marginTop="@dimen/dp4"
+                            android:layout_marginEnd="@dimen/dp30"
+                            android:background="@drawable/background_edittext_round"
                             android:importantForAutofill="no"
                             android:inputType="number"
-                            android:padding="3dp"
-                            android:textSize="12sp"
-                            android:visibility="visible" />
+                            android:padding="@dimen/dp3"
+                            android:textSize="@dimen/sp12"
+                            android:visibility="visible"
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
                     </LinearLayout>
                 </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="10dp" />
+                    android:layout_height="@dimen/dp10" />
             </LinearLayout>
 
 
@@ -317,48 +315,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp12"
-                android:fontFamily="@font/gtwalsheimpromedium"
-                android:text="Revisit Date"
+                android:text="@string/revisit_date"
                 android:textColor="@color/text_black"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/revisitDateTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp8"
-                android:background="@drawable/background_edittext_roundable"
-                android:fontFamily="@font/gtwalsheimpromedium"
-                android:hint="Set revisit date"
-                android:paddingVertical="15dp"
-                android:paddingStart="@dimen/dp10"
-                android:paddingEnd="2dp"
+                android:background="@drawable/background_edittext_round"
+                android:hint="@string/set_revisit_date"
+                android:paddingVertical="@dimen/dp14"
+                android:paddingStart="@dimen/dp8"
+                android:paddingEnd="@dimen/dp8"
                 android:textColor="@color/text_black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp14"
+                android:textStyle="bold"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
-                android:id="@+id/revisitTimeLable"
+                android:id="@+id/revisitTimeLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp12"
-                android:fontFamily="@font/gtwalsheimpromedium"
-                android:text="Revisit Time"
+                android:text="@string/revisit_time"
                 android:textColor="@color/text_black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/sp18"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/revisitTimeTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp8"
-                android:background="@drawable/background_edittext_roundable"
-                android:fontFamily="@font/gtwalsheimpromedium"
-                android:hint="Set revisit time"
-                android:paddingVertical="15dp"
-                android:paddingStart="@dimen/dp10"
-                android:paddingEnd="2dp"
+                android:background="@drawable/background_edittext_round"
+                android:hint="@string/set_revisit_time"
+                android:paddingVertical="@dimen/sp14"
+                android:paddingStart="@dimen/dp8"
+                android:paddingEnd="@dimen/dp8"
                 android:textColor="@color/text_black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp14"
+                android:textStyle="bold"
+                tools:ignore="TextContrastCheck" />
 
             <TextView
                 android:id="@+id/statusActionRemarkLabel"
@@ -366,29 +366,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp12"
                 android:buttonTint="@color/colorPrimary"
-                android:fontFamily="@font/gtwalsheimpromedium"
-                android:text="Remarks"
+                android:text="@string/remarks"
                 android:textColor="@color/text_black"
-                android:textSize="18sp" />
+                android:textSize="@dimen/sp18"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/statusActionRemarkET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp8"
-                android:background="@drawable/background_edittext_roundable"
-                android:fontFamily="@font/gtwalsheimproregular"
+                android:background="@drawable/background_edittext_round"
                 android:gravity="top"
-                android:hint="Type here..."
+                android:hint="@string/type_here"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:lines="5"
-                android:paddingVertical="10dp"
-                android:paddingStart="@dimen/dp10"
-                android:paddingEnd="2dp"
+                android:paddingVertical="@dimen/dp8"
+                android:paddingStart="@dimen/dp8"
+                android:paddingEnd="@dimen/dp8"
                 android:scrollbars="vertical"
                 android:textColor="@color/text_black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp14"
+                tools:ignore="TextContrastCheck" />
 
             <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/assignToTracerCB"
@@ -396,8 +396,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
                 android:buttonTint="@color/colorPrimary"
-                android:fontFamily="@font/gtwalsheimproregular"
-                android:text="Assign To Tracer"
+                android:text="@string/assign_to_tracer"
                 android:textSize="16sp" />
 
             <com.google.android.material.button.MaterialButton
@@ -407,12 +406,11 @@
                 android:layout_gravity="end"
                 android:layout_marginTop="@dimen/dp16"
                 android:backgroundTint="@color/colorPrimary"
-                android:text="Done"
+                android:text="@string/done"
                 android:textColor="@color/white" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 
 
 </LinearLayout>

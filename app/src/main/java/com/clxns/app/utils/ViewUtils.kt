@@ -87,7 +87,7 @@ fun String.makeFirstLetterCapital() : String {
 fun String.convertServerDateToNormal(newFormat : String) : String? {
     var date = this
     var spf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-    spf.timeZone = TimeZone.getTimeZone("GMT")
+    spf.timeZone = TimeZone.getDefault()
     var newDate : Date? = null
     try {
         newDate = spf.parse(date)

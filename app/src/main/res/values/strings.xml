@@ -114,7 +114,7 @@
     <string name="LocationVerified">Location Check In</string>
     <string name="online">Online</string>
     <string name="cheque">Cheque</string>
-    <string name="cash">cash</string>
+    <string name="cash">Cash</string>
     <string name="upload_screenshots">Upload screenshots</string>
     <string name="myPlas">My Plans</string>
     <string name="MyPlans">My Plans</string>
@@ -211,6 +211,16 @@
     <string name="remarks">Remarks</string>
     <string name="upload_supporting">Upload Supporting</string>
     <string name="plan_list_is_empty">Plan list is empty</string>
+    <string name="probability">Probability</string>
+    <string name="between_50_80">50% - 80%</string>
+    <string name="reference_cheque_no">Reference/Cheque No.</string>
+    <string name="revisit_date">Revisit Date</string>
+    <string name="set_revisit_date">Set revisit date</string>
+    <string name="revisit_time">Revisit Time</string>
+    <string name="set_revisit_time">Set revisit time</string>
+    <string name="type_here">Type here…</string>
+    <string name="assign_to_tracer">Assign To Tracer</string>
+    <string name="done">Done</string>
 
 
     <string-array name="yesNo">

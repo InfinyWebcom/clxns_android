@@ -17,39 +17,39 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PaymentCollectionViewModel @Inject constructor(
-    private val repository: PaymentCollectionRepository
+    private val repository : PaymentCollectionRepository
 ) : ViewModel() {
 
-    var loanAccountNumber: String? = null
-    var dispositionId: String? = null
-    var location: String? = null
-    lateinit var mainSupporting: ArrayList<String>
+    var loanAccountNumber : String? = null
+    var dispositionId : String? = null
+    var location : String? = null
+    lateinit var mainSupporting : ArrayList<String>
 
-    private val _responseCaseDetails: MutableLiveData<NetworkResult<CaseDetailsResponse>> =
+    private val _responseCaseDetails : MutableLiveData<NetworkResult<CaseDetailsResponse>> =
         MutableLiveData()
-    val responseCaseDetails: LiveData<NetworkResult<CaseDetailsResponse>> = _responseCaseDetails
+    val responseCaseDetails : LiveData<NetworkResult<CaseDetailsResponse>> = _responseCaseDetails
 
-    fun getCaseDetails(token: String, loanAccountNumber: String) = viewModelScope.launch {
+    fun getCaseDetails(token : String, loanAccountNumber : String) = viewModelScope.launch {
         repository.getCaseDetails(token, loanAccountNumber).collect { values ->
             _responseCaseDetails.value = values
         }
     }
 
-    private val _responseAddPayment: MutableLiveData<NetworkResult<HomeStatisticsResponse>> =
+    private val _responseAddPayment : MutableLiveData<NetworkResult<HomeStatisticsResponse>> =
         MutableLiveData()
-    val responseAddPayment: LiveData<NetworkResult<HomeStatisticsResponse>> = _responseAddPayment
+    val responseAddPayment : LiveData<NetworkResult<HomeStatisticsResponse>> = _responseAddPayment
 
     fun addPayment(
-        token: String,
-        leadId: String,
-        loanNo: String,
-        amtType: String,
-        paymentMode: String,
-        recoveryDate: String,
-        refNo: String,
-        chequeNo: String,
-        remark: String,
-        supporting: Array<String>
+        token : String,
+        leadId : String,
+        loanNo : String,
+        amtType : String,
+        paymentMode : String,
+        recoveryDate : String,
+        refNo : String,
+        chequeNo : String,
+        remark : String,
+        supporting : Array<String>
     ) = viewModelScope.launch {
         repository.addPayment(
             token, leadId, loanNo, amtType,
@@ -59,14 +59,15 @@ class PaymentCollectionViewModel @Inject constructor(
         }
     }
 
-    private val _responseSaveCheckIn: MutableLiveData<NetworkResult<MyPlanModel>> =
+    private val _responseSaveCheckIn : MutableLiveData<NetworkResult<MyPlanModel>> =
         MutableLiveData()
-    val responseSaveCheckIn: LiveData<NetworkResult<MyPlanModel>> = _responseSaveCheckIn
+    val responseSaveCheckIn : LiveData<NetworkResult<MyPlanModel>> = _responseSaveCheckIn
 
     fun saveCheckInData(
-        token: String,
-        body: CaseCheckInBody
+        token : String,
+        body : CaseCheckInBody
     ) = viewModelScope.launch {
+        _responseSaveCheckIn.value = NetworkResult.Loading()
         repository.saveCheckInData(
             token, body
         ).collect { values ->

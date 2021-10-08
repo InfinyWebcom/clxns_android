@@ -156,8 +156,6 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
 
             } else {
                 if (validate()) {
-                    binding.progressBar.show()
-
                     //additional fields
                     val additionalField = AdditionalFieldModel()
                     additionalField.recoveryDate = recoveryDate
@@ -215,7 +213,6 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         viewModel.responseCaseDetails.observe(this) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    binding.progressBar.hide()
                     if (!response.data?.error!!) {
                         caseDetails = response.data
                         binding.txtName.text = nullSafeString(response.data.data?.name)
@@ -229,7 +226,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                                 )
                         }
                         binding.txtBankName.text = nullSafeString(response.data.data?.fiData?.name)
-                        var amount =
+                        val amount =
                             (response.data.data?.totalDueAmount?.minus(response.data.data?.amountCollected!!))
                         binding.collectableAmountEt.text =
                             "₹${amount}"/*{nullSafeString(amount.toString())}*/
@@ -240,12 +237,10 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {
-                    binding.progressBar.hide()
                     toast(response.message!!)
                     // show error message
                 }
                 is NetworkResult.Loading -> {
-                    binding.progressBar.show()
                     // show a progress bar
                 }
             }
@@ -254,7 +249,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         viewModel.responseSaveCheckIn.observe(this) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    binding.progressBar.hide()
+                    binding.paymentProgressBar.hide()
                     if (!response.data?.error!!) {
                         toast(response.data.title!!)
                         val l : LinearLayout = findViewById(R.id.mainLinearLayout)
@@ -268,12 +263,12 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     }
                 }
                 is NetworkResult.Error -> {
-                    binding.progressBar.hide()
+                    binding.paymentProgressBar.hide()
                     toast(response.message!!)
                     // show error message
                 }
                 is NetworkResult.Loading -> {
-                    binding.progressBar.show()
+                    binding.paymentProgressBar.show()
                     // show a progress bar
                 }
             }
@@ -400,7 +395,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
 
     private fun openFileUploadDialog() {
         val items = arrayOf<CharSequence>("Camera", "Choose from gallery")
-        val builder = AlertDialog.Builder(ctx, R.style.AlertDialogCustom)
+        val builder = AlertDialog.Builder(ctx)
         builder.setTitle("Add File ")
         builder.setItems(items) { _ : DialogInterface?, item : Int ->
             when (items[item].toString()) {

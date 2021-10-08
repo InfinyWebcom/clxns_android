@@ -49,8 +49,8 @@
             android:id="@+id/mainLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp16"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -184,7 +184,6 @@
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spAmount"
-                    style="@style/spinner_style"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="@dimen/dp4"
@@ -317,7 +316,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/background_edittext_roundable"
+                android:background="@drawable/background_edittext_round"
                 android:fontFamily="@font/gtwalsheimpromedium"
                 android:paddingHorizontal="@dimen/dp8"
                 android:paddingVertical="@dimen/dp10"
@@ -341,7 +340,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/background_edittext_roundable"
+                android:background="@drawable/background_edittext_round"
                 android:fontFamily="@font/gtwalsheimproregular"
                 android:importantForAutofill="no"
                 android:inputType="number"
@@ -367,7 +366,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/background_edittext_roundable"
+                android:background="@drawable/background_edittext_round"
                 android:fontFamily="@font/gtwalsheimproregular"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
@@ -424,12 +423,10 @@
         android:textColor="@color/white" />
 
     <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|center_vertical"
-        android:clickable="true"
-        android:focusable="true"
-        android:elevation="10dp"
-        android:padding="185dp" />
+        android:id="@+id/payment_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
 </RelativeLayout>

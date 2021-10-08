@@ -40,7 +40,8 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
         var followUpDate = ""
         if (data.followUp != null) {
             followUpDate =
-                "Follow Up Date :  " + data.followUp.convertServerDateToNormal("dd, MMM yyyy")
+                "Follow Up Date :  " + data.followUp.convertServerDateToNormal("dd, MMM yyyy") +
+                        ", Time : " + data.followUp.convertServerDateToNormal("hh:mm a")
         }
         if (data.subDisposition != null) {
             var subStatus = data.subDisposition.name
