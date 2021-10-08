@@ -6,15 +6,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.clxns.app.R
@@ -27,7 +26,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
@@ -35,35 +33,35 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.PlacesClient
 
-class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
+class RepossessionMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private var map: GoogleMap? = null
-    private var cameraPosition: CameraPosition? = null
+    private var map : GoogleMap? = null
+    private var cameraPosition : CameraPosition? = null
     private val defaultLocation = LatLng(-33.8523341, 151.2106085)
-    lateinit var view1: View
+    lateinit var view1 : View
 
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
-    private var lastKnownLocation: Location? = null
-    private var likelyPlaceNames: Array<String?> = arrayOfNulls(0)
-    private var likelyPlaceAddresses: Array<String?> = arrayOfNulls(0)
-    private var likelyPlaceAttributions: Array<List<*>?> = arrayOfNulls(0)
-    private var likelyPlaceLatLngs: Array<LatLng?> = arrayOfNulls(0)
+    private var lastKnownLocation : Location? = null
+    private var likelyPlaceNames : Array<String?> = arrayOfNulls(0)
+    private var likelyPlaceAddresses : Array<String?> = arrayOfNulls(0)
+    private var likelyPlaceAttributions : Array<List<*>?> = arrayOfNulls(0)
+    private var likelyPlaceLatLngs : Array<LatLng?> = arrayOfNulls(0)
 
     val latlang = LatLng(19.0434696, 73.021306)
     val latlang1 = LatLng(19.0441479, 73.0214671)
     val latlang2 = LatLng(19.0453153, 73.0244009)
 
-    lateinit var locationArrayList: ArrayList<LatLng>
+    lateinit var locationArrayList : ArrayList<LatLng>
 
-    lateinit var ctx: Context
-    lateinit var reposseionMapBinding: ActivityReposseionMapBinding
-    val reposessionMapViewModel: RepossesionMapViewModel by viewModels()
+    lateinit var ctx : Context
+    lateinit var reposseionMapBinding : ActivityReposseionMapBinding
+    val reposessionMapViewModel : RepossesionMapViewModel by viewModels()
     private var locationPermissionGranted = false
-    private lateinit var placesClient: PlacesClient
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var placesClient : PlacesClient
+    private lateinit var fusedLocationProviderClient : FusedLocationProviderClient
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
 
         setInit()
@@ -139,16 +137,15 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager =
+    private fun isLocationEnabled() : Boolean {
+        val locationManager : LocationManager =
             ctx.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )
     }
 
-    override fun onMapReady(map: GoogleMap) {
-        Log.i(javaClass.name, "onMapReady---------->")
+    override fun onMapReady(map : GoogleMap) {
         this.map = map
         for (latLong in locationArrayList) {
 
@@ -162,11 +159,11 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         this.map?.setInfoWindowAdapter(object : GoogleMap.InfoWindowAdapter {
             // Return null here, so that getInfoContents() is called next.
-            override fun getInfoWindow(arg0: Marker): View? {
+            override fun getInfoWindow(arg0 : Marker) : View? {
                 return null
             }
 
-            override fun getInfoContents(marker: Marker): View {
+            override fun getInfoContents(marker : Marker) : View {
                 // Inflate the layouts for the info window, title and snippet.
 
                 val customInfoContentsBinding = CustomInfoContentsBinding.inflate(layoutInflater)
@@ -176,7 +173,6 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     customInfoContentsBinding.root.findViewById<FrameLayout>(R.id.map), false
                 )
                 val title = infoWindow.findViewById<TextView>(R.id.title)
-                Log.i(javaClass.name, "getInfoContentscount--->" + marker.title)
                 title.text = marker.title
                 val snippet = infoWindow.findViewById<TextView>(R.id.snippet)
                 snippet.text = marker.snippet
@@ -203,8 +199,6 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 locationResult.addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         // Set the map's camera position to the current location of the device.
-
-                        Log.i("getDeviceLocation", "task.result--->" + task.result)
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
                             map?.moveCamera(
@@ -228,13 +222,11 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 }
             }
-        } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message, e)
+        } catch (e : SecurityException) {
         }
     }
 
     private fun updateLocationUI() {
-        Log.i(javaClass.name, "updateLocationUI--->" + map)
         if (map == null) {
             return
         }
@@ -247,8 +239,7 @@ class RepossesionMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 map?.uiSettings?.isMyLocationButtonEnabled = false
                 lastKnownLocation = null
             }
-        } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message, e)
+        } catch (e : SecurityException) {
         }
     }
 

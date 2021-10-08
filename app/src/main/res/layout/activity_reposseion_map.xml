@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
 
     <RelativeLayout
@@ -17,8 +18,9 @@
             android:id="@+id/imgBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back_24"
             app:tint="@color/white"
-            android:src="@drawable/ic_arrow_back_24" />
+            tools:ignore="ImageContrastCheck" />
 
 
         <TextView
@@ -27,22 +29,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp16"
             android:layout_toEndOf="@id/imgBack"
-            android:fontFamily="@font/gtwalsheimprobold"
-            android:text="Repossession"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/sp18" />
 
     </RelativeLayout>
-
-
-<!--    <androidx.fragment.app.FragmentContainerView-->
-<!--        android:id="@+id/mapFrag"-->
-<!--        android:layout_marginTop="-20dp"-->
-<!--        android:layout_below="@+id/repossession_map_custom_toolbar"-->
-<!--        android:name="com.google.android.gms.maps.SupportMapFragment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" />-->
 
 
     <com.google.android.material.button.MaterialButton
@@ -51,10 +42,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/dp32"
-        app:cornerRadius="@dimen/dp32"
         android:paddingVertical="@dimen/dp16"
-        android:fontFamily="@font/gtwalsheimpromedium"
         android:text="@string/DropOffSet"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        app:cornerRadius="@dimen/dp32"
+        tools:ignore="TextContrastCheck" />
 
 </RelativeLayout>

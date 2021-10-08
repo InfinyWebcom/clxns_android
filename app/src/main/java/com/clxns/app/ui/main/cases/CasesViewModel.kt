@@ -16,53 +16,63 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CasesViewModel @Inject constructor(
-    private val repository: CasesRepository
+    private val repository : CasesRepository
 ) : ViewModel() {
 
-    private var _dispositionsResponse: MutableLiveData<List<String>> = MutableLiveData()
-    val dispositionsResponse: LiveData<List<String>> = _dispositionsResponse
+    private var _dispositionsResponse : MutableLiveData<List<String>> = MutableLiveData()
+    val dispositionsResponse : LiveData<List<String>> = _dispositionsResponse
 
-    private var _subDispositionsResponse: MutableLiveData<List<String>> = MutableLiveData()
-    val subDispositionsResponse: LiveData<List<String>> = _subDispositionsResponse
+    private var _subDispositionsResponse : MutableLiveData<List<String>> = MutableLiveData()
+    val subDispositionsResponse : LiveData<List<String>> = _subDispositionsResponse
 
-    private var _dispositionsIdResponse: MutableLiveData<Int> = MutableLiveData()
-    val dispositionsIdResponse: LiveData<Int> = _dispositionsIdResponse
+    private var _dispositionsIdResponse : MutableLiveData<Int> = MutableLiveData()
+    val dispositionsIdResponse : LiveData<Int> = _dispositionsIdResponse
 
-    private var _subDispositionsIdResponse: MutableLiveData<Int> = MutableLiveData()
-    val subDispositionsIdResponse: LiveData<Int> = _subDispositionsIdResponse
+    private var _subDispositionsIdResponse : MutableLiveData<Int> = MutableLiveData()
+    val subDispositionsIdResponse : LiveData<Int> = _subDispositionsIdResponse
 
-    private val _responseCaseList: MutableLiveData<NetworkResult<CasesResponse>> = MutableLiveData()
-    val responseCaseList: LiveData<NetworkResult<CasesResponse>> = _responseCaseList
-
-    private val _responseAddToPlan: MutableLiveData<NetworkResult<AddToPlanModel>> =
+    private val _responseCaseList : MutableLiveData<NetworkResult<CasesResponse>> =
         MutableLiveData()
-    val responseAddToPlan: LiveData<NetworkResult<AddToPlanModel>> = _responseAddToPlan
+    val responseCaseList : LiveData<NetworkResult<CasesResponse>> = _responseCaseList
 
-    private val _responseRemovePlan: MutableLiveData<NetworkResult<UnPlanResponse>> =
+    private val _responseAddToPlan : MutableLiveData<NetworkResult<AddToPlanModel>> =
         MutableLiveData()
-    val responseRemovePlan: LiveData<NetworkResult<UnPlanResponse>> = _responseRemovePlan
+    val responseAddToPlan : LiveData<NetworkResult<AddToPlanModel>> = _responseAddToPlan
+
+    private val _responseRemovePlan : MutableLiveData<NetworkResult<UnPlanResponse>> =
+        MutableLiveData()
+    val responseRemovePlan : LiveData<NetworkResult<UnPlanResponse>> = _responseRemovePlan
 
     //Network Calls
     fun getCasesList(
-        token: String,
-        searchTxt: String,
-        dispositionId: String,
-        subDispositionId: String,
-        fromDate: String,
-        toDate: String,
-        visitPending: String,
-        followUp: String
+        token : String,
+        searchTxt : String,
+        dispositionId : String,
+        subDispositionId : String,
+        fromDate : String,
+        toDate : String,
+        visitPending : String,
+        followUp : String
     ) = viewModelScope.launch {
-        repository.getCasesList(token, searchTxt, dispositionId, subDispositionId, fromDate, toDate,visitPending,followUp)
+        repository.getCasesList(
+            token,
+            searchTxt,
+            dispositionId,
+            subDispositionId,
+            fromDate,
+            toDate,
+            visitPending,
+            followUp
+        )
             .collect { values ->
                 _responseCaseList.value = values
             }
     }
 
     fun addToPlan(
-        token: String,
-        leadId: String,
-        planDate: String
+        token : String,
+        leadId : String,
+        planDate : String
     ) = viewModelScope.launch {
         _responseAddToPlan.value = NetworkResult.Loading()
         repository.addToPlan(token, leadId, planDate).collect {
@@ -70,7 +80,7 @@ class CasesViewModel @Inject constructor(
         }
     }
 
-    fun removePlan(token: String, leadId: String) = viewModelScope.launch {
+    fun removePlan(token : String, leadId : String) = viewModelScope.launch {
         _responseRemovePlan.value = NetworkResult.Loading()
         repository.removePlan(token, leadId).collect {
             _responseRemovePlan.value = it
@@ -84,19 +94,19 @@ class CasesViewModel @Inject constructor(
         }
     }
 
-    fun getSubDispositionsFromRoomDB(dispositionId: Int) = viewModelScope.launch {
+    fun getSubDispositionsFromRoomDB(dispositionId : Int) = viewModelScope.launch {
         repository.getAllSubDispositionsFromRoomDB(dispositionId).collect {
             _subDispositionsResponse.value = it
         }
     }
 
-    fun getDispositionIdFromRoomDB(dispositionName: String) = viewModelScope.launch {
+    fun getDispositionIdFromRoomDB(dispositionName : String) = viewModelScope.launch {
         repository.getDispositionIdFromRoomDB(dispositionName).collect {
             _dispositionsIdResponse.value = it
         }
     }
 
-    fun getSubDispositionIdFromRoomDB(subDispositionName: String) = viewModelScope.launch {
+    fun getSubDispositionIdFromRoomDB(subDispositionName : String) = viewModelScope.launch {
         repository.getSubDispositionIdFromRoomDB(subDispositionName).collect {
             _subDispositionsIdResponse.value = it
         }

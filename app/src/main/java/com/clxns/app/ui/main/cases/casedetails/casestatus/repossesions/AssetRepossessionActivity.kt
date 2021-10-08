@@ -12,10 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.ArrayAdapter
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -25,9 +22,8 @@ import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.clxns.app.R
 import com.clxns.app.databinding.ActivityAssetRepossesionBinding
-import com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.map.RepossesionMapActivity
+import com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.map.RepossessionMapActivity
 import com.clxns.app.utils.support.CropImageActivity
-import com.clxns.app.utils.support.FileUtils
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -36,39 +32,30 @@ import kotlin.collections.ArrayList
 
 class AssetRepossessionActivity : AppCompatActivity(), AddImageAdapter.removePhoto {
 
-    private lateinit var blankUri: Uri
-    private val MONTHS = arrayOf(
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-    )
-    lateinit var activityAssetRepossesionBinding: ActivityAssetRepossesionBinding
-    lateinit var ctx: Context
-    lateinit var datePickerDialog: DatePickerDialog
-    lateinit var addAssetImageAdapter: AddImageAdapter
-    lateinit var nearestAddressAdapter: NearestAddressAdapter
-    private val REQUEST_IMAGE_CAPTURE = 854
-    private var imageUri: Uri? = null
-    private var mCurrentPhotoPath: String? = null
-    var addedPhotosList: ArrayList<Uri> = ArrayList()
-    var cropImageLaucher: ActivityResultLauncher<Intent>? = null
+    private lateinit var blankUri : Uri
+
+    companion object {
+        private const val REQUEST_IMAGE_CAPTURE = 854
+    }
+
+    lateinit var activityAssetRepossessionBinding : ActivityAssetRepossesionBinding
+    lateinit var ctx : Context
+    lateinit var datePickerDialog : DatePickerDialog
+    lateinit var addAssetImageAdapter : AddImageAdapter
+    lateinit var nearestAddressAdapter : NearestAddressAdapter
+
+    private var imageUri : Uri? = null
+    private var mCurrentPhotoPath : String? = null
+    var addedPhotosList : ArrayList<Uri> = ArrayList()
+    var cropImageLauncher : ActivityResultLauncher<Intent>? = null
 
     var year = 0
     var month = 0
     var day = 0
-    var imageCameraPickerLauncher: ActivityResultLauncher<Intent>? = null
-    var imageGalleryPickerLauncher: ActivityResultLauncher<Intent>? = null
+    var imageCameraPickerLauncher : ActivityResultLauncher<Intent>? = null
+    var imageGalleryPickerLauncher : ActivityResultLauncher<Intent>? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
 
         setInit()
@@ -84,34 +71,19 @@ class AssetRepossessionActivity : AppCompatActivity(), AddImageAdapter.removePho
         day = calendar.get(Calendar.DAY_OF_MONTH)
         month = calendar.get(Calendar.MONTH)
 
-
-        activityAssetRepossesionBinding.txtDate.setOnClickListener {
-            /*datePickerDialog =
-                DatePickerDialog(ctx, DatePickerDialog.OnDateSetListener { view, year, month, day ->
-
-                    Log.i(javaClass.name, "month--->" + MONTHS[month])
-                    activityAssetRepossesionBinding.txtDate.text =
-                        " $day " + MONTHS[month] + " year"
-                }, year, month, day)
-
-            datePickerDialog.show()*/
-        }
-
-
-
-        activityAssetRepossesionBinding.imgBack.setOnClickListener {
+        activityAssetRepossessionBinding.imgBack.setOnClickListener {
             onBackPressed()
         }
 
-        activityAssetRepossesionBinding.repoGoToDropAreaBtn.setOnClickListener {
-            startActivity(Intent(this, RepossesionMapActivity::class.java))
+        activityAssetRepossessionBinding.repoGoToDropAreaBtn.setOnClickListener {
+            startActivity(Intent(this, RepossessionMapActivity::class.java))
         }
 
     }
 
     private fun openFileUploadDialog() {
         if (ActivityCompat.checkSelfPermission(
-                ctx!!,
+                ctx,
                 Manifest.permission.CAMERA
             ) != PackageManager.PERMISSION_GRANTED
         ) {
@@ -126,13 +98,13 @@ class AssetRepossessionActivity : AppCompatActivity(), AddImageAdapter.removePho
             )
         } else {
             val items = arrayOf<CharSequence>("Camera", "Choose from gallery")
-            val builder = AlertDialog.Builder(ctx!!, R.style.AlertDialogCustom)
+            val builder = AlertDialog.Builder(ctx, R.style.AlertDialogCustom)
             builder.setTitle("Add File ")
-            builder.setItems(items) { _: DialogInterface?, item: Int ->
+            builder.setItems(items) { _ : DialogInterface?, item : Int ->
                 when (items[item].toString()) {
                     "Camera" ->
                         if (ActivityCompat.checkSelfPermission(
-                                ctx!!,
+                                ctx,
                                 Manifest.permission.CAMERA
                             ) != PackageManager.PERMISSION_GRANTED
                         ) {
@@ -149,7 +121,7 @@ class AssetRepossessionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     "Choose from gallery" ->                         //ACTION_GET_CONTENT
 
                         if (ActivityCompat.checkSelfPermission(
-                                ctx!!,
+                                ctx,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE
                             ) != PackageManager.PERMISSION_GRANTED
                         ) {
@@ -182,41 +154,32 @@ class AssetRepossessionActivity : AppCompatActivity(), AddImageAdapter.removePho
 
     private fun getResultFromActivity() {
         imageCameraPickerLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult(),
-            object : ActivityResultCallback<ActivityResult> {
-                override fun onActivityResult(result: ActivityResult) {
-                    Log.i(javaClass.name, "getResultCode---->" + result.resultCode)
-                    if (result.resultCode == RESULT_OK) {
-                        // There are no request codes
-                        val data = result.data
-                        Log.i(javaClass.name, "data---->$imageUri")
-
-                        imageUri?.let {
-                            Log.i("onActivity", " ------------- > $imageUri")
-                            startCropActivity(imageUri!!)
-                        }
-
-                    }
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == RESULT_OK) {
+                // There are no request codes
+                imageUri?.let {
+                    startCropActivity(imageUri!!)
                 }
-            })
+
+            }
+        }
 
         imageGalleryPickerLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult(), object :
-                ActivityResultCallback<ActivityResult> {
-                override fun onActivityResult(result: ActivityResult?) {
-                    if (result?.resultCode == RESULT_OK) {
-                        val data = result.data
-                        Log.i(javaClass.name, "data-->$data")
-                        data?.data?.let { startCropActivity(data.data!!) }
-                    }
+            registerForActivityResult(
+                ActivityResultContracts.StartActivityForResult()
+            ) {
+                if (it?.resultCode == RESULT_OK) {
+                    val data = it.data
+                    data?.data?.let { startCropActivity(data.data!!) }
                 }
-            })
+            }
 
 
 
 
 
-        cropImageLaucher =
+        cropImageLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
                     // There are no request codes
@@ -224,37 +187,17 @@ class AssetRepossessionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     if (data != null) {
                         val imageUri = data.getParcelableExtra<Uri>("sourceuri")
                         // Uri imageUri = data.getData();
-                        Log.i("CROP_ACTIVITY", " CROP_ACTIVITY bitmap ==> $imageUri")
                         if (imageUri != null) {
                             try {
-                                val bitmap = MediaStore.Images.Media.getBitmap(
-                                    ctx!!.contentResolver,
-                                    imageUri
-                                )
-                                val file: File? = FileUtils.getFile(ctx!!, imageUri)
-                                Log.i(
-                                    "CROP_ACTIVITY",
-                                    " CROP_ACTIVITY bitmap ==> $imageUri Bitmap  $bitmap"
-                                )
-
-                                Log.i(
-                                    javaClass.name,
-                                    "addedphotosList--->" + addedPhotosList.contains(blankUri)
-                                )
-                                /*if(addedphotosList.contains(blankUri)){
-                                    addedphotosList.clear()
-                                }*/
 
                                 addedPhotosList.add(addedPhotosList.size - 1, imageUri)
-                                Log.i(javaClass.name, "addedphotosList---" + addedPhotosList.size)
 
-                                var newArraylist = ArrayList<Uri>();
+                                val newArraylist = ArrayList<Uri>()
                                 newArraylist.addAll(addedPhotosList)
-
 
                                 addAssetImageAdapter.submitList(addedPhotosList)
 
-                            } catch (e: IOException) {
+                            } catch (e : IOException) {
                                 e.printStackTrace()
                             }
                         }
@@ -263,19 +206,17 @@ class AssetRepossessionActivity : AppCompatActivity(), AddImageAdapter.removePho
             }
     }
 
-    private fun startCropActivity(uri: Uri) {
+    private fun startCropActivity(uri : Uri) {
         val intent = Intent(ctx, CropImageActivity::class.java)
-        // Log.i(TAG,"startCropActivity  -- > "+uri.toString());
         intent.putExtra("sourceUri", uri.toString())
         intent.putExtra("cropping", "disable")
-        cropImageLaucher!!.launch(intent)
-        //overridePendingTransition(R.anim.right_in,R.anim.left_out);
+        cropImageLauncher!!.launch(intent)
     }
 
     private fun openCamera() {
         when {
             ActivityCompat.checkSelfPermission(
-                ctx!!,
+                ctx,
                 Manifest.permission.CAMERA
             ) != PackageManager.PERMISSION_GRANTED -> {
                 ActivityCompat.requestPermissions(
@@ -287,7 +228,7 @@ class AssetRepossessionActivity : AppCompatActivity(), AddImageAdapter.removePho
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> {
                 intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 imageUri = FileProvider.getUriForFile(
-                    ctx!!, ctx!!.applicationContext.packageName
+                    ctx, ctx.applicationContext.packageName
                             + ".provider",
                     createImageFile()!!
                 )
@@ -303,15 +244,14 @@ class AssetRepossessionActivity : AppCompatActivity(), AddImageAdapter.removePho
         }
     }
 
-    private fun createImageFile(): File? {
+    private fun createImageFile() : File? {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val imageFileName = "JPEG_" + timeStamp + "_"
         val storageDir = File(
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera"
         )
-        var image: File? = null
+        var image : File? = null
 
-        Log.i(javaClass.name, "storageDir---->$storageDir")
         try {
             image = File.createTempFile(
                 imageFileName,  /* prefix */
@@ -319,60 +259,52 @@ class AssetRepossessionActivity : AppCompatActivity(), AddImageAdapter.removePho
                 storageDir /* directory */
             )
             mCurrentPhotoPath = "file:" + image.absolutePath
-        } catch (e: IOException) {
+        } catch (e : IOException) {
             e.printStackTrace()
         }
 
         // Save a file: path for use with ACTION_VIEW intents
-        Log.i(javaClass.name, "createImage file log  $image")
         return image
     }
 
     private fun setInit() {
         ctx = this
-        activityAssetRepossesionBinding = ActivityAssetRepossesionBinding.inflate(layoutInflater)
-        setContentView(activityAssetRepossesionBinding.root)
+        activityAssetRepossessionBinding = ActivityAssetRepossesionBinding.inflate(layoutInflater)
+        setContentView(activityAssetRepossessionBinding.root)
 
         if (addedPhotosList.size == 0) {
             blankUri = Uri.parse("blank_uri")
             addedPhotosList.add(blankUri)
         }
 
-        var assetTypeArrayAdapter = ArrayAdapter.createFromResource(
+        val assetTypeArrayAdapter = ArrayAdapter.createFromResource(
             ctx,
             R.array.assetType_sample,
             android.R.layout.simple_spinner_item
         )
         assetTypeArrayAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
-        activityAssetRepossesionBinding.spAssetType.adapter = assetTypeArrayAdapter
+        activityAssetRepossessionBinding.spAssetType.adapter = assetTypeArrayAdapter
 
         addAssetImageAdapter = AddImageAdapter(this, ctx)
-        activityAssetRepossesionBinding.recyclerAddImage.layoutManager =
+        activityAssetRepossessionBinding.recyclerAddImage.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        activityAssetRepossesionBinding.recyclerSlipImage.layoutManager =
+        activityAssetRepossessionBinding.recyclerSlipImage.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        activityAssetRepossesionBinding.recyclerAddImage.adapter = addAssetImageAdapter
-        activityAssetRepossesionBinding.recyclerSlipImage.adapter = addAssetImageAdapter
+        activityAssetRepossessionBinding.recyclerAddImage.adapter = addAssetImageAdapter
+        activityAssetRepossessionBinding.recyclerSlipImage.adapter = addAssetImageAdapter
 
         nearestAddressAdapter = NearestAddressAdapter()
-        activityAssetRepossesionBinding.nearestAddressRecyclerView.layoutManager =
+        activityAssetRepossessionBinding.nearestAddressRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        activityAssetRepossesionBinding.nearestAddressRecyclerView.adapter = nearestAddressAdapter
+        activityAssetRepossessionBinding.nearestAddressRecyclerView.adapter = nearestAddressAdapter
 
         addAssetImageAdapter.submitList(addedPhotosList)
     }
 
-    override fun removePhoto(uri: Uri) {
-
-        Log.i(javaClass.name, "removePhoto----->" + uri.path)
-        Log.i(javaClass.name, "addedphotosList----->" + addedPhotosList.size)
-
+    override fun removePhoto(uri : Uri) {
         addedPhotosList.remove(uri)
-        Log.i(javaClass.name, "addedphotosList--afterremove--->" + addedPhotosList.size)
         addAssetImageAdapter.submitList(addedPhotosList)
-
-
     }
 
     override fun addPhoto() {

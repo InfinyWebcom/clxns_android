@@ -39,7 +39,7 @@
             android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.AssetRepossessionActivity"
             android:exported="true" />
         <activity
-            android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.map.RepossesionMapActivity"
+            android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.map.RepossessionMapActivity"
             android:exported="true" />
         <activity
             android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.RepossessionsSubmitActivity"

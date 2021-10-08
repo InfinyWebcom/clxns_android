@@ -30,7 +30,6 @@ import com.clxns.app.ui.search.SearchActivity
 import com.clxns.app.utils.*
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -75,14 +74,11 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
 
         setListeners()
 
-        binding.casesProgressBar.show()
         //If user is navigating from home case summary bottom sheet
         when {
             casesArgs.dispositionId != 0 -> {
                 filterBtn.text = getString(R.string.reset)
-                Timber.i("Disposition Run")
-                Timber.i(casesArgs.fromDate)
-                Timber.i(casesArgs.toDate)
+                binding.casesProgressBar.show()
                 getCaseList(
                     casesArgs.dispositionId.toString(),
                     casesArgs.fromDate, casesArgs.toDate, "", ""
@@ -90,24 +86,24 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
             }
             casesArgs.visitPending != 0 -> {
                 filterBtn.text = getString(R.string.reset)
-                Timber.i("Visit Pending Run")
-                Timber.i(casesArgs.fromDate)
-                Timber.i(casesArgs.toDate)
+                binding.casesProgressBar.show()
                 getCaseList(
                     "", casesArgs.fromDate, casesArgs.toDate, "1", ""
                 )
             }
             casesArgs.followUps != 0 -> {
                 filterBtn.text = getString(R.string.reset)
-                Timber.i("Follow Up Run")
-                Timber.i(casesArgs.fromDate)
-                Timber.i(casesArgs.toDate)
+                binding.casesProgressBar.show()
                 getCaseList(
                     "", casesArgs.fromDate, casesArgs.toDate, "", "1"
                 )
             }
-            casesArgs.isFilterApplied -> {filterBtn.text = getString(R.string.reset)}
+            casesArgs.isFilterApplied -> {
+                filterBtn.text = getString(R.string.reset)
+            }
+
             else -> {
+                binding.casesProgressBar.show()
                 getCaseList(
                     "", "",
                     "", "", ""
@@ -173,53 +169,52 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
     private fun subscribeObserver() {
         viewModel.responseCaseList.observe(viewLifecycleOwner) { response ->
             binding.casesNoData.noDataTv.text = getString(R.string.something_went_wrong)
-            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                when (response) {
-                    is NetworkResult.Success -> {
-                        // bind data to the view
-                        binding.casesProgressBar.hide()
-                        noDataLayout.hide()
-                        casesRV.show()
-                        if (response.data?.error == false) {
-                            val totalCases =
-                                getString(R.string.cases_toolbar_txt) + response.data.casesDataList.size.toString()
-                            binding.casesAllottedTv.text = totalCases
-                            val collectable =
-                                getString(R.string.cases_collectable_txt) + (response.data.collectable?.convertToCurrency()
-                                    ?: "-")
-                            binding.amountCollectedTv.text = collectable
-                            if (!response.data.casesDataList.isNullOrEmpty()) {
-                                clearAndNotifyAdapter()
-                                val dataList = response.data.casesDataList
-                                casesDataList.addAll(dataList)
-                                casesAdapter.notifyDataSetChanged()
-                            } else {
-                                binding.casesNoData.noDataTv.text = getString(R.string.no_data)
-                                binding.casesNoData.retryBtn.hide()
-                                noDataLayout.show()
-                                val size = casesDataList.size
-                                casesDataList.clear()
-                                casesAdapter.notifyItemRangeRemoved(0, size)
-                            }
+            when (response) {
+                is NetworkResult.Success -> {
+                    // bind data to the view
+                    binding.casesProgressBar.hide()
+                    noDataLayout.hide()
+                    casesRV.show()
+                    if (response.data?.error == false) {
+                        val totalCases =
+                            getString(R.string.cases_toolbar_txt) + response.data.casesDataList.size.toString()
+                        binding.casesAllottedTv.text = totalCases
+                        val collectable =
+                            getString(R.string.cases_collectable_txt) + (response.data.collectable?.convertToCurrency()
+                                ?: "-")
+                        binding.amountCollectedTv.text = collectable
+                        if (!response.data.casesDataList.isNullOrEmpty()) {
+                            clearAndNotifyAdapter()
+                            val dataList = response.data.casesDataList
+                            casesDataList.addAll(dataList)
+                            casesAdapter.notifyDataSetChanged()
                         } else {
-                            binding.casesNoData.noDataTv.text = response.data?.title
+                            binding.casesNoData.noDataTv.text = getString(R.string.no_data)
+                            binding.casesNoData.retryBtn.hide()
                             noDataLayout.show()
-                            casesRV.hide()
+                            val size = casesDataList.size
+                            casesDataList.clear()
+                            casesAdapter.notifyItemRangeRemoved(0, size)
                         }
-                    }
-                    is NetworkResult.Error -> {
-                        binding.casesProgressBar.hide()
+                    } else {
+                        binding.casesNoData.noDataTv.text = response.data?.title
                         noDataLayout.show()
                         casesRV.hide()
-                        binding.root.snackBar(response.message!!)
-                        // show error message
-                    }
-                    is NetworkResult.Loading -> {
-                        noDataLayout.hide()
-                        binding.casesAllottedTv.text = getString(R.string.cases_toolbar_txt)
-                        binding.amountCollectedTv.text = getString(R.string.cases_collectable_txt)
                     }
                 }
+                is NetworkResult.Error -> {
+                    binding.casesProgressBar.hide()
+                    noDataLayout.show()
+                    casesRV.hide()
+                    binding.root.snackBar(response.message!!)
+                    // show error message
+                }
+                is NetworkResult.Loading -> {
+                    noDataLayout.hide()
+                    binding.casesAllottedTv.text = getString(R.string.cases_toolbar_txt)
+                    binding.amountCollectedTv.text = getString(R.string.cases_collectable_txt)
+                }
+
             }
         }
 

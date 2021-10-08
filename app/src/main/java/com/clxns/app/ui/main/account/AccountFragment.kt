@@ -16,10 +16,7 @@ import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentAccountBinding
 import com.clxns.app.ui.login.LoginActivity
 import com.clxns.app.ui.main.account.changePassword.ChangePasswordActivity
-import com.clxns.app.utils.Constants
-import com.clxns.app.utils.loadImage
-import com.clxns.app.utils.snackBar
-import com.clxns.app.utils.toast
+import com.clxns.app.utils.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -27,30 +24,30 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AccountFragment : Fragment() {
 
-    private val accountViewModel: AccountViewModel by viewModels()
-    private lateinit var binding: FragmentAccountBinding
+    private val accountViewModel : AccountViewModel by viewModels()
+    private lateinit var binding : FragmentAccountBinding
     private var bankNames = arrayOf<String>()
 
     @Inject
-    lateinit var sessionManager: SessionManager
+    lateinit var sessionManager : SessionManager
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
+        inflater : LayoutInflater,
+        container : ViewGroup?,
+        savedInstanceState : Bundle?,
+    ) : View {
         accountViewModel.getUserDetails(sessionManager.getString(Constants.TOKEN)!!)
         binding = FragmentAccountBinding.inflate(layoutInflater)
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         accountViewModel.getBankNameList()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         subscribeObserver()
@@ -82,12 +79,22 @@ class AccountFragment : Fragment() {
 
         if (!sessionManager.getString(Constants.USER_IMAGE).isNullOrEmpty()) {
             val imageUrl = sessionManager.getString(Constants.USER_IMAGE)
-            binding.userProfileImg.loadImage(imageUrl!!)
+            if (imageUrl != null) {
+                binding.userProfileImg.loadImage(imageUrl)
+            }
         } else {
-            val names = sessionManager.getString(Constants.USER_NAME)?.split(" ")
-            val name = names?.get(0)?.substring(0, 1) + names?.get(1)?.substring(0, 1)
-            binding.userNameInitials.visibility = View.VISIBLE
-            binding.userNameInitials.text = name
+            val names = userName?.split(" ")
+            var initials = ""
+            if (!names.isNullOrEmpty()) {
+                initials = names[0].substring(0, 1)
+                initials += if (names[1].isNotEmpty()) {
+                    names[1].substring(0, 1)
+                } else {
+                    names[0].substring(1, 2)
+                }
+            }
+            binding.userNameInitials.show()
+            binding.userNameInitials.text = initials
         }
     }
 
@@ -98,7 +105,7 @@ class AccountFragment : Fragment() {
         }
     }
 
-    private fun onMenuClick(view: View) {
+    private fun onMenuClick(view : View) {
         val popup = PopupMenu(requireContext(), view)
         popup.menuInflater.inflate(R.menu.account_menu, popup.menu)
         popup.setOnMenuItemClickListener { item ->
@@ -113,7 +120,7 @@ class AccountFragment : Fragment() {
                 "Select Bank" -> {
                     val bankDialogBuilder = MaterialAlertDialogBuilder(requireContext())
                         .setTitle("Select your bank")
-                        .setItems(bankNames) { _: DialogInterface, i: Int ->
+                        .setItems(bankNames) { _ : DialogInterface, i : Int ->
                             accountViewModel.getBankImage(bankNames[i])
                         }
                     bankDialogBuilder.show()

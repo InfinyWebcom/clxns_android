@@ -18,8 +18,9 @@
             android:id="@+id/imgBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back_24"
             app:tint="@color/white"
-            android:src="@drawable/ic_arrow_back_24" />
+            tools:ignore="ImageContrastCheck" />
 
 
         <TextView
@@ -28,8 +29,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp16"
             android:layout_toEndOf="@id/imgBack"
-            android:fontFamily="@font/gtwalsheimprobold"
-            android:text="Repossession"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/sp18" />
@@ -49,26 +48,10 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
-            android:fontFamily="@font/gtwalsheimpromedium"
-
-            android:text="Rahul Dravid"
             android:textAllCaps="true"
             android:textColor="@color/text_black"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/txtName"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="15dp"
-            android:fontFamily="@font/gtwalsheimproregular"
-            android:text="12/08/2021"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/sp14"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtName" />
 
         <TextView
             android:id="@+id/txtStatus"
@@ -79,9 +62,7 @@
             android:layout_marginTop="@dimen/dp8"
             android:layout_marginEnd="@dimen/dp4"
             android:ellipsize="end"
-            android:fontFamily="@font/gtwalsheimproregular"
             android:maxLines="1"
-            android:text="Denial/RTP - Refused to Pay"
             android:textColor="@color/text_black"
             android:textSize="14sp" />
 
@@ -89,8 +70,7 @@
     </RelativeLayout>
 
 
-    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/relDetails"
@@ -120,7 +100,8 @@
                     android:overlapAnchor="false"
                     android:paddingVertical="@dimen/dp10"
                     android:spinnerMode="dialog"
-                    android:theme="@style/spinnerTheme" />
+                    android:theme="@style/spinnerTheme"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
             </RelativeLayout>
 
             <com.google.android.material.card.MaterialCardView
@@ -141,109 +122,87 @@
                     android:padding="@dimen/dp12">
 
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="vertical"
                         tools:ignore="MissingConstraints">
-                        <RelativeLayout
+
+
+                        <TextView
+                            android:id="@+id/txtAssetType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp12"
+                            android:text="@string/AssetDesc"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/txtAssetTypeValue"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/txtAssetType"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dp12"
-                                android:fontFamily="@font/gtwalsheimproregular"
-                                android:text="@string/AssetDesc"
-                                android:textColor="@color/text_black"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/txtAssetTypeValue"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/txtAssetType"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="@dimen/dp12"
-                                android:fontFamily="@font/gtwalsheimpromedium"
-                                android:text="Skoda Rapid 2016"
-                                android:textColor="@color/text_black"
-                                android:textSize="16sp" />
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="@dimen/dp12"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
 
 
-                            <TextView
-                                android:id="@+id/txtRegisterNo"
-                                android:layout_below="@+id/txtAssetTypeValue"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dp12"
-                                android:fontFamily="@font/gtwalsheimproregular"
-                                android:text="@string/RegistrationNo"
-                                android:textColor="@color/text_black"
-                                android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/txtRegisterNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp12"
+                            android:text="@string/RegistrationNo"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
 
-                            <TextView
-                                android:id="@+id/txtRegisterValue"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/txtRegisterNo"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="@dimen/dp12"
-                                android:fontFamily="@font/gtwalsheimpromedium"
-                                android:text="124356879997"
-                                android:textColor="@color/text_black"
-                                android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/txtRegisterValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="@dimen/dp12"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
 
 
-                            <TextView
-                                android:id="@+id/txtChasisNo"
-                                android:layout_below="@+id/txtRegisterValue"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dp12"
-                                android:fontFamily="@font/gtwalsheimproregular"
-                                android:text="@string/ChasisNumber"
-                                android:textColor="@color/text_black"
-                                android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/txtChasisNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp12"
+                            android:text="@string/ChasisNumber"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
 
-                            <TextView
-                                android:id="@+id/txtChasisNoValue"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/txtChasisNo"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="@dimen/dp12"
-                                android:fontFamily="@font/gtwalsheimpromedium"
-                                android:text="79997"
-                                android:textColor="@color/text_black"
-                                android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/txtChasisNoValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="@dimen/dp12"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
 
 
-                            <TextView
-                                android:id="@+id/txtEngineNo"
-                                android:layout_below="@+id/txtChasisNoValue"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dp12"
-                                android:fontFamily="@font/gtwalsheimproregular"
-                                android:text="@string/EngineNo"
-                                android:textColor="@color/text_black"
-                                android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/txtEngineNo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp12"
+                            android:text="@string/EngineNo"
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp" />
 
-                            <TextView
-                                android:id="@+id/txtEngineNoValue"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/txtEngineNo"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginBottom="@dimen/dp12"
-                                android:fontFamily="@font/gtwalsheimpromedium"
-                                android:text="6U90000BB41202329"
-                                android:textColor="@color/text_black"
-                                android:textSize="16sp" />
+                        <TextView
+                            android:id="@+id/txtEngineNoValue"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="@dimen/dp12"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
 
-                        </RelativeLayout>
 
                     </LinearLayout>
 
@@ -274,8 +233,6 @@
                         android:id="@+id/upload_asset_img_at_pickup_txt"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/gtwalsheimpromedium"
-                        android:text="Upload Asset Image at Pick Up"
                         android:textColor="@color/text_black"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -296,8 +253,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        android:fontFamily="@font/gtwalsheimpromedium"
-                        android:text="Upload Customer Slip Image"
                         android:textColor="@color/text_black"
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="@id/upload_asset_img_at_pickup_txt"
@@ -317,8 +272,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        android:fontFamily="@font/gtwalsheimpromedium"
-                        android:text="3 Nearest Yards/Agencies - Kotak Bank"
                         android:textColor="@color/text_black"
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="@id/upload_asset_img_at_pickup_txt"
@@ -355,7 +308,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="@color/green"
-                    android:fontFamily="@font/gtwalsheimproregular"
                     android:paddingVertical="@dimen/dp10"
                     android:text="@string/go_to_drop_area"
                     app:cornerRadius="15dp" />
@@ -367,7 +319,6 @@
                     android:layout_marginStart="@dimen/dp10"
                     android:layout_weight="1"
                     android:backgroundTint="@color/green"
-                    android:fontFamily="@font/gtwalsheimproregular"
                     android:paddingVertical="@dimen/dp10"
                     android:text="@string/keep_at_home"
                     app:cornerRadius="15dp" />
