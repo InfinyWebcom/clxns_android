@@ -13,11 +13,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.clxns.app.R
+import com.clxns.app.databinding.DialogCollectableAmountBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -114,19 +114,15 @@ fun Int.convertToCurrency() : String {
 
 fun View.showDialog(totalAmount : Int, collected : Int) {
     val dialog = MaterialAlertDialogBuilder(this.context)
-    val customView = LayoutInflater.from(this.context)
-        .inflate(R.layout.dialog_collectable_amount, null, false)
-    val txtTotalDue = customView.findViewById<TextView>(R.id.txt_total_due)
-    val txtCollected = customView.findViewById<TextView>(R.id.txt_collectable)
-    val txtResult = customView.findViewById<TextView>(R.id.txt_result)
-    dialog.setView(customView)
-        .setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
+    val c = DialogCollectableAmountBinding.inflate(LayoutInflater.from(this.context))
+    dialog.setView(c.root)
+        .setPositiveButton("OK") { d, _ ->
+            d.dismiss()
         }
         .show()
-    txtTotalDue.text = "₹${totalAmount}"
-    txtCollected.text = "₹${collected}"
-    txtResult.text = "₹${totalAmount.minus(collected)}"
+    c.txtTotalDue.text = totalAmount.convertToCurrency()
+    c.txtCollectable.text = collected.convertToCurrency()
+    c.txtResult.text = (totalAmount.minus(collected)).convertToCurrency()
 }
 
 fun String.formatDate(format : String, newFormat : String) : String {
@@ -148,7 +144,6 @@ fun String.formatDate(format : String, newFormat : String) : String {
 fun File.getBase64StringFile() : String {
     var inputStream : InputStream? = null
     var encodedFile = ""
-    val lastVal : String
     try {
         inputStream = FileInputStream(this.absolutePath)
         val buffer = ByteArray(10240) //specify the size to allow
@@ -165,8 +160,7 @@ fun File.getBase64StringFile() : String {
     } finally {
         inputStream?.close()
     }
-    lastVal = encodedFile
-    return lastVal
+    return encodedFile
 }
 
 fun Uri.getFileNameFromUri(context : Context) : String? {
@@ -212,7 +206,7 @@ fun Uri.getFileNameFromUri(context : Context) : String? {
 
 fun Context.createImageFile() : File? {
     // Create an image file name
-    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
     val imageFileName = "JPEG_" + timeStamp + "_"
     val storageDir = externalCacheDir //getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     // Save a file: path for use with ACTION_VIEW intents

@@ -152,15 +152,15 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
 
         binding.visitPendingCard.setOnClickListener {
             val actions = HomeFragmentDirections.actionNavigationHomeToNavigationCases(
-                0,
-                1, 0, fromDate, toDate, false
+                "",
+                "", "1", "0", fromDate, toDate, true
             )
             findNavController().navigate(actions)
         }
         binding.followUpCard.setOnClickListener {
             val actions = HomeFragmentDirections.actionNavigationHomeToNavigationCases(
-                0,
-                0, 1, fromDate, toDate, false
+                "",
+                "", "", "1", fromDate, toDate, true
             )
             findNavController().navigate(actions)
         }

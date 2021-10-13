@@ -28,17 +28,21 @@
             app:destination="@id/navigation_cases_filter" />
         <argument
             android:name="disposition_id"
-            android:defaultValue="0"
-            app:argType="integer" />
+            android:defaultValue=" "
+            app:argType="string" />
+        <argument
+            android:name="sub_disposition_id"
+            android:defaultValue=" "
+            app:argType="string" />
 
         <argument
             android:name="visit_pending"
-            android:defaultValue="0"
-            app:argType="integer" />
+            android:defaultValue=" "
+            app:argType="string" />
         <argument
             android:name="follow_ups"
-            android:defaultValue="0"
-            app:argType="integer" />
+            android:defaultValue=" "
+            app:argType="string" />
         <argument
             android:name="fromDate"
             android:defaultValue=" "
@@ -49,8 +53,8 @@
             app:argType="string" />
         <argument
             android:name="isFilterApplied"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
 
     <fragment
@@ -64,14 +68,18 @@
         android:name="com.clxns.app.ui.main.account.AccountFragment"
         android:label="@string/Account"
         tools:layout="@layout/fragment_account" />
+
     <dialog
         android:id="@+id/navigation_cases_filter"
         android:name="com.clxns.app.ui.main.cases.casedetails.bottomsheets.CasesFilterBS"
         android:label="CasesFilterBS"
-        tools:layout="@layout/bottom_sheet_cases_filter" >
+        tools:layout="@layout/bottom_sheet_cases_filter">
         <action
             android:id="@+id/action_navigation_cases_filter_to_navigation_cases"
-            app:destination="@id/navigation_cases" />
+            app:destination="@id/navigation_cases"
+            app:popUpTo="@id/navigation_cases"
+            app:popUpToInclusive="true"
+            />
     </dialog>
 
     <dialog
@@ -88,12 +96,10 @@
             app:destination="@id/navigation_cases" />
         <argument
             android:name="fromDate"
-            app:argType="string"
-            />
+            app:argType="string" />
         <argument
             android:name="toDate"
-            app:argType="string"
-             />
+            app:argType="string" />
     </dialog>
 
 </navigation>

@@ -36,31 +36,31 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityDetailsBinding
-    lateinit var ctx: Context
-    private val detailsViewModel: DetailsViewModel by viewModels()
+    lateinit var binding : ActivityDetailsBinding
+    lateinit var ctx : Context
+    private val detailsViewModel : DetailsViewModel by viewModels()
 
-    private val casesViewModel: CasesViewModel by viewModels()
+    private val casesViewModel : CasesViewModel by viewModels()
 
     @Inject
-    lateinit var sessionManager: SessionManager
+    lateinit var sessionManager : SessionManager
 
-    private lateinit var token: String
-    private lateinit var loanAccountNo: String
-    private lateinit var name: String
+    private lateinit var token : String
+    private lateinit var loanAccountNo : String
+    private lateinit var name : String
     private var status = ""
     private var isPlanned = false
     private var isCaseDetail = false
 
-    private var mobileNo: String? = null
+    private var mobileNo : String? = null
 
-    private lateinit var planStatusIntent: Intent
+    private lateinit var planStatusIntent : Intent
 
     private var totalDueAmount = 0
     private var collectedAmount = 0
-    var checkInLauncher: ActivityResultLauncher<Intent>? = null
+    var checkInLauncher : ActivityResultLauncher<Intent>? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
 
         initView()
@@ -90,8 +90,10 @@ class DetailsActivity : AppCompatActivity() {
 
         binding.txtToolbarTitle.text = name
         binding.txtStatusValue.text = status
+
+        //If the user has come from Cases or Search Cases Screen then hide the Check In Button
         if (isCaseDetail) {
-            binding.btnCheckIn.visibility = View.GONE
+            binding.btnCheckIn.hide()
         }
     }
 
@@ -179,9 +181,9 @@ class DetailsActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                val data: Intent? = result.data
+                val data : Intent? = result.data
                 if (data != null) {
-                    val returnValue: Boolean = data!!.getBooleanExtra("close_app", false)
+                    val returnValue : Boolean = data!!.getBooleanExtra("close_app", false)
                     if (returnValue) {
                         planStatusIntent = Intent()
                         planStatusIntent.putExtra("hasChangedPlanStatus", true)
@@ -213,10 +215,10 @@ class DetailsActivity : AppCompatActivity() {
                         totalDueAmount = response.data.data.totalDueAmount!!
                         collectedAmount = response.data.data.amountCollected!!
 
-                        if (((response.data.data?.totalDueAmount!!.minus(response.data.data?.amountCollected!!)) <= 0)||isCaseDetail) {
-                            binding.btnCheckIn.visibility = View.GONE
+                        if (((response.data.data.totalDueAmount.minus(response.data.data.amountCollected)) <= 0) || isCaseDetail) {
+                            binding.btnCheckIn.hide()
                         } else {
-                            binding.btnCheckIn.visibility = View.VISIBLE
+                            binding.btnCheckIn.show()
                         }
 
                         //Fetching Dispositions from Local DB
@@ -261,6 +263,9 @@ class DetailsActivity : AppCompatActivity() {
                     binding.root.snackBar(it.data?.title!!)
                     if (it.data.error == false) {
                         isPlanned = true
+                        if (!isCaseDetail) {
+                            binding.btnCheckIn.show()
+                        }
                         setPlanStatus()
                         updatePlanButtonUI()
                     }
@@ -278,6 +283,7 @@ class DetailsActivity : AppCompatActivity() {
                     binding.root.snackBar(it.data?.title!!)
                     if (!it.data.error) {
                         isPlanned = false
+                        binding.btnCheckIn.hide()
                         setPlanStatus()
                         updatePlanButtonUI()
                     }
@@ -316,7 +322,7 @@ class DetailsActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, planStatusIntent)
     }
 
-    private fun updateUI(data: Lead) {
+    private fun updateUI(data : Lead) {
 
         val bankImageUrl = Constants.BANK_LOGO_URL + data.fiData?.fiImage
         binding.imgBank.loadImage(bankImageUrl)
@@ -357,7 +363,7 @@ class DetailsActivity : AppCompatActivity() {
 
     }
 
-    private fun showPlanDialog(loanId: String) {
+    private fun showPlanDialog(loanId : String) {
         val cal = Calendar.getInstance()
         val dateSetListener =
             DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
@@ -384,7 +390,7 @@ class DetailsActivity : AppCompatActivity() {
 
     }
 
-    private fun showConfirmUnPlanDialog(loanId: String, name: String) {
+    private fun showConfirmUnPlanDialog(loanId : String, name : String) {
         val logoutDialog = AlertDialog.Builder(this)
         val title = "UnPlan" + getString(R.string.arrow_forward) + name
         logoutDialog.setTitle(title)
@@ -433,14 +439,14 @@ class DetailsActivity : AppCompatActivity() {
     }
 
 
-    private fun checkIfAmountValueIsZero(value: String): String {
+    private fun checkIfAmountValueIsZero(value : String) : String {
         if (value.isNotEmpty() && value == "0") {
             return "-"
         }
         return value.toInt().convertToCurrency()
     }
 
-    private fun nullSafeString(value: String): String {
+    private fun nullSafeString(value : String) : String {
         if (value.isEmpty() || value.isBlank() || value == "null" || value == "0") {
             return "-"
         }

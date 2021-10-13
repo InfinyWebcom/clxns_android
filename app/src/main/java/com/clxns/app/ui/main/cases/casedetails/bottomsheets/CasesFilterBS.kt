@@ -9,7 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.clxns.app.R
 import com.clxns.app.data.preference.SessionManager
@@ -25,35 +25,35 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CasesFilterBS : BottomSheetDialogFragment() {
 
-    private var _binding: BottomSheetCasesFilterBinding? = null
+    private var _binding : BottomSheetCasesFilterBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private lateinit var calendar: Calendar
-    private lateinit var datePickerDialog: DatePickerDialog
+    private lateinit var calendar : Calendar
+    private lateinit var datePickerDialog : DatePickerDialog
 
-    private val casesViewModel: CasesViewModel by activityViewModels()
-    private var dispositionList: ArrayList<String> = arrayListOf()
+    private val casesViewModel : CasesViewModel by viewModels()
+    private var dispositionList : ArrayList<String> = arrayListOf()
     private var subDispositionList = arrayListOf("None")
 
     @Inject
-    lateinit var sessionManager: SessionManager
+    lateinit var sessionManager : SessionManager
 
-    private lateinit var dispositionSpinner: Spinner
-    private lateinit var subDispositionSpinner: Spinner
-    private lateinit var subDispositionAdapter: ArrayAdapter<String>
+    private lateinit var dispositionSpinner : Spinner
+    private lateinit var subDispositionSpinner : Spinner
+    private lateinit var subDispositionAdapter : ArrayAdapter<String>
 
-    private var fromDate: String = ""
-    private var toDate: String = ""
-    private var dispositionId: String = ""
-    private var subDispositionId: String = ""
+    private var fromDate : String = ""
+    private var toDate : String = ""
+    private var dispositionId : String = ""
+    private var subDispositionId : String = ""
 
-    private lateinit var token: String
+    private lateinit var token : String
 
     companion object {
-        private var mYear: Int = 0
+        private var mYear : Int = 0
         private var mMonth = 0
         private var mDay = 0
         private val MONTHS = arrayOf(
@@ -62,22 +62,22 @@ class CasesFilterBS : BottomSheetDialogFragment() {
         )
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
         casesViewModel.getAllDispositionsFromRoomDB()
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater : LayoutInflater,
+        container : ViewGroup?,
+        savedInstanceState : Bundle?
+    ) : View? {
         _binding = BottomSheetCasesFilterBinding.inflate(layoutInflater)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
@@ -153,37 +153,35 @@ class CasesFilterBS : BottomSheetDialogFragment() {
         }
 
         binding.filterApplyBtn.setOnClickListener {
-            casesViewModel.getCasesList(
-                token,
-                "",
-                dispositionId,
-                subDispositionId,
-                fromDate,
-                toDate,
-                "",
-                ""
-            )
             val actions = CasesFilterBSDirections.actionNavigationCasesFilterToNavigationCases(
-                0,0,0,"","",true
+                dispositionId, subDispositionId, "0", "0", fromDate,
+                toDate, true
             )
             findNavController().navigate(actions)
         }
 
         binding.filterResetBtn.setOnClickListener {
-            casesViewModel.getCasesList(
-                token, "", "", "", "", "",
-                "",
-                ""
-            )
-            dismiss()
+            dispositionSpinner.setSelection(0)
+            subDispositionSpinner.setSelection(0)
+            binding.startDateTv.text = ""
+            binding.endDateTv.text = ""
+            fromDate = ""
+            toDate = ""
+            dispositionId = ""
+            subDispositionId = ""
+//            val actions = CasesFilterBSDirections.actionNavigationCasesFilterToNavigationCases(
+//                "", "", "0", "0", "",
+//                "", false
+//            )
+//            findNavController().navigate(actions)
         }
 
         dispositionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
+                parent : AdapterView<*>?,
+                view : View?,
+                position : Int,
+                id : Long
             ) {
                 subDispositionList.clear()
                 subDispositionList.add("Select")
@@ -194,29 +192,29 @@ class CasesFilterBS : BottomSheetDialogFragment() {
                 }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onNothingSelected(parent : AdapterView<*>?) {}
         }
 
         subDispositionSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
+                parent : AdapterView<*>?,
+                view : View?,
+                position : Int,
+                id : Long
             ) {
                 if (position != 0) {
                     casesViewModel.getSubDispositionIdFromRoomDB(subDispositionList[position])
                 }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+            override fun onNothingSelected(parent : AdapterView<*>?) {
             }
 
         }
 
     }
 
-    private fun showDatePicker(textView: TextView, isEndDate: Boolean) {
+    private fun showDatePicker(textView : TextView, isEndDate : Boolean) {
         datePickerDialog = DatePickerDialog(requireContext(), { _, year, month, day ->
             val monthPlusOne = month + 1
             val date = "$day/${MONTHS[month]}/$year"

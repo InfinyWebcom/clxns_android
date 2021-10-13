@@ -14,8 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Lifecycle
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,7 +35,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
 
-    private val viewModel : CasesViewModel by activityViewModels()
+    private val viewModel : CasesViewModel by viewModels()
     private var _binding : FragmentCasesBinding? = null
 
     // This property is only valid between onCreateView and
@@ -75,45 +74,64 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         setListeners()
 
         //If user is navigating from home case summary bottom sheet
-        when {
-            casesArgs.dispositionId != 0 -> {
-                filterBtn.text = getString(R.string.reset)
-                binding.casesProgressBar.show()
-                getCaseList(
-                    casesArgs.dispositionId.toString(),
-                    casesArgs.fromDate, casesArgs.toDate, "", ""
-                )
-            }
-            casesArgs.visitPending != 0 -> {
-                filterBtn.text = getString(R.string.reset)
-                binding.casesProgressBar.show()
-                getCaseList(
-                    "", casesArgs.fromDate, casesArgs.toDate, "1", ""
-                )
-            }
-            casesArgs.followUps != 0 -> {
-                filterBtn.text = getString(R.string.reset)
-                binding.casesProgressBar.show()
-                getCaseList(
-                    "", casesArgs.fromDate, casesArgs.toDate, "", "1"
-                )
-            }
-            casesArgs.isFilterApplied -> {
-                filterBtn.text = getString(R.string.reset)
-            }
-
-            else -> {
-                binding.casesProgressBar.show()
-                getCaseList(
-                    "", "",
-                    "", "", ""
-                )
-            }
+        if (casesArgs.isFilterApplied) {
+            filterBtn.text = getString(R.string.reset)
+            binding.casesProgressBar.show()
+            getCaseList(
+                casesArgs.dispositionId,
+                casesArgs.subDispositionId,
+                casesArgs.fromDate,
+                casesArgs.toDate,
+                casesArgs.visitPending,
+                casesArgs.followUps
+            )
+        } else {
+            binding.casesProgressBar.show()
+            getCaseList(
+                "", "",
+                "", "", "", ""
+            )
         }
+//        when {
+//            casesArgs.dispositionId != 0 -> {
+//                filterBtn.text = getString(R.string.reset)
+//                binding.casesProgressBar.show()
+//                getCaseList(
+//                    casesArgs.dispositionId.toString(),
+//                    casesArgs.fromDate, casesArgs.toDate, "", ""
+//                )
+//            }
+//            casesArgs.visitPending != 0 -> {
+//                filterBtn.text = getString(R.string.reset)
+//                binding.casesProgressBar.show()
+//                getCaseList(
+//                    "", casesArgs.fromDate, casesArgs.toDate, "1", ""
+//                )
+//            }
+//            casesArgs.followUps != 0 -> {
+//                filterBtn.text = getString(R.string.reset)
+//                binding.casesProgressBar.show()
+//                getCaseList(
+//                    "", casesArgs.fromDate, casesArgs.toDate, "", "1"
+//                )
+//            }
+//            casesArgs.isFilterApplied -> {
+//                filterBtn.text = getString(R.string.reset)
+//            }
+//
+//            else -> {
+//                binding.casesProgressBar.show()
+//                getCaseList(
+//                    "", "",
+//                    "", "", ""
+//                )
+//            }
+//        }
     }
 
     private fun getCaseList(
         dispositionId : String,
+        subDispositionId : String,
         fromDate : String,
         toDate : String,
         visitPending : String,
@@ -121,7 +139,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
     ) {
         viewModel.getCasesList(
             token,
-            "", dispositionId, "", fromDate, toDate, visitPending, followUp
+            "", dispositionId, subDispositionId, fromDate, toDate, visitPending, followUp
         )
     }
 
@@ -145,7 +163,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                 filterBtn.text = getString(R.string.filter)
                 getCaseList(
                     "", "",
-                    "", "", ""
+                    "", "", "", ""
                 )
             }
         }
@@ -160,7 +178,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         binding.casesNoData.retryBtn.setOnClickListener {
             getCaseList(
                 "", "",
-                "", "", ""
+                "", "", "", ""
             )
         }
     }
@@ -219,49 +237,47 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         }
 
         viewModel.responseAddToPlan.observe(viewLifecycleOwner) { response ->
-            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                when (response) {
-                    is NetworkResult.Success -> {
-                        binding.root.snackBar(response.data?.title!!)
-                        getCaseList(
-                            "", "",
-                            "", "", ""
-                        )
-                    }
-                    is NetworkResult.Error -> {
-                        binding.root.snackBar(response.message!!)
-                        // show error message
-                    }
-                    is NetworkResult.Loading -> {
-                        binding.root.snackBar("Adding to my plan...")
-                        // show a progress bar
-                    }
+            when (response) {
+                is NetworkResult.Success -> {
+                    binding.root.snackBar(response.data?.title!!)
+                    getCaseList(
+                        "", "",
+                        "", "", "", ""
+                    )
+                }
+                is NetworkResult.Error -> {
+                    binding.root.snackBar(response.message!!)
+                    // show error message
+                }
+                is NetworkResult.Loading -> {
+                    binding.root.snackBar("Adding to my plan...")
+                    // show a progress bar
                 }
             }
+
         }
 
         viewModel.responseRemovePlan.observe(viewLifecycleOwner) {
-            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                when (it) {
-                    is NetworkResult.Success -> {
-                        binding.root.snackBar(it.data?.title!!)
-                        if (!it.data.error) {
-                            getCaseList(
-                                "", "",
-                                "", "", ""
-                            )
-                        }
-                    }
-                    is NetworkResult.Error -> {
-                        binding.root.snackBar(it.message!!)
-                        // show error message
-                    }
-                    is NetworkResult.Loading -> {
-                        binding.root.snackBar("Removing from my plan...")
-                        // show a progress bar
+            when (it) {
+                is NetworkResult.Success -> {
+                    binding.root.snackBar(it.data?.title!!)
+                    if (!it.data.error) {
+                        getCaseList(
+                            "", "",
+                            "", "", "", ""
+                        )
                     }
                 }
+                is NetworkResult.Error -> {
+                    binding.root.snackBar(it.message!!)
+                    // show error message
+                }
+                is NetworkResult.Loading -> {
+                    binding.root.snackBar("Removing from my plan...")
+                    // show a progress bar
+                }
             }
+
         }
     }
 
@@ -350,11 +366,12 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val data : Intent? = it.data
+                //If the user has plan or un plan a case then fetch the latest list from the DB
                 val status = data?.getBooleanExtra("hasChangedPlanStatus", false)
                 if (status == true) {
                     getCaseList(
                         "", "",
-                        "", "", ""
+                        "", "", "", ""
                     )
                 }
             }

@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.clxns.app.R
-import com.clxns.app.data.model.cases.CaseFilterModel
 import com.clxns.app.data.model.home.SummaryData
 import com.clxns.app.databinding.CasesSummaryLayoutBinding
 import com.clxns.app.ui.main.cases.CasesViewModel
@@ -18,34 +17,34 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
 
-    lateinit var binding: CasesSummaryLayoutBinding
+    lateinit var binding : CasesSummaryLayoutBinding
 
-    private lateinit var summaryData: SummaryData
+    private lateinit var summaryData : SummaryData
 
-    private val casesViewModel: CasesViewModel by viewModels()
+    private val casesViewModel : CasesViewModel by viewModels()
 
-    private lateinit var fromDate:String
-    private lateinit var toDate:String
+    private lateinit var fromDate : String
+    private lateinit var toDate : String
 
 
     private val caseArgs by navArgs<CaseSummaryBottomSheetArgs>()
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
     }
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+        inflater : LayoutInflater,
+        container : ViewGroup?,
+        savedInstanceState : Bundle?
+    ) : View {
         summaryData = caseArgs.summaryData!!
         binding = CasesSummaryLayoutBinding.inflate(layoutInflater)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         updateUI()
@@ -64,7 +63,7 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    private fun getDispositionId(dispositionName: String) {
+    private fun getDispositionId(dispositionName : String) {
         casesViewModel.getDispositionIdFromRoomDB(dispositionName)
     }
 
@@ -73,9 +72,11 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
             dismiss()
         }
         binding.caseSummaryTotalCaseBtn.setOnClickListener {
-            val actions = CaseSummaryBottomSheetDirections.actionNavigationHomeSummaryToNavigationCases(
-                0,0,0,fromDate,toDate, false
-            )
+            val actions =
+                CaseSummaryBottomSheetDirections.actionNavigationHomeSummaryToNavigationCases(
+                    "", "", "", "", fromDate,
+                    toDate, true
+                )
             findNavController().navigate(actions)
             dismiss()
         }
@@ -132,9 +133,10 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
 
     }
 
-    private fun navigateToCasesScreen(dispositionId: Int) {
+    private fun navigateToCasesScreen(dispositionId : Int) {
         val actions = CaseSummaryBottomSheetDirections.actionNavigationHomeSummaryToNavigationCases(
-            dispositionId,0,0,fromDate,toDate, false
+            dispositionId.toString(), "", "", "", fromDate,
+            toDate, true
         )
         findNavController().navigate(actions)
         dismiss()
