@@ -23,8 +23,8 @@
             android:layout_height="@dimen/dp48"
             android:elevation="0dp"
             android:visibility="visible"
-            app:cardCornerRadius="@dimen/dp200"
             app:layout_constraintStart_toStartOf="parent"
+            app:cardUseCompatPadding="true"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView

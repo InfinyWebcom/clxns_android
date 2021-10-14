@@ -222,6 +222,8 @@
     <string name="assign_to_tracer">Assign To Tracer</string>
     <string name="done">Done</string>
     <string name="collected_amount">Collected Amount</string>
+    <string name="cheque_number">Cheque No.</string>
+    <string name="back_to_my_plan">back to my plan</string>
 
 
     <string-array name="yesNo">

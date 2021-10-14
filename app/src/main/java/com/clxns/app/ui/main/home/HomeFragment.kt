@@ -73,10 +73,6 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding.rbToday.isChecked = true
-    }
 
     private fun getHomeStatistics() {
         homeViewModel.getHomeStatsData(sessionManager.getString(Constants.TOKEN)!!)
@@ -95,8 +91,20 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                         monthData = it.data.monthData!!
 
                         //Updating UI for Today
-                        summaryData = todayData.summaryData!!
-                        updateHomeStatsUI(todayData.actionsData!!, todayData.stats!!)
+                        when {
+                            binding.rbToday.isChecked -> {
+                                summaryData = todayData.summaryData!!
+                                updateHomeStatsUI(todayData.actionsData!!, todayData.stats!!)
+                            }
+                            binding.rbWeek.isChecked -> {
+                                summaryData = weekData.summaryData!!
+                                updateHomeStatsUI(weekData.actionsData!!, weekData.stats!!)
+                            }
+                            binding.rbMonth.isChecked -> {
+                                summaryData = monthData.summaryData!!
+                                updateHomeStatsUI(monthData.actionsData!!, monthData.stats!!)
+                            }
+                        }
                     } else {
                         noDataLayout.show()
                         binding.homeScrollView.hide()

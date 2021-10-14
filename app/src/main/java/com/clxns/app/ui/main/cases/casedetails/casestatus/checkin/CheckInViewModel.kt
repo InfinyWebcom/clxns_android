@@ -31,6 +31,7 @@ class CheckInViewModel @Inject constructor(
         token: String,
         body: CaseCheckInBody
     ) = viewModelScope.launch {
+        _responseSaveCheckIn.value = NetworkResult.Loading()
         repository.saveCheckInData(
             token, body
         ).collect { values ->
@@ -49,6 +50,8 @@ class CheckInViewModel @Inject constructor(
         type: String,
         content: String
     ) = viewModelScope.launch {
+        //This line is important to trigger the observer loading condition
+        _responseLeadContactUpdate.value = NetworkResult.Loading()
         repository.leadContactUpdate(
             token, leadId, type, content
         ).collect { values ->
@@ -61,6 +64,7 @@ class CheckInViewModel @Inject constructor(
     val responseCaseDetails: LiveData<NetworkResult<CaseDetailsResponse>> = _responseCaseDetails
 
     fun getCaseDetails(token: String, loanAccountNumber: String) = viewModelScope.launch {
+        _responseCaseDetails.value = NetworkResult.Loading()
         repository.getCaseDetails(token, loanAccountNumber).collect { values ->
             _responseCaseDetails.value = values
         }

@@ -47,11 +47,9 @@ class AddImageAdapter(var removePhotoListener: removePhoto, var ctx: Context) :
             }
         } else {
 //            holder.addedImageBinding.imgCamera.setImageDrawable(ContextCompat.getDrawable(ctx, R.drawable.ic_baseline_photo_camera_24));
-            holder.addedImageBinding.imgAddedImage.setBackground(
-                ContextCompat.getDrawable(
-                    ctx,
-                    R.drawable.background_green_border
-                )
+            holder.addedImageBinding.imgAddedImage.background = ContextCompat.getDrawable(
+                ctx,
+                R.drawable.background_green_border
             )
             holder.addedImageBinding.imgCamera.visibility = View.VISIBLE
             holder.addedImageBinding.imgDeletePhoto.visibility = View.GONE

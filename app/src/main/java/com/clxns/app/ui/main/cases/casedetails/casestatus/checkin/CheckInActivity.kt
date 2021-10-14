@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.location.LocationManager
 import android.net.Uri
 import android.os.*
@@ -15,8 +14,6 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -43,8 +40,6 @@ import com.clxns.app.utils.*
 import com.clxns.app.utils.support.CropImageActivity
 import com.clxns.app.utils.support.GridSpacingItemDecoration
 import com.google.android.gms.location.*
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.nabinbhandari.android.permissions.PermissionHandler
@@ -60,39 +55,38 @@ import kotlin.collections.ArrayList
 class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     AddImageAdapter.removePhoto {
 
-    private var IS_SUB_DIS: Boolean = false
-    private var IS_SET_RESULT: Boolean = false
-    var remark: String = ""
-    var followUpDate: String = ""
-    var additionalFields: AdditionalFieldModel? = null
-    lateinit var binding: ActivityCheckInBinding
-    lateinit var ctx: Context
-    val viewModel: CheckInViewModel by viewModels()
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    var imageCameraPickerLauncher: ActivityResultLauncher<Intent>? = null
-    var imageGalleryPickerLauncher: ActivityResultLauncher<Intent>? = null
-    var cropImageLaucher: ActivityResultLauncher<Intent>? = null
-    private var mCurrentPhotoPath: String? = null
-    private var imageUri: Uri? = null
-    lateinit var addImageAdapter: AddImageAdapter
-    private var addedPhotosList: ArrayList<Uri> = ArrayList()
-    private var photoB64List: ArrayList<String> = ArrayList()
-    var caseDetails: CaseDetailsResponse? = null
+    private var remark : String = ""
+    private var followUpDate : String = ""
+    private var additionalFields : AdditionalFieldModel? = null
+    lateinit var binding : ActivityCheckInBinding
+    lateinit var ctx : Context
+    val viewModel : CheckInViewModel by viewModels()
+    private lateinit var fusedLocationProviderClient : FusedLocationProviderClient
+    private var imageCameraPickerLauncher : ActivityResultLauncher<Intent>? = null
+    var imageGalleryPickerLauncher : ActivityResultLauncher<Intent>? = null
+    private var cropImageLauncher : ActivityResultLauncher<Intent>? = null
+    private var imageUri : Uri? = null
+    private lateinit var addImageAdapter : AddImageAdapter
+    private var addedPhotosList : ArrayList<Uri> = ArrayList()
+    private var photoB64List : ArrayList<String> = ArrayList()
+    var caseDetails : CaseDetailsResponse? = null
 
-    private var dispositionId: String = ""
-    private var subDispositionId: String = ""
+    private var dispositionId : String = ""
+    private var subDispositionId : String = ""
 
     @Inject
-    lateinit var sessionManager: SessionManager
+    lateinit var sessionManager : SessionManager
 
     companion object {
         private const val PERMISSION_ID = 101
-        private const val CAMERA_REQUEST_CODE = 1
-        private const val GALLERY_REQUEST_CODE = 2
+
+        private var PAYMENT_MODE = false
+        private var IS_SUB_DIS : Boolean = false
+        private var IS_SET_RESULT : Boolean = false
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
         ctx = this
@@ -124,7 +118,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 
                 val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
                 val rationale = "Please provide location permission"
-                val options: Permissions.Options = Permissions.Options()
+                val options : Permissions.Options = Permissions.Options()
                     .setRationaleDialogTitle("Info")
                     .setSettingsDialogTitle("Warning")
                 Permissions.check(
@@ -136,7 +130,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         override fun onGranted() {
                             getLastLocation()
 //                            if (getLocationCord()) {
-                            binding.txtLocationCheckIn.text = "Check In"
+                            binding.txtLocationCheckIn.text = getString(R.string.check_in)
                             binding.txtLocationVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
                                 ContextCompat.getDrawable(
                                     this@CheckInActivity,
@@ -157,8 +151,8 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         }
 
                         override fun onDenied(
-                            context: Context?,
-                            deniedPermissions: ArrayList<String?>?
+                            context : Context?,
+                            deniedPermissions : ArrayList<String?>?
                         ) {
                             // permission denied, block the feature.
                         }
@@ -178,7 +172,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 )
                 binding.verifiedImageUpload.setImageResource(android.R.color.transparent)
                 binding.verifiedImageUpload.visibility = View.GONE
-                binding.txtImageVerify.text = "Upload"
+                binding.txtImageVerify.text = getString(R.string.upload)
                 binding.txtImageVerify.setTextColor(
                     ContextCompat.getColor(
                         this,
@@ -189,6 +183,53 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         }
 
     }
+
+    /*private fun updateImageUploadUI(isImageAdded : Boolean) {
+        if (isImageAdded) {
+            binding.txtImageVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                ContextCompat.getDrawable(this, R.drawable.ic_verified_24),
+                null,
+                null,
+                null
+            )
+        } else {
+            binding.txtImageVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                ContextCompat.getDrawable(this, R.mipmap.ic_delete),
+                null,
+                null,
+                null
+            )
+            binding.txtImageVerify.text = getString(R.string.upload)
+            binding.txtImageVerify.setTextColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.colorPrimary
+                )
+            )
+        }
+    }*/
+
+
+    /*private fun showConfirmRemoveAllImageDialog() {
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle("Remove All Images")
+        dialog.setMessage("Are you sure you want to remove all the images?")
+
+        dialog.setPositiveButton("Yes") { d, _ ->
+            addedPhotosList.clear()
+            photoB64List.clear()
+            addImageAdapter.submitList(addedPhotosList)
+            updateImageUploadUI(false)
+            d.dismiss()
+        }.setNegativeButton("Cancel") { d, _ ->
+            d.dismiss()
+        }
+
+        val d = dialog.create()
+        d.show()
+        d.getButton(AlertDialog.BUTTON_POSITIVE).isAllCaps = false
+        d.getButton(AlertDialog.BUTTON_NEGATIVE).isAllCaps = false
+    }*/
 
     private fun setInit() {
 
@@ -284,14 +325,12 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     }
 
     private fun saveCheckingData(
-        comments: String,
-        followUp: String,
-        nextAction: String,
-        additionalField: AdditionalFieldModel?
+        comments : String,
+        followUp : String,
+        nextAction : String,
+        additionalField : AdditionalFieldModel?
     ) {
-        binding.progressBar.show()
-
-        var body = CaseCheckInBody()
+        val body = CaseCheckInBody()
         body.loanAccountNo = viewModel.leadId!!
         body.dispositionId = dispositionId
         body.subDispositionId =
@@ -315,7 +354,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         viewModel.responseSaveCheckIn.observe(this) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    binding.progressBar.hide()
+                    binding.checkInProgressBar.hide()
                     if (!response.data?.error!!) {
                         photoB64List.clear()
                         addedPhotosList.clear()
@@ -344,12 +383,12 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                     }
                 }
                 is NetworkResult.Error -> {
-                    binding.progressBar.hide()
+                    binding.checkInProgressBar.hide()
                     toast(response.message!!)
                     // show error message
                 }
                 is NetworkResult.Loading -> {
-                    binding.progressBar.show()
+                    binding.checkInProgressBar.show()
                     // show a progress bar
                 }
             }
@@ -358,17 +397,17 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         viewModel.responseLeadContactUpdate.observe(this) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    binding.progressBar.hide()
+                    binding.checkInProgressBar.hide()
                     toast(response.data?.title!!)
                     IS_SET_RESULT = true
                 }
                 is NetworkResult.Error -> {
-                    binding.progressBar.hide()
+                    binding.checkInProgressBar.hide()
                     toast(response.message!!)
                     // show error message
                 }
                 is NetworkResult.Loading -> {
-                    binding.progressBar.show()
+                    binding.checkInProgressBar.show()
                     // show a progress bar
                 }
             }
@@ -377,14 +416,14 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         viewModel.responseCaseDetails.observe(this) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    binding.progressBar.hide()
+                    binding.checkInProgressBar.hide()
                     if (!response.data?.error!!) {
                         caseDetails = response.data
                         binding.txtCheckInName.text = response.data.data?.name
                         binding.txtCheckInStatus.text = response.data.data?.paymentStatus
                         if (response.data.data?.allocationDate != null) {
-                            binding.txtDate.text = response.data.data?.allocationDate.toString()
-                                .formatDate("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "dd-MM-yyyy")
+                            binding.txtDate.text = response.data.data.allocationDate
+                                .convertServerDateToNormal("dd, MMM yyyy")
                         }
 
                     } else {
@@ -394,12 +433,12 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {
-                    binding.progressBar.hide()
+                    binding.checkInProgressBar.hide()
                     toast(response.message!!)
                     // show error message
                 }
                 is NetworkResult.Loading -> {
-                    binding.progressBar.show()
+                    binding.checkInProgressBar.show()
                     // show a progress bar
                 }
             }
@@ -423,7 +462,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         intent.putExtra("location", "${viewModel.lat},${viewModel.long}")
 
                         paymentLauncher.launch(intent)
-                        binding.progressBar.hide()
+                        binding.checkInProgressBar.hide()
                     } else {
                         saveCheckingData(
                             remark,
@@ -447,16 +486,16 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 IS_SET_RESULT = true
-                val data: Intent? = it.data
+                val data : Intent? = it.data
                 if (data != null) {
-                    val returnValue: Boolean = data!!.getBooleanExtra("close_app", false)
+                    val returnValue : Boolean = data.getBooleanExtra("close_app", false)
                     if (returnValue) {
                         val resultIntent = Intent()
                         resultIntent.putExtra("close_app", true)
                         setResult(RESULT_OK, resultIntent)
 
                         val uiHandler = Handler(Looper.getMainLooper())
-                        uiHandler.postDelayed(Runnable { super.onBackPressed() }, 50)
+                        uiHandler.postDelayed({ super.onBackPressed() }, 50)
 
                     }
                 }
@@ -467,7 +506,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         val items = arrayOf<CharSequence>("Camera", "Choose from gallery")
         val builder = AlertDialog.Builder(ctx)
         builder.setTitle("Add File ")
-        builder.setItems(items) { dialog: DialogInterface?, item: Int ->
+        builder.setItems(items) { _ : DialogInterface?, item : Int ->
             when (items[item].toString()) {
                 "Camera" -> {
                     val permissions = arrayOf(
@@ -475,7 +514,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                     )
                     val rationale = "Please provide camera permission"
-                    val options: Permissions.Options = Permissions.Options()
+                    val options : Permissions.Options = Permissions.Options()
                         .setRationaleDialogTitle("Info")
                         .setSettingsDialogTitle("Warning")
                     Permissions.check(this, permissions, rationale, options,
@@ -485,8 +524,8 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                             }
 
                             override fun onDenied(
-                                context: Context?,
-                                deniedPermissions: ArrayList<String?>?
+                                context : Context?,
+                                deniedPermissions : ArrayList<String?>?
                             ) {
                                 // permission denied, block the feature.
                             }
@@ -497,7 +536,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
                     )
                     val rationale = "Please provide storage permission"
-                    val options: Permissions.Options = Permissions.Options()
+                    val options : Permissions.Options = Permissions.Options()
                         .setRationaleDialogTitle("Info")
                         .setSettingsDialogTitle("Warning")
                     Permissions.check(this, permissions, rationale, options,
@@ -516,8 +555,8 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                             }
 
                             override fun onDenied(
-                                context: Context?,
-                                deniedPermissions: ArrayList<String?>?
+                                context : Context?,
+                                deniedPermissions : ArrayList<String?>?
                             ) {
                                 // permission denied, block the feature.
                             }
@@ -532,7 +571,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             imageUri = FileProvider.getUriForFile(
-                ctx, ctx!!.applicationContext.packageName
+                ctx, ctx.applicationContext.packageName
                         + ".provider",
                 createImageFile()!!
             )
@@ -548,18 +587,16 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 
     private fun getResultFromActivity() {
         imageCameraPickerLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult(),
-            object : ActivityResultCallback<ActivityResult> {
-                override fun onActivityResult(result: ActivityResult) {
-                    if (result.resultCode == RESULT_OK) {
-                        // There are no request codes
-                        imageUri?.let {
-                            startCropActivity(imageUri!!)
-                        }
-
-                    }
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                // There are no request codes
+                imageUri?.let {
+                    startCropActivity(imageUri!!)
                 }
-            })
+
+            }
+        }
 
         imageGalleryPickerLauncher =
             registerForActivityResult(
@@ -571,7 +608,8 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 }
             }
 
-        cropImageLaucher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        cropImageLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == RESULT_OK) {
                     // There are no request codes
                     val data = result.data
@@ -582,21 +620,27 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                                 addedPhotosList.add(imageUri)
                                 addImageAdapter.submitList(addedPhotosList)
                                 //Convert Base64
-                                var filepathString: String? = null
+                                var filepathString : String? = null
                                 try {
                                     filepathString = imageUri.getFileNameFromUri(ctx)
-                                } catch (e: Exception) {
+                                } catch (e : Exception) {
                                     e.printStackTrace()
-                                   toast("Error loading file")
+                                    toast("Error loading file")
                                 }
                                 if (filepathString != null) {
                                     try {
-                                        photoB64List.add("data:image/jpeg;base64,${File(filepathString).getBase64StringFile()}")
-                                    } catch (e: IOException) {
+                                        photoB64List.add(
+                                            "data:image/jpeg;base64,${
+                                                File(
+                                                    filepathString
+                                                ).getBase64StringFile()
+                                            }"
+                                        )
+                                    } catch (e : IOException) {
                                         e.printStackTrace()
                                     }
                                 }
-                            } catch (e: IOException) {
+                            } catch (e : IOException) {
                                 e.printStackTrace()
                             }
                         }
@@ -605,11 +649,11 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             }
     }
 
-    private fun startCropActivity(uri: Uri) {
+    private fun startCropActivity(uri : Uri) {
         val intent = Intent(ctx, CropImageActivity::class.java)
         intent.putExtra("sourceUri", uri.toString())
         intent.putExtra("cropping", "disable")
-        cropImageLaucher!!.launch(intent)
+        cropImageLauncher!!.launch(intent)
     }
 
 
@@ -618,30 +662,25 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 
         if (checkPermissions()) {
             if (isLocationEnabled()) {
-                fusedLocationProviderClient.lastLocation.addOnCompleteListener(object :
-                    OnCompleteListener<Location> {
-                    override fun onComplete(task: Task<Location>) {
-                        val location = task.result
-                        if (location == null) {
-                            toast("Error while fetching location try again")
-                            binding.txtLocationCheckIn.text = "Check In"
-                            binding.txtLocationVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                                ContextCompat.getDrawable(
-                                    this@CheckInActivity,
-                                    R.mipmap.ic_delete
-                                ),
-                                null,
-                                null,
-                                null
-                            )
-                            requestNewLocationData()
-                        } else {
-                            viewModel.setLocation(location.latitude, location.longitude)
-                        }
-
-
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
+                    val location = task.result
+                    if (location == null) {
+                        toast("Error while fetching location try again")
+                        binding.txtLocationCheckIn.text = getString(R.string.check_in)
+                        binding.txtLocationVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                            ContextCompat.getDrawable(
+                                this@CheckInActivity,
+                                R.mipmap.ic_delete
+                            ),
+                            null,
+                            null,
+                            null
+                        )
+                        requestNewLocationData()
+                    } else {
+                        viewModel.setLocation(location.latitude, location.longitude)
                     }
-                })
+                }
 
             } else {
                 Toast.makeText(this, "Please turn on" + " your location...", Toast.LENGTH_LONG)
@@ -669,14 +708,14 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         fusedLocationProviderClient.requestLocationUpdates(
             mLocationRequest,
-            mLocationCallback,
-            Looper.myLooper()
+            CheckInLocationCallback,
+            Looper.getMainLooper()
         )
     }
 
 
-    private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager =
+    private fun isLocationEnabled() : Boolean {
+        val locationManager : LocationManager =
             getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
@@ -692,7 +731,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         )
     }
 
-    private fun checkPermissions(): Boolean {
+    private fun checkPermissions() : Boolean {
         return ActivityCompat.checkSelfPermission(
             ctx,
             Manifest.permission.ACCESS_COARSE_LOCATION
@@ -702,19 +741,18 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    object mLocationCallback : LocationCallback() {
-        override fun onLocationResult(locationRequest: LocationResult) {
+    object CheckInLocationCallback : LocationCallback() {
+        override fun onLocationResult(locationRequest : LocationResult) {
             super.onLocationResult(locationRequest)
 
         }
     }
 
-    override fun openAddDetailsBottomSheet(isMobile: Boolean) {
+    override fun openAddDetailsBottomSheet(isMobile : Boolean) {
         val openAddDetailsBS = AddMobileOrAddressBottomSheet.newInstance(
             object : AddMobileOrAddressBottomSheet.OnClick {
 
-                override fun onMobileClick(mobile: String) {
-                    binding.progressBar.show()
+                override fun onMobileClick(mobile : String) {
                     viewModel.leadContactUpdate(
                         sessionManager.getString(Constants.TOKEN)!!,
                         viewModel.leadId!!,
@@ -723,8 +761,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                     )
                 }
 
-                override fun onAddressClick(address: String) {
-                    binding.progressBar.show()
+                override fun onAddressClick(address : String) {
                     viewModel.leadContactUpdate(
                         sessionManager.getString(Constants.TOKEN)!!,
                         viewModel.leadId!!,
@@ -743,12 +780,12 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     }
 
 
-    override fun openSubStatusActionBottomSheet(isPTPAction: Boolean, dispositionType: String) {
+    override fun openSubStatusActionBottomSheet(isPTPAction : Boolean, dispositionType : String) {
 
         if (viewModel.lat.isNullOrEmpty() || viewModel.long.isNullOrEmpty() ||
             viewModel.lat.isNullOrBlank() || viewModel.long.isNullOrBlank()
         ) {
-            binding.txtLocationCheckIn.text = "Check In"
+            binding.txtLocationCheckIn.text = getString(R.string.check_in)
             binding.txtLocationVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 ContextCompat.getDrawable(
                     this@CheckInActivity,
@@ -766,11 +803,11 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             SubStatusActionBottomSheet.newInstance(caseDetails,
                 object : SubStatusActionBottomSheet.OnClick {
                     override fun onClick(
-                        dispositionType: String,
-                        subDispositionType: String,
-                        followUpDate: String,
-                        remark: String,
-                        additionalFields: AdditionalFieldModel?
+                        dispositionType : String,
+                        subDispositionType : String,
+                        followUpDate : String,
+                        remark : String,
+                        additionalFields : AdditionalFieldModel?
                     ) {
                         prepareDataForCheckIn(
                             dispositionType,
@@ -788,12 +825,12 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         openSubStatusAction.show(supportFragmentManager, SubStatusActionBottomSheet.TAG)
     }
 
-    var PAYMENT_MODE = false
-    override fun openPaymentScreen(dispositionType: String) {
+
+    override fun openPaymentScreen(dispositionType : String) {
         if (viewModel.lat.isNullOrEmpty() || viewModel.long.isNullOrEmpty() ||
             viewModel.lat.isNullOrBlank() || viewModel.long.isNullOrBlank()
         ) {
-            binding.txtLocationCheckIn.text = "Check In"
+            binding.txtLocationCheckIn.text = getString(R.string.check_in)
             binding.txtLocationVerification.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 ContextCompat.getDrawable(
                     this@CheckInActivity,
@@ -807,7 +844,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             return
         }
         PAYMENT_MODE = true
-        binding.progressBar.show()
+        binding.checkInProgressBar.show()
         when (dispositionType) {
             "Collect" -> {
                 viewModel.getDispositionIdFromRoomDB("Collected")
@@ -822,7 +859,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         }
     }
 
-    override fun removePhoto(uri: Uri) {
+    override fun removePhoto(uri : Uri) {
         photoB64List.removeAt(addedPhotosList.indexOf(uri))
         addedPhotosList.remove(uri)
         addImageAdapter.submitList(addedPhotosList)
@@ -833,11 +870,11 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     }
 
     private fun prepareDataForCheckIn(
-        dispositionType: String,
-        subDispositionType: String,
-        followUpDate: String,
-        remark: String,
-        additionalFields: AdditionalFieldModel?
+        dispositionType : String,
+        subDispositionType : String,
+        followUpDate : String,
+        remark : String,
+        additionalFields : AdditionalFieldModel?
     ) {
         this.remark = remark
         this.followUpDate = followUpDate
@@ -870,7 +907,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 viewModel.getDispositionIdFromRoomDB(dispositionType)
             }
         }
-        binding.progressBar.show()
+        binding.checkInProgressBar.show()
     }
 
     override fun onBackPressed() {

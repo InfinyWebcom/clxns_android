@@ -9,14 +9,11 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -37,10 +34,10 @@ import com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.AddImageA
 import com.clxns.app.utils.*
 import com.clxns.app.utils.support.CropImageActivity
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -56,21 +53,20 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
 
     @Inject
     lateinit var sessionManager : SessionManager
-    private val REQUEST_IMAGE_CAPTURE = 854
+
     private var imageUri : Uri? = null
-    private var mCurrentPhotoPath : String? = null
     private var addedPhotosList : ArrayList<Uri> = ArrayList()
     private var photoB64List : ArrayList<String> = ArrayList()
     private var cropImageLauncher : ActivityResultLauncher<Intent>? = null
-    lateinit var addImageAdapter : AddImageAdapter
+    private lateinit var addImageAdapter : AddImageAdapter
     var recoveryDate = ""
-    var paymentType = "ONLINE"
+    private var paymentType = "ONLINE"
     var caseDetails : CaseDetailsResponse? = null
 
     private var year = 0
     private var month = 0
     private var day = 0
-    var imageCameraPickerLauncher : ActivityResultLauncher<Intent>? = null
+    private var imageCameraPickerLauncher : ActivityResultLauncher<Intent>? = null
     var imageGalleryPickerLauncher : ActivityResultLauncher<Intent>? = null
 
     companion object {
@@ -105,7 +101,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         viewModel.dispositionId = intent.getStringExtra("disposition_id")
         viewModel.location = intent.getStringExtra("location")
         if (sessionManager.getString("main_supporting") != null) {
-            val myType = object : TypeToken<ArrayList<String>>() {}.type
+            //val myType = object : TypeToken<ArrayList<String>>() {}.type
             val mainSupporting =
                 Gson().fromJson(sessionManager.getString("main_supporting"), DemoCap::class.java)
 
@@ -164,7 +160,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     additionalField.refChequeNo =
                         if (paymentType == "CHEQUE") binding.edtReferenceType.text.toString() else (if (paymentType == "ONLINE") binding.edtReferenceType.text.toString() else "")
                     additionalField.recoveredAmount =
-                        binding.paymentAmountEt.text.toString().toString()
+                        binding.paymentAmountEt.text.toString()
 
                     //payment details
                     val payment = PaymentModel()
@@ -220,16 +216,16 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                         binding.txtProductValue.text = nullSafeString(response.data.data?.loanType)
                         if (response.data.data?.allocationDate != null) {
                             binding.txtDate.text =
-                                response.data.data?.allocationDate.toString().formatDate(
-                                    "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-                                    "dd-MM-yyyy"
-                                )
+                                response.data.data.allocationDate.
+                                convertServerDateToNormal("dd, MMM yyyy")
+
                         }
                         binding.txtBankName.text = nullSafeString(response.data.data?.fiData?.name)
                         val amount =
-                            (response.data.data?.totalDueAmount?.minus(response.data.data?.amountCollected!!))
-                        binding.collectableAmountEt.text =
-                            "₹${amount}"/*{nullSafeString(amount.toString())}*/
+                            (response.data.data?.totalDueAmount?.minus(response.data.data.amountCollected!!))
+                        if (amount != null) {
+                            binding.collectableAmountEt.text = amount.convertToCurrency()
+                        }
                     } else {
                         toast(response.data.title!!)
                         finish()
@@ -257,7 +253,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                             it.isEnabled = false
                         }
                         IS_PAYMENT_DONE = true
-                        binding.generateReceiptBtn.text = "back to my plan"
+                        binding.generateReceiptBtn.text = getString(R.string.back_to_my_plan)
                     } else {
                         toast(response.data.title!!)
                     }
@@ -287,24 +283,10 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
     private fun showDatePickerDialog() {
         datePickerDialog =
             DatePickerDialog(ctx, { _, year, month, day ->
-                Log.i(javaClass.name, "month--->" + MONTHS[month])
+                Timber.i("month--->" + MONTHS[month])
+                val paymentOrRecoveryDate = "$day " + MONTHS[month] + " $year"
+                binding.txtPaymentOrRecoveryDateValue.text = paymentOrRecoveryDate
 
-                //set current time as default time
-                val millis = System.currentTimeMillis()
-                val c = Calendar.getInstance()
-                c.timeInMillis = millis
-                val hours = c.get(Calendar.HOUR)
-                val minutes = c.get(Calendar.MINUTE)
-
-//                T${String.format("%02d", hours + 12)}:${
-//                String.format(
-//                    "%02d",
-//                    minutes
-//                )
-//            }:00.000Z
-
-                binding.txtPaymentOrRecoveryDateValue.text =
-                    "$day " + MONTHS[month] + " $year"
                 recoveryDate =
                     "${year}-${String.format("%02d", month + 1)}-${
                         String.format(
@@ -328,14 +310,14 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         paymentType = "ONLINE"
         binding.txtReferenceNo.visibility = View.VISIBLE
         binding.edtReferenceType.visibility = View.VISIBLE
-        binding.txtReferenceNo.text = "Reference No."
+        binding.txtReferenceNo.text = getString(R.string.reference_no)
 
 
     }
 
     private fun setChequeVisibility() {
         paymentType = "CHEQUE"
-        binding.txtReferenceNo.text = "Cheque No."
+        binding.txtReferenceNo.text = getString(R.string.cheque_number)
         binding.txtReferenceNo.visibility = View.VISIBLE
         binding.edtReferenceType.visibility = View.VISIBLE
 
@@ -462,40 +444,33 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
 
     private fun getResultFromActivity() {
         imageCameraPickerLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult(),
-            object : ActivityResultCallback<ActivityResult> {
-                override fun onActivityResult(result : ActivityResult) {
-                    Log.i(javaClass.name, "getResultCode---->" + result.resultCode)
-                    if (result.resultCode == RESULT_OK) {
-                        // There are no request codes
-                        val data = result.data
-                        Log.i(javaClass.name, "data---->$imageUri")
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            Timber.i("getResultCode---->" + result.resultCode)
+            if (result.resultCode == RESULT_OK) {
+                // There are no request codes
+                Timber.i("data---->$imageUri")
 
-                        imageUri?.let {
-                            Log.i("onActivity", " ------------- > $imageUri")
-                            startCropActivity(imageUri!!)
-                        }
-
-                    }
+                imageUri?.let {
+                    Timber.i(" ------------- > $imageUri")
+                    startCropActivity(imageUri!!)
                 }
-            })
+
+            }
+        }
 
         imageGalleryPickerLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult(), object :
-                ActivityResultCallback<ActivityResult> {
-                override fun onActivityResult(result : ActivityResult?) {
-                    if (result?.resultCode == RESULT_OK) {
-                        val data = result.data
-                        Log.i(javaClass.name, "data-->$data")
+            registerForActivityResult(
+                ActivityResultContracts.StartActivityForResult()
+            ) { result ->
+                if (result?.resultCode == RESULT_OK) {
+                    val data = result.data
+                    Timber.i("data-->$data")
 
-                        data?.data?.let { startCropActivity(data.data!!) }
-
-                    }
-
+                    data?.data?.let { startCropActivity(data.data!!) }
 
                 }
-
-            })
+            }
 
         cropImageLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -551,7 +526,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             imageUri = FileProvider.getUriForFile(
-                ctx, ctx!!.applicationContext.packageName
+                ctx, ctx.applicationContext.packageName
                         + ".provider",
                 createImageFile()!!
             )

@@ -140,7 +140,7 @@
         <entry key="app/src/main/res/drawable/progress_icon.xml" value="0.140234375" />
         <entry key="app/src/main/res/layout/activity_asset_repossesion.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_check_in.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_check_in.xml" value="0.15" />
         <entry key="app/src/main/res/layout/activity_details.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.16" />
         <entry key="app/src/main/res/layout/activity_history_details.xml" value="0.15" />

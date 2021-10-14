@@ -14,12 +14,12 @@ class CollectionsApp : Application() {
         }
         /**
          * Add OTP Timer in Forgot Password Activity - TODO
-         * After we un plan a case from the detail screen, the CheckIn Button should get hide - DONE
-         * Case Filter had an issue when we apply filter it recreates the cases fragment because
-         * when you click back button it doesn't go back to home screen instead goes back to previous
-         * instance of cases screen - FIXED
-         * Case Filter Reset Button will clear the field, as we apply filter then we can see the reset button
-         * on the top for resetting the filters.
+         * In the listing, unable to see the images of the bank.
+         * Go to "This Month" tab, it shows some data in all the fields. Now pull down to refresh on this screen, all the data turns 0.
+         * Added corner radius to check in bottom sheet
+         * Only Portrait support for the remaining screens
+         * Check In Screen Progress bar was too small to be seen - FIXED
+         * Changed Check In & Payment Collection Date Format
          */
     }
 }

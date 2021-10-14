@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="LockedOrientationActivity"
     package="com.clxns.app">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -27,43 +28,56 @@
 
         <activity
             android:name="com.clxns.app.ui.main.cases.casedetails.history.HistoryDetailsActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
 
         <activity
             android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.checkin.CheckInActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.paymentcollection.PaymentCollectionActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.AssetRepossessionActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.map.RepossessionMapActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.RepossessionsSubmitActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name="com.clxns.app.ui.main.cases.casedetails.DetailsActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".ui.search.SearchActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".ui.notification.NotificationActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name="com.clxns.app.ui.main.account.changePassword.ChangePasswordActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name="com.clxns.app.ui.login.forgotPassword.ForgotPasswordActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name="com.clxns.app.utils.support.CropImageActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".ui.splash.SplashScreenActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -77,14 +91,14 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"
-            tools:ignore="LockedOrientationActivity" />
+             />
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
+            />
 
         <provider
             android:name="androidx.core.content.FileProvider"
