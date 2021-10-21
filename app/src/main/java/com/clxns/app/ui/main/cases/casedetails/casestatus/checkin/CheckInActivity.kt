@@ -45,6 +45,7 @@ import com.google.gson.Gson
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import java.io.*
 import java.util.*
 import javax.inject.Inject
@@ -83,6 +84,8 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         private var PAYMENT_MODE = false
         private var IS_SUB_DIS : Boolean = false
         private var IS_SET_RESULT : Boolean = false
+
+        private var IS_PARTIALLY_COLLECT = false
     }
 
 
@@ -455,13 +458,21 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         val demoCap = DemoCap()
                         demoCap.mainSupporting = photoB64List
                         sessionManager.saveAnyData("main_supporting", Gson().toJson(demoCap))
-                        val intent =
+                        val goToPaymentActivity =
                             Intent(this, PaymentCollectionActivity::class.java)
-                        intent.putExtra("loan_account_number", viewModel.leadId)
-                        intent.putExtra("disposition_id", dispositionId)
-                        intent.putExtra("location", "${viewModel.lat},${viewModel.long}")
+                        goToPaymentActivity.putExtra("loan_account_number", viewModel.leadId)
+                        goToPaymentActivity.putExtra("disposition_id", dispositionId)
+                        goToPaymentActivity.putExtra(
+                            "location",
+                            "${viewModel.lat},${viewModel.long}"
+                        )
+                        goToPaymentActivity.putExtra("isPartialCollect", IS_PARTIALLY_COLLECT)
+                        goToPaymentActivity.putExtra(
+                            "fosAssignedDate",
+                            intent.getStringExtra("fosAssignedDate")
+                        )
 
-                        paymentLauncher.launch(intent)
+                        paymentLauncher.launch(goToPaymentActivity)
                         binding.checkInProgressBar.hide()
                     } else {
                         saveCheckingData(
@@ -821,12 +832,14 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         val bundle = Bundle()
         bundle.putBoolean("isPTPAction", isPTPAction)
         bundle.putString("dispositionType", dispositionType)
+        bundle.putString("fosAssignedDate", intent.getStringExtra("fosAssignedDate"))
         openSubStatusAction.arguments = bundle
         openSubStatusAction.show(supportFragmentManager, SubStatusActionBottomSheet.TAG)
     }
 
 
     override fun openPaymentScreen(dispositionType : String) {
+        IS_PARTIALLY_COLLECT = false
         if (viewModel.lat.isNullOrEmpty() || viewModel.long.isNullOrEmpty() ||
             viewModel.lat.isNullOrBlank() || viewModel.long.isNullOrBlank()
         ) {
@@ -850,6 +863,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 viewModel.getDispositionIdFromRoomDB("Collected")
             }
             "Partially Collect" -> {
+                IS_PARTIALLY_COLLECT = true
                 viewModel.getDispositionIdFromRoomDB("Partially Collected")
             }
             else -> {
@@ -906,6 +920,9 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             "Customer Deceased" -> {
                 viewModel.getDispositionIdFromRoomDB(dispositionType)
             }
+            "Settlement/Foreclosure" -> {
+                viewModel.getDispositionIdFromRoomDB(dispositionType)
+            }
         }
         binding.checkInProgressBar.show()
     }
@@ -913,6 +930,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
     override fun onBackPressed() {
         if (IS_SET_RESULT) {
             setResult(RESULT_OK)
+            IS_SET_RESULT = false
         }
         super.onBackPressed()
     }

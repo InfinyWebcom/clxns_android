@@ -88,7 +88,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <RadioButton
-                        android:id="@+id/rbToday"
+                        android:id="@+id/rbMonth"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dp4"
@@ -98,7 +98,7 @@
                         android:checked="true"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:text="@string/today"
+                        android:text="@string/this_month"
                         android:textAllCaps="true"
                         android:textColor="@drawable/radio_text_color_state"
                         android:textSize="@dimen/sp12"
@@ -121,7 +121,7 @@
                         android:textStyle="bold" />
 
                     <RadioButton
-                        android:id="@+id/rbMonth"
+                        android:id="@+id/rbToday"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dp4"
@@ -130,11 +130,12 @@
                         android:button="@null"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:text="@string/this_month"
+                        android:text="@string/today"
                         android:textAllCaps="true"
                         android:textColor="@drawable/radio_text_color_state"
                         android:textSize="@dimen/sp12"
                         android:textStyle="bold" />
+
 
                 </RadioGroup>
 

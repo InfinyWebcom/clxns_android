@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/dp16"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/bottom_sheet_background"
+    android:padding="@dimen/dp16">
 
 
     <TextView
@@ -20,12 +21,12 @@
         android:id="@+id/add_new_mobile_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp16"
         android:fontFamily="@font/gtwalsheimpromedium"
         android:text="@string/AddNewMobile"
-        android:layout_marginTop="@dimen/dp16"
-        android:visibility="gone"
         android:textColor="@color/text_black"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:visibility="gone" />
 
     <EditText
         android:id="@+id/edtNewMobileNo"
@@ -51,10 +52,10 @@
         android:id="@+id/add_new_address_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp16"
         android:buttonTint="@color/colorPrimary"
         android:fontFamily="@font/gtwalsheimpromedium"
         android:text="@string/AddNewAddress"
-        android:layout_marginTop="@dimen/dp16"
         android:textColor="@color/text_black"
         android:textSize="18sp" />
 
@@ -81,13 +82,13 @@
         android:id="@+id/updateDetailsBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dip"
-        android:backgroundTint="@color/colorPrimary"
-        android:textSize="@dimen/sp16"
         android:layout_marginTop="24dp"
+        android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/gtwalsheimpromedium"
+        android:padding="16dip"
         android:text="Update Details"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp16" />
 
 
 </LinearLayout>

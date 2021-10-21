@@ -81,6 +81,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/statusSpinnerLayout"
                 android:layout_marginTop="@dimen/dp6"
                 android:background="@drawable/background_spinner">
 
@@ -89,10 +90,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="@dimen/dp4"
-                    android:theme="@style/spinnerTheme"
                     android:overlapAnchor="false"
                     android:paddingVertical="@dimen/dp10"
                     android:spinnerMode="dialog"
+                    android:theme="@style/spinnerTheme"
                     tools:ignore="SpeakableTextPresentCheck" />
             </RelativeLayout>
 
@@ -296,7 +297,8 @@
                             android:layout_marginEnd="@dimen/dp30"
                             android:background="@drawable/background_edittext_round"
                             android:importantForAutofill="no"
-                            android:inputType="number"
+                            android:inputType="textCapCharacters"
+                            android:digits="@string/alpha_numeric_chars"
                             android:padding="@dimen/dp3"
                             android:textSize="@dimen/sp12"
                             android:visibility="visible"

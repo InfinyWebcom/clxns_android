@@ -59,7 +59,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
     private var photoB64List : ArrayList<String> = ArrayList()
     private var cropImageLauncher : ActivityResultLauncher<Intent>? = null
     private lateinit var addImageAdapter : AddImageAdapter
-    var recoveryDate = ""
+    private var recoveryDate = ""
     private var paymentType = "ONLINE"
     var caseDetails : CaseDetailsResponse? = null
 
@@ -68,6 +68,8 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
     private var day = 0
     private var imageCameraPickerLauncher : ActivityResultLauncher<Intent>? = null
     var imageGalleryPickerLauncher : ActivityResultLauncher<Intent>? = null
+
+    private var isPartialCollect = false
 
     companion object {
         private val MONTHS = arrayOf(
@@ -156,9 +158,9 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     val additionalField = AdditionalFieldModel()
                     additionalField.recoveryDate = recoveryDate
                     additionalField.paymentMode = paymentType
-                    additionalField.recoveryType = binding.spAmount.selectedItem.toString()
+                    additionalField.recoveryType = getSelectedRecoveryType()
                     additionalField.refChequeNo =
-                        if (paymentType == "CHEQUE") binding.edtReferenceType.text.toString() else (if (paymentType == "ONLINE") binding.edtReferenceType.text.toString() else "")
+                        if (paymentType == "CHEQUE") binding.edtChequeNumber.text.toString() else (if (paymentType == "ONLINE") binding.edtReferenceNo.text.toString() else "")
                     additionalField.recoveredAmount =
                         binding.paymentAmountEt.text.toString()
 
@@ -166,13 +168,13 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     val payment = PaymentModel()
                     payment.leadId = viewModel.loanAccountNumber
                     payment.loanNo = viewModel.loanAccountNumber
-                    payment.amtType = binding.spAmount.selectedItem.toString()
+                    payment.amtType = getSelectedRecoveryType()
                     payment.paymentMode = paymentType
                     payment.recoveryDate = recoveryDate
                     payment.refNo =
-                        if (paymentType == "ONLINE") binding.edtReferenceType.text.toString() else ""
+                        if (paymentType == "ONLINE") binding.edtReferenceNo.text.toString() else ""
                     payment.chequeNo =
-                        if (paymentType == "CHEQUE") binding.edtReferenceType.text.toString() else ""
+                        if (paymentType == "CHEQUE") binding.edtChequeNumber.text.toString() else ""
                     payment.remark = binding.remarksET.text.toString()
                     payment.supporting = photoB64List
                     payment.collectedAmt = binding.paymentAmountEt.text.toString().toLong()
@@ -183,13 +185,14 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     body.dispositionId = viewModel.dispositionId!!
                     body.subDispositionId = null
                     body.comments = binding.remarksET.text.toString()
-                    body.followUp = recoveryDate
-                    body.nextAction = recoveryDate
+                    //body.followUp = recoveryDate
+                    //body.nextAction = recoveryDate
                     body.additionalField = additionalField
                     body.location = viewModel.location!!
                     body.supporting = viewModel.mainSupporting
                     body.payment = payment
 
+                    Timber.i(body.toString())
                     viewModel.saveCheckInData(
                         sessionManager.getString(Constants.TOKEN)!!,
                         body
@@ -205,10 +208,20 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
 
     }
 
+    private fun getSelectedRecoveryType() : String {
+        return if (binding.spAmount.selectedItemPosition != 0) {
+            binding.spAmount.selectedItem.toString()
+        } else {
+            " "
+        }
+    }
+
+
     private fun setObserver() {
         viewModel.responseCaseDetails.observe(this) { response ->
             when (response) {
                 is NetworkResult.Success -> {
+                    binding.paymentProgressBar.hide()
                     if (!response.data?.error!!) {
                         caseDetails = response.data
                         binding.txtName.text = nullSafeString(response.data.data?.name)
@@ -216,8 +229,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                         binding.txtProductValue.text = nullSafeString(response.data.data?.loanType)
                         if (response.data.data?.allocationDate != null) {
                             binding.txtDate.text =
-                                response.data.data.allocationDate.
-                                convertServerDateToNormal("dd, MMM yyyy")
+                                response.data.data.allocationDate.convertServerDateToNormal("dd, MMM yyyy")
 
                         }
                         binding.txtBankName.text = nullSafeString(response.data.data?.fiData?.name)
@@ -235,9 +247,11 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                 is NetworkResult.Error -> {
                     toast(response.message!!)
                     // show error message
+                    binding.paymentProgressBar.hide()
                 }
                 is NetworkResult.Loading -> {
                     // show a progress bar
+                    binding.paymentProgressBar.show()
                 }
             }
         }
@@ -284,7 +298,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         datePickerDialog =
             DatePickerDialog(ctx, { _, year, month, day ->
                 Timber.i("month--->" + MONTHS[month])
-                val paymentOrRecoveryDate = "$day " + MONTHS[month] + " $year"
+                val paymentOrRecoveryDate = "$day, " + MONTHS[month] + " $year"
                 binding.txtPaymentOrRecoveryDateValue.text = paymentOrRecoveryDate
 
                 recoveryDate =
@@ -296,30 +310,38 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     }"
 
             }, year, month, day)
-        //datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+
+        val minDate = intent.getStringExtra("fosAssignedDate")!!.getDateInLongFormat()
+        datePickerDialog.datePicker.minDate = minDate
+        datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
         datePickerDialog.show()
     }
 
     private fun setCashVisibility() {
         paymentType = "CASH"
-        binding.txtReferenceNo.visibility = View.GONE
-        binding.edtReferenceType.visibility = View.GONE
+        binding.txtReferenceNo.hide()
+        binding.edtReferenceNo.hide()
+        binding.edtChequeNumber.hide()
     }
 
     private fun setOnlineVisibility() {
         paymentType = "ONLINE"
-        binding.txtReferenceNo.visibility = View.VISIBLE
-        binding.edtReferenceType.visibility = View.VISIBLE
+        binding.txtReferenceNo.show()
+        binding.edtReferenceNo.show()
+        binding.edtChequeNumber.hide()
         binding.txtReferenceNo.text = getString(R.string.reference_no)
-
-
+        binding.edtReferenceNo.setText("")
+        binding.edtChequeNumber.setText("")
     }
 
     private fun setChequeVisibility() {
         paymentType = "CHEQUE"
         binding.txtReferenceNo.text = getString(R.string.cheque_number)
-        binding.txtReferenceNo.visibility = View.VISIBLE
-        binding.edtReferenceType.visibility = View.VISIBLE
+        binding.edtReferenceNo.hide()
+        binding.txtReferenceNo.show()
+        binding.edtChequeNumber.show()
+        binding.edtReferenceNo.setText("")
+        binding.edtChequeNumber.setText("")
 
     }
 
@@ -336,6 +358,14 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
         year = calendar.get(Calendar.YEAR)
         day = calendar.get(Calendar.DAY_OF_MONTH)
         month = calendar.get(Calendar.MONTH)
+
+        isPartialCollect = intent.getBooleanExtra("isPartialCollect", false)
+
+        if (isPartialCollect) {
+            binding.spAmountLayout.hide()
+            binding.txtAmountType.hide()
+            binding.amountLabel.text = getString(R.string.partial_amount)
+        }
 
 
         val amountTypeAdapter = ArrayAdapter.createFromResource(
@@ -357,9 +387,15 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
                     if (position == 1 || position == 2) {
                         binding.paymentAmountEt.isEnabled = false
                         if (position == 1) {
-                            binding.paymentAmountEt.setText(caseDetails?.data?.totalDueAmount.toString())
+                            val totalDueAmount = caseDetails?.data?.totalDueAmount?.minus(
+                                caseDetails?.data?.amountCollected!!
+                            )
+                            binding.paymentAmountEt.setText(totalDueAmount.toString())
                         } else {
-                            binding.paymentAmountEt.setText(caseDetails?.data?.principalOutstandingAmount.toString())
+                            val posAmount = caseDetails?.data?.principalOutstandingAmount?.minus(
+                                caseDetails?.data?.amountCollected!!
+                            )
+                            binding.paymentAmountEt.setText(posAmount.toString())
                         }
                     } else {
                         binding.paymentAmountEt.isEnabled = true
@@ -551,12 +587,14 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
     }
 
     private fun validate() : Boolean {
-        if (binding.spAmount.selectedItem.toString().isBlank() ||
-            binding.spAmount.selectedItem.toString().isEmpty() ||
-            binding.spAmount.selectedItem.toString() == "Select an Option"
-        ) {
-            toast("Please select amount type")
-            return false
+        if (!isPartialCollect) {
+            if (binding.spAmount.selectedItem.toString().isBlank() ||
+                binding.spAmount.selectedItem.toString().isEmpty() ||
+                binding.spAmount.selectedItem.toString() == "Select an Option"
+            ) {
+                toast("Please select amount type")
+                return false
+            }
         }
         if (binding.paymentAmountEt.text.toString().isBlank()
             || binding.paymentAmountEt.text.toString().isEmpty()
@@ -581,16 +619,16 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
 
         when (binding.rgPayment.checkedRadioButtonId) {
             binding.rbOnline.id -> {
-                if (binding.edtReferenceType.text.toString().isBlank()
-                    || binding.edtReferenceType.text.toString().isEmpty()
+                if (binding.edtReferenceNo.text.toString().isBlank()
+                    || binding.edtReferenceNo.text.toString().isEmpty()
                 ) {
                     toast("Please enter reference number")
                     return false
                 }
             }
             binding.rbCheque.id -> {
-                if (binding.edtReferenceType.text.toString().isBlank()
-                    || binding.edtReferenceType.text.toString().isEmpty()
+                if (binding.edtChequeNumber.text.toString().isBlank()
+                    || binding.edtChequeNumber.text.toString().isEmpty()
                 ) {
                     toast("Please enter cheque number")
                     return false
@@ -616,6 +654,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.removePho
     override fun onBackPressed() {
         if (IS_PAYMENT_DONE) {
             setResult(RESULT_OK)
+            IS_PAYMENT_DONE = false
         }
         super.onBackPressed()
     }

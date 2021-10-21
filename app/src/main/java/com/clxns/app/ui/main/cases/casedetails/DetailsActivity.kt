@@ -58,12 +58,16 @@ class DetailsActivity : AppCompatActivity() {
 
     private var totalDueAmount = 0
     private var collectedAmount = 0
-    var checkInLauncher : ActivityResultLauncher<Intent>? = null
+    private var checkInLauncher : ActivityResultLauncher<Intent>? = null
+
+    private lateinit var fosAssignedDate : String
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
 
         initView()
+
+        initCheckInLauncher()
 
         setListeners()
 
@@ -73,6 +77,7 @@ class DetailsActivity : AppCompatActivity() {
 
         updatePlanButtonUI()
     }
+
 
     private fun initView() {
         binding = ActivityDetailsBinding.inflate(layoutInflater)
@@ -107,11 +112,16 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun setListeners() {
 
+        binding.txtTotalDueAmount.setOnClickListener {
+            it.showDialog(totalDueAmount, collectedAmount)
+        }
+
         binding.btnCheckIn.setOnClickListener {
             val intent = Intent(this, CheckInActivity::class.java)
             intent.putExtra("status", intent.getStringExtra("status"))
             intent.putExtra("loan_account_number", loanAccountNo)
             intent.putExtra("name", intent.getStringExtra("name"))
+            intent.putExtra("fosAssignedDate", fosAssignedDate)
             checkInLauncher!!.launch(intent)
         }
 
@@ -177,31 +187,6 @@ class DetailsActivity : AppCompatActivity() {
             }
         }
 
-        checkInLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val data : Intent? = result.data
-                if (data != null) {
-                    val returnValue : Boolean = data!!.getBooleanExtra("close_app", false)
-                    if (returnValue) {
-                        planStatusIntent = Intent()
-                        planStatusIntent.putExtra("hasChangedPlanStatus", true)
-                        setResult(Activity.RESULT_OK, planStatusIntent)
-                        val uiHandler = Handler(Looper.getMainLooper())
-                        uiHandler.postDelayed(Runnable { super.onBackPressed() }, 50)
-                    }
-                }
-                //Refresh detail screen if user has checked in
-                detailsViewModel.getCaseDetails(
-                    token,
-                    loanAccountNo
-                )
-                //To refresh my plan fragment
-                setPlanStatus()
-            }
-        }
-
     }
 
     private fun subscribeObserver() {
@@ -210,10 +195,15 @@ class DetailsActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     binding.progressBar.hide()
                     if (response.data?.error == false && response.data.data != null) {
-                        mobileNo = response.data.data.phone
+                        binding.btnCheckIn.show()
 
+                        response.data.data
+
+                        mobileNo = response.data.data.phone
                         totalDueAmount = response.data.data.totalDueAmount!!
                         collectedAmount = response.data.data.amountCollected!!
+
+                        fosAssignedDate = response.data.data.fosAssignedDate.toString()
 
                         if (((response.data.data.totalDueAmount.minus(response.data.data.amountCollected)) <= 0) || isCaseDetail) {
                             binding.btnCheckIn.hide()
@@ -225,7 +215,9 @@ class DetailsActivity : AppCompatActivity() {
                         if (response.data.data.dispositionId != null) {
                             detailsViewModel.getDispositionName(response.data.data.dispositionId)
                             if (response.data.data.subDispositionId != null) {
-                                detailsViewModel.getSubDispositionName(response.data.data.subDispositionId)
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    detailsViewModel.getSubDispositionName(response.data.data.subDispositionId)
+                                }, 100)
                             }
                         }
                         //Addition Details if available only then show it
@@ -252,6 +244,7 @@ class DetailsActivity : AppCompatActivity() {
                 }
                 is NetworkResult.Loading -> {
                     binding.progressBar.show()
+                    binding.btnCheckIn.hide()
                     // show a progress bar
                 }
             }
@@ -316,6 +309,28 @@ class DetailsActivity : AppCompatActivity() {
 
     }
 
+    private fun initCheckInLauncher() {
+        checkInLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data : Intent? = result.data
+                if (data != null) {
+                    val returnValue : Boolean = data.getBooleanExtra("close_app", false)
+                    if (returnValue) {
+                        setPlanStatus()
+                        val uiHandler = Handler(Looper.getMainLooper())
+                        uiHandler.postDelayed({ super.onBackPressed() }, 50)
+                    }
+                }
+                //Refresh detail screen if user has checked in
+                getCaseDetail()
+                //To refresh my plan fragment
+                setPlanStatus()
+            }
+        }
+    }
+
     private fun setPlanStatus() {
         planStatusIntent = Intent()
         planStatusIntent.putExtra("hasChangedPlanStatus", true)
@@ -332,7 +347,10 @@ class DetailsActivity : AppCompatActivity() {
             nullSafeString(data.paymentStatus.toString()).makeFirstLetterCapital()
 
         binding.txtLoanAmountValue.text = checkIfAmountValueIsZero(data.totalLoanAmount.toString())
-        binding.totalDueAmountValue.text = checkIfAmountValueIsZero(data.totalDueAmount.toString())
+
+        val updatedDueAmount = totalDueAmount - collectedAmount
+        binding.totalDueAmountValue.text = checkIfAmountValueIsZero(updatedDueAmount.toString())
+
         binding.emiAmountValue.text = checkIfAmountValueIsZero(data.emiAmount.toString())
         binding.principalOutstandingAmountValue.text =
             checkIfAmountValueIsZero(data.principalOutstandingAmount.toString())
@@ -343,7 +361,7 @@ class DetailsActivity : AppCompatActivity() {
         binding.DPDValue.text = nullSafeString(data.allocationDpd.toString())
 
         binding.txtDueDateValue.text =
-            data.dateOfDefault?.convertServerDateToNormal("dd MMM, yyyy")
+            data.dateOfDefault?.convertServerDateToNormal("dd, MMM yyyy")
 
         binding.txtLoanTypeValue.text = nullSafeString(data.loanType.toString())
         binding.txtPinCodeValue.text = nullSafeString(data.applicantPincode.toString())

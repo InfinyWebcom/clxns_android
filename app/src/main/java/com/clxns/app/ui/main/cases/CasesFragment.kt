@@ -158,7 +158,8 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
     private fun setListeners() {
         filterBtn.setOnClickListener {
             if (filterBtn.text.equals("Filter")) {
-                findNavController().navigate(R.id.action_navigation_cases_to_navigation_cases_filter)
+                findNavController().safeNavigate(
+                    CasesFragmentDirections.actionNavigationCasesToNavigationCasesFilter())
             } else {
                 filterBtn.text = getString(R.string.filter)
                 getCaseList(

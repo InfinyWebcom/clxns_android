@@ -30,6 +30,7 @@ class PaymentCollectionViewModel @Inject constructor(
     val responseCaseDetails : LiveData<NetworkResult<CaseDetailsResponse>> = _responseCaseDetails
 
     fun getCaseDetails(token : String, loanAccountNumber : String) = viewModelScope.launch {
+        _responseCaseDetails.value = NetworkResult.Loading()
         repository.getCaseDetails(token, loanAccountNumber).collect { values ->
             _responseCaseDetails.value = values
         }
@@ -39,25 +40,6 @@ class PaymentCollectionViewModel @Inject constructor(
         MutableLiveData()
     val responseAddPayment : LiveData<NetworkResult<HomeStatisticsResponse>> = _responseAddPayment
 
-    fun addPayment(
-        token : String,
-        leadId : String,
-        loanNo : String,
-        amtType : String,
-        paymentMode : String,
-        recoveryDate : String,
-        refNo : String,
-        chequeNo : String,
-        remark : String,
-        supporting : Array<String>
-    ) = viewModelScope.launch {
-        repository.addPayment(
-            token, leadId, loanNo, amtType,
-            paymentMode, recoveryDate, refNo, chequeNo, remark, supporting
-        ).collect { values ->
-            _responseAddPayment.value = values
-        }
-    }
 
     private val _responseSaveCheckIn : MutableLiveData<NetworkResult<MyPlanModel>> =
         MutableLiveData()

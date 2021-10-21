@@ -18,7 +18,7 @@ import com.clxns.app.data.model.home.StatsData
 import com.clxns.app.data.model.home.SummaryData
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentHomeBinding
-import com.clxns.app.ui.notification.NotificationActivity
+import com.clxns.app.ui.MapsActivity
 import com.clxns.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
@@ -101,6 +101,8 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                                 updateHomeStatsUI(weekData.actionsData!!, weekData.stats!!)
                             }
                             binding.rbMonth.isChecked -> {
+                                fromDate = getCalculatedDate(-31)
+                                toDate = getCalculatedDate(0)
                                 summaryData = monthData.summaryData!!
                                 updateHomeStatsUI(monthData.actionsData!!, monthData.stats!!)
                             }
@@ -130,7 +132,7 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
         binding.usernameTv.text = sessionManager.getString(Constants.USER_NAME)
         noDataLayout = binding.homeNoData.root
 
-        fromDate = getCalculatedDate(0)
+        fromDate = getCalculatedDate(-31)
         toDate = getCalculatedDate(0)
     }
 
@@ -140,8 +142,10 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
             binding.homeSwipeRefresh.isRefreshing = false
             getHomeStatistics()
         }
+
         binding.notificationBtn.setOnClickListener {
-            startActivity(Intent(context, NotificationActivity::class.java))
+            startActivity(Intent(context, MapsActivity::class.java))
+            //startActivity(Intent(context, NotificationActivity::class.java))
         }
 
         binding.summaryCardView.setOnClickListener {
@@ -151,7 +155,7 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                     fromDate,
                     toDate
                 )
-            findNavController().navigate(actions)
+            findNavController().safeNavigate(actions)
         }
 
         binding.homeNoData.retryBtn.setOnClickListener {
@@ -163,14 +167,14 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                 "",
                 "", "1", "0", fromDate, toDate, true
             )
-            findNavController().navigate(actions)
+            findNavController().safeNavigate(actions)
         }
         binding.followUpCard.setOnClickListener {
             val actions = HomeFragmentDirections.actionNavigationHomeToNavigationCases(
                 "",
                 "", "", "1", fromDate, toDate, true
             )
-            findNavController().navigate(actions)
+            findNavController().safeNavigate(actions)
         }
     }
 

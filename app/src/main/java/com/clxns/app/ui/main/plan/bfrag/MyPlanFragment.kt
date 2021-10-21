@@ -21,46 +21,56 @@ import com.clxns.app.utils.Constants
 import com.clxns.app.utils.hide
 import com.clxns.app.utils.show
 import com.clxns.app.utils.snackBar
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
 
-    private val planViewModel: MyPlanViewModel by viewModels()
-    private var _binding: FragmentMyPlanBinding? = null
+    private val planViewModel : MyPlanViewModel by viewModels()
+    private var _binding : FragmentMyPlanBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var datePickerDialog: DatePickerDialog
+    private lateinit var datePickerDialog : DatePickerDialog
 
     @Inject
-    lateinit var sessionManager: SessionManager
+    lateinit var sessionManager : SessionManager
 
-    private lateinit var token: String
-    private lateinit var noDataLayout: RelativeLayout
-    private lateinit var planRV: RecyclerView
+    private lateinit var token : String
+    private lateinit var noDataLayout : RelativeLayout
+    private lateinit var planRV : RecyclerView
+
+    private lateinit var planMapView : BottomSheetBehavior<View>
 
     companion object {
         fun newInstance() = MyPlanFragment()
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
+        inflater : LayoutInflater,
+        container : ViewGroup?,
+        savedInstanceState : Bundle?,
+    ) : View {
         _binding = FragmentMyPlanBinding.inflate(layoutInflater)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+
+        initDatePicker()
+
         setListeners()
+
         subscribeObserver()
+
         getPlanList()
     }
 
@@ -71,18 +81,10 @@ class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
         noDataLayout = binding.planNoData.root
         planRV = binding.recyclerContacts
         token = sessionManager.getString(Constants.TOKEN)!!
+
     }
 
-
-    private fun setListeners() {
-
-        binding.planNoData.retryBtn.setOnClickListener {
-            getPlanList()
-        }
-
-        binding.txtDateSort.setOnClickListener {
-            datePickerDialog.show()
-        }
+    private fun initDatePicker() {
         //Listener for Calender pop up dialog
         datePickerDialog = DatePickerDialog(requireContext(), { _, year, monthOfYear, dayOfMonth ->
 
@@ -120,9 +122,28 @@ class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
             binding.txtDateSort.text = resources.getString(R.string.today)
             getPlanList()
         }
+    }
 
-        //Setting max date to current date for the calender
-        //datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+
+    private fun setListeners() {
+
+        /*binding.openMapActionBtn.setOnClickListener {
+            binding.openMapActionBtn.hide()
+            planMapView.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
+        binding.planMapView.closeMapBtn.setOnClickListener {
+            planMapView.state = BottomSheetBehavior.STATE_COLLAPSED
+            binding.openMapActionBtn.show()
+        }*/
+
+        binding.planNoData.retryBtn.setOnClickListener {
+            getPlanList()
+        }
+
+        binding.txtDateSort.setOnClickListener {
+            datePickerDialog.show()
+        }
     }
 
     private fun getPlanList() {
@@ -134,6 +155,7 @@ class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
             when (response) {
                 is NetworkResult.Success -> {
                     binding.planProgressBar.hide()
+                    //binding.openMapActionBtn.show()
                     planRV.show()
                     if (!response.data?.error!!) {
                         if (response.data.total!! > 0) {
@@ -145,6 +167,7 @@ class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
                                 )
                             }
                         } else {
+                            binding.openMapActionBtn.hide()
                             binding.planNoData.noDataTv.text = getString(R.string.no_data)
                             noDataLayout.show()
                             binding.planNoData.retryBtn.hide()
@@ -154,18 +177,21 @@ class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
                         noDataLayout.show()
                         binding.planNoData.noDataTv.text = response.data.title
                         planRV.hide()
+                        binding.openMapActionBtn.hide()
                     }
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {
                     binding.planProgressBar.hide()
                     planRV.hide()
+                    binding.openMapActionBtn.hide()
                     noDataLayout.show()
                     binding.root.snackBar(response.message!!)
                     // show error message
                 }
                 is NetworkResult.Loading -> {
                     binding.planProgressBar.show()
+                    binding.openMapActionBtn.hide()
                     noDataLayout.hide()
                     // show a progress bar
                 }
@@ -176,19 +202,25 @@ class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
     private val startDetailActivityForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = it.data
+                val data : Intent? = it.data
                 val status = data?.getBooleanExtra("hasChangedPlanStatus", false)
                 if (status == true) {
-                    getPlanList()
+                    val filterAPIDate = "${planViewModel.mYear}-${
+                        String.format(
+                            "%02d",
+                            planViewModel.mMonth + 1
+                        )
+                    }-${String.format("%02d", planViewModel.mDay)}"
+                    planViewModel.getMyPlanList(token, filterAPIDate)
                 }
             }
         }
 
     override fun openDetailActivity(
-        loadId: String,
-        name: String,
-        dispositions: String,
-        isPlanned: Boolean
+        loadId : String,
+        name : String,
+        dispositions : String,
+        isPlanned : Boolean
     ) {
         val intent = Intent(context, DetailsActivity::class.java)
         intent.putExtra("loan_account_number", loadId)
@@ -197,6 +229,20 @@ class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
         intent.putExtra("name", name)
         startDetailActivityForResult.launch(intent)
     }
+
+
+    /*private fun initMapView(savedInstanceState : Bundle?) {
+        planMapView = BottomSheetBehavior.from(binding.planMapView.root)
+        planMapView.isDraggable = false
+
+        val mapView = binding.planMapView.bsMapView
+        mapView.getMapAsync(this)
+
+    }
+
+    override fun onMapReady(p0 : GoogleMap) {
+        Timber.i("Map is ready")
+    }*/
 
 
 }

@@ -16,6 +16,7 @@ import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.BottomSheetCasesFilterBinding
 import com.clxns.app.ui.main.cases.CasesViewModel
 import com.clxns.app.utils.Constants
+import com.clxns.app.utils.safeNavigate
 import com.clxns.app.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -157,7 +158,7 @@ class CasesFilterBS : BottomSheetDialogFragment() {
                 dispositionId, subDispositionId, "0", "0", fromDate,
                 toDate, true
             )
-            findNavController().navigate(actions)
+            findNavController().safeNavigate(actions)
         }
 
         binding.filterResetBtn.setOnClickListener {

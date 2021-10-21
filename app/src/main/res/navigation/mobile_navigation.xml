@@ -72,7 +72,6 @@
     <dialog
         android:id="@+id/navigation_cases_filter"
         android:name="com.clxns.app.ui.main.cases.casedetails.bottomsheets.CasesFilterBS"
-        android:label="CasesFilterBS"
         tools:layout="@layout/bottom_sheet_cases_filter">
         <action
             android:id="@+id/action_navigation_cases_filter_to_navigation_cases"

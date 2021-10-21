@@ -30,7 +30,7 @@ class ListViewAdapter(var context: Context) :
             context.startActivity(intent)
         }
 
-        holder.listItemsBinding.map.setOnClickListener {
+        holder.listItemsBinding.mapBtn.setOnClickListener {
             cal = Calendar.getInstance()
             datePickerDialog(context)
         }

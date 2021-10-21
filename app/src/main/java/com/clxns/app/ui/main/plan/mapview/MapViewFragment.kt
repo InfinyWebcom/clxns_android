@@ -11,7 +11,6 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,40 +37,41 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
 import com.google.android.libraries.places.api.net.PlacesClient
+import timber.log.Timber
 
 
 class MapViewFragment : Fragment(), OnMapReadyCallback {
 
-    private var map: GoogleMap? = null
-    private var cameraPosition: CameraPosition? = null
-    private lateinit var placesClient: PlacesClient
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private var map : GoogleMap? = null
+    private var cameraPosition : CameraPosition? = null
+    private lateinit var placesClient : PlacesClient
+    private lateinit var fusedLocationProviderClient : FusedLocationProviderClient
     private val defaultLocation = LatLng(-33.8523341, 151.2106085)
     private var locationPermissionGranted = false
-    lateinit var ctx: Context
-    lateinit var view1: View
-    lateinit var mapViewBinding: FragmentMapViewBinding
+    lateinit var ctx : Context
+    lateinit var view1 : View
+    lateinit var mapViewBinding : FragmentMapViewBinding
 
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
-    private var lastKnownLocation: Location? = null
-    private var likelyPlaceNames: Array<String?> = arrayOfNulls(0)
-    private var likelyPlaceAddresses: Array<String?> = arrayOfNulls(0)
-    private var likelyPlaceAttributions: Array<List<*>?> = arrayOfNulls(0)
-    private var likelyPlaceLatLngs: Array<LatLng?> = arrayOfNulls(0)
+    private var lastKnownLocation : Location? = null
+    private var likelyPlaceNames : Array<String?> = arrayOfNulls(0)
+    private var likelyPlaceAddresses : Array<String?> = arrayOfNulls(0)
+    private var likelyPlaceAttributions : Array<List<*>?> = arrayOfNulls(0)
+    private var likelyPlaceLatLngs : Array<LatLng?> = arrayOfNulls(0)
 
-    val latlang = LatLng(19.0434696, 73.021306)
-    val latlang1 = LatLng(19.0441479, 73.0214671)
-    val latlang2 = LatLng(19.0453153, 73.0244009)
+    private val latlang = LatLng(19.0434696, 73.021306)
+    private val latlang1 = LatLng(19.0441479, 73.0214671)
+    private val latlang2 = LatLng(19.0453153, 73.0244009)
 
-    lateinit var locationArrayList: ArrayList<LatLng>
+    lateinit var locationArrayList : ArrayList<LatLng>
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater : LayoutInflater,
+        container : ViewGroup?,
+        savedInstanceState : Bundle?
+    ) : View? {
 
         setInit()
         setListeners()
@@ -93,14 +93,14 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
         locationArrayList.add(latlang1)
         locationArrayList.add(latlang2)
 
-        Log.i(javaClass.name, "locationArrayList---->" + locationArrayList.size)
+        Timber.i("locationArrayList---->" + locationArrayList.size)
 
         getLocationPermission()
 
         mapViewBinding = FragmentMapViewBinding.inflate(layoutInflater)
         view1 = mapViewBinding.root
 
-        Places.initialize(ctx, getString(R.string.google_maps_key))
+        Places.initialize(ctx, "444245")
         placesClient = Places.createClient(ctx)
 
 //        showCurrentPlace()
@@ -132,7 +132,7 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
                 if (task.isSuccessful && task.result != null) {
                     val likelyPlaces = task.result
 
-                    Log.i(TAG, "likelyPlaces--->" + likelyPlaces)
+                    Timber.i("likelyPlaces--->$likelyPlaces")
 
                     // Set the count, handling cases where less than 5 entries are returned.
                     val count =
@@ -142,7 +142,7 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
                             M_MAX_ENTRIES
                         }
 
-                    Log.i(TAG, "count--->" + count)
+                    Timber.i("count--->$count")
                     var i = 0
                     likelyPlaceNames = arrayOfNulls(count)
                     likelyPlaceAddresses = arrayOfNulls(count)
@@ -164,12 +164,12 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
                     // marker at the selected place.
                     openPlacesDialog()
                 } else {
-                    Log.e(TAG, "Exception: %s", task.exception)
+                    Timber.e(task.exception, "Exception: %s")
                 }
             }
         } else {
             // The user has not granted permission.
-            Log.i(TAG, "The user did not grant location permission.")
+            Timber.i("The user did not grant location permission.")
 
             // Add a default marker, because the user hasn't selected a place.
             map?.addMarker(
@@ -233,7 +233,8 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
 
         ctx = requireActivity()
         if (ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             locationPermissionGranted = true
         } else {
             ActivityCompat.requestPermissions(
@@ -251,34 +252,30 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
 
 
     companion object {
-        private val TAG = MapViewFragment::class.java.simpleName
         const val DEFAULT_ZOOM = 15
         const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
-
-        private const val KEY_CAMERA_POSITION = "camera_position"
-        private const val KEY_LOCATION = "location"
 
         // Used for selecting the current place.
         private const val M_MAX_ENTRIES = 5
     }
 
-    private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager =
+    private fun isLocationEnabled() : Boolean {
+        val locationManager : LocationManager =
             ctx.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )
     }
 
-    override fun onMapReady(map: GoogleMap) {
+    override fun onMapReady(map : GoogleMap) {
         this.map = map
-        Log.i(javaClass.name, "onMapReady---------->")
+        Timber.i("onMapReady---------->")
 
         map.uiSettings.isZoomControlsEnabled = true
         val titleArr = listOf(
-            "Sharukh Shaikh,\n Kurla East, Mumbai 400024",
-            "Priti,\n Vashi, Navi Mumbai 400687",
-            "Gagan Dangre,\n Nerul, Navi Mumbai 400706"
+            "Ali Shaikh, Mumbai 400024",
+            "Priti, Navi Mumbai 400687",
+            "Navi Mumbai 400706"
         )
         for ((i, latLong) in locationArrayList.withIndex()) {
             map.addMarker(
@@ -292,11 +289,11 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
 
         this.map?.setInfoWindowAdapter(object : GoogleMap.InfoWindowAdapter {
             // Return null here, so that getInfoContents() is called next.
-            override fun getInfoWindow(arg0: Marker): View? {
+            override fun getInfoWindow(arg0 : Marker) : View? {
                 return null
             }
 
-            override fun getInfoContents(marker: Marker): View {
+            override fun getInfoContents(marker : Marker) : View {
                 // Inflate the layouts for the info window, title and snippet.
 
                 val customInfoContentsBinding = CustomInfoContentsBinding.inflate(layoutInflater)
@@ -306,7 +303,7 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
                     customInfoContentsBinding.root.findViewById<FrameLayout>(R.id.map), false
                 )
                 val title = infoWindow.findViewById<TextView>(R.id.title)
-                Log.i(TAG, "getInfoContentscount--->" + marker.title)
+                Timber.i("getInfoContent Count--->" + marker.title)
                 title.text = marker.title
                 val snippet = infoWindow.findViewById<TextView>(R.id.snippet)
                 snippet.text = marker.snippet
@@ -336,8 +333,8 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
                 lastKnownLocation = null
                 //getLocationPermission()
             }
-        } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message, e)
+        } catch (e : SecurityException) {
+            Timber.e(e, e.message)
         }
     }
 
@@ -353,7 +350,7 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
                     if (task.isSuccessful) {
                         // Set the map's camera position to the current location of the device.
 
-                        Log.i(TAG, "task.result--->" + task.result)
+                        Timber.i("task.result--->" + task.result)
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
                             map?.moveCamera(
@@ -366,8 +363,8 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
                             )
                         }
                     } else {
-                        Log.d(TAG, "Current location is null. Using defaults.")
-                        Log.e(TAG, "Exception: %s", task.exception)
+                        Timber.d("Current location is null. Using defaults.")
+                        Timber.e(task.exception, "Exception: %s")
                         map?.moveCamera(
                             CameraUpdateFactory
                                 .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
@@ -376,8 +373,8 @@ class MapViewFragment : Fragment(), OnMapReadyCallback {
                     }
                 }
             }
-        } catch (e: SecurityException) {
-            Log.e("Exception: %s", e.message, e)
+        } catch (e : SecurityException) {
+            Timber.e(e, e.message)
         }
     }
 

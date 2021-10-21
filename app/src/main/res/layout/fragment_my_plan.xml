@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
@@ -8,77 +8,102 @@
     android:background="@color/white"
     tools:context=".ui.main.plan.bfrag.MyPlanFragment">
 
-    <RelativeLayout
-        android:id="@+id/my_plan_custom_toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/toolbar_background"
-        android:paddingStart="@dimen/dp16"
-        android:paddingTop="@dimen/dp10"
-        android:paddingEnd="@dimen/dp16"
-        android:paddingBottom="@dimen/dp10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/txtAppName"
+        <RelativeLayout
+            android:id="@+id/my_plan_custom_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/txtDateSort"
-            android:layout_alignBottom="@id/txtDateSort"
-            android:layout_toStartOf="@id/txtDateSort"
-            android:gravity="center_vertical"
-            android:text="@string/my_plans"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp18"
-            android:textStyle="bold" />
+            android:background="@drawable/toolbar_background"
+            android:paddingStart="@dimen/dp16"
+            android:paddingTop="@dimen/dp10"
+            android:paddingEnd="@dimen/dp16"
+            android:paddingBottom="@dimen/dp10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/txtDateSort"
+            <TextView
+                android:id="@+id/txtAppName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/txtDateSort"
+                android:layout_alignBottom="@id/txtDateSort"
+                android:layout_toStartOf="@id/txtDateSort"
+                android:gravity="center_vertical"
+                android:text="@string/my_plans"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtDateSort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/background_date_filter"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="5dp"
+                android:text="@string/today"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:visibility="visible"
+                app:drawableRightCompat="@drawable/icon_dropdown" />
+
+        </RelativeLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerContacts"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_plan_custom_toolbar" />
+
+
+        <include
+            android:id="@+id/plan_no_data"
+            layout="@layout/no_data_layout"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/plan_progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/background_date_filter"
-            android:drawablePadding="5dp"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="5dp"
-            android:text="@string/today"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:visibility="visible"
-            app:drawableRightCompat="@drawable/icon_dropdown" />
-
-    </RelativeLayout>
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_plan_custom_toolbar"
+            tools:ignore="SpeakableTextPresentCheck" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerContacts"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_plan_custom_toolbar" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include layout="@layout/no_data_layout"
-        android:visibility="gone"
-        android:id="@+id/plan_no_data"/>
-
-    <ProgressBar
-        android:id="@+id/plan_progress_bar"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_plan_custom_toolbar"
-        tools:ignore="SpeakableTextPresentCheck" />
+        android:id="@+id/open_map_action_btn"
+        android:layout_gravity="end|bottom"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        android:layout_marginBottom="@dimen/dp24"
+        android:src="@drawable/ic_baseline_map_24"
+        android:layout_marginEnd="@dimen/dp24"
+        android:contentDescription="@string/map" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!--    <include-->
+<!--        android:id="@+id/plan_map_view"-->
+<!--        layout="@layout/bottom_sheet_map" />-->
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

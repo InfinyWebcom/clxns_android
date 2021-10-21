@@ -15,6 +15,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import com.bumptech.glide.Glide
 import com.clxns.app.R
 import com.clxns.app.databinding.DialogCollectableAmountBinding
@@ -84,10 +86,10 @@ fun String.makeFirstLetterCapital() : String {
     return String(arr)
 }
 
-fun String.convertServerDateToNormal(newFormat : String) : String? {
+fun String.convertServerDateToNormal(newFormat : String, isGMT:Boolean = false) : String? {
     var date = this
     var spf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-    spf.timeZone = TimeZone.getDefault()
+    spf.timeZone = if (isGMT) TimeZone.getTimeZone("GMT5:30+") else TimeZone.getDefault()
     var newDate : Date? = null
     try {
         newDate = spf.parse(date)
@@ -125,19 +127,18 @@ fun View.showDialog(totalAmount : Int, collected : Int) {
     c.txtResult.text = (totalAmount.minus(collected)).convertToCurrency()
 }
 
-fun String.formatDate(format : String, newFormat : String) : String {
-    var date : String = this
-    var spf = SimpleDateFormat(format, Locale.getDefault())
-    spf.timeZone = TimeZone.getTimeZone("UTC")
-    var newDate : Date? = null
+fun String.getDateInLongFormat() : Long {
+    val spf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+    spf.timeZone = TimeZone.getDefault()
+    val newDate : Date?
+    var dateInLong = 0L
     try {
-        newDate = spf.parse(date)
+        newDate = spf.parse(this)
+        dateInLong = newDate.time
     } catch (e : ParseException) {
         e.printStackTrace()
     }
-    spf = SimpleDateFormat(newFormat, Locale.getDefault())
-    date = spf.format(newDate)
-    return date
+    return dateInLong
 }
 
 @Throws(IOException::class)
@@ -222,4 +223,12 @@ fun getCalculatedDate(days : Int) : String {
     val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     calendar.add(Calendar.DAY_OF_YEAR, days)
     return formatter.format(Date(calendar.timeInMillis))
+}
+
+//This ensure if the user has click a button multiple time to navigate to a different screen so it does
+//not throws illegal argument exception error saying cannot find specified navigation action
+fun NavController.safeNavigate(directions: NavDirections){
+    currentDestination?.getAction(directions.actionId)?.run {
+        navigate(directions)
+    }
 }

@@ -94,7 +94,7 @@ class RepossessionMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         getLocationPermission()
 
-        Places.initialize(ctx, getString(R.string.google_maps_key))
+        Places.initialize(ctx, "212")
         placesClient = Places.createClient(ctx)
 
 //        showCurrentPlace()

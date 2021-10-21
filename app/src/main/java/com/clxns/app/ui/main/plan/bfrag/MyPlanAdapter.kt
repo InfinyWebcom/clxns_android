@@ -83,7 +83,7 @@ class MyPlanAdapter(
             context.startActivity(intent)
         }
 
-        holder.contactItemBinding.map.setOnClickListener {
+        holder.contactItemBinding.mapBtn.setOnClickListener {
 //            openDatePickerDialog()
             val map = "http://maps.google.co.in/maps?q=${details?.lead?.address}"
             // val uri = String.format(Locale.ENGLISH, "geo:%f,%f", details?.lead?.address)

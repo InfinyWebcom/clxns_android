@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.clxns.app.R
 import com.clxns.app.databinding.FragmentAddMobileAddressBottomSheetDialogBinding
 import com.clxns.app.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -22,6 +23,11 @@ class AddMobileOrAddressBottomSheet(private val listener: OnClick) : BottomSheet
         fun newInstance(listener: OnClick): AddMobileOrAddressBottomSheet {
             return AddMobileOrAddressBottomSheet(listener)
         }
+    }
+
+    override fun onCreate(savedInstanceState : Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
     }
 
 

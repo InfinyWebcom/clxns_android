@@ -97,7 +97,7 @@
                 app:icon="@drawable/ic_phone_call"
                 app:iconSize="@dimen/dp16"
                 app:iconTint="@color/green"
-                app:layout_constraintEnd_toStartOf="@id/map"
+                app:layout_constraintEnd_toStartOf="@id/mapBtn"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/planContactAddress"
                 app:rippleColor="@color/green"
@@ -105,7 +105,7 @@
                 app:strokeWidth="@dimen/dp2" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/map"
+                android:id="@+id/mapBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp4"
@@ -137,7 +137,7 @@
                 app:iconSize="@dimen/dp16"
                 app:iconTint="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/map"
+                app:layout_constraintStart_toEndOf="@id/mapBtn"
                 app:layout_constraintTop_toBottomOf="@id/planContactAddress"
                 app:rippleColor="@color/colorPrimary"
                 app:strokeColor="@color/colorPrimary"

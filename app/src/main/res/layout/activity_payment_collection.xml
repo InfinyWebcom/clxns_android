@@ -28,13 +28,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/imgBack"
-            android:fontFamily="@font/gtwalsheimprobold"
             android:paddingTop="@dimen/dp16"
             android:paddingBottom="@dimen/dp16"
             android:text="@string/payment_collection"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp18" />
+            android:textSize="@dimen/sp18"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
@@ -62,10 +62,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="@font/gtwalsheimpromedium"
                     android:textAllCaps="true"
                     android:textColor="@color/text_black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtStatus"
@@ -76,10 +76,10 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:fontFamily="@font/gtwalsheimpromedium"
                     android:textAllCaps="true"
                     android:textColor="@color/green"
-                    android:textSize="@dimen/sp18" />
+                    android:textSize="@dimen/sp18"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -87,7 +87,6 @@
                 android:id="@+id/txtDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/gtwalsheimproregular"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
                 android:textSize="14sp" />
@@ -97,7 +96,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/gtwalsheimproregular"
                 android:text="@string/financial_institution"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
@@ -108,9 +106,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/gtwalsheimpromedium"
                 android:textColor="@color/text_black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
 
             <TextView
@@ -118,7 +116,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
-                android:fontFamily="@font/gtwalsheimproregular"
                 android:text="@string/loan_type"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
@@ -129,9 +126,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/gtwalsheimpromedium"
                 android:textColor="@color/text_black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
 
             <LinearLayout
@@ -146,7 +143,6 @@
                     android:id="@+id/collectable_amount_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/gtwalsheimproregular"
                     android:text="@string/collectable_amount"
                     android:textAllCaps="false"
                     android:textColor="@color/text_black"
@@ -158,18 +154,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:focusable="false"
-                    android:fontFamily="@font/gtwalsheimpromedium"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/sp16" />
+                    android:textSize="@dimen/sp16"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/txtAmount"
+                android:id="@+id/txtAmountType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
-                android:fontFamily="@font/gtwalsheimproregular"
                 android:text="@string/amount_type"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
@@ -180,6 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:id="@+id/spAmountLayout"
                 android:background="@drawable/background_spinner">
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -205,7 +201,6 @@
                     android:id="@+id/amount_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/gtwalsheimproregular"
                     android:text="@string/amount"
                     android:textAllCaps="false"
                     android:textColor="@color/text_black"
@@ -215,11 +210,11 @@
                     android:id="@+id/payment_amount_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/gtwalsheimpromedium"
                     android:hint="@string/enter_amount"
                     android:importantForAutofill="no"
                     android:inputType="numberDecimal"
-                    android:paddingVertical="@dimen/dp8" />
+                    android:paddingVertical="@dimen/dp8"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -228,11 +223,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
-                android:fontFamily="@font/gtwalsheimpromedium"
                 android:text="@string/payment_mode"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
-                android:textSize="@dimen/sp16" />
+                android:textSize="@dimen/sp16"
+                android:textStyle="bold" />
 
 
             <RadioGroup
@@ -250,7 +245,6 @@
                     android:background="@drawable/background_rb_selection"
                     android:button="@null"
                     android:checked="true"
-                    android:fontFamily="@font/gtwalsheimpromedium"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:paddingHorizontal="20dp"
@@ -258,7 +252,8 @@
                     android:text="@string/online"
                     android:textAllCaps="true"
                     android:textColor="@drawable/rb_text_selector"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:id="@+id/rbCheque"
@@ -268,15 +263,15 @@
                     android:layout_weight="1"
                     android:background="@drawable/background_rb_selection"
                     android:button="@null"
-                    android:fontFamily="@font/gtwalsheimpromedium"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:paddingVertical="@dimen/dp10"
                     android:text="@string/cheque"
-
                     android:textAllCaps="true"
+
                     android:textColor="@drawable/rb_text_selector"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:id="@+id/rbCash"
@@ -286,7 +281,6 @@
                     android:layout_weight="1"
                     android:background="@drawable/background_rb_selection"
                     android:button="@null"
-                    android:fontFamily="@font/gtwalsheimpromedium"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:padding="10dp"
@@ -295,7 +289,8 @@
                     android:text="@string/cash"
                     android:textAllCaps="true"
                     android:textColor="@drawable/rb_text_selector"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
 
             </RadioGroup>
 
@@ -305,7 +300,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
-                android:fontFamily="@font/gtwalsheimproregular"
                 android:text="@string/payment_recovery_date"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
@@ -317,10 +311,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/background_edittext_round"
-                android:fontFamily="@font/gtwalsheimpromedium"
                 android:paddingHorizontal="@dimen/dp8"
                 android:paddingVertical="@dimen/dp10"
-                android:textColor="@color/text_black" />
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
 
 
             <TextView
@@ -328,7 +322,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
-                android:fontFamily="@font/gtwalsheimproregular"
                 android:text="@string/reference_no"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
@@ -336,18 +329,31 @@
                 android:visibility="visible" />
 
             <EditText
-                android:id="@+id/edtReferenceType"
+                android:id="@+id/edtReferenceNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/background_edittext_round"
-                android:fontFamily="@font/gtwalsheimproregular"
+                android:importantForAutofill="no"
+                android:inputType="textCapCharacters"
+                android:digits="@string/alpha_numeric_chars"
+                android:paddingVertical="@dimen/dp10"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/edtChequeNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/background_edittext_round"
                 android:importantForAutofill="no"
                 android:inputType="number"
                 android:paddingVertical="@dimen/dp10"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
 
             <TextView
@@ -355,7 +361,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
-                android:fontFamily="@font/gtwalsheimproregular"
                 android:text="@string/remarks"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
@@ -367,7 +372,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/background_edittext_round"
-                android:fontFamily="@font/gtwalsheimproregular"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:paddingVertical="@dimen/dp10"
@@ -380,11 +384,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/gtwalsheimpromedium"
                 android:text="@string/upload_supporting"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
 
             <LinearLayout
@@ -418,15 +422,14 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/background_button_rectangle"
-        android:fontFamily="@font/gtwalsheimpromedium"
         android:text="@string/generate_receipt_txt"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
     <ProgressBar
         android:id="@+id/payment_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 </RelativeLayout>

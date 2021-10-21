@@ -51,7 +51,8 @@ class StatusAdapter(
                         holder.itemsBinding.statusTxt.text.equals("Broken PTP") ||
                         holder.itemsBinding.statusTxt.text.equals("RTP") ||
                         holder.itemsBinding.statusTxt.text.equals("Customer Not Found") ||
-                        holder.itemsBinding.statusTxt.text.equals("Customer Deceased")
+                        holder.itemsBinding.statusTxt.text.equals("Customer Deceased") ||
+                        holder.itemsBinding.statusTxt.text.equals("Settlement/Foreclosure")
                 -> {
                     onStatusListener.openSubStatusActionBottomSheet(
                         false,
@@ -59,8 +60,7 @@ class StatusAdapter(
                     )
                 }
                 holder.itemsBinding.statusTxt.text.equals("Collect") ||
-                        holder.itemsBinding.statusTxt.text.equals("Partially Collect") ||
-                        holder.itemsBinding.statusTxt.text.equals("Settlement/Foreclosure")
+                        holder.itemsBinding.statusTxt.text.equals("Partially Collect")
                 -> {
                     onStatusListener.openPaymentScreen(holder.itemsBinding.statusTxt.text.toString())
                 }

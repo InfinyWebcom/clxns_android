@@ -12,6 +12,7 @@ import com.clxns.app.R
 import com.clxns.app.data.model.AdditionalFieldModel
 import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.databinding.SubStatusActionBottomSheetBinding
+import com.clxns.app.utils.getDateInLongFormat
 import com.clxns.app.utils.hide
 import com.clxns.app.utils.show
 import com.clxns.app.utils.toast
@@ -33,6 +34,7 @@ class SubStatusActionBottomSheet(
     private var dateFormatted = ""
     private var dateFormattedRecovery = ""
     private val additionalFields = AdditionalFieldModel()
+    private var fosAssignedDate : String? = null
 
     companion object {
         const val TAG = "SubStatusActionBottomSheet"
@@ -76,14 +78,28 @@ class SubStatusActionBottomSheet(
         isPTP = arguments?.getBoolean("isPTPAction") ?: false
         dispositionType = arguments?.getString("dispositionType") ?: ""
         subDispositionType = arguments?.getString("customNotFoundReason") ?: ""
+        fosAssignedDate = arguments?.getString("fosAssignedDate")
         actionBinding = SubStatusActionBottomSheetBinding.inflate(layoutInflater)
         return actionBinding.root
     }
 
     override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initView()
+
+        setListeners()
+
+        initSpinners()
+
+
+    }
+
+
+    private fun initView() {
+        actionBinding.llPayment.hide()
         if (isPTP) {
-            actionBinding.revisitDateLabel.text = "Future"
+            actionBinding.revisitDateLabel.text = getString(R.string.future)
             actionBinding.assignToTracerCB.hide()
             actionBinding.revisitTimeLabel.hide()
             actionBinding.revisitTimeTxt.hide()
@@ -93,6 +109,22 @@ class SubStatusActionBottomSheet(
             actionBinding.statusActionActiveRG.hide()
         }
 
+        if (dispositionType == "Settlement/Foreclosure") {
+            actionBinding.statusActionActiveRG.hide()
+            actionBinding.txtStatus.hide()
+            actionBinding.statusSpinnerLayout.hide()
+            actionBinding.llPaymentDetails.hide()
+            actionBinding.revisitTimeLabel.hide()
+            actionBinding.revisitTimeTxt.hide()
+            actionBinding.llPayment.show()
+            actionBinding.statusActionActiveLabel.show()
+            actionBinding.statusActionActiveLabel.text = getString(R.string.settlement_foreclosure)
+            actionBinding.revisitDateLabel.text = getString(R.string.future)
+            actionBinding.revisitDateTxt.hint = "Set future date"
+        }
+    }
+
+    private fun setListeners() {
         actionBinding.revisitDateTxt.setOnClickListener {
             showDatePicker(false)
         }
@@ -115,21 +147,24 @@ class SubStatusActionBottomSheet(
                     if (subDispositionType == "Active PTP"
                         || subDispositionType == "Future PTP"
                         || subDispositionType == "Already Paid"
+                        || dispositionType == "Settlement/Foreclosure"
                     ) additionalFields else null
                 )
                 this.dismiss()
             }
         }
+    }
 
-
-
-        actionBinding.llPayment.visibility = View.GONE
+    private fun initSpinners() {
         if (dispositionType == "PTP"
             || dispositionType == "Dispute"
             || dispositionType == "Customer Not Found"
+            || dispositionType == "Settlement/Foreclosure"
         ) {
-            actionBinding.spStatus.show()
-            actionBinding.txtStatus.show()
+            if (dispositionType != "Settlement/Foreclosure") {
+                actionBinding.spStatus.show()
+                actionBinding.txtStatus.show()
+            }
 
             val dispositionAdapter = ArrayAdapter.createFromResource(
                 requireContext(),
@@ -188,7 +223,7 @@ class SubStatusActionBottomSheet(
             //
             val amountTypeAdapter = ArrayAdapter.createFromResource(
                 requireContext(),
-                R.array.amount_type,
+                if (dispositionType == "Settlement/Foreclosure") R.array.amount_type else R.array.ptp_amount_type,
                 android.R.layout.simple_spinner_item
             )
             amountTypeAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
@@ -203,14 +238,24 @@ class SubStatusActionBottomSheet(
                         id : Long
                     ) {
                         if (position == 1 || position == 2) {
-                            actionBinding.paymentAmountEt.isEnabled = false
+                            setPaymentETActive(false)
                             if (position == 1) {
-                                actionBinding.paymentAmountEt.setText(caseDetails?.data?.totalDueAmount.toString())
+                                val totalDueAmount = caseDetails?.data?.totalDueAmount?.minus(
+                                    caseDetails?.data?.amountCollected!!
+                                )
+                                actionBinding.paymentAmountEt.setText(totalDueAmount.toString())
                             } else {
-                                actionBinding.paymentAmountEt.setText(caseDetails?.data?.principalOutstandingAmount.toString())
+                                val posAmount =
+                                    caseDetails?.data?.principalOutstandingAmount?.minus(
+                                        caseDetails?.data?.amountCollected!!
+                                    )
+                                actionBinding.paymentAmountEt.setText(posAmount.toString())
                             }
+                        } else if (position == 3) {
+                            setPaymentETActive(true)
+                            actionBinding.paymentAmountEt.setText("")
                         } else {
-                            actionBinding.paymentAmountEt.isEnabled = true
+                            setPaymentETActive(false)
                             actionBinding.paymentAmountEt.setText("")
                         }
                     }
@@ -224,7 +269,12 @@ class SubStatusActionBottomSheet(
             actionBinding.spStatus.hide()
             actionBinding.txtStatus.hide()
         }
+    }
 
+    private fun setPaymentETActive(value : Boolean) {
+        actionBinding.paymentAmountEt.isClickable = value
+        actionBinding.paymentAmountEt.isFocusableInTouchMode = value
+        actionBinding.paymentAmountEt.isFocusable = value
     }
 
     private fun showTimePicker() {
@@ -270,9 +320,10 @@ class SubStatusActionBottomSheet(
         val datePickerDialog =
             DatePickerDialog(requireContext(), { _, year, month, day ->
                 val m = month + 1
-
+                val date = "$day, ${MONTHS[month]} $year"
                 if (isRecovery) {
-                    actionBinding.txtPaymentOrRecoveryDateValue.text = "$day/$m/$year"
+
+                    actionBinding.txtPaymentOrRecoveryDateValue.text = date
                     dateFormattedRecovery =
                         "${year}-${String.format("%02d", m)}-${String.format("%02d", day)}"
 
@@ -294,13 +345,19 @@ class SubStatusActionBottomSheet(
                             )
                         }:00.000Z"
                     }
-                    actionBinding.revisitDateTxt.text = "$day/$m/$year"
+                    actionBinding.revisitDateTxt.text = date
                     dateFormatted =
                         "${year}-${String.format("%02d", m)}-${String.format("%02d", day)}"
+
                 }
             }, year, month, day)
-
-        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+        if (isRecovery) {
+            datePickerDialog.datePicker.minDate =
+                fosAssignedDate?.getDateInLongFormat() ?: System.currentTimeMillis()
+            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+        } else {
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+        }
         datePickerDialog.show()
     }
 
@@ -321,19 +378,6 @@ class SubStatusActionBottomSheet(
             message = "Please select status"
         }
 
-//        if (success && (actionBinding.revisitDateTxt.text.isBlank()
-//                    || actionBinding.revisitDateTxt.text.isEmpty())
-//        ) {
-//            success = false
-//            val txt = if (isPTP) "future" else "revisit"
-//            message = "Please select $txt date"
-//        }
-//        if (!isPTP && success && (actionBinding.revisitTimeTxt.text.isBlank()
-//                    || actionBinding.revisitTimeTxt.text.isEmpty())
-//        ) {
-//            success = false
-//            message = "Please select revisit time"
-//        }
         if (success && (actionBinding.statusActionRemarkET.text.toString().isBlank()
                     || actionBinding.statusActionRemarkET.text.toString().isEmpty())
         ) {
@@ -358,7 +402,19 @@ class SubStatusActionBottomSheet(
             ) ""
             else actionBinding.spAmount.selectedItem.toString()
 
-        additionalFields.ptpAmount = actionBinding.paymentAmountEt.text.toString()
+        val amount = actionBinding.paymentAmountEt.text.toString()
+        val actualAmount = caseDetails?.data?.totalDueAmount?.minus(
+            caseDetails?.data?.amountCollected!!
+        )
+        if (amount.isNotEmpty() || amount.isNotBlank()) {
+            if (amount.toInt() <= actualAmount!!) {
+                additionalFields.ptpAmount = amount
+            } else {
+                requireContext().toast("Amount cannot be greater than total due amount")
+                return false
+            }
+        }
+
         additionalFields.recoveredAmount = additionalFields.ptpAmount
 
         additionalFields.recoveryDate = dateFormattedRecovery

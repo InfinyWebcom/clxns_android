@@ -224,6 +224,10 @@
     <string name="collected_amount">Collected Amount</string>
     <string name="cheque_number">Cheque No.</string>
     <string name="back_to_my_plan">back to my plan</string>
+    <string name="future">Future</string>
+    <string name="alpha_numeric_chars">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+    <string name="partial_amount">Partial Amount</string>
+    <string name="personal_details">Personal Details</string>
 
 
     <string-array name="yesNo">
@@ -269,12 +273,18 @@
         <item>OTHER</item>
     </string-array>
 
+
     <string-array name="amount_type">
         <item>Select an Option</item>
         <item>Total Due Amount</item>
         <item>Principal Outstanding Amount (POS)</item>
         <item>Settlement Amount (if different from POS)</item>
-        <item>Custom Amount</item>
+    </string-array>
+
+    <string-array name="ptp_amount_type">
+        <item>Select an Option</item>
+        <item>Total Due Amount</item>
+        <item>Principal Outstanding Amount (POS)</item>
     </string-array>
 
     <string-array name="ptp_sub_dispositions">
@@ -323,5 +333,6 @@
         <item>PTP (based on conversation tone Orange: 50% -80% probability)</item>
         <item>PTP (based on conversation tone , Green: >80% probability)</item>
     </string-array>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

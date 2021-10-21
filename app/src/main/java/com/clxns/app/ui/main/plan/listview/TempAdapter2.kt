@@ -53,7 +53,7 @@ class TempAdapter2(
             context.startActivity(intent)
         }
 
-        holder.contactItemBinding.map.setOnClickListener {
+        holder.contactItemBinding.mapBtn.setOnClickListener {
             openDatePickerDialog()
         }
 

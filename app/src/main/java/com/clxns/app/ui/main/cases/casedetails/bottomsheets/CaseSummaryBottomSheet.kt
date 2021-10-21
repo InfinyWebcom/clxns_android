@@ -11,6 +11,7 @@ import com.clxns.app.R
 import com.clxns.app.data.model.home.SummaryData
 import com.clxns.app.databinding.CasesSummaryLayoutBinding
 import com.clxns.app.ui.main.cases.CasesViewModel
+import com.clxns.app.utils.safeNavigate
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -77,7 +78,7 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
                     "", "", "", "", fromDate,
                     toDate, true
                 )
-            findNavController().navigate(actions)
+            findNavController().safeNavigate(actions)
             dismiss()
         }
 
@@ -138,7 +139,7 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
             dispositionId.toString(), "", "", "", fromDate,
             toDate, true
         )
-        findNavController().navigate(actions)
+        findNavController().safeNavigate(actions)
         dismiss()
     }
 

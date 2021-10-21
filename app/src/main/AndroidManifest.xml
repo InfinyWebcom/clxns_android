@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="LockedOrientationActivity"
-    package="com.clxns.app">
+    package="com.clxns.app"
+    tools:ignore="LockedOrientationActivity">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,6 +12,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <!--
+      The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+      Google Maps Android API v2, but you must specify either coarse or fine
+      location permissions for the "MyLocation" functionality. -->
     <application
         android:name=".CollectionsApp"
         android:allowBackup="true"
@@ -22,63 +26,71 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Clxns">
 
+        <activity
+            android:name=".ui.MapsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_maps" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="${GOOGLE_MAPS_API_KEY}" />
 
         <activity
-            android:name="com.clxns.app.ui.main.cases.casedetails.history.HistoryDetailsActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
-
+            android:name=".ui.main.cases.casedetails.history.HistoryDetailsActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.checkin.CheckInActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:name=".ui.main.cases.casedetails.casestatus.checkin.CheckInActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.paymentcollection.PaymentCollectionActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:name=".ui.main.cases.casedetails.casestatus.paymentcollection.PaymentCollectionActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.AssetRepossessionActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:name=".ui.main.cases.casedetails.casestatus.repossesions.AssetRepossessionActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.map.RepossessionMapActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:name=".ui.main.cases.casedetails.casestatus.repossesions.map.RepossessionMapActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.clxns.app.ui.main.cases.casedetails.casestatus.repossesions.RepossessionsSubmitActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:name=".ui.main.cases.casedetails.casestatus.repossesions.RepossessionsSubmitActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.clxns.app.ui.main.cases.casedetails.DetailsActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:name=".ui.main.cases.casedetails.DetailsActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.search.SearchActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.notification.NotificationActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.clxns.app.ui.main.account.changePassword.ChangePasswordActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:name=".ui.main.account.changePassword.ChangePasswordActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.clxns.app.ui.login.forgotPassword.ForgotPasswordActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:name=".ui.login.forgotPassword.ForgotPasswordActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.clxns.app.utils.support.CropImageActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:name=".utils.support.CropImageActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.splash.SplashScreenActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -90,15 +102,13 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-             />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

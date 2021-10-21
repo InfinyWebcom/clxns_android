@@ -11,27 +11,29 @@ import com.clxns.app.databinding.HistoryItemBinding
 import com.clxns.app.utils.convertServerDateToNormal
 import com.clxns.app.utils.convertToCurrency
 import com.clxns.app.utils.hide
-import timber.log.Timber
 
-class HistoryDetailsAdapter(private val context: Context, private val dataList: List<HistoryData>) :
+class HistoryDetailsAdapter(
+    private val context : Context,
+    private val dataList : List<HistoryData>
+) :
     RecyclerView.Adapter<HistoryDetailsAdapter.HistoryVH>() {
-    class HistoryVH(itemBinding: HistoryItemBinding) :
+    class HistoryVH(itemBinding : HistoryItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        var historyItemBinding: HistoryItemBinding = itemBinding
+        var historyItemBinding : HistoryItemBinding = itemBinding
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryVH {
+    override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : HistoryVH {
         return HistoryVH(HistoryItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
-    override fun onBindViewHolder(holder: HistoryVH, position: Int) {
+    override fun onBindViewHolder(holder : HistoryVH, position : Int) {
         val data = dataList[position]
 
         holder.historyItemBinding.updatedAtDateTv.text =
             data.updatedAt.convertServerDateToNormal("dd, MMM, yy")
         holder.historyItemBinding.itemTimeTv.text =
-            data.updatedAt.convertServerDateToNormal("hh:mm a")
+            data.updatedAt.convertServerDateToNormal("hh:mm a", true)
 
         if (data.dispositions != null) {
             holder.historyItemBinding.tvStatusTitle.text = data.dispositions.name
@@ -50,9 +52,9 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
             }
             holder.historyItemBinding.tvSubStatus.text = subStatus
         } else {
-            if (followUpDate.isEmpty()){
+            if (followUpDate.isEmpty()) {
                 holder.historyItemBinding.tvSubStatus.hide()
-            }else {
+            } else {
                 holder.historyItemBinding.tvSubStatus.text = followUpDate
             }
         }
@@ -77,7 +79,6 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
         if (data.additionalField != null) {
             //Removing all the occurrences of backslash
             val prob = data.additionalField.replace("\\", "")
-            Timber.i(prob)
             when {
                 prob.contains("80% >") || prob.contains("80% u003e") -> {
                     holder.historyItemBinding.ptpProbabilityDot.imageTintList =
@@ -119,11 +120,11 @@ class HistoryDetailsAdapter(private val context: Context, private val dataList: 
 
     }
 
-    override fun getItemViewType(position: Int): Int {
+    override fun getItemViewType(position : Int) : Int {
         return position
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount() : Int {
         return dataList.size
     }
 }
