@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.main.cases.casedetails.history.HistoryDetailsActivity">
+    tools:context=".ui.main.cases.caseDetails.history.HistoryDetailsActivity">
 
 
     <RelativeLayout
@@ -34,7 +34,7 @@
             android:layout_toStartOf="@id/due_amount_card"
             android:layout_toEndOf="@id/imgBack"
             android:ellipsize="end"
-            android:fontFamily="@font/gtwalsheimprobold"
+            android:fontFamily="@font/gt_pro_bold"
             android:maxLines="1"
             android:paddingTop="@dimen/dp16"
             android:paddingBottom="@dimen/dp16"

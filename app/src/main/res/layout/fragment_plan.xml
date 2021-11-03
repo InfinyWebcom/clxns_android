@@ -7,16 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.plan.PlanFragment">
 
+
     <RelativeLayout
-        android:id="@+id/relAppName"
+        android:id="@+id/my_plan_custom_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:paddingTop="@dimen/dp16"
-        android:paddingEnd="@dimen/dp16"
         android:paddingStart="@dimen/dp16"
-        android:paddingBottom="@dimen/dp8"
-        >
+        android:paddingTop="@dimen/dp10"
+        android:paddingEnd="@dimen/dp16"
+        android:paddingBottom="@dimen/dp10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/txtAppName"
@@ -25,11 +28,11 @@
             android:layout_alignTop="@id/txtDateSort"
             android:layout_alignBottom="@id/txtDateSort"
             android:layout_toStartOf="@id/txtDateSort"
-            android:fontFamily="@font/gtwalsheimpromedium"
             android:gravity="center_vertical"
             android:text="@string/my_plans"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp18" />
+            android:textSize="@dimen/sp18"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtDateSort"
@@ -38,15 +41,14 @@
             android:layout_alignParentEnd="true"
             android:background="@drawable/background_date_filter"
             android:drawablePadding="5dp"
-            android:fontFamily="@font/gtwalsheimpromedium"
             android:gravity="center"
             android:includeFontPadding="false"
             android:paddingHorizontal="15dp"
             android:paddingVertical="5dp"
             android:text="@string/today"
-            android:visibility="gone"
             android:textColor="@color/white"
             android:textSize="14sp"
+            android:visibility="visible"
             app:drawableRightCompat="@drawable/icon_dropdown" />
 
     </RelativeLayout>
@@ -55,14 +57,13 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relAppName" />
+        android:layout_below="@+id/tabLayout" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/relAppName"
-        android:background="@drawable/background_tab"
+        android:layout_below="@+id/my_plan_custom_toolbar"
         android:backgroundTint="@color/colorPrimaryVariant"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/green"
@@ -70,6 +71,7 @@
         app:tabMaxWidth="0dp"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/quantum_grey300"
         tools:ignore="SpeakableTextPresentCheck" />
 
 

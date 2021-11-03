@@ -1,6 +1,7 @@
 package com.clxns.app.utils
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -216,6 +217,15 @@ fun Context.createImageFile() : File? {
         ".jpg",  /* suffix */
         storageDir /* directory */
     )
+}
+
+fun getProgressDialog(context : Context, title : String, msg : String) : ProgressDialog{
+    val pd = ProgressDialog(context)
+    pd.setTitle(title)
+    pd.setMessage(msg)
+    pd.setCancelable(false)
+    pd.create()
+    return pd
 }
 
 fun getCalculatedDate(days : Int) : String {

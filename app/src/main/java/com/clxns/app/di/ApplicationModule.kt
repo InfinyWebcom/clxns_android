@@ -1,11 +1,9 @@
 package com.clxns.app.di
 
 import android.content.Context
-import androidx.room.Room
 import com.clxns.app.BuildConfig
 import com.clxns.app.data.api.ApiService
 import com.clxns.app.data.api.helper.NetworkConnectionInterceptor
-import com.clxns.app.utils.Constants.Companion.DATABASE_NAME
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -24,33 +22,24 @@ import javax.inject.Singleton
 object ApplicationModule {
 
     @Provides
-    fun provideBaseUrl() = BuildConfig.BASE_DEV_URL
+    fun provideBaseUrl() = BuildConfig.BASE_STAGING_URL
 
-//    @Singleton
-//    @Provides
-//    fun provideAppDatabase(
-//        @ApplicationContext app: Context
-//    ) = Room.databaseBuilder(
-//        app,
-//        AppDatabase::class.java,
-//        DATABASE_NAME
-//    ).build()
 
     @Provides
     @Singleton
-    fun provideMoshi(): Moshi = Moshi.Builder().build()
+    fun provideMoshi() : Moshi = Moshi.Builder().build()
 
 
     @Provides
     @Singleton
     fun provideConnectionInterceptor(
-        @ApplicationContext app: Context
+        @ApplicationContext app : Context
     ) = NetworkConnectionInterceptor(app)
 
     @Provides
     @Singleton
     fun provideHTTPClient(
-        networkConnectionInterceptor: NetworkConnectionInterceptor
+        networkConnectionInterceptor : NetworkConnectionInterceptor
     ) = if (BuildConfig.DEBUG) {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
@@ -70,10 +59,10 @@ object ApplicationModule {
     @Provides
     @Singleton
     fun provideRetrofit(
-        okkHttpclient: OkHttpClient,
-        moshi: Moshi,
-        BASE_URL: String
-    ): Retrofit = Retrofit.Builder()
+        okkHttpclient : OkHttpClient,
+        moshi : Moshi,
+        BASE_URL : String
+    ) : Retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .baseUrl(BASE_URL)
         .client(okkHttpclient)
@@ -81,6 +70,6 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService =
+    fun provideApiService(retrofit : Retrofit) : ApiService =
         retrofit.create(ApiService::class.java)
 }

@@ -13,7 +13,8 @@ class CollectionsApp : Application() {
             Timber.plant(Timber.DebugTree())
         }
         /**
-         * Add OTP Timer in Forgot Password Activity - TODO
+         * Missing fosAssignedDate in StatusBottomSheet - FIXED
+         * Recovery Date wasn't showing in the History Screen - FIXED
          */
     }
 }

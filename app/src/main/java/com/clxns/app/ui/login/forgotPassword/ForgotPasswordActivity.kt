@@ -2,14 +2,15 @@ package com.clxns.app.ui.login.forgotPassword
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.Html
-import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
+import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
@@ -24,27 +25,26 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ForgotPasswordActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityForgotPasswordBinding
+    private lateinit var binding : ActivityForgotPasswordBinding
 
-    private val viewModel: ForgotPasswordViewModel by viewModels()
+    private val viewModel : ForgotPasswordViewModel by viewModels()
 
-    private lateinit var otpET1: TextInputEditText
-    private lateinit var otpET2: TextInputEditText
-    private lateinit var otpET3: TextInputEditText
-    private lateinit var otpET4: TextInputEditText
-    private lateinit var emailET: TextInputEditText
+    private lateinit var otpET1 : TextInputEditText
+    private lateinit var otpET2 : TextInputEditText
+    private lateinit var otpET3 : TextInputEditText
+    private lateinit var otpET4 : TextInputEditText
+    private lateinit var emailET : TextInputEditText
 
-    private lateinit var didNotGetOTPTxt: TextView
+    private lateinit var didNotGetOTPTxtLayout : LinearLayout
 
-    private lateinit var getOTPBtn: MaterialButton
+    private lateinit var getOTPBtn : MaterialButton
+
+    private lateinit var otpExpirationTimer : CountDownTimer
 
     @Inject
-    lateinit var sessionManager: SessionManager
-    override fun onCreate(savedInstanceState: Bundle?) {
+    lateinit var sessionManager : SessionManager
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         initView()
 
         setListener()
@@ -66,7 +66,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                     }
                 }
                 is NetworkResult.Error -> {
-                    toast(response.message!!)
+                    binding.root.snackBar(response.message!!)
                 }
                 is NetworkResult.Loading -> {
                     binding.root.snackBar("Getting OTP...")
@@ -99,6 +99,10 @@ class ForgotPasswordActivity : AppCompatActivity() {
     }
 
     private fun updateUIOnSuccessfulGetOTP() {
+        if (didNotGetOTPTxtLayout.isVisible) {
+            otpExpirationTimer.start()
+            binding.resendOtpBtn.isClickable = false
+        }
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             binding.forgotPasswordSubHeader.text = (Html.fromHtml(
                 "<html><body><font size=12><b>OTP Verification</b></font><br/>" +
@@ -112,11 +116,11 @@ class ForgotPasswordActivity : AppCompatActivity() {
                             "Enter the OTP sent to ${emailET.text.toString()}</body><html>"
                 )
         }
-        emailET.visibility = View.GONE
-        binding.didNotGetOTPTxt.visibility = View.VISIBLE
-        binding.otpETParent.visibility = View.VISIBLE
+        emailET.hide()
+        binding.didNotGetOTPTxtLayout.show()
+        binding.otpETParent.show()
         getOTPBtn.updateLayoutParams<ConstraintLayout.LayoutParams> {
-            topToBottom = binding.didNotGetOTPTxt.id
+            topToBottom = binding.didNotGetOTPTxtLayout.id
         }
         getOTPBtn.text = getString(R.string.verify_proceed)
         binding.emailLabel.text = getString(R.string.enter_otp)
@@ -126,17 +130,19 @@ class ForgotPasswordActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (binding.forgotPasswordTitle.text.equals("Verify OTP")) {
-            emailET.visibility = View.GONE
+            emailET.hide()
         }
     }
 
     private fun initView() {
+        binding = ActivityForgotPasswordBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         otpET1 = binding.otpET1
         otpET2 = binding.otpET2
         otpET3 = binding.otpET3
         otpET4 = binding.otpET4
-        didNotGetOTPTxt = binding.didNotGetOTPTxt
+        didNotGetOTPTxtLayout = binding.didNotGetOTPTxtLayout
         emailET = binding.forgotPasswordEmailET
 
         getOTPBtn = binding.getOTPBtn
@@ -148,14 +154,28 @@ class ForgotPasswordActivity : AppCompatActivity() {
         otpET3.addTextChangedListener(OTPTextWatcher(edit, otpET3))
         otpET4.addTextChangedListener(OTPTextWatcher(edit, otpET4))
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            didNotGetOTPTxt.text = (Html.fromHtml(
-                "<html><body>Didn't receive the OTP?<font size=12 color=red> <b>RESEND OTP</b></font></body><html>",
-                Html.FROM_HTML_MODE_LEGACY
-            ))
-        } else {
-            didNotGetOTPTxt.text =
-                Html.fromHtml("<html><body>Didn't receive the OTP?<font size=12 color=red> <b>RESEND OTP</b></font></body><html>")
+
+        val resendOtpTxt = getString(R.string.resent_otp)
+        binding.resendOtpBtn.text = resendOtpTxt
+
+        //Initializing count down timer for resend otp button
+        otpExpirationTimer = object : CountDownTimer(90000, 1000) {
+            override fun onTick(millisUntilFinished : Long) {
+                val secondsInMilli : Long = 1000
+                val minutesInMilli = secondsInMilli * 60
+                var diff = millisUntilFinished
+                val elapsedMinutes = diff / minutesInMilli
+                diff %= minutesInMilli
+                val elapsedSeconds = diff / secondsInMilli
+                val timeLeft = "$elapsedMinutes:$elapsedSeconds"
+                binding.resendOtpBtn.text = timeLeft
+            }
+
+            override fun onFinish() {
+                binding.resendOtpBtn.text = resendOtpTxt
+                binding.resendOtpBtn.isClickable = true
+            }
+
         }
     }
 
@@ -163,7 +183,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
     private fun setListener() {
         binding.forgotPasswordBackBtn.setOnClickListener { onBackPressed() }
 
-        binding.didNotGetOTPTxt.setOnClickListener {
+        binding.resendOtpBtn.setOnClickListener {
             //Requesting the OTP again after not receiving
             viewModel.getOTP(emailET.text.toString())
             clearFocusFromOTPET()
@@ -175,7 +195,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         getOTPBtn.setOnClickListener {
             this.hideKeyboard(binding.root)
-            if (getOTPBtn.text.equals("Get OTP")) {
+            if (getOTPBtn.text.equals(getString(R.string.get_otp))) {
                 emailET.removeFocus()
                 if (emailET.text.toString().isNotEmpty() && emailET.text.toString()
                         .isValidEmail()
@@ -201,7 +221,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         }
 
-        binding.otpET4.setOnEditorActionListener { _, actionId, _ ->
+        otpET4.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> clearFocusFromOTPET()
             }
@@ -229,7 +249,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
     private fun showExitConfirmDialog() {
         val exitDialog = AlertDialog.Builder(this)
         exitDialog.setTitle("Confirm exit?")
-        exitDialog.setMessage("Are you sure want to exit \"OTP Verification Process\"?")
+        exitDialog.setMessage("Are you sure you want to exit the \"OTP Verification Process\"?")
 
         exitDialog.setPositiveButton("Yes") { dialog, _ ->
             dialog.dismiss()

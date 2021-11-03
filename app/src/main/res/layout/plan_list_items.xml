@@ -59,7 +59,7 @@
                 android:layout_marginTop="@dimen/dp4"
                 android:background="@drawable/background_green_border"
                 android:backgroundTint="@color/quantum_grey400"
-                android:fontFamily="@font/gtwalsheimpromedium"
+                android:fontFamily="@font/gt_pro_medium"
                 android:paddingHorizontal="@dimen/dp8"
                 android:paddingVertical="5dp"
                 android:text="@string/status"

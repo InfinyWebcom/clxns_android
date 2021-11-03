@@ -19,7 +19,7 @@ import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.ActivitySearchBinding
 import com.clxns.app.ui.main.cases.CasesAdapter
 import com.clxns.app.ui.main.cases.CasesViewModel
-import com.clxns.app.ui.main.cases.casedetails.DetailsActivity
+import com.clxns.app.ui.main.cases.caseDetails.DetailsActivity
 import com.clxns.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*

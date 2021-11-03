@@ -1,5 +1,6 @@
 package com.clxns.app.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -56,6 +57,20 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.getAllDispositions()
         mainViewModel.getBankList(token)
+    }
+
+    override fun onNewIntent(intent : Intent?) {
+        super.onNewIntent(intent)
+        /**
+         * This will refresh the my plan fragment only once after successful payment
+         * It only gets triggered from the payment activity on by clearing back stack
+         * up to this activity as it's been Launched in Single Top mode (Only One Instance)
+         */
+        if (intent != null) {
+            if (intent.getBooleanExtra("hasChangedPlanStatus", false)) {
+                setIntent(intent)
+            }
+        }
     }
 
     private fun subscribeObserver() {

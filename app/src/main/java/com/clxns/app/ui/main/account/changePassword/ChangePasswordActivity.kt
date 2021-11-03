@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -23,21 +22,21 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChangePasswordActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityChangePasswordBinding
-    private val changePasswordViewModel: ChangePasswordViewModel by viewModels()
+    private lateinit var binding : ActivityChangePasswordBinding
+    private val changePasswordViewModel : ChangePasswordViewModel by viewModels()
 
-    private lateinit var newPasswordET: TextInputEditText
-    private lateinit var confirmPasswordET: TextInputEditText
-    private lateinit var oldPasswordET: TextInputEditText
-    private lateinit var oldPasswordIL: TextInputLayout
-    private lateinit var confirmPasswordIL: TextInputLayout
+    private lateinit var newPasswordET : TextInputEditText
+    private lateinit var confirmPasswordET : TextInputEditText
+    private lateinit var oldPasswordET : TextInputEditText
+    private lateinit var oldPasswordIL : TextInputLayout
+    private lateinit var confirmPasswordIL : TextInputLayout
 
-    private var isFromOTPScreen: Boolean = false
+    private var isFromOTPScreen : Boolean = false
 
     @Inject
-    lateinit var sessionManager: SessionManager
-    private lateinit var token: String
-    override fun onCreate(savedInstanceState: Bundle?) {
+    lateinit var sessionManager : SessionManager
+    private lateinit var token : String
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChangePasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -57,7 +56,8 @@ class ChangePasswordActivity : AppCompatActivity() {
             removeFocusFromAllET()
             if (oldPasswordIL.isVisible) {
                 if (!oldPasswordET.text.isNullOrBlank() && !newPasswordET.text.isNullOrBlank() &&
-                    !confirmPasswordET.text.isNullOrBlank()) {
+                    !confirmPasswordET.text.isNullOrBlank()
+                ) {
                     if (newPasswordET.text.toString()
                             .contentEquals(confirmPasswordET.text.toString())
                     ) {
@@ -71,7 +71,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                     } else {
                         binding.root.snackBar(getString(R.string.error_password_not_match))
                     }
-                }else{
+                } else {
                     binding.root.snackBar("Fields cannot be empty")
                 }
             } else {
@@ -88,7 +88,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                     } else {
                         binding.root.snackBar(getString(R.string.error_password_not_match))
                     }
-                }else{
+                } else {
                     binding.root.snackBar("Fields cannot be empty")
                 }
             }
@@ -96,13 +96,18 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
 
         newPasswordET.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            override fun beforeTextChanged(
+                s : CharSequence?,
+                start : Int,
+                count : Int,
+                after : Int
+            ) {
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(s : CharSequence?, start : Int, before : Int, count : Int) {
             }
 
-            override fun afterTextChanged(s: Editable?) {
+            override fun afterTextChanged(s : Editable?) {
                 if (confirmPasswordET.text.toString().isNotEmpty()) {
                     if (s.toString() == confirmPasswordET.text.toString()) {
                         setConfirmETTick()
@@ -115,13 +120,18 @@ class ChangePasswordActivity : AppCompatActivity() {
         })
 
         confirmPasswordET.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            override fun beforeTextChanged(
+                s : CharSequence?,
+                start : Int,
+                count : Int,
+                after : Int
+            ) {
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(s : CharSequence?, start : Int, before : Int, count : Int) {
             }
 
-            override fun afterTextChanged(s: Editable?) {
+            override fun afterTextChanged(s : Editable?) {
                 if (newPasswordET.text.toString().isNotEmpty()) {
                     if (s.toString() == newPasswordET.text.toString()) {
                         setConfirmETTick()
@@ -165,7 +175,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (isFromOTPScreen) {
-            oldPasswordIL.visibility = View.GONE
+            oldPasswordIL.hide()
         }
     }
 

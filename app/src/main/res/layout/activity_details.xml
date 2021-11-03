@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.main.cases.casedetails.DetailsActivity">
+    tools:context=".ui.main.cases.caseDetails.DetailsActivity">
 
 
     <RelativeLayout
@@ -37,7 +37,7 @@
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/sp18"
-            android:textStyle="bold" />
+            android:fontFamily="@font/gt_pro_bold" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/case_detail_call_btn"
@@ -596,12 +596,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:fontFamily="@font/gt_pro_medium"
                     android:text="@string/history"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/sp16"
-                    />
+                    android:textSize="@dimen/sp16" />
 
 
                 <TextView

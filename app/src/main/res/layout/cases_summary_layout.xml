@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp16"
             android:layout_marginBottom="@dimen/dp12"
-            android:fontFamily="@font/gtwalsheimpromedium"
+            android:fontFamily="@font/gt_pro_medium"
             android:gravity="center_horizontal"
             android:text="@string/cases_summary"
             android:textColor="@color/white"
@@ -89,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp4"
-                        android:fontFamily="@font/gtwalsheimpromedium"
+                        android:fontFamily="@font/gt_pro_medium"
                         android:includeFontPadding="false"
                         android:text="@string/TotalCases"
                         android:textSize="@dimen/sp14" />
@@ -137,7 +137,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp4"
-                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:fontFamily="@font/gt_pro_medium"
                             android:includeFontPadding="false"
                             android:text="@string/ptp"
                             android:textSize="@dimen/sp14" />
@@ -180,7 +180,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp4"
-                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:fontFamily="@font/gt_pro_medium"
                             android:includeFontPadding="false"
                             android:text="@string/rtp"
                             android:textSize="@dimen/sp14" />
@@ -230,7 +230,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp4"
-                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:fontFamily="@font/gt_pro_medium"
                             android:includeFontPadding="false"
                             android:text="@string/broken_ptp"
                             android:textSize="@dimen/sp14" />
@@ -273,7 +273,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp4"
-                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:fontFamily="@font/gt_pro_medium"
                             android:includeFontPadding="false"
                             android:text="@string/dispute"
                             android:textSize="@dimen/sp14" />
@@ -323,7 +323,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp4"
-                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:fontFamily="@font/gt_pro_medium"
                             android:includeFontPadding="false"
                             android:text="@string/customer_not_found"
                             android:textSize="@dimen/sp14" />
@@ -366,7 +366,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp4"
-                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:fontFamily="@font/gt_pro_medium"
                             android:includeFontPadding="false"
                             android:text="@string/call_back"
                             android:textSize="@dimen/sp14" />
@@ -415,7 +415,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp4"
-                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:fontFamily="@font/gt_pro_medium"
                             android:includeFontPadding="false"
                             android:text="@string/collected"
                             android:textSize="@dimen/sp14" />
@@ -458,7 +458,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp4"
-                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:fontFamily="@font/gt_pro_medium"
                             android:includeFontPadding="false"
                             android:text="@string/partially_collect"
                             android:textSize="@dimen/sp14" />
@@ -509,7 +509,7 @@
                             android:layout_marginTop="@dimen/dp4"
                             android:maxLines="1"
                             android:ellipsize="end"
-                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:fontFamily="@font/gt_pro_medium"
                             android:includeFontPadding="false"
                             android:text="@string/settlement_foreclosure"
                             android:textSize="@dimen/sp14" />
@@ -552,7 +552,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp4"
-                            android:fontFamily="@font/gtwalsheimpromedium"
+                            android:fontFamily="@font/gt_pro_medium"
                             android:includeFontPadding="false"
                             android:text="@string/customer_deceased"
                             android:textSize="@dimen/sp14" />

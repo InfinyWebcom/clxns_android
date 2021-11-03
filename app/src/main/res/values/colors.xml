@@ -33,6 +33,7 @@
     <color name="hint_color">#EBE7F8</color>
     <color name="yellow">#FF7C1C</color>
     <color name="light_red">#FF3939</color>
+    <color name="light_red_transparent">#B3FF3939</color>
     <color name="color_primary_light">#DAE5EA</color>
     <color name="color_accent_light">#EBFAD8</color>
 </resources>

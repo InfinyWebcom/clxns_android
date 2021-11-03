@@ -3,6 +3,7 @@ package com.clxns.app.data.model.cases
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 @JsonClass(generateAdapter = true)
 data class UpdatedContactData(
@@ -18,4 +19,4 @@ data class UpdatedContactData(
     val type: String,
     @Json(name = "updatedAt")
     val updatedAt: String
-)
+) : Serializable

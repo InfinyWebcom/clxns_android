@@ -9,7 +9,6 @@ import android.graphics.RectF
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +18,7 @@ import com.isseiaoki.simplecropview.CropImageView
 import com.isseiaoki.simplecropview.callback.CropCallback
 import com.isseiaoki.simplecropview.callback.LoadCallback
 import com.isseiaoki.simplecropview.callback.SaveCallback
+import timber.log.Timber
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,28 +26,26 @@ import java.util.concurrent.RejectedExecutionException
 
 class CropImageActivity : AppCompatActivity() {
 
-    private var path: String? = null
-    var activityCropImageBinding: ActivityCropImageBinding? = null
-    var file: File? = null
-    private var mFrameRect: RectF? = null
-    var context: Context? = null
-    var mSourceUri: Uri? = null
+    private var path : String? = null
+    var activityCropImageBinding : ActivityCropImageBinding? = null
+    var file : File? = null
+    private var mFrameRect : RectF? = null
+    var context : Context? = null
+    var mSourceUri : Uri? = null
 
     private val mCompressFormat = CompressFormat.JPEG
 
-    companion object{
-        var TAG = "cropImageActivityLog"
+    companion object {
         private var KEY_FRAME_RECT = "FrameRect"
-        private val CROP_ACTIVITY = 15
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crop_image)
         activityCropImageBinding = ActivityCropImageBinding.inflate(layoutInflater)
 
-        val view: View = activityCropImageBinding!!.root
+        val view : View = activityCropImageBinding!!.root
 
         setContentView(view)
 
@@ -65,14 +63,13 @@ class CropImageActivity : AppCompatActivity() {
         }
         val fromDoc = intent.getBooleanExtra("from_documents", false)
         if (fromDoc) {
-            Log.i(TAG, "======CUSTOM==>")
             activityCropImageBinding!!.cropImageView.setCropMode(CropImageView.CropMode.FREE)
         } /*else{
             Log.i(TAG, "=====SQUARE=====>" );
             activityCropImageBinding.cropImageView.setCropMode(CropImageView.CropMode.SQUARE);
         }*/
 
-        Log.i(TAG, "==mSourceUri==>$mSourceUri")
+        Timber.i("==mSourceUri==>$mSourceUri")
         //activityCropImageBinding.cropImageView.setCropMode();
 
 
@@ -95,41 +92,41 @@ class CropImageActivity : AppCompatActivity() {
         }
 
         activityCropImageBinding!!.buttonCencel.setOnClickListener {
-            val intent = Intent()
-            setResult(2, intent)
+            val setResultIntent = Intent()
+            setResult(2, setResultIntent)
             finish()
         }
 
     }
 
-    private val mLoadCallback: LoadCallback = object : LoadCallback {
+    private val mLoadCallback : LoadCallback = object : LoadCallback {
         override fun onSuccess() {
             activityCropImageBinding!!.imgProg.visibility = View.GONE
         }
 
-        override fun onError(e: Throwable) {
+        override fun onError(e : Throwable) {
             Toast.makeText(applicationContext, "error", Toast.LENGTH_SHORT).show()
         }
     }
-    private val mCropCallback: CropCallback = object : CropCallback {
-        override fun onSuccess(cropped: Bitmap) {
+    private val mCropCallback : CropCallback = object : CropCallback {
+        override fun onSuccess(cropped : Bitmap) {
             try {
                 activityCropImageBinding!!.cropImageView.save(cropped)
                     .compressFormat(mCompressFormat)
                     .compressQuality(40)
                     .execute(createSaveUri(), mSaveCallback)
-            } catch (e: RejectedExecutionException) {
+            } catch (e : RejectedExecutionException) {
             }
         }
 
-        override fun onError(e: Throwable) {}
+        override fun onError(e : Throwable) {}
     }
 
-    fun createSaveUri(): Uri? {
+    fun createSaveUri() : Uri? {
         return createNewUri(context!!, mCompressFormat)
     }
 
-    private fun createNewUri(context: Context, format: CompressFormat?): Uri? {
+    private fun createNewUri(context : Context, format : CompressFormat?) : Uri? {
         val currentTimeMillis = System.currentTimeMillis()
         val today = Date(currentTimeMillis)
         val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
@@ -154,12 +151,12 @@ class CropImageActivity : AppCompatActivity() {
         return resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
     }
 
-    private fun getDirPath(): String {
+    private fun getDirPath() : String {
         var dirPath = ""
-        var imageDir: File? = null
+        var imageDir : File? = null
         val extStorageDir = externalCacheDir
         if (extStorageDir!!.canWrite()) {
-            imageDir = File(extStorageDir?.path + "/simplecropview")
+            imageDir = File(extStorageDir.path + "/simplecropview")
         }
         if (imageDir != null) {
             if (!imageDir.exists()) {
@@ -172,7 +169,7 @@ class CropImageActivity : AppCompatActivity() {
         return dirPath
     }
 
-    private fun getMimeType(format: CompressFormat?): String {
+    private fun getMimeType(format : CompressFormat?) : String {
 //        Logger.i("getMimeType CompressFormat = " + format);
         return when (format) {
             CompressFormat.JPEG -> "jpeg"
@@ -181,17 +178,17 @@ class CropImageActivity : AppCompatActivity() {
         }
     }
 
-    private val mSaveCallback: SaveCallback = object : SaveCallback {
-        override fun onSuccess(outputUri: Uri) {
+    private val mSaveCallback : SaveCallback = object : SaveCallback {
+        override fun onSuccess(outputUri : Uri) {
             val intent = Intent()
-            Log.i(TAG, "sourceUri" + outputUri.toString() + "path_---------" + path)
+            Timber.i("sourceUri" + outputUri.toString() + "path_---------" + path)
             intent.putExtra("sourceUri", outputUri)
             intent.putExtra("path", path)
             setResult(RESULT_OK, intent)
             finish()
         }
 
-        override fun onError(e: Throwable) {
+        override fun onError(e : Throwable) {
             Toast.makeText(this@CropImageActivity, "error", Toast.LENGTH_SHORT).show()
         }
     }

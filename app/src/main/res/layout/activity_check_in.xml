@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.main.cases.casedetails.casestatus.checkin.CheckInActivity">
+    tools:context=".ui.main.cases.caseDetails.caseStatus.checkIn.CheckInActivity">
 
     <RelativeLayout
         android:id="@+id/checkInCustomToolbar"
@@ -20,7 +20,8 @@
             android:background="?android:selectableItemBackgroundBorderless"
             android:padding="@dimen/dp16"
             android:src="@drawable/ic_arrow_back_24"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            tools:ignore="ImageContrastCheck" />
 
 
         <TextView
@@ -28,13 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/imgBack"
-            android:fontFamily="@font/gtwalsheimprobold"
+            android:fontFamily="@font/gt_pro_bold"
             android:paddingTop="@dimen/dp16"
             android:paddingBottom="@dimen/dp16"
-            android:text="Case CheckIn"
+            android:text="@string/check_in"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp18" />
+            android:textSize="@dimen/sp18"
+            tools:ignore="TextContrastCheck" />
 
     </RelativeLayout>
 
@@ -64,10 +66,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@id/txtDate"
-                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:fontFamily="@font/gt_pro_medium"
                     android:textAllCaps="true"
                     android:textColor="@color/text_black"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/sp16" />
+
+
+                <TextView
+                    android:id="@+id/txtCheckInLoanId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtCheckInName"
+                    android:layout_toStartOf="@id/txtCheckInPaymentStatus"
+                    android:textColor="@color/quantum_grey600"
+                    android:textSize="@dimen/sp14"
+                    />
 
                 <TextView
                     android:id="@+id/txtDate"
@@ -75,20 +88,20 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/txtCheckInName"
                     android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:fontFamily="@font/gt_pro_medium"
                     android:textAllCaps="true"
                     android:textColor="@color/text_black"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/sp16" />
 
 
                 <TextView
-                    android:id="@+id/txtCheckInStatus"
+                    android:id="@+id/txtCheckInPaymentStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/txtDate"
                     android:layout_alignParentEnd="true"
-                    android:fontFamily="@font/gtwalsheimproregular"
                     android:textAllCaps="true"
+                    android:fontFamily="@font/gt_pro_bold"
                     android:textColor="@color/green"
                     android:textSize="@dimen/sp16" />
             </RelativeLayout>
@@ -105,12 +118,13 @@
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@id/txtLocationCheckIn"
                     android:drawablePadding="@dimen/dp8"
-                    android:fontFamily="@font/gtwalsheimpromedium"
                     android:text="@string/LocationVerified"
                     android:textAllCaps="false"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/sp16"
-                    app:drawableStartCompat="@mipmap/ic_delete" />
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    app:drawableStartCompat="@drawable/ic_baseline_cancel_24" />
 
 
                 <TextView
@@ -119,11 +133,13 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/dp8"
-                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:gravity="center_vertical"
                     android:text="@string/check_in"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/sp14"
+                    android:textStyle="bold"
+                    tools:ignore="TextContrastCheck" />
 
 
             </RelativeLayout>
@@ -140,12 +156,13 @@
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@id/txtImageVerify"
                     android:drawablePadding="@dimen/dp8"
-                    android:fontFamily="@font/gtwalsheimpromedium"
+                    android:textStyle="bold"
                     android:text="@string/image_upload"
+                    android:gravity="center_vertical"
                     android:textAllCaps="false"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/sp16"
-                    app:drawableStartCompat="@mipmap/ic_delete" />
+                    app:drawableStartCompat="@drawable/ic_baseline_cancel_24" />
 
 
                 <TextView
@@ -154,11 +171,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/dp8"
-                    android:fontFamily="@font/gtwalsheimpromedium"
                     android:text="@string/upload"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/sp14"
+                    android:textStyle="bold"
+                    tools:ignore="TextContrastCheck" />
 
 
             </RelativeLayout>

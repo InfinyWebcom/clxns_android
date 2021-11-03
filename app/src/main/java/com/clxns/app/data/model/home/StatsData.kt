@@ -8,9 +8,9 @@ data class StatsData(
     @Json(name = "cases")
     val cases: Int,
     @Json(name = "pos")
-    val pos: Int,
+    val pos: Int? = null,
     @Json(name = "totalAmountDue")
-    val totalAmountDue: Int,
+    val totalAmountDue: Int? = null,
     @Json(name = "totalColletedAmt")
-    val totalCollectedAmt: Int
+    val totalCollectedAmt: Int? = null
 )

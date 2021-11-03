@@ -24,7 +24,7 @@ import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.cases.CasesData
 import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentCasesBinding
-import com.clxns.app.ui.main.cases.casedetails.DetailsActivity
+import com.clxns.app.ui.main.cases.caseDetails.DetailsActivity
 import com.clxns.app.ui.search.SearchActivity
 import com.clxns.app.utils.*
 import com.google.android.material.button.MaterialButton
@@ -92,41 +92,6 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                 "", "", "", ""
             )
         }
-//        when {
-//            casesArgs.dispositionId != 0 -> {
-//                filterBtn.text = getString(R.string.reset)
-//                binding.casesProgressBar.show()
-//                getCaseList(
-//                    casesArgs.dispositionId.toString(),
-//                    casesArgs.fromDate, casesArgs.toDate, "", ""
-//                )
-//            }
-//            casesArgs.visitPending != 0 -> {
-//                filterBtn.text = getString(R.string.reset)
-//                binding.casesProgressBar.show()
-//                getCaseList(
-//                    "", casesArgs.fromDate, casesArgs.toDate, "1", ""
-//                )
-//            }
-//            casesArgs.followUps != 0 -> {
-//                filterBtn.text = getString(R.string.reset)
-//                binding.casesProgressBar.show()
-//                getCaseList(
-//                    "", casesArgs.fromDate, casesArgs.toDate, "", "1"
-//                )
-//            }
-//            casesArgs.isFilterApplied -> {
-//                filterBtn.text = getString(R.string.reset)
-//            }
-//
-//            else -> {
-//                binding.casesProgressBar.show()
-//                getCaseList(
-//                    "", "",
-//                    "", "", ""
-//                )
-//            }
-//        }
     }
 
     private fun getCaseList(

@@ -59,9 +59,9 @@
 
     <fragment
         android:id="@+id/navigation_my_plan"
-        android:name="com.clxns.app.ui.main.plan.bfrag.MyPlanFragment"
+        android:name="com.clxns.app.ui.main.plan.PlanFragment"
         android:label="@string/title_my_plan"
-        tools:layout="@layout/fragment_my_plan" />
+        tools:layout="@layout/fragment_plan" />
 
     <fragment
         android:id="@+id/navigation_account"
@@ -71,7 +71,7 @@
 
     <dialog
         android:id="@+id/navigation_cases_filter"
-        android:name="com.clxns.app.ui.main.cases.casedetails.bottomsheets.CasesFilterBS"
+        android:name="com.clxns.app.ui.main.cases.caseDetails.bottomsheets.CasesFilterBS"
         tools:layout="@layout/bottom_sheet_cases_filter">
         <action
             android:id="@+id/action_navigation_cases_filter_to_navigation_cases"
@@ -83,7 +83,7 @@
 
     <dialog
         android:id="@+id/navigation_home_summary"
-        android:name="com.clxns.app.ui.main.cases.casedetails.bottomsheets.CaseSummaryBottomSheet"
+        android:name="com.clxns.app.ui.main.cases.caseDetails.bottomsheets.CaseSummaryBottomSheet"
         android:label="CasesFilterBS"
         tools:layout="@layout/cases_summary_layout">
         <argument

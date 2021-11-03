@@ -22,7 +22,7 @@
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="submit">Submit</string>
-    <string name="error_password_not_match">New Password and Confirm Password does not match</string>
+    <string name="error_password_not_match">New password and confirm password does not match</string>
     <string name="welcome_back">Welcome Back,</string>
     <string name="my_statistics">My Statistics</string>
     <string name="today">Today</string>
@@ -56,6 +56,7 @@
     <string name="refresh">Refresh</string>
     <string name="followup">Follow Up</string>
     <string name="check_in">Check In</string>
+    <string name="checked_in">Checked In</string>
     <string name="create_route">Create Route</string>
     <string name="my_plans">My Plans</string>
     <string name="cases_summary">Cases Summary</string>
@@ -228,6 +229,7 @@
     <string name="alpha_numeric_chars">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
     <string name="partial_amount">Partial Amount</string>
     <string name="personal_details">Personal Details</string>
+    <string name="clear">Clear</string>
 
 
     <string-array name="yesNo">
@@ -334,5 +336,7 @@
         <item>PTP (based on conversation tone , Green: >80% probability)</item>
     </string-array>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="forgot_password_txt_2">Didn\'t receive the OTP?&#160;</string>
+    <string name="resent_otp">RESENT OTP</string>
 
 </resources>

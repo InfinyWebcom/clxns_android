@@ -18,4 +18,6 @@ data class HistoryPaymentData(
     val refNo: String,
     @Json(name = "recoveryDate")
     val recoveryDate: String,
+    @Json(name = "supporting")
+    val supporting: String
 )

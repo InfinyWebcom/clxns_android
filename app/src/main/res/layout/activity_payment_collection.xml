@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.main.cases.casedetails.casestatus.paymentcollection.PaymentCollectionActivity">
+    tools:context=".ui.main.cases.caseDetails.caseStatus.paymentCollection.PaymentCollectionActivity">
 
     <RelativeLayout
         android:id="@+id/payment_collection_custom_toolbar"
@@ -20,7 +20,8 @@
             android:background="?android:selectableItemBackgroundBorderless"
             android:padding="@dimen/dp16"
             android:src="@drawable/ic_arrow_back_24"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            tools:ignore="ImageContrastCheck" />
 
 
         <TextView
@@ -28,13 +29,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/imgBack"
+            android:fontFamily="@font/gt_pro_bold"
             android:paddingTop="@dimen/dp16"
             android:paddingBottom="@dimen/dp16"
             android:text="@string/payment_collection"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/sp18"
-            android:textStyle="bold" />
+            tools:ignore="TextContrastCheck" />
 
     </RelativeLayout>
 
@@ -55,59 +57,70 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                >
 
                 <TextView
                     android:id="@+id/txtName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/dp8"
+                    android:layout_toStartOf="@id/txtDate"
                     android:textAllCaps="true"
                     android:textColor="@color/text_black"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/gt_pro_medium" />
 
+                <TextView
+                    android:id="@+id/txtPaymentLoanId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtName"
+                    android:layout_toStartOf="@id/txtStatus"
+                    android:textColor="@color/quantum_grey600"
+                    android:textSize="@dimen/sp14" />
+
+                <TextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_black"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignTop="@id/txtName"
+                    android:textAllCaps="true"
+                    android:textSize="@dimen/sp16" />
                 <TextView
                     android:id="@+id/txtStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txtName"
-                    android:layout_alignTop="@+id/txtName"
+                    android:layout_below="@+id/txtDate"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="@dimen/dp4"
                     android:textAllCaps="true"
+                    android:fontFamily="@font/gt_pro_bold"
                     android:textColor="@color/green"
                     android:textSize="@dimen/sp18"
-                    android:textStyle="bold" />
+                    />
 
             </RelativeLayout>
-
-            <TextView
-                android:id="@+id/txtDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAllCaps="false"
-                android:textColor="@color/text_black"
-                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txtSkipTracing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/dp16"
                 android:text="@string/financial_institution"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp14" />
 
             <TextView
                 android:id="@+id/txtBankName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/dp4"
                 android:textColor="@color/text_black"
-                android:textSize="16sp"
+                android:textSize="@dimen/sp16"
                 android:textStyle="bold" />
 
 
@@ -119,15 +132,15 @@
                 android:text="@string/loan_type"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp14" />
 
             <TextView
                 android:id="@+id/txtProductValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/dp4"
                 android:textColor="@color/text_black"
-                android:textSize="16sp"
+                android:textSize="@dimen/sp16"
                 android:textStyle="bold" />
 
 
@@ -152,7 +165,7 @@
                     android:id="@+id/collectable_amount_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/dp4"
                     android:focusable="false"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/sp16"
@@ -168,13 +181,13 @@
                 android:text="@string/amount_type"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp14" />
 
             <RelativeLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/dp4"
                 android:id="@+id/spAmountLayout"
                 android:background="@drawable/background_spinner">
 
@@ -186,7 +199,8 @@
                     android:overlapAnchor="false"
                     android:paddingVertical="@dimen/dp10"
                     android:spinnerMode="dialog"
-                    android:theme="@style/spinnerTheme" />
+                    android:theme="@style/spinnerTheme"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
             </RelativeLayout>
 
             <LinearLayout
@@ -212,9 +226,11 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/enter_amount"
                     android:importantForAutofill="no"
+                    android:maxLength="9"
                     android:inputType="numberDecimal"
                     android:paddingVertical="@dimen/dp8"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
 
             </LinearLayout>
 
@@ -252,14 +268,15 @@
                     android:text="@string/online"
                     android:textAllCaps="true"
                     android:textColor="@drawable/rb_text_selector"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp12"
+                    android:textStyle="bold"
+                    tools:ignore="TextContrastCheck" />
 
                 <RadioButton
                     android:id="@+id/rbCheque"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="@dimen/dp8"
                     android:layout_weight="1"
                     android:background="@drawable/background_rb_selection"
                     android:button="@null"
@@ -268,29 +285,29 @@
                     android:paddingVertical="@dimen/dp10"
                     android:text="@string/cheque"
                     android:textAllCaps="true"
-
                     android:textColor="@drawable/rb_text_selector"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp12"
+                    android:textStyle="bold"
+                    tools:ignore="TextContrastCheck" />
 
                 <RadioButton
                     android:id="@+id/rbCash"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="@dimen/dp8"
                     android:layout_weight="1"
                     android:background="@drawable/background_rb_selection"
                     android:button="@null"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:padding="10dp"
                     android:paddingHorizontal="20dp"
                     android:paddingVertical="@dimen/dp10"
                     android:text="@string/cash"
                     android:textAllCaps="true"
                     android:textColor="@drawable/rb_text_selector"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/sp12"
+                    android:textStyle="bold"
+                    tools:ignore="TextContrastCheck" />
 
             </RadioGroup>
 
@@ -303,13 +320,13 @@
                 android:text="@string/payment_recovery_date"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp14" />
 
             <TextView
                 android:id="@+id/txtPaymentOrRecoveryDateValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/dp4"
                 android:background="@drawable/background_edittext_round"
                 android:paddingHorizontal="@dimen/dp8"
                 android:paddingVertical="@dimen/dp10"
@@ -325,34 +342,36 @@
                 android:text="@string/reference_no"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
-                android:textSize="14sp"
+                android:textSize="@dimen/sp14"
                 android:visibility="visible" />
 
             <EditText
                 android:id="@+id/edtReferenceNo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/dp4"
                 android:background="@drawable/background_edittext_round"
+                android:digits="@string/alpha_numeric_chars"
                 android:importantForAutofill="no"
                 android:inputType="textCapCharacters"
-                android:digits="@string/alpha_numeric_chars"
                 android:paddingVertical="@dimen/dp10"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
-                android:visibility="visible" />
+                android:paddingStart="@dimen/dp4"
+                android:paddingEnd="@dimen/dp4"
+                android:visibility="visible"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <EditText
                 android:id="@+id/edtChequeNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/dp4"
                 android:background="@drawable/background_edittext_round"
                 android:importantForAutofill="no"
                 android:inputType="number"
+                android:maxLength="25"
                 android:paddingVertical="@dimen/dp10"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
+                android:paddingStart="@dimen/dp4"
+                android:paddingEnd="@dimen/dp4"
                 android:visibility="gone" />
 
 
@@ -364,30 +383,30 @@
                 android:text="@string/remarks"
                 android:textAllCaps="false"
                 android:textColor="@color/text_black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp14" />
 
             <EditText
                 android:id="@+id/remarksET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/dp4"
                 android:background="@drawable/background_edittext_round"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:paddingVertical="@dimen/dp10"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp" />
+                android:paddingStart="@dimen/dp4"
+                android:paddingEnd="@dimen/dp4" />
 
 
             <TextView
                 android:id="@+id/txtUploadScreenShot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/dp16"
                 android:text="@string/upload_supporting"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
-                android:textSize="12sp"
+                android:textSize="@dimen/sp12"
                 android:textStyle="bold" />
 
 
@@ -417,14 +436,15 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="@dimen/dp16"
+        android:layout_marginTop="@dimen/dp4"
+        android:layout_marginRight="@dimen/dp16"
+        android:layout_marginBottom="@dimen/dp16"
         android:background="@drawable/background_button_rectangle"
         android:text="@string/generate_receipt_txt"
         android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="TextContrastCheck" />
 
     <ProgressBar
         android:id="@+id/payment_progress_bar"

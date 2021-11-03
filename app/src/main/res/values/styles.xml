@@ -12,7 +12,7 @@
 
     <style name="spinnerTheme" parent="@android:style/Widget.TextView">
         <item name="android:textSize">@dimen/sp14</item>
-        <item name="android:fontFamily">@font/gtwalsheimpromedium</item>
+        <item name="android:fontFamily">@font/gt_pro_medium</item>
     </style>
 
 

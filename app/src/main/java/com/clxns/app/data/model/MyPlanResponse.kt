@@ -4,6 +4,7 @@ import com.clxns.app.data.model.cases.Disposition
 import com.clxns.app.data.model.cases.Fi
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 @JsonClass(generateAdapter = true)
 data class MyPlanModel(
@@ -116,7 +117,7 @@ data class Lead(
     val applicantAltCity: String? = null,
 
     @Json(name = "collectionStatus")
-    val collectionStatus: Any? = null,
+    val collectionStatus: String? = null,
 
     @Json(name = "poolId")
     val poolId: Int? = null,
@@ -164,7 +165,7 @@ data class Lead(
     val callStatus: String? = null,
 
     @Json(name = "applicantDob")
-    val applicantDob: Any? = null,
+    val applicantDob: String? = null,
 
     @Json(name = "fosAssignedDate")
     val fosAssignedDate: String? = null,
@@ -197,7 +198,7 @@ data class Lead(
     val oDValue: Int? = null,
 
     @Json(name = "telecallerAssignedDate")
-    val telecallerAssignedDate: Any? = null,
+    val telecallerAssignedDate: String? = null,
 
     @Json(name = "engineNumber")
     val engineNumber: String? = null,
@@ -209,7 +210,7 @@ data class Lead(
     val dateOfDefault: String? = null,
 
     @Json(name = "chequeDate")
-    val chequeDate: Any? = null,
+    val chequeDate: String? = null,
 
     @Json(name = "coApplicantEmail")
     val coApplicantEmail: String? = null,
@@ -378,4 +379,4 @@ data class Lead(
     val subDispositionData: SubDispositionData?,
     @Json(name = "fi")
     val fiData: Fi? = null
-)
+) : Serializable
