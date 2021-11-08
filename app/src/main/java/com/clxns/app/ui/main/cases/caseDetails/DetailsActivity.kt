@@ -10,6 +10,7 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.ColorRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -74,8 +75,6 @@ class DetailsActivity : AppCompatActivity() {
         subscribeObserver()
 
         getCaseDetail()
-
-        updatePlanButtonUI()
     }
 
 
@@ -99,6 +98,13 @@ class DetailsActivity : AppCompatActivity() {
         //If the user has come from Cases or Search Cases Screen then hide the Check In Button
         if (hasComeFromCasesScreen) {
             binding.btnCheckIn.hide()
+        }
+
+        //Changing UI of the plan btn according to the lead plan status
+        if (isPlanned) {
+            updatePlanButtonUI(R.color.light_red)
+        } else {
+            updatePlanButtonUI(R.color.green)
         }
     }
 
@@ -195,6 +201,7 @@ class DetailsActivity : AppCompatActivity() {
             when (response) {
                 is NetworkResult.Success -> {
                     binding.progressBar.hide()
+                    binding.detailsPlanBtn.show()
                     if (response.data?.error == false && response.data.data != null) {
                         binding.btnCheckIn.show()
 
@@ -218,6 +225,7 @@ class DetailsActivity : AppCompatActivity() {
                             if (response.data.data.subDispositionId != null) {
                                 lifecycleScope.launch {
                                     delay(100)
+                                    //3C3F41FF
                                     detailsViewModel.getSubDispositionName(response.data.data.subDispositionId)
                                 }
                             }
@@ -247,6 +255,7 @@ class DetailsActivity : AppCompatActivity() {
                 is NetworkResult.Loading -> {
                     binding.progressBar.show()
                     binding.btnCheckIn.hide()
+                    binding.detailsPlanBtn.hide()
                     // show a progress bar
                 }
             }
@@ -262,7 +271,7 @@ class DetailsActivity : AppCompatActivity() {
                             binding.btnCheckIn.show()
                         }
                         setPlanStatus()
-                        updatePlanButtonUI()
+                        updatePlanButtonUI(R.color.light_red)
                     }
                 }
 
@@ -280,7 +289,7 @@ class DetailsActivity : AppCompatActivity() {
                         isPlanned = false
                         binding.btnCheckIn.hide()
                         setPlanStatus()
-                        updatePlanButtonUI()
+                        updatePlanButtonUI(R.color.green)
                     }
                 }
                 is NetworkResult.Error -> {
@@ -352,6 +361,10 @@ class DetailsActivity : AppCompatActivity() {
 
         val updatedDueAmount = totalDueAmount - collectedAmount
         binding.totalDueAmountValue.text = checkIfAmountValueIsZero(updatedDueAmount.toString())
+        if (updatedDueAmount == 0){
+            updatePlanButtonUI(R.color.quantum_grey400)
+            binding.detailsPlanBtn.isEnabled = false
+        }
 
         binding.emiAmountValue.text = checkIfAmountValueIsZero(data.emiAmount.toString())
         binding.principalOutstandingAmountValue.text =
@@ -430,31 +443,21 @@ class DetailsActivity : AppCompatActivity() {
         d.getButton(AlertDialog.BUTTON_NEGATIVE).isAllCaps = false
     }
 
-    private fun updatePlanButtonUI() {
-        if (isPlanned) {
+    private fun updatePlanButtonUI(@ColorRes color : Int) {
+        binding.detailsPlanBtn.rippleColor =
+            ContextCompat.getColorStateList(this, color)
+        binding.detailsPlanBtn.strokeColor =
+            ContextCompat.getColorStateList(this, color)
+        binding.detailsPlanBtn.setTextColor(
+            ContextCompat.getColor(
+                this,
+                color
+            )
+        )
+        if (isPlanned){
             binding.detailsPlanBtn.text = getString(R.string.un_plan)
-            binding.detailsPlanBtn.rippleColor =
-                ContextCompat.getColorStateList(this, R.color.light_red)
-            binding.detailsPlanBtn.strokeColor =
-                ContextCompat.getColorStateList(this, R.color.light_red)
-            binding.detailsPlanBtn.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.light_red
-                )
-            )
-        } else {
+        }else{
             binding.detailsPlanBtn.text = getString(R.string.plan)
-            binding.detailsPlanBtn.rippleColor =
-                ContextCompat.getColorStateList(this, R.color.green)
-            binding.detailsPlanBtn.strokeColor =
-                ContextCompat.getColorStateList(this, R.color.green)
-            binding.detailsPlanBtn.setTextColor(
-                ContextCompat.getColor(
-                    this,
-                    R.color.green
-                )
-            )
         }
     }
 

@@ -56,7 +56,8 @@
                 android:layout_height="wrap_content"
                 android:overlapAnchor="false"
                 android:paddingVertical="@dimen/dp10"
-                android:spinnerMode="dialog" />
+                android:spinnerMode="dialog"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
@@ -88,7 +89,8 @@
                 android:layout_height="wrap_content"
                 android:overlapAnchor="false"
                 android:paddingVertical="@dimen/dp10"
-                android:spinnerMode="dialog" />
+                android:spinnerMode="dialog"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
         </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
@@ -125,7 +127,8 @@
                     android:paddingVertical="@dimen/dp8"
                     android:paddingStart="@dimen/dp6"
                     android:paddingEnd="@dimen/dp6"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="TextContrastCheck" />
             </LinearLayout>
 
             <LinearLayout
@@ -155,7 +158,8 @@
                     android:paddingVertical="@dimen/dp8"
                     android:paddingStart="@dimen/dp6"
                     android:paddingEnd="@dimen/dp6"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="TextContrastCheck" />
             </LinearLayout>
 
         </LinearLayout>
@@ -193,12 +197,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp8"
             android:layout_weight="1"
-            app:rippleColor="@color/colorSecondaryVariant"
             android:backgroundTint="@color/colorPrimary"
             android:text="@string/apply"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp18" />
+            android:textSize="@dimen/sp18"
+            app:rippleColor="@color/colorSecondaryVariant"
+            tools:ignore="TextContrastCheck" />
 
     </LinearLayout>
 

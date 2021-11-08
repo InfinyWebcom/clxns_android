@@ -56,6 +56,7 @@ class CasesAdapter(
             if (!casesData.fi?.fiImage.isNullOrEmpty()) {
                 val url = Constants.BANK_LOGO_URL + casesData.fi?.fiImage
                 contactBinding.casesImage.loadImage(url)
+
             }
             val isPlanned: Boolean
             if (casesData.plans.isNotEmpty()) {
@@ -68,6 +69,11 @@ class CasesAdapter(
                 contactBinding.casesPlanBtn.backgroundTintList =
                     ContextCompat.getColorStateList(context, R.color.green)
                 contactBinding.casesPlanBtn.text = context.getString(R.string.plan)
+            }
+            if (amount == 0){
+                contactBinding.casesPlanBtn.backgroundTintList =
+                    ContextCompat.getColorStateList(context, R.color.quantum_grey400)
+                contactBinding.casesPlanBtn.isEnabled = false
             }
             contactBinding.casesPlanBtn.setOnClickListener {
                 onCaseItemClickListener.onPlanClick(isPlanned, casesData)
