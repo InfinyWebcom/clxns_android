@@ -57,8 +57,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/txtName"
@@ -66,10 +65,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp8"
                     android:layout_toStartOf="@id/txtDate"
+                    android:fontFamily="@font/gt_pro_medium"
                     android:textAllCaps="true"
                     android:textColor="@color/text_black"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/gt_pro_medium" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/txtPaymentLoanId"
@@ -84,11 +83,12 @@
                     android:id="@+id/txtDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_black"
-                    android:layout_alignParentEnd="true"
                     android:layout_alignTop="@id/txtName"
+                    android:layout_alignParentEnd="true"
                     android:textAllCaps="true"
+                    android:textColor="@color/text_black"
                     android:textSize="@dimen/sp16" />
+
                 <TextView
                     android:id="@+id/txtStatus"
                     android:layout_width="wrap_content"
@@ -96,11 +96,10 @@
                     android:layout_below="@+id/txtDate"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/dp4"
-                    android:textAllCaps="true"
                     android:fontFamily="@font/gt_pro_bold"
+                    android:textAllCaps="true"
                     android:textColor="@color/green"
-                    android:textSize="@dimen/sp18"
-                    />
+                    android:textSize="@dimen/sp18" />
 
             </RelativeLayout>
 
@@ -185,10 +184,10 @@
 
             <RelativeLayout
 
+                android:id="@+id/spAmountLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp4"
-                android:id="@+id/spAmountLayout"
                 android:background="@drawable/background_spinner">
 
                 <androidx.appcompat.widget.AppCompatSpinner
@@ -226,8 +225,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/enter_amount"
                     android:importantForAutofill="no"
-                    android:maxLength="9"
                     android:inputType="numberDecimal"
+                    android:maxLength="9"
                     android:paddingVertical="@dimen/dp8"
                     android:textStyle="bold"
                     tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
@@ -430,6 +429,12 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <ProgressBar
+        android:id="@+id/payment_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/generate_receipt_btn"
@@ -446,10 +451,22 @@
         android:textStyle="bold"
         tools:ignore="TextContrastCheck" />
 
-    <ProgressBar
-        android:id="@+id/payment_progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+    <LinearLayout
+        android:id="@+id/payment_success_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/light_black_transparent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/payment_animation_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:lottie_rawRes="@raw/payment_success_anim"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true"
+            />
+    </LinearLayout>
 </RelativeLayout>

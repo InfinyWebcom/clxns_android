@@ -245,7 +245,9 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.RemovePho
                     binding.paymentProgressBar.hide()
                     progressDialog.dismiss()
                     if (!response.data?.error!!) {
-                        toast(response.data.title!!)
+                        toast("Payment has been done successfully")
+                        binding.paymentSuccessLayout.show()
+                        binding.paymentAnimationView.playAnimation()
                         val l : LinearLayout = findViewById(R.id.mainLinearLayout)
                         l.forEachChildView {
                             it.isEnabled = false
@@ -382,7 +384,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.RemovePho
                 caseDetails.data!!.allocationDate?.convertServerDateToNormal("dd, MMM yyyy") ?: ""
 
         }
-        val loanId = "Loan ID: ${caseDetails.data?.loanAccountNo.toString()}"
+        val loanId = "Loan ID : ${caseDetails.data?.loanAccountNo.toString()}"
         binding.txtPaymentLoanId.text = loanId
         binding.txtBankName.text = nullSafeString(caseDetails.data?.fiData?.name)
         val amount =

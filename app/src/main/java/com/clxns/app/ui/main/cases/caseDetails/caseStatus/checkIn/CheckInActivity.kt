@@ -487,7 +487,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 
         binding.txtCheckInName.text = caseDetails.data?.name
         binding.txtCheckInPaymentStatus.text = caseDetails.data?.paymentStatus
-        val loanId = "Loan ID: ${caseDetails.data?.loanAccountNo.toString()}"
+        val loanId = "Loan ID : ${caseDetails.data?.loanAccountNo.toString()}"
         binding.txtCheckInLoanId.text = loanId
         if (caseDetails.data?.allocationDate != null) {
             binding.txtDate.text = caseDetails.data!!.allocationDate

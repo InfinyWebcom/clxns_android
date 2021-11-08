@@ -13,8 +13,7 @@ class CollectionsApp : Application() {
             Timber.plant(Timber.DebugTree())
         }
         /**
-         * Missing fosAssignedDate in StatusBottomSheet - FIXED
-         * Recovery Date wasn't showing in the History Screen - FIXED
+         * Added payment success animation using LOTTIE
          */
     }
 }
