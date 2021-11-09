@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/dp6"
-                android:contentDescription="@string/edit_button"
+                android:importantForAccessibility="no"
                 android:src="@drawable/ic_close_black_24dp"
                 app:tint="@color/text_black"
                 tools:ignore="RedundantDescriptionCheck" />

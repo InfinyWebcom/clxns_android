@@ -12,9 +12,5 @@ class CollectionsApp : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-        /**
-         * Added payment success animation using LOTTIE
-         * Disabled Plan Button in Cases & Detail screen if the total amount due is zero i.e Collected.
-         */
     }
 }

@@ -66,7 +66,7 @@
     <fragment
         android:id="@+id/navigation_account"
         android:name="com.clxns.app.ui.main.account.AccountFragment"
-        android:label="@string/Account"
+        android:label="@string/account"
         tools:layout="@layout/fragment_account" />
 
     <dialog

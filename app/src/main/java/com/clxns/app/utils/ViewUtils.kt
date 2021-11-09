@@ -55,6 +55,10 @@ fun Context.hideKeyboard(view : View) {
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
+/**
+ * This function is only triggered on long click of Call button from plan fragment to copy the number on the clipboard
+ * @param text -> Provided mobile number
+ */
 fun Context.copyToClipBoard(text : CharSequence) {
     val clipboard = ContextCompat.getSystemService(this, ClipboardManager::class.java)
     val clip = ClipData.newPlainText("label", text)
@@ -87,6 +91,12 @@ fun String.makeFirstLetterCapital() : String {
     return String(arr)
 }
 
+/**
+ * This functions converts server date to any format given
+ * @param newFormat -> Any desired format eg. "dd, MMM yyyy"
+ * @param isGMT -> This is only used for History Detail Activity due to server date being 5:30 Hr behind
+ * @return - Formatted date in string type
+ */
 fun String.convertServerDateToNormal(newFormat : String, isGMT:Boolean = false) : String? {
     var date = this
     var spf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
@@ -102,6 +112,10 @@ fun String.convertServerDateToNormal(newFormat : String, isGMT:Boolean = false) 
     return date
 }
 
+/**
+ * This performs loading an image using Glide
+ * @param url -> Image links such as bank, user profile, etc.
+ */
 fun ImageView.loadImage(url : String) {
     Glide.with(this).load(url)
         .error(R.drawable.ic_logo_x)
@@ -109,12 +123,23 @@ fun ImageView.loadImage(url : String) {
         .into(this)
 }
 
+/**
+ * This converts a integer value to indian currency by adding rupee symbol at
+ * the end of the result also keeping only value before the decimal point
+ * @return String i.e Value = 100 -> Result = "₹ 100"
+ */
 fun Int.convertToCurrency() : String {
     val amount = NumberFormat.getCurrencyInstance(Locale("en", "in"))
         .format(this)
     return amount.substringBefore('.')
 }
 
+/**
+ * This functions shows a dialog containing custom view that shows calculated amount.
+ * @param totalAmount -> Total due amount for the particular lead
+ * @param collected -> Total amount collected till now
+ * @return totalAmount - collected = Result
+ */
 fun View.showDialog(totalAmount : Int, collected : Int) {
     val dialog = MaterialAlertDialogBuilder(this.context)
     val c = DialogCollectableAmountBinding.inflate(LayoutInflater.from(this.context))
@@ -219,6 +244,7 @@ fun Context.createImageFile() : File? {
     )
 }
 
+
 fun getProgressDialog(context : Context, title : String, msg : String) : ProgressDialog{
     val pd = ProgressDialog(context)
     pd.setTitle(title)
@@ -228,6 +254,11 @@ fun getProgressDialog(context : Context, title : String, msg : String) : Progres
     return pd
 }
 
+/**
+ * Get calculated date by passing any number of days to this function
+ * @param days - Number of days to be subtracted from the current date
+ *  @return - Date in string format, i.e days = 7 & Current Date = 08-02-2021 then result = 01-02-2021
+ */
 fun getCalculatedDate(days : Int) : String {
     val calendar = Calendar.getInstance()
     val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -235,8 +266,12 @@ fun getCalculatedDate(days : Int) : String {
     return formatter.format(Date(calendar.timeInMillis))
 }
 
-//This ensure if the user has click a button multiple time to navigate to a different screen so it does
-//not throws illegal argument exception error saying cannot find specified navigation action
+/**
+ * This ensure if the user has clicked a button multiple times to navigate to a different screen without
+ * throwing illegal argument exception error saying cannot find specified navigation action.
+ * @param directions - Passing generated directions classes with or without arguments
+ * defined in the mobile_navigation.xml file.
+ */
 fun NavController.safeNavigate(directions: NavDirections){
     currentDestination?.getAction(directions.actionId)?.run {
         navigate(directions)

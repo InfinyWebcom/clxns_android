@@ -1,4 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Clxns</string>
+    <string name="title_home">Home</string>
+    <string name="title_my_plan">My Plan</string>
+    <string name="title_cases">Cases</string>
+    <string name="invalid_email">Invalid email address</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="forgot_password_txt_1">We will send you an <b>One Time Password</b> on this email address</string>
+    <string name="enter_email">Enter Email Id</string>
+    <string name="get_otp">Get OTP</string>
+    <string name="zero">0</string>
+    <string name="verify_proceed"><![CDATA[Verify & Proceed]]></string>
+    <string name="enter_otp">Enter OTP Here</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="enter_your_details">Enter your details</string>
+    <string name="forgot_password_question">Forgot Password?</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="change_password">Change Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="submit">Submit</string>
+    <string name="error_password_not_match">New password and confirm password does not match</string>
+    <string name="welcome_back">Welcome Back,</string>
+    <string name="my_statistics">My Statistics</string>
+    <string name="today">Today</string>
+    <string name="this_week">This week</string>
+    <string name="this_month">This Month</string>
+    <string name="cases_allocated">Cases Allocated</string>
+    <string name="visit_pending">Visit Pending</string>
+    <string name="follow_ups">Follow Ups</string>
+    <string name="actions_pending">Actions Pending</string>
+    <string name="amount_recovered">Amount Recovered</string>
+    <string name="total_due">Total Due</string>
+    <string name="total_pos">Total POS</string>
+    <string name="notifications">Notifications</string>
+    <string name="my_cases">My Cases</string>
+    <string name="filter">Filter</string>
+    <string name="search_hint_txt">Search by Loan Id/Name/Mobile/Pincode</string>
+    <string name="account">Account</string>
+    <string name="profile">Profile</string>
+    <string name="select_bank">Select Bank</string>
+    <string name="profile_subtitle">CLXNS Technologies Pvt. Ltd.</string>
+    <string name="logout">Logout</string>
+    <string name="status">Status</string>
+    <string name="sub_status">Sub Status</string>
+    <string name="from">From</string>
+    <string name="start_date">Start Date</string>
+    <string name="to">To</string>
+    <string name="end_date">End Date</string>
+    <string name="reset">Reset</string>
+    <string name="apply">Apply</string>
+    <string name="search_cases">Search Cases</string>
+    <string name="refresh">Refresh</string>
+    <string name="followup">Follow Up</string>
+    <string name="check_in">Check In</string>
+    <string name="checked_in">Checked In</string>
+    <string name="create_route">Create Route</string>
+    <string name="my_plans">My Plans</string>
+    <string name="cases_summary">Cases Summary</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="TotalCases">Total Cases</string>
+    <string name="bank_name">Bank Name</string>
+    <string name="due_date">Due Date</string>
+    <string name="address">Address</string>
+    <string name="Check_In">Check-IN</string>
+    <string name="AddNewMobile">Add New Mobile</string>
+    <string name="AddNewAddress">Add New Address</string>
+    <string name="loan_amount">Loan Amount</string>
+    <string name="total_due_amount">Total Due Amount</string>
+    <string name="emi_amount">EMI Amount</string>
+    <string name="DPDs">DPDs</string>
+    <string name="principal_outstanding_amount">Principal Outstanding Amount</string>
+    <string name="pin_code">Pincode</string>
+    <string name="type_new_address">Type new Address</string>
+    <string name="location_verified">Location Check In</string>
+    <string name="online">Online</string>
+    <string name="cheque">Cheque</string>
+    <string name="cash">Cash</string>
+    <string name="call">call</string>
+    <string name="generate_receipt_txt">Generate Receipt</string>
+    <string name="financial_institution">Financial institution</string>
+    <string name="enter_new_mobile_number">Enter new mobile number</string>
+    <string name="less_than_50"><![CDATA[50% <]]></string>
+    <string name="greater_than_80"><![CDATA[80% >]]></string>
+    <string name="interest_due_amount">Interest Due Amount</string>
+    <string name="late_fee_penal_charges">Late Fee/Penal Charges</string>
+    <string name="we_will_send_you_an_one_time_password_on_this_mobile_number">We will send you an <b>One Time Password</b> on this email</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="manager_contact_none">Manager Contact : None</string>
+    <string name="reporting_manager_none">Reporting Manager : None</string>
+    <string name="blood_group_none">Blood Group : None</string>
+    <string name="employee_code_0">Employee Code : 0</string>
+    <string name="please_wait">Please wait…</string>
+    <string name="summary">Summary</string>
+    <string name="ptp">Promise to Pay</string>
+    <string name="rtp">RTP</string>
+    <string name="broken_ptp">Broken PTP</string>
+    <string name="dispute">Dispute</string>
+    <string name="customer_not_found">Customer Not Found</string>
+    <string name="call_back">Call Back</string>
+    <string name="partially_collect">Partially Collected</string>
+    <string name="settlement_foreclosure">Settlement/Foreclosure</string>
+    <string name="customer_deceased">Customer Deceased</string>
+    <string name="cases_toolbar_txt">Cases :&#160;</string>
+    <string name="cases_collectable_txt">Collectable :&#160;</string>
+    <string name="plan">+ Plan</string>
+    <string name="un_plan">UnPlan</string>
+    <string name="dash">-</string>
+    <string name="loan_id">Loan ID</string>
+    <string name="payment_status">Payment Status</string>
+    <string name="show_more">Show more</string>
+    <string name="show_less">Show less</string>
+    <string name="history">History</string>
+    <string name="contact_no">Contact No.</string>
+    <string name="pan_card">PAN Card</string>
+    <string name="dob">DOB</string>
+    <string name="cibil_score">Cibil Score</string>
+    <string name="business_name">Business Name</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="alternate_address">Alternate Address</string>
+    <string name="alternate_mobile">Alternate Mobile</string>
+    <string name="payment_collection">Payment Collection</string>
+    <string name="retry">Retry</string>
+    <string name="something_went_wrong">Something went wrong.</string>
+    <string name="no_data">There\'s no data available currently.</string>
+    <string name="empty_password">Password cannot be empty</string>
+    <string name="password_with_space">Password should not contain spaces.</string>
+    <string name="collected">Collected</string>
+    <string name="due_amount">Due amount :&#160;</string>
+    <string name="loan_type">Loan Type</string>
+    <string name="arrow_forward">&#160;➜&#160;</string>
+    <string name="additional_details">Additional Details</string>
+    <string name="image_upload">Image Upload</string>
+    <string name="upload">Upload</string>
+    <string name="collectable_amount">Collectable Amount</string>
+    <string name="amount_type">Amount Type</string>
+    <string name="amount">Amount</string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="payment_mode">Payment Mode</string>
+    <string name="payment_recovery_date">Payment/Recovery Date</string>
+    <string name="reference_no">Reference No.</string>
+    <string name="remarks">Remarks</string>
+    <string name="upload_supporting">Upload Supporting</string>
+    <string name="plan_list_is_empty">Plan list is empty</string>
+    <string name="probability">Probability</string>
+    <string name="between_50_80">50% - 80%</string>
+    <string name="reference_cheque_no">Reference/Cheque No.</string>
+    <string name="revisit_date">Revisit Date</string>
+    <string name="set_revisit_date">Set revisit date</string>
+    <string name="revisit_time">Revisit Time</string>
+    <string name="set_revisit_time">Set revisit time</string>
+    <string name="type_here">Type here…</string>
+    <string name="assign_to_tracer">Assign To Tracer</string>
+    <string name="done">Done</string>
+    <string name="collected_amount">Collected Amount</string>
+    <string name="cheque_number">Cheque No.</string>
+    <string name="back_to_my_plan">back to my plan</string>
+    <string name="future">Future</string>
+    <string name="alpha_numeric_chars">ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</string>
+    <string name="partial_amount">Partial Amount</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="clear">Clear</string>
+    <string name="forgot_password_txt_2">Didn\'t receive the OTP?&#160;</string>
+    <string name="resent_otp">RESENT OTP</string>
+    <string name="map">Map</string>
+
+    <string-array name="amount_type">
+        <item>Select an Option</item>
+        <item>Total Due Amount</item>
+        <item>Principal Outstanding Amount (POS)</item>
+        <item>Settlement Amount (if different from POS)</item>
+    </string-array>
+
+    <string-array name="ptp_amount_type">
+        <item>Select an Option</item>
+        <item>Total Due Amount</item>
+        <item>Principal Outstanding Amount (POS)</item>
+    </string-array>
+
+    <string-array name="ptp_sub_dispositions">
+        <item>Select</item>
+        <item>Active PTP</item>
+        <item>Future PTP</item>
+    </string-array>
+
+    <string-array name="customer_not_found_sub_dispositions">
+        <item>Select</item>
+        <item>House Locked</item>
+        <item>Address Not Found</item>
+        <item>Not Available but Resides here</item>
+        <item>Residence Shifted</item>
+        <item>Left Message with Family Members</item>
+    </string-array>
+
+    <string-array name="dispute_sub_dispositions">
+        <item>Select</item>
+        <item>Already Paid</item>
+        <item>Amount Dispute</item>
+        <item>Fraud/Cheating</item>
+        <item>Others</item>
+    </string-array>
 
 </resources>

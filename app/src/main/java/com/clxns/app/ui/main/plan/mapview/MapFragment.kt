@@ -5,14 +5,18 @@ import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.app.ProgressDialog
+import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -112,10 +116,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }
         }
 
-        binding.changeMapTypeBtn.setOnClickListener {
-            mGoogleMap.mapType = GoogleMap.MAP_TYPE_HYBRID
-        }
-
     }
 
     private fun initViewModel() {
@@ -124,7 +124,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 is NetworkResult.Success -> {
                     mGoogleMap.clear()
                     if (::myLocationLatLng.isInitialized) {
-                        showMarker(myLocationLatLng, userName, "This is my location")
+                        showMarker(myLocationLatLng, userName, "MY LOCATION")
                     }
                     if (!response.data?.error!!) {
                         val planList = response.data.data
@@ -194,17 +194,15 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     Timber.i(
                         location.latitude.toString() + " : " + location.longitude
                     )
-                    progressDialog.dismiss()
-
                     myLocationLatLng = LatLng(location.latitude, location.longitude)
                     initViewModel()
                     gotoLocation(myLocationLatLng.latitude, myLocationLatLng.longitude)
-                    showMarker(myLocationLatLng, userName, "This is my location")
+                    showMarker(myLocationLatLng, userName, "MY LOCATION")
 
                 } else {
                     Timber.i("Location returned was null")
                 }
-
+                progressDialog.dismiss()
                 //Removing callback after getting the current location coz we don't wanna keep requesting the location
                 mLocationClient.removeLocationUpdates(mLocationCallback)
             }
@@ -308,9 +306,41 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     openLocationToggleDialog()
                 }
             } else {
-                showPermissionRequiredPopUp()
+                var isSelectedNeverAskAgain : Boolean = false
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    isSelectedNeverAskAgain =
+                        shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
+                }
+                if (isSelectedNeverAskAgain) {
+                    //User has selected the denied option
+                    showPermissionRequiredPopUp(
+                        "Please provide location permission as it is mandatory to continue",
+                        false
+                    )
+                } else {
+                    //User has selected the denied & never ask again option
+                    showPermissionRequiredPopUp(
+                        "You've chosen never ask again for this permission.Please provide location permission from this app's permission settings.",
+                        true
+                    )
+                }
             }
         }
+
+    private val forceRequestPermissionCallBack =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (checkLocationPermission()) {
+                mLocationPermissionGranted = true
+                if (isGPSEnabled()) {
+                    getLocationUpdates()
+                } else {
+                    openLocationToggleDialog()
+                }
+            } else {
+                binding.root.snackBar("Please provide location permission to continue.")
+            }
+        }
+
 
     private fun isServicesOk() : Boolean {
         val googleApi = GoogleApiAvailability.getInstance()
@@ -396,17 +426,24 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
 
-    private fun showPermissionRequiredPopUp() {
+    private fun showPermissionRequiredPopUp(message : String, goToSettings : Boolean) {
         val dialog = MaterialAlertDialogBuilder(requireContext())
         dialog.apply {
             setTitle("Location Permission Required")
-            setMessage("Please provide location permission as it is mandatory for the map to work properly")
+            setMessage(message)
             setCancelable(false)
             create()
             setPositiveButton(
                 "Set Permission"
             ) { d, _ ->
-                requestLocationPermission()
+                if (goToSettings) {
+                    val intentToSetting = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    intentToSetting.data =
+                        Uri.fromParts("package", requireActivity().packageName, null)
+                    forceRequestPermissionCallBack.launch(intentToSetting)
+                } else {
+                    requestLocationPermission()
+                }
                 d.dismiss()
             }
         }

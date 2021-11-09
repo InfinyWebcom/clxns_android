@@ -13,6 +13,7 @@ import android.location.LocationManager
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
+import android.provider.Settings
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -215,7 +216,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 val location : Location? = result.lastLocation
                 if (location != null) {
                     viewModel.setLocation(location.latitude, location.longitude)
-                    progressDialog.dismiss()
                     updateLocationCheckInUI(
                         R.drawable.ic_verified_24,
                         R.color.green,
@@ -228,6 +228,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                         getString(R.string.check_in)
                     )
                 }
+                progressDialog.dismiss()
                 mLocationClient.removeLocationUpdates(mLocationCallback)
             }
         }
@@ -294,20 +295,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
     }
 
-    private val permissionCallback =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it) {
-                mLocationPermissionGranted = true
-                if (isGPSEnabled()) {
-                    getLocationUpdates()
-                } else {
-                    openLocationToggleDialog()
-                }
-            } else {
-                showPermissionRequiredPopUp()
-            }
-        }
-
     @SuppressLint("MissingPermission")
     private fun getLocationUpdates() {
         if (ContextCompat.checkSelfPermission(
@@ -367,6 +354,37 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         }
     }
 
+    private val permissionCallback =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                mLocationPermissionGranted = true
+                if (isGPSEnabled()) {
+                    getLocationUpdates()
+                } else {
+                    openLocationToggleDialog()
+                }
+            } else {
+                var isSelectedNeverAskAgain : Boolean = false
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    isSelectedNeverAskAgain =
+                        shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)
+                }
+                if (isSelectedNeverAskAgain) {
+                    //User has selected the denied option
+                    showPermissionRequiredPopUp(
+                        "Please provide location permission as it is mandatory to continue",
+                        false
+                    )
+                } else {
+                    //User has selected the denied & never ask again option
+                    showPermissionRequiredPopUp(
+                        "You've chosen never ask again for this permission.Please provide location permission from this app's permission settings.",
+                        true
+                    )
+                }
+            }
+        }
+
     private val locationSettingCallback =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
             if (it.resultCode == RESULT_OK) {
@@ -376,16 +394,36 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             }
         }
 
-    private fun showPermissionRequiredPopUp() {
+    private val forceRequestPermissionCallBack =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (checkLocationPermission()) {
+                mLocationPermissionGranted = true
+                if (isGPSEnabled()) {
+                    getLocationUpdates()
+                } else {
+                    openLocationToggleDialog()
+                }
+            } else {
+                binding.root.snackBar("Please provide location permission to continue.")
+            }
+        }
+
+    private fun showPermissionRequiredPopUp(message : String, goToSettings : Boolean) {
         val dialog = MaterialAlertDialogBuilder(this)
         dialog.apply {
             setTitle("Location Permission Required")
-            setMessage("Please provide location permission as it is mandatory to continue")
+            setMessage(message)
             create()
             setPositiveButton(
                 "Set Permission"
             ) { d, _ ->
-                requestLocationPermission()
+                if (goToSettings) {
+                    val intentToSetting = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    intentToSetting.data = Uri.fromParts("package", packageName, null)
+                    forceRequestPermissionCallBack.launch(intentToSetting)
+                } else {
+                    requestLocationPermission()
+                }
                 d.dismiss()
             }
         }

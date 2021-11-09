@@ -148,7 +148,7 @@
         <entry key="app/src/main/res/layout/activity_crop_image.xml" value="0.144921875" />
         <entry key="app/src/main/res/layout/activity_details.xml" value="0.16" />
         <entry key="app/src/main/res/layout/activity_forgot_password.xml" value="0.16" />
-        <entry key="app/src/main/res/layout/activity_history_details.xml" value="0.15" />
+        <entry key="app/src/main/res/layout/activity_history_details.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.16" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17083333333333334" />
         <entry key="app/src/main/res/layout/activity_maps.xml" value="0.12777777777777777" />

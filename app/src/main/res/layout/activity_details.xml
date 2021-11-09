@@ -87,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp12"
                         android:layout_toStartOf="@id/detailsPlanBtn"
-                        android:text="@string/Status"
+                        android:text="@string/status"
                         android:textColor="@color/text_black"
                         android:textSize="12sp" />
 
@@ -165,7 +165,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp12"
-                        android:text="@string/BankName"
+                        android:text="@string/bank_name"
                         android:textColor="@color/text_black"
                         android:textSize="12sp" />
 
@@ -265,7 +265,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp12"
-                        android:text="@string/LoanAmount"
+                        android:text="@string/loan_amount"
                         android:textColor="@color/text_black"
                         android:textSize="12sp" />
 
@@ -335,7 +335,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp12"
-                        android:text="@string/EmiAmount"
+                        android:text="@string/emi_amount"
                         android:textColor="@color/text_black"
                         android:textSize="12sp" />
 
@@ -467,7 +467,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp12"
-                        android:text="@string/DueDate"
+                        android:text="@string/due_date"
                         android:textColor="@color/text_black"
                         android:textSize="12sp" />
 
@@ -890,7 +890,7 @@
                         android:id="@+id/txtAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/Address"
+                        android:text="@string/address"
                         android:textColor="@color/text_black"
                         android:textSize="12sp" />
 

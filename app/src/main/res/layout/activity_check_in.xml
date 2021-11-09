@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toStartOf="@id/txtLocationCheckIn"
                     android:drawablePadding="@dimen/dp8"
-                    android:text="@string/LocationVerified"
+                    android:text="@string/location_verified"
                     android:textAllCaps="false"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/sp16"

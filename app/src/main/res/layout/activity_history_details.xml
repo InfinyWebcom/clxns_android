@@ -31,6 +31,7 @@
             android:id="@+id/history_toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp4"
             android:layout_toStartOf="@id/due_amount_card"
             android:layout_toEndOf="@id/imgBack"
             android:ellipsize="end"
@@ -38,7 +39,6 @@
             android:maxLines="1"
             android:paddingTop="@dimen/dp16"
             android:paddingBottom="@dimen/dp16"
-            android:layout_marginEnd="@dimen/dp4"
             android:text="@string/history"
             android:textAllCaps="true"
             android:textColor="@color/white"
@@ -66,39 +66,11 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/user_details_lin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/history_custom_toolbar"
-        android:layout_marginStart="@dimen/dp16"
-        android:layout_marginTop="@dimen/dp8"
-        android:layout_marginEnd="@dimen/dp16"
-        android:visibility="gone"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name"
-            android:textColor="@color/text_black"
-            android:textSize="@dimen/sp16"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dash"
-            android:textSize="@dimen/sp18"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_details_track"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/user_details_lin"
+        android:layout_below="@+id/history_custom_toolbar"
         android:paddingStart="@dimen/dp8"
         android:paddingTop="@dimen/dp16"
         android:paddingEnd="@dimen/dp8"
