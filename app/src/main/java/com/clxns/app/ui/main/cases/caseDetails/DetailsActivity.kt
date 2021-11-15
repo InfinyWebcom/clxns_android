@@ -142,6 +142,7 @@ class DetailsActivity : AppCompatActivity() {
         }
 
         binding.detailsPlanBtn.setOnClickListener {
+            it.preventDoubleClick(800)
             if (isPlanned) {
                 showConfirmUnPlanDialog(loanAccountNo, name)
             } else {
@@ -154,6 +155,7 @@ class DetailsActivity : AppCompatActivity() {
         }
 
         binding.caseDetailCallBtn.setOnClickListener {
+            it.preventDoubleClick()
             val dialIntent = Intent(Intent.ACTION_DIAL)
             if (mobileNo != null) {
                 dialIntent.data = Uri.parse("tel:${mobileNo}")

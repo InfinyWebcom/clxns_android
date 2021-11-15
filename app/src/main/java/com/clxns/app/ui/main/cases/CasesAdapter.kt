@@ -76,8 +76,8 @@ class CasesAdapter(
                 contactBinding.casesPlanBtn.isEnabled = false
             }
             contactBinding.casesPlanBtn.setOnClickListener {
+                it.preventDoubleClick(800)
                 onCaseItemClickListener.onPlanClick(isPlanned, casesData)
-
             }
             contactBinding.casesCardView.setOnClickListener {
                 onCaseItemClickListener.openDetailActivity(

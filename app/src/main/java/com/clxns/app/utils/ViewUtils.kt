@@ -44,6 +44,10 @@ fun View.hide() {
     visibility = View.GONE
 }
 
+fun View.preventDoubleClick(delayTime:Long = 1000){
+    this.apply { isEnabled = false }.postDelayed({isEnabled = true}, delayTime)
+}
+
 fun TextInputEditText.removeFocus() {
     if (this.hasFocus()) {
         this.clearFocus()
@@ -57,7 +61,7 @@ fun Context.hideKeyboard(view : View) {
 
 /**
  * This function is only triggered on long click of Call button from plan fragment to copy the number on the clipboard
- * @param text -> Provided mobile number
+ * @param text Provided mobile number
  */
 fun Context.copyToClipBoard(text : CharSequence) {
     val clipboard = ContextCompat.getSystemService(this, ClipboardManager::class.java)
@@ -77,7 +81,6 @@ fun String.isValidEmail() =
     !TextUtils.isEmpty(this) && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
 fun String.makeFirstLetterCapital() : String {
-    // stores each characters to a char array
     var foundSpace = true
     val arr = this.toCharArray()
     for (i in arr.indices) {
@@ -95,7 +98,7 @@ fun String.makeFirstLetterCapital() : String {
  * This functions converts server date to any format given
  * @param newFormat -> Any desired format eg. "dd, MMM yyyy"
  * @param isGMT -> This is only used for History Detail Activity due to server date being 5:30 Hr behind
- * @return - Formatted date in string type
+ * @return Formatted date in string type
  */
 fun String.convertServerDateToNormal(newFormat : String, isGMT:Boolean = false) : String? {
     var date = this
@@ -113,8 +116,8 @@ fun String.convertServerDateToNormal(newFormat : String, isGMT:Boolean = false) 
 }
 
 /**
- * This performs loading an image using Glide
- * @param url -> Image links such as bank, user profile, etc.
+ * This performs loading an image from the given URL using Glide
+ * @param url Image links such as bank, user profile, etc.
  */
 fun ImageView.loadImage(url : String) {
     Glide.with(this).load(url)
@@ -124,9 +127,9 @@ fun ImageView.loadImage(url : String) {
 }
 
 /**
- * This converts a integer value to indian currency by adding rupee symbol at
+ * This function converts an integer value to an indian currency by adding rupee symbol at
  * the end of the result also keeping only value before the decimal point
- * @return String i.e Value = 100 -> Result = "₹ 100"
+ * @return String i.e Value = 100 -> Result = "₹ 100.0000" -> finalResult = "₹ 100"
  */
 fun Int.convertToCurrency() : String {
     val amount = NumberFormat.getCurrencyInstance(Locale("en", "in"))
@@ -136,8 +139,8 @@ fun Int.convertToCurrency() : String {
 
 /**
  * This functions shows a dialog containing custom view that shows calculated amount.
- * @param totalAmount -> Total due amount for the particular lead
- * @param collected -> Total amount collected till now
+ * @param totalAmount Total due amount for the particular lead
+ * @param collected Total amount collected till now
  * @return totalAmount - collected = Result
  */
 fun View.showDialog(totalAmount : Int, collected : Int) {
@@ -152,7 +155,10 @@ fun View.showDialog(totalAmount : Int, collected : Int) {
     c.txtCollectable.text = collected.convertToCurrency()
     c.txtResult.text = (totalAmount.minus(collected)).convertToCurrency()
 }
-
+/**
+ * Converts server date to long format that'll be used to set the max date for the date picker
+ * @return Date in long datatype
+ */
 fun String.getDateInLongFormat() : Long {
     val spf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
     spf.timeZone = TimeZone.getDefault()
@@ -256,8 +262,8 @@ fun getProgressDialog(context : Context, title : String, msg : String) : Progres
 
 /**
  * Get calculated date by passing any number of days to this function
- * @param days - Number of days to be subtracted from the current date
- *  @return - Date in string format, i.e days = 7 & Current Date = 08-02-2021 then result = 01-02-2021
+ * @param days Number of days to be subtracted from the current date
+ *  @return Date in string format, i.e days = 7 & Current Date = 08-02-2021 then result = 01-02-2021
  */
 fun getCalculatedDate(days : Int) : String {
     val calendar = Calendar.getInstance()
@@ -269,7 +275,7 @@ fun getCalculatedDate(days : Int) : String {
 /**
  * This ensure if the user has clicked a button multiple times to navigate to a different screen without
  * throwing illegal argument exception error saying cannot find specified navigation action.
- * @param directions - Passing generated directions classes with or without arguments
+ * @param directions Passing generated directions classes with or without arguments
  * defined in the mobile_navigation.xml file.
  */
 fun NavController.safeNavigate(directions: NavDirections){

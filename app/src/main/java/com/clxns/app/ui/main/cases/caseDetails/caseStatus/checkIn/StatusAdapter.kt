@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.clxns.app.data.model.StatusModel
 import com.clxns.app.databinding.StatusItemsBinding
+import com.clxns.app.utils.preventDoubleClick
 
 
 class StatusAdapter(
@@ -33,6 +34,7 @@ class StatusAdapter(
     override fun onBindViewHolder(holder: StatusVH, position: Int) {
         val statusDetails = statusList[position]
         holder.itemsBinding.statusCard.setOnClickListener {
+            it.preventDoubleClick()
             when {
                 holder.itemsBinding.statusTxt.text.equals("Add Mobile") -> {
                     onStatusListener.openAddDetailsBottomSheet(true)

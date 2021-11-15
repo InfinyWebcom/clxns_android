@@ -969,10 +969,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                 IS_PARTIALLY_COLLECT = true
                 viewModel.getDispositionIdFromRoomDB("Partially Collected")
             }
-            else -> {
-                viewModel.getDispositionIdFromRoomDB(dispositionType)
-            }
-
         }
     }
 

@@ -57,6 +57,7 @@ class AccountFragment : Fragment() {
 
     private fun setListeners() {
         binding.profileMoreOptionBtn.setOnClickListener {
+            it.preventDoubleClick(500)
             onMenuClick(it)
         }
     }

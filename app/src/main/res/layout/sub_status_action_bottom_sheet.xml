@@ -79,9 +79,9 @@
                 android:textStyle="bold" />
 
             <RelativeLayout
+                android:id="@+id/statusSpinnerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/statusSpinnerLayout"
                 android:layout_marginTop="@dimen/dp6"
                 android:background="@drawable/background_spinner">
 
@@ -92,7 +92,7 @@
                     android:elevation="@dimen/dp4"
                     android:overlapAnchor="false"
                     android:paddingVertical="@dimen/dp10"
-                    android:spinnerMode="dialog"
+                    android:spinnerMode="dropdown"
                     android:theme="@style/spinnerTheme"
                     tools:ignore="SpeakableTextPresentCheck" />
             </RelativeLayout>
@@ -103,15 +103,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp10"
                 android:background="@drawable/background_spinner"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/dp8">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp10"
-                    android:baselineAligned="false"
-                    android:weightSum="2">
+                    android:baselineAligned="false">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -123,7 +122,7 @@
                             android:id="@+id/txtAmount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp10"
+                            android:layout_marginStart="@dimen/dp4"
                             android:text="@string/amount_type"
                             android:textAllCaps="false"
                             android:textColor="@color/text_black"
@@ -133,18 +132,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp4"
-                            android:layout_marginEnd="@dimen/dp30"
+                            android:layout_marginEnd="@dimen/dp8"
                             android:background="@drawable/background_edittext_round">
 
                             <androidx.appcompat.widget.AppCompatSpinner
                                 android:id="@+id/spAmount"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/dp30"
-                                android:elevation="@dimen/dp3"
-                                android:overlapAnchor="false"
                                 android:padding="@dimen/dp4"
-                                android:spinnerMode="dialog"
-                                android:textSize="@dimen/sp10"
+                                android:spinnerMode="dropdown"
                                 android:theme="@style/spinnerTheme"
                                 tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
                         </RelativeLayout>
@@ -161,7 +157,7 @@
                             android:id="@+id/amount_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp10"
+                            android:layout_marginStart="@dimen/dp10"
                             android:labelFor="@id/payment_amount_et"
                             android:text="@string/collectable_amount"
                             android:textAllCaps="false"
@@ -173,15 +169,19 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp30"
                             android:layout_marginTop="@dimen/dp4"
-                            android:layout_marginEnd="@dimen/dp30"
+                            android:layout_marginStart="@dimen/dp8"
                             android:background="@drawable/background_edittext_round"
+                            android:hint="@string/enter_amount"
                             android:importantForAutofill="no"
                             android:inputType="number"
                             android:maxLength="9"
-                            android:padding="@dimen/dp4"
+                            android:paddingStart="@dimen/dp8"
+                            android:paddingTop="@dimen/dp4"
+                            android:paddingEnd="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp4"
                             android:textSize="@dimen/sp12"
                             android:visibility="visible"
-                            tools:ignore="TouchTargetSizeCheck,DuplicateSpeakableTextCheck" />
+                            tools:ignore="DuplicateSpeakableTextCheck,LabelFor,TouchTargetSizeCheck" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -190,8 +190,8 @@
                     android:id="@+id/txtPaymentMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp10"
-                    android:layout_marginTop="@dimen/dp16"
+                    android:layout_marginStart="@dimen/dp4"
+                    android:layout_marginTop="@dimen/dp12"
                     android:text="@string/payment_mode"
                     android:textAllCaps="false"
                     android:textColor="@color/text_black"
@@ -201,7 +201,6 @@
                     android:id="@+id/rgPayment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp10"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -237,9 +236,8 @@
                     android:id="@+id/ll_payment_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp10"
-                    android:baselineAligned="false"
-                    android:weightSum="2">
+                    android:layout_marginTop="@dimen/dp6"
+                    android:baselineAligned="false">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -251,7 +249,7 @@
                             android:id="@+id/txtPaymentOrRecoveryDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp16"
+                            android:layout_marginStart="@dimen/dp4"
                             android:text="@string/payment_recovery_date"
                             android:textAllCaps="false"
                             android:textColor="@color/text_black"
@@ -262,12 +260,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp30"
                             android:layout_marginTop="@dimen/dp4"
-                            android:layout_marginEnd="@dimen/dp30"
+                            android:layout_marginEnd="@dimen/dp8"
                             android:background="@drawable/background_edittext_round"
                             android:gravity="center_vertical"
-                            android:padding="@dimen/dp3"
-                            android:paddingHorizontal="@dimen/dp8"
-                            android:paddingVertical="@dimen/dp10"
+                            android:hint="@string/select_date"
+                            android:paddingStart="@dimen/dp8"
+                            android:paddingTop="@dimen/dp4"
+                            android:paddingEnd="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp4"
                             android:textColor="@color/text_black"
                             android:textSize="@dimen/sp12"
                             android:textStyle="bold" />
@@ -283,7 +283,7 @@
                             android:id="@+id/txtReferenceNo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dp16"
+                            android:layout_marginStart="@dimen/dp10"
                             android:text="@string/reference_cheque_no"
                             android:textAllCaps="false"
                             android:textColor="@color/text_black"
@@ -295,24 +295,24 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp30"
                             android:layout_marginTop="@dimen/dp4"
-                            android:layout_marginEnd="@dimen/dp30"
+                            android:layout_marginStart="@dimen/dp8"
                             android:background="@drawable/background_edittext_round"
+                            android:digits="@string/alpha_numeric_chars"
+                            android:hint="@string/type_here"
                             android:importantForAutofill="no"
                             android:inputType="textCapCharacters"
                             android:maxLength="25"
-                            android:digits="@string/alpha_numeric_chars"
-                            android:padding="@dimen/dp3"
+                            android:paddingStart="@dimen/dp8"
+                            android:paddingTop="@dimen/dp4"
+                            android:paddingEnd="@dimen/dp4"
+                            android:paddingBottom="@dimen/dp4"
                             android:textSize="@dimen/sp12"
                             android:visibility="visible"
                             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
                     </LinearLayout>
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp10" />
             </LinearLayout>
-
 
             <TextView
                 android:id="@+id/revisitDateLabel"
