@@ -69,7 +69,13 @@ class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
                 false
             )
         ) {
-            getPlanList()
+            val filterAPIDate = "${planViewModel.mYear}-${
+                String.format(
+                    "%02d",
+                    planViewModel.mMonth + 1
+                )
+            }-${String.format("%02d", planViewModel.mDay)}"
+            getPlanList(filterAPIDate)
             requireActivity().intent = null
         }
     }
@@ -91,8 +97,8 @@ class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
         }
     }
 
-    private fun getPlanList() {
-        planViewModel.getMyPlanList(token, planViewModel.currentDate)
+    private fun getPlanList(date : String = planViewModel.currentDate) {
+        planViewModel.getMyPlanList(token, date)
     }
 
     private fun subscribeObserver() {
@@ -151,7 +157,7 @@ class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
                             planViewModel.mMonth + 1
                         )
                     }-${String.format("%02d", planViewModel.mDay)}"
-                    planViewModel.getMyPlanList(token, filterAPIDate)
+                    getPlanList(filterAPIDate)
                 }
             }
         }

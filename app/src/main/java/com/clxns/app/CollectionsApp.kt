@@ -12,9 +12,7 @@ class CollectionsApp : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
             /**
-             * On Collect & Partial Collect if we tap more than one time it opens payment activity but also gets checked in with the Collected Disposition - FIXED
-             * Wrote a function to handle the fast double tap for Button or Clickable elements
-             * UI Clean up & Documentation
+             * Plan list was refreshing after successful payment to current date only even if the selected date was different - FIXED
              */
         }
     }
