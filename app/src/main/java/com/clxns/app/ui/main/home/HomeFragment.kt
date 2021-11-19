@@ -9,6 +9,7 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.clxns.app.BuildConfig
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.home.ActionsData
@@ -48,6 +49,9 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
     private var fromDate : String = ""
     private var toDate : String = ""
 
+    @Inject
+    lateinit var BASE_URL : String
+
     override fun onCreateView(
         inflater : LayoutInflater,
         container : ViewGroup?,
@@ -60,6 +64,13 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
 
     override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //Temporary will be removed
+        when(BASE_URL){
+            BuildConfig.BASE_DEMO_URL -> {binding.apkTypeTxt.text = "DEMO"}
+            BuildConfig.BASE_STAGING_URL -> {binding.apkTypeTxt.text = "STAGING"}
+            BuildConfig.BASE_DEV_URL -> {binding.apkTypeTxt.text = "DEV"}
+        }
 
         getHomeStatistics()
 
@@ -198,7 +209,7 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                 statsData = weekData.stats!!
                 summaryData = weekData.summaryData!!
 
-                fromDate = getCalculatedDate(-7)
+                fromDate = getCalculatedDate(-6)
                 toDate = getCalculatedDate(0)
                 Timber.i(fromDate)
                 Timber.i(toDate)
@@ -210,7 +221,7 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                 summaryData = monthData.summaryData!!
 
                 //
-                fromDate = getCalculatedDate(-31)
+                fromDate = getCalculatedDate(-30)
                 toDate = getCalculatedDate(0)
                 Timber.i(fromDate)
                 Timber.i(toDate)

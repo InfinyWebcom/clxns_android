@@ -42,6 +42,26 @@
             android:textStyle="bold"
             tools:ignore="TextContrastCheck" />
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/apkTypeCard"
+            app:cardCornerRadius="@dimen/dp18"
+            app:cardBackgroundColor="@color/colorPrimaryVariant"
+            android:layout_alignTop="@+id/tv_welcome"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp4">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/apkTypeTxt"
+                android:textColor="@color/white"
+                android:paddingHorizontal="@dimen/dp12"
+                android:paddingVertical="@dimen/dp8"
+                android:textSize="@dimen/sp14"/>
+        </com.google.android.material.card.MaterialCardView>
+
         <ImageView
             android:id="@+id/notification_btn"
             android:layout_width="wrap_content"

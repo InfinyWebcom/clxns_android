@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/statusCard"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     app:cardBackgroundColor="@color/quantum_grey50"
-    app:cardElevation="2dp"
     app:cardCornerRadius="@dimen/dp4"
-    android:id="@+id/statusCard"
+    app:cardElevation="2dp"
     app:rippleColor="@color/colorPrimary">
+
     <TextView
+        android:id="@+id/statusTxt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/statusTxt"
+        android:layout_gravity="center"
         android:drawablePadding="@dimen/dp8"
         android:fontFamily="@font/gt_pro_medium"
-        tools:text="@string/collected"
-        android:textAlignment="center"
-        android:layout_gravity="center"
-        android:paddingTop="24dp"
-        android:paddingBottom="24dp"
         android:paddingStart="@dimen/dp12"
+        android:paddingTop="24dp"
         android:paddingEnd="@dimen/dp12"
+        android:paddingBottom="24dp"
+        android:textAlignment="center"
         android:textColor="@color/text_black"
         android:textSize="14sp"
         app:drawableTint="@color/colorPrimary"
-        app:drawableTopCompat="@drawable/ic_lock_24" />
+        app:drawableTopCompat="@drawable/ic_lock_24"
+        tools:text="@string/collected" />
 
 </com.google.android.material.card.MaterialCardView>

@@ -31,13 +31,13 @@
             android:layout_toStartOf="@id/case_detail_call_btn"
             android:layout_toEndOf="@id/case_detail_back_btn"
             android:ellipsize="end"
+            android:fontFamily="@font/gt_pro_bold"
             android:maxLines="1"
             android:paddingTop="@dimen/dp16"
             android:paddingBottom="@dimen/dp16"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp18"
-            android:fontFamily="@font/gt_pro_bold" />
+            android:textSize="@dimen/sp18" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/case_detail_call_btn"

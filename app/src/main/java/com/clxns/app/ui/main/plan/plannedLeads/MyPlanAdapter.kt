@@ -14,6 +14,7 @@ import com.clxns.app.databinding.PlanListItemsBinding
 import com.clxns.app.utils.convertToCurrency
 import com.clxns.app.utils.copyToClipBoard
 import com.clxns.app.utils.makeFirstLetterCapital
+import com.clxns.app.utils.preventDoubleClick
 
 class MyPlanAdapter(
     private val context: Context,
@@ -78,6 +79,7 @@ class MyPlanAdapter(
             false
         }
         holder.contactItemBinding.planCallBtn.setOnClickListener {
+            it.preventDoubleClick()
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:${details?.lead?.phone}")
             context.startActivity(intent)

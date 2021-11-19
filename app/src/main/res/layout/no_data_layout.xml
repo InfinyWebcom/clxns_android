@@ -20,6 +20,7 @@
         android:layout_below="@id/no_data_img"
         android:layout_centerHorizontal="true"
         android:text="@string/something_went_wrong"
+        android:textAlignment="center"
         android:textSize="@dimen/sp18" />
 
     <com.google.android.material.button.MaterialButton

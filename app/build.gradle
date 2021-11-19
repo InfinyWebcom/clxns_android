@@ -22,6 +22,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField 'String', 'BASE_DEV_URL', '"https://clxns.infiny.dev/"'
         buildConfigField 'String', 'BASE_STAGING_URL', '"https://staging.clxns.in/"'
+        buildConfigField 'String', 'BASE_DEMO_URL', '"https://demo.clxns.in/"'
     }
 
     buildTypes {
@@ -107,13 +108,13 @@ dependencies {
     //Google Places
     implementation 'com.google.android.libraries.places:places:2.5.0'
 
-    //paging 3
-    def paging_version = "3.0.1"
-    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
-    testImplementation "androidx.paging:paging-common-ktx:$paging_version"
-    implementation "androidx.paging:paging-guava:$paging_version"
-    // optional - Jetpack Compose integration
-//    implementation "androidx.paging:paging-compose:1.0.0-alpha12"
+//    //paging 3
+//    def paging_version = "3.0.1"
+//    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+//    testImplementation "androidx.paging:paging-common-ktx:$paging_version"
+//    implementation "androidx.paging:paging-guava:$paging_version"
+//    // optional - Jetpack Compose integration
+////    implementation "androidx.paging:paging-compose:1.0.0-alpha12"
 
     //Android Room
     implementation "androidx.room:room-runtime:2.3.0"

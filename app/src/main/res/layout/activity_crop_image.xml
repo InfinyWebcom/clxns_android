@@ -74,8 +74,7 @@
             android:layout_toStartOf="@+id/buttonDone"
             android:src="@drawable/ic_baseline_rotate_right_24"
             app:tint="@color/white"
-            android:importantForAccessibility="no"
-            />
+            android:importantForAccessibility="no" />
 
 
     </RelativeLayout>

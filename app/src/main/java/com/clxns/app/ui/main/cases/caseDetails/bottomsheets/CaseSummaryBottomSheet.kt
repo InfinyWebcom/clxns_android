@@ -72,7 +72,7 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
         binding.caseSummaryCloseBtn.setOnClickListener {
             dismiss()
         }
-        binding.caseSummaryTotalCaseBtn.setOnClickListener {
+        /*binding.caseSummaryTotalCaseBtn.setOnClickListener {
             val actions =
                 CaseSummaryBottomSheetDirections.actionNavigationHomeSummaryToNavigationCases(
                     "", "", "", "", fromDate,
@@ -80,7 +80,7 @@ class CaseSummaryBottomSheet : BottomSheetDialogFragment() {
                 )
             findNavController().safeNavigate(actions)
             dismiss()
-        }
+        }*/
 
         binding.caseSummaryPtpBtn.setOnClickListener {
             getDispositionId(binding.ptpTv.text.toString())

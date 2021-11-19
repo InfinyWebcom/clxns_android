@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         //Will be removed
-        Timber.i(sessionManager.getString(Constants.TOKEN)!!)
+        Timber.i("MAIN_TOKEN -> ${sessionManager.getString(Constants.TOKEN)!!}")
 
         mainViewModel.getAllDispositions()
         mainViewModel.getBankList(token)

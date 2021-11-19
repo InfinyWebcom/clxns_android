@@ -223,7 +223,17 @@ class SubStatusActionBottomSheet(
             //
             val amountTypeAdapter = ArrayAdapter.createFromResource(
                 requireContext(),
-                if (dispositionType == "Settlement/Foreclosure") R.array.amount_type else R.array.ptp_amount_type,
+                when (dispositionType) {
+                    "Settlement/Foreclosure" -> {
+                        R.array.settlement_amount_type
+                    }
+                    "PTP" -> {
+                        R.array.ptp_amount_type
+                    }
+                    else -> {
+                        R.array.dispute_amount_type
+                    }
+                },
                 android.R.layout.simple_spinner_item
             )
             amountTypeAdapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice)
@@ -237,26 +247,32 @@ class SubStatusActionBottomSheet(
                         position : Int,
                         id : Long
                     ) {
-                        if (position == 1 || position == 2) {
-                            setPaymentETActive(false)
-                            if (position == 1) {
-                                val totalDueAmount = caseDetails?.data?.totalDueAmount?.minus(
-                                    caseDetails?.data?.amountCollected!!
-                                )
-                                actionBinding.paymentAmountEt.setText(totalDueAmount.toString())
-                            } else {
-                                val posAmount =
-                                    caseDetails?.data?.principalOutstandingAmount?.minus(
-                                        caseDetails?.data?.amountCollected!!
-                                    )
-                                actionBinding.paymentAmountEt.setText(posAmount.toString())
-                            }
-                        } else if (position == 3) {
+                        if (dispositionType == "Settlement/Foreclosure") {
                             setPaymentETActive(true)
                             actionBinding.paymentAmountEt.setText("")
                         } else {
-                            setPaymentETActive(false)
-                            actionBinding.paymentAmountEt.setText("")
+                            if (position == 1 || position == 2) {
+                                setPaymentETActive(false)
+                                if (position == 1) {
+                                    val totalDueAmount =
+                                        caseDetails?.data?.totalDueAmount?.minus(
+                                            caseDetails?.data?.amountCollected!!
+                                        )
+                                    actionBinding.paymentAmountEt.setText(totalDueAmount.toString())
+                                } else {
+                                    val posAmount =
+                                        caseDetails?.data?.principalOutstandingAmount?.minus(
+                                            caseDetails?.data?.amountCollected!!
+                                        )
+                                    actionBinding.paymentAmountEt.setText(posAmount.toString())
+                                }
+                            } else if (position == 3) {
+                                setPaymentETActive(true)
+                                actionBinding.paymentAmountEt.setText("")
+                            } else {
+                                setPaymentETActive(false)
+                                actionBinding.paymentAmountEt.setText("")
+                            }
                         }
                     }
 
@@ -407,12 +423,22 @@ class SubStatusActionBottomSheet(
             caseDetails?.data?.amountCollected!!
         )
         if (amount.isNotEmpty() || amount.isNotBlank()) {
-            if (amount.toInt() <= actualAmount!!) {
-                additionalFields.ptpAmount = amount
-            } else {
-                requireContext().toast("Amount cannot be greater than total due amount")
-                return false
+            if (isPTP){
+                if (amount.toInt() < actualAmount!!) {
+                    additionalFields.ptpAmount = amount
+                } else {
+                    requireContext().toast("Amount must be less than total due amount - ₹$actualAmount")
+                    return false
+                }
+            }else{
+                if (amount.toInt() <= actualAmount!!) {
+                    additionalFields.ptpAmount = amount
+                } else {
+                    requireContext().toast("Amount cannot be greater than total due amount - ₹$actualAmount")
+                    return false
+                }
             }
+
         }
 
         additionalFields.recoveredAmount = additionalFields.ptpAmount

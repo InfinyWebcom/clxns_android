@@ -1,11 +1,15 @@
 package com.clxns.app.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
+import android.os.Build
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Base64OutputStream
@@ -32,6 +36,41 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
+class ViewUtils {
+    companion object {
+        @SuppressLint("MissingPermission")
+        fun isInternetAvailable(context : Context) : Boolean {
+            var result = false
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                val networkCapabilities = connectivityManager.activeNetwork ?: return false
+                val activeNetwork =
+                    connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+                result = when {
+                    activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                    activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                    activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                    else -> false
+                }
+            } else {
+                connectivityManager.run {
+                    connectivityManager.activeNetworkInfo?.run {
+                        result = when (type) {
+                            ConnectivityManager.TYPE_WIFI -> true
+                            ConnectivityManager.TYPE_MOBILE -> true
+                            ConnectivityManager.TYPE_ETHERNET -> true
+                            else -> false
+                        }
+
+                    }
+                }
+            }
+            return result
+        }
+    }
+}
+
 fun Context.toast(message : String) {
     Toast.makeText(this, message, Toast.LENGTH_LONG).show()
 }
@@ -44,8 +83,8 @@ fun View.hide() {
     visibility = View.GONE
 }
 
-fun View.preventDoubleClick(delayTime:Long = 1000){
-    this.apply { isEnabled = false }.postDelayed({isEnabled = true}, delayTime)
+fun View.preventDoubleClick(delayTime : Long = 1000) {
+    this.apply { isEnabled = false }.postDelayed({ isEnabled = true }, delayTime)
 }
 
 fun TextInputEditText.removeFocus() {
@@ -100,7 +139,7 @@ fun String.makeFirstLetterCapital() : String {
  * @param isGMT -> This is only used for History Detail Activity due to server date being 5:30 Hr behind
  * @return Formatted date in string type
  */
-fun String.convertServerDateToNormal(newFormat : String, isGMT:Boolean = false) : String? {
+fun String.convertServerDateToNormal(newFormat : String, isGMT : Boolean = false) : String? {
     var date = this
     var spf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
     spf.timeZone = if (isGMT) TimeZone.getTimeZone("GMT5:30+") else TimeZone.getDefault()
@@ -155,6 +194,7 @@ fun View.showDialog(totalAmount : Int, collected : Int) {
     c.txtCollectable.text = collected.convertToCurrency()
     c.txtResult.text = (totalAmount.minus(collected)).convertToCurrency()
 }
+
 /**
  * Converts server date to long format that'll be used to set the max date for the date picker
  * @return Date in long datatype
@@ -251,7 +291,7 @@ fun Context.createImageFile() : File? {
 }
 
 
-fun getProgressDialog(context : Context, title : String, msg : String) : ProgressDialog{
+fun getProgressDialog(context : Context, title : String, msg : String) : ProgressDialog {
     val pd = ProgressDialog(context)
     pd.setTitle(title)
     pd.setMessage(msg)
@@ -278,7 +318,7 @@ fun getCalculatedDate(days : Int) : String {
  * @param directions Passing generated directions classes with or without arguments
  * defined in the mobile_navigation.xml file.
  */
-fun NavController.safeNavigate(directions: NavDirections){
+fun NavController.safeNavigate(directions : NavDirections) {
     currentDestination?.getAction(directions.actionId)?.run {
         navigate(directions)
     }

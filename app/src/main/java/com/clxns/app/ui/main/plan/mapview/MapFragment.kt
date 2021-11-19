@@ -8,6 +8,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -17,13 +18,18 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.clxns.app.R
@@ -76,6 +82,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var progressDialog : ProgressDialog
 
+    private lateinit var noInternetLayout : RelativeLayout
+
     companion object {
         private const val DEFAULT_ZOOM = 15
 
@@ -96,6 +104,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        noInternetLayout = binding.mapNoInternetLayout.root
+
         userName = sessionManager.getString(Constants.USER_NAME).toString()
         progressDialog = getProgressDialog(
             requireContext(),
@@ -106,6 +116,35 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         requestLocationPermission()
         createLocationRequest()
         initGoogleMap()
+
+        checkInternetAvailability()
+
+        binding.mapNoInternetLayout.retryBtn.setOnClickListener {
+            checkInternetAvailability()
+        }
+    }
+
+    private fun checkInternetAvailability() {
+        if (ViewUtils.isInternetAvailable(requireContext())) {
+            checkIfPermissionAndLocationHasProvided()
+            noInternetLayout.hide()
+        } else {
+            noInternetLayout.show()
+            binding.mapNoInternetLayout.noDataContainer.setBackgroundColor(
+                getColor(
+                    requireContext(),
+                    R.color.white
+                )
+            )
+            val s = "No Internet Connection!!.\nPlease provide internet access to continue."
+            val span = SpannableString(s)
+            span.setSpan(RelativeSizeSpan(1.2f), 0, 25, 0)
+            span.setSpan(ForegroundColorSpan(getColor(requireContext(), R.color.red_orange)), 0, 25, 0)
+            binding.mapNoInternetLayout.noDataTv.text = span
+        }
+    }
+
+    private fun checkIfPermissionAndLocationHasProvided() {
         if (isServicesOk()) {
             if (mLocationPermissionGranted) {
                 if (isGPSEnabled()) {
@@ -115,7 +154,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         }
-
     }
 
     private fun initViewModel() {
@@ -154,8 +192,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     }
                     // bind data to the view
                 }
-                else -> {
-                }
+                else -> {}
             }
         }
     }
@@ -292,6 +329,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             if (it.resultCode == RESULT_OK) {
                 getLocationUpdates()
             } else {
+                requireContext().toast("Please provide location access to continue")
                 openLocationToggleDialog()
             }
         }
@@ -306,7 +344,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     openLocationToggleDialog()
                 }
             } else {
-                var isSelectedNeverAskAgain : Boolean = false
+                var isSelectedNeverAskAgain = false
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     isSelectedNeverAskAgain =
                         shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)

@@ -34,7 +34,7 @@
             android:layout_marginEnd="@dimen/dp16"
             app:cardBackgroundColor="@color/quantum_grey100"
             app:cardCornerRadius="@dimen/dp50"
-            app:rippleColor="@color/colorPrimary">
+            app:rippleColor="@color/light_red">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -65,6 +65,8 @@
                 android:layout_margin="@dimen/dp12"
                 app:cardCornerRadius="@dimen/dp8"
                 app:cardElevation="2dp"
+                android:visibility="gone"
+                tools:visibility="visible"
                 app:rippleColor="@color/colorPrimary"
                 >
 

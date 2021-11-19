@@ -9,18 +9,18 @@
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <Button
+        android:id="@+id/close_map_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Close"
-        android:textColor="@color/quantum_grey100"
-        android:id="@+id/close_map_btn"
         android:layout_gravity="end"
-        android:layout_margin="@dimen/dp16"/>
+        android:layout_margin="@dimen/dp16"
+        android:text="Close"
+        android:textColor="@color/quantum_grey100" />
 
     <com.google.android.gms.maps.MapView
+        android:id="@+id/bs_map_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/bs_map_view"/>
+        android:layout_height="match_parent" />
 
 
 </FrameLayout>

@@ -30,7 +30,6 @@
         android:layout_gravity="end"
         android:layout_marginTop="@dimen/dp4"
         android:layout_marginEnd="@dimen/dp24"
-        android:src="@drawable/ic_remove_circle_24"
-        />
+        android:src="@drawable/ic_remove_circle_24" />
 
 </FrameLayout>

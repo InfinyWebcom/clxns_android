@@ -390,6 +390,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             if (it.resultCode == RESULT_OK) {
                 getLocationUpdates()
             } else {
+                toast("Please provide location access to continue")
                 openLocationToggleDialog()
             }
         }

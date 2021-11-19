@@ -171,6 +171,11 @@
     <string name="map">Map</string>
     <string name="select_date">Select date</string>
 
+
+    <string-array name="settlement_amount_type">
+        <item>Settlement/Foreclosure Amount</item>
+    </string-array>
+
     <string-array name="amount_type">
         <item>Select an Option</item>
         <item>Total Due Amount</item>
@@ -178,10 +183,18 @@
         <item>Settlement Amount (if different from POS)</item>
     </string-array>
 
+    <string-array name="dispute_amount_type">
+        <item>Select an Option</item>
+        <item>Total Due Amount</item>
+        <item>Principal Outstanding Amount (POS)</item>
+    </string-array>
+
+
     <string-array name="ptp_amount_type">
         <item>Select an Option</item>
         <item>Total Due Amount</item>
         <item>Principal Outstanding Amount (POS)</item>
+        <item>Partial Amount</item>
     </string-array>
 
     <string-array name="ptp_sub_dispositions">
