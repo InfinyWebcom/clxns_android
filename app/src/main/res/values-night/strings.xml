@@ -170,6 +170,7 @@
     <string name="resent_otp">RESENT OTP</string>
     <string name="map">Map</string>
     <string name="select_date">Select date</string>
+    <string name="cancel">Cancel</string>
 
 
     <string-array name="settlement_amount_type">

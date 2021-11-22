@@ -72,7 +72,11 @@ class ViewUtils {
 }
 
 fun Context.toast(message : String) {
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    try {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }catch (e: Exception){
+        e.printStackTrace()
+    }
 }
 
 fun View.show() {

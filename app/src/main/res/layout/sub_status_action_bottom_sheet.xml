@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,10 +30,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp16"
+                android:fontFamily="@font/gt_pro_medium"
                 android:text="@string/probability"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/sp18"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sp18" />
 
             <RadioGroup
                 android:id="@+id/statusActionActiveRG"
@@ -71,12 +71,10 @@
                 android:id="@+id/txtStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp12"
+                android:layout_marginTop="@dimen/dp8"
+                android:fontFamily="@font/gt_pro_medium"
                 android:text="@string/status"
-                android:textAllCaps="false"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/sp18"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sp18" />
 
             <RelativeLayout
                 android:id="@+id/statusSpinnerLayout"
@@ -89,7 +87,6 @@
                     android:id="@+id/spStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:elevation="@dimen/dp4"
                     android:overlapAnchor="false"
                     android:paddingVertical="@dimen/dp10"
                     android:spinnerMode="dropdown"
@@ -110,7 +107,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -124,8 +122,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dp4"
                             android:text="@string/amount_type"
-                            android:textAllCaps="false"
-                            android:textColor="@color/text_black"
                             android:textSize="@dimen/sp12" />
 
                         <RelativeLayout
@@ -160,16 +156,14 @@
                             android:layout_marginStart="@dimen/dp10"
                             android:labelFor="@id/payment_amount_et"
                             android:text="@string/collectable_amount"
-                            android:textAllCaps="false"
-                            android:textColor="@color/text_black"
                             android:textSize="@dimen/sp12" />
 
                         <EditText
                             android:id="@+id/payment_amount_et"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp30"
-                            android:layout_marginTop="@dimen/dp4"
                             android:layout_marginStart="@dimen/dp8"
+                            android:layout_marginTop="@dimen/dp4"
                             android:background="@drawable/background_edittext_round"
                             android:hint="@string/enter_amount"
                             android:importantForAutofill="no"
@@ -181,7 +175,7 @@
                             android:paddingBottom="@dimen/dp4"
                             android:textSize="@dimen/sp12"
                             android:visibility="visible"
-                            tools:ignore="DuplicateSpeakableTextCheck,LabelFor,TouchTargetSizeCheck" />
+                            tools:ignore="DuplicateSpeakableTextCheck,LabelFor,TouchTargetSizeCheck,TextContrastCheck" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -193,8 +187,6 @@
                     android:layout_marginStart="@dimen/dp4"
                     android:layout_marginTop="@dimen/dp12"
                     android:text="@string/payment_mode"
-                    android:textAllCaps="false"
-                    android:textColor="@color/text_black"
                     android:textSize="@dimen/sp12" />
 
                 <RadioGroup
@@ -208,7 +200,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/online"
-                        android:textColor="@color/text_black"
                         android:textSize="@dimen/sp12"
                         tools:ignore="TextContrastCheck" />
 
@@ -217,7 +208,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/cheque"
-                        android:textColor="@color/text_black"
                         android:textSize="@dimen/sp12"
                         tools:ignore="TextContrastCheck" />
 
@@ -226,7 +216,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/cash"
-                        android:textColor="@color/text_black"
                         android:textSize="@dimen/sp12"
                         tools:ignore="TextContrastCheck" />
                 </RadioGroup>
@@ -251,8 +240,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dp4"
                             android:text="@string/payment_recovery_date"
-                            android:textAllCaps="false"
-                            android:textColor="@color/text_black"
                             android:textSize="@dimen/sp12" />
 
                         <TextView
@@ -270,7 +257,7 @@
                             android:paddingBottom="@dimen/dp4"
                             android:textColor="@color/text_black"
                             android:textSize="@dimen/sp12"
-                            android:textStyle="bold" />
+                            tools:ignore="TextContrastCheck" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -285,8 +272,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dp10"
                             android:text="@string/reference_cheque_no"
-                            android:textAllCaps="false"
-                            android:textColor="@color/text_black"
                             android:textSize="@dimen/sp12"
                             android:visibility="visible" />
 
@@ -294,8 +279,8 @@
                             android:id="@+id/edtReferenceType"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp30"
-                            android:layout_marginTop="@dimen/dp4"
                             android:layout_marginStart="@dimen/dp8"
+                            android:layout_marginTop="@dimen/dp4"
                             android:background="@drawable/background_edittext_round"
                             android:digits="@string/alpha_numeric_chars"
                             android:hint="@string/type_here"
@@ -308,7 +293,7 @@
                             android:paddingBottom="@dimen/dp4"
                             android:textSize="@dimen/sp12"
                             android:visibility="visible"
-                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,DuplicateSpeakableTextCheck,TextContrastCheck" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -319,10 +304,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp12"
+                android:fontFamily="@font/gt_pro_medium"
                 android:text="@string/revisit_date"
-                android:textColor="@color/text_black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/revisitDateTxt"
@@ -336,7 +320,6 @@
                 android:paddingEnd="@dimen/dp8"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/sp14"
-                android:textStyle="bold"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -344,10 +327,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp12"
+                android:fontFamily="@font/gt_pro_medium"
                 android:text="@string/revisit_time"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/sp18"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sp18" />
 
             <TextView
                 android:id="@+id/revisitTimeTxt"
@@ -361,7 +343,6 @@
                 android:paddingEnd="@dimen/dp8"
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/sp14"
-                android:textStyle="bold"
                 tools:ignore="TextContrastCheck" />
 
             <TextView
@@ -370,10 +351,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp12"
                 android:buttonTint="@color/colorPrimary"
+                android:fontFamily="@font/gt_pro_medium"
                 android:text="@string/remarks"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/sp18"
-                android:textStyle="bold" />
+                android:textSize="@dimen/sp18" />
 
             <EditText
                 android:id="@+id/statusActionRemarkET"
@@ -403,15 +383,40 @@
                 android:text="@string/assign_to_tracer"
                 android:textSize="16sp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/doneBtn"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="@dimen/dp16"
-                android:backgroundTint="@color/colorPrimary"
-                android:text="@string/done"
-                android:textColor="@color/white" />
+                android:layout_marginTop="@dimen/dp8"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/cancelBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp4"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="@string/cancel"
+                    android:textColor="@color/red"
+                    app:rippleColor="@color/red"
+                    app:strokeColor="@color/red"
+                    android:textAllCaps="false"
+                    app:strokeWidth="@dimen/dp1" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/doneBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp4"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:text="@string/done"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:rippleColor="@color/colorPrimaryVariant" />
+            </LinearLayout>
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

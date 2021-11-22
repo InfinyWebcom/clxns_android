@@ -41,6 +41,7 @@ import com.clxns.app.ui.main.cases.caseDetails.bottomsheets.SubStatusActionBotto
 import com.clxns.app.ui.main.cases.caseDetails.caseStatus.AddImageAdapter
 import com.clxns.app.ui.main.cases.caseDetails.caseStatus.paymentCollection.PaymentCollectionActivity
 import com.clxns.app.utils.*
+import com.clxns.app.utils.Constants.TOKEN
 import com.clxns.app.utils.support.CropImageActivity
 import com.clxns.app.utils.support.GridSpacingItemDecoration
 import com.google.android.gms.common.api.ResolvableApiException
@@ -108,16 +109,6 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         initLocationCallback()
         setListeners()
         setObserver()
-
-//        if (viewModel.leadId != null) {
-//            viewModel.getCaseDetails(
-//                sessionManager.getString(Constants.TOKEN)!!,
-//                viewModel.leadId!!
-//            )
-//        } else {
-//            toast("Error while fetching details")
-//            onBackPressed()
-//        }
     }
 
     private fun initStatusAdapter() {
@@ -559,7 +550,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         body.payment = null
 
         viewModel.saveCheckInData(
-            sessionManager.getString(Constants.TOKEN)!!,
+            sessionManager.getString(TOKEN)!!,
             body
         )
 
@@ -879,7 +870,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 
                 override fun onMobileClick(mobile : String) {
                     viewModel.leadContactUpdate(
-                        sessionManager.getString(Constants.TOKEN)!!,
+                        sessionManager.getString(TOKEN)!!,
                         viewModel.leadId!!,
                         "mobile",
                         mobile
@@ -888,7 +879,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
 
                 override fun onAddressClick(address : String) {
                     viewModel.leadContactUpdate(
-                        sessionManager.getString(Constants.TOKEN)!!,
+                        sessionManager.getString(TOKEN)!!,
                         viewModel.leadId!!,
                         "address",
                         address
@@ -920,8 +911,8 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         }
 
         val openSubStatusAction =
-            SubStatusActionBottomSheet.newInstance(caseDetails,
-                object : SubStatusActionBottomSheet.OnClick {
+            SubStatusActionBottomSheet(caseDetails,
+                object : SubStatusActionBottomSheet.OnDispositionDoneClickListener {
                     override fun onClick(
                         dispositionType : String,
                         subDispositionType : String,

@@ -49,8 +49,8 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
     private var fromDate : String = ""
     private var toDate : String = ""
 
-    @Inject
-    lateinit var BASE_URL : String
+//    @Inject
+//    lateinit var BASE_URL : String
 
     override fun onCreateView(
         inflater : LayoutInflater,
@@ -66,11 +66,11 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
         super.onViewCreated(view, savedInstanceState)
 
         //Temporary will be removed
-        when(BASE_URL){
-            BuildConfig.BASE_DEMO_URL -> {binding.apkTypeTxt.text = "DEMO"}
-            BuildConfig.BASE_STAGING_URL -> {binding.apkTypeTxt.text = "STAGING"}
-            BuildConfig.BASE_DEV_URL -> {binding.apkTypeTxt.text = "DEV"}
-        }
+//        when(BASE_URL){
+//            BuildConfig.BASE_DEMO_URL -> {binding.apkTypeTxt.text = "DEMO"}
+//            BuildConfig.BASE_STAGING_URL -> {binding.apkTypeTxt.text = "STAGING"}
+//            BuildConfig.BASE_DEV_URL -> {binding.apkTypeTxt.text = "DEV"}
+//        }
 
         getHomeStatistics()
 
@@ -200,8 +200,6 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
 
                 fromDate = getCalculatedDate(0)
                 toDate = getCalculatedDate(0)
-                Timber.i(fromDate)
-                Timber.i(toDate)
                 updateHomeStatsUI(actionsData, statsData)
             }
             R.id.rbWeek -> {
@@ -211,8 +209,6 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
 
                 fromDate = getCalculatedDate(-6)
                 toDate = getCalculatedDate(0)
-                Timber.i(fromDate)
-                Timber.i(toDate)
                 updateHomeStatsUI(actionsData, statsData)
             }
             R.id.rbMonth -> {
@@ -220,11 +216,9 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                 statsData = monthData.stats!!
                 summaryData = monthData.summaryData!!
 
-                //
+
                 fromDate = getCalculatedDate(-30)
                 toDate = getCalculatedDate(0)
-                Timber.i(fromDate)
-                Timber.i(toDate)
                 updateHomeStatsUI(actionsData, statsData)
             }
         }

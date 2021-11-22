@@ -23,7 +23,8 @@ import java.util.*
 
 
 class SubStatusActionBottomSheet(
-    private var caseDetails : CaseDetailsResponse?, private var callback : OnClick
+    private var caseDetails : CaseDetailsResponse?,
+    private var doneClickListener : OnDispositionDoneClickListener
 ) : BottomSheetDialogFragment() {
 
     private lateinit var actionBinding : SubStatusActionBottomSheetBinding
@@ -55,13 +56,6 @@ class SubStatusActionBottomSheet(
             "Nov",
             "Dec"
         )
-
-        fun newInstance(
-            caseDetails : CaseDetailsResponse?,
-            callback : OnClick
-        ) : SubStatusActionBottomSheet {
-            return SubStatusActionBottomSheet(caseDetails, callback)
-        }
     }
 
 
@@ -137,9 +131,13 @@ class SubStatusActionBottomSheet(
             showTimePicker()
         }
 
+        actionBinding.cancelBtn.setOnClickListener {
+            dismiss()
+        }
+
         actionBinding.doneBtn.setOnClickListener {
             if (validate()) {
-                callback.onClick(
+                doneClickListener.onClick(
                     dispositionType,
                     subDispositionType,
                     if (dateFormatted == "") "" else "${dateFormatted}T${timeFormatted}",
@@ -302,12 +300,7 @@ class SubStatusActionBottomSheet(
             requireContext(),
             { _, selectedHour, selectedMinute ->
 
-                val time = "${String.format("%02d", selectedHour)}:${
-                    String.format(
-                        "%02d",
-                        selectedMinute
-                    )
-                }"
+                val time = "${selectedHour}:${selectedMinute}"
                 timeFormatted = "$time:00.000Z"
                 val fmt = SimpleDateFormat("HH:mm", Locale.getDefault())
                 var date : Date? = null
@@ -321,7 +314,7 @@ class SubStatusActionBottomSheet(
             hour,
             minute,
             false
-        ) //Yes 24 hour time
+        )
 
         mTimePicker.setTitle("Select Time")
         mTimePicker.show()
@@ -402,7 +395,7 @@ class SubStatusActionBottomSheet(
         }
 
         if (!success) {
-            context?.toast(message)
+            requireContext().toast(message)
             return false
         }
         additionalFields.paymentMode =
@@ -423,14 +416,14 @@ class SubStatusActionBottomSheet(
             caseDetails?.data?.amountCollected!!
         )
         if (amount.isNotEmpty() || amount.isNotBlank()) {
-            if (isPTP){
+            if (isPTP) {
                 if (amount.toInt() < actualAmount!!) {
                     additionalFields.ptpAmount = amount
                 } else {
                     requireContext().toast("Amount must be less than total due amount - ₹$actualAmount")
                     return false
                 }
-            }else{
+            } else {
                 if (amount.toInt() <= actualAmount!!) {
                     additionalFields.ptpAmount = amount
                 } else {
@@ -451,13 +444,12 @@ class SubStatusActionBottomSheet(
 
         additionalFields.assignTracer = actionBinding.assignToTracerCB.isChecked
 
-        additionalFields.ptpProbability =
-            if (actionBinding.statusActionActiveRG.checkedRadioButtonId == actionBinding.rb80.id) "80% >" else
-                (when (actionBinding.statusActionActiveRG.checkedRadioButtonId) {
+        additionalFields.ptpProbability = when (actionBinding.statusActionActiveRG.checkedRadioButtonId) {
+                    actionBinding.rb80.id -> "80% >"
                     actionBinding.rb50.id -> "50% - 80%"
                     actionBinding.rb30.id -> "50% <"
                     else -> ""
-                })
+                }
 
         return true
     }
@@ -468,9 +460,10 @@ class SubStatusActionBottomSheet(
         actionBinding.txtPaymentOrRecoveryDateValue.text = ""
         actionBinding.edtReferenceType.text = null
         dateFormattedRecovery = ""
+        actionBinding.spAmount.setSelection(0)
     }
 
-    interface OnClick {
+    interface OnDispositionDoneClickListener {
         fun onClick(
             dispositionType : String,
             subDispositionType : String,
