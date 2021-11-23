@@ -5,37 +5,39 @@
     android:id="@+id/relParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".ui.main.plan.PlanFragment">
 
 
     <RelativeLayout
-        android:id="@+id/my_plan_custom_toolbar"
+        android:id="@+id/planCustomToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:paddingStart="@dimen/dp16"
-        android:paddingTop="@dimen/dp10"
+        android:paddingTop="@dimen/dp8"
         android:paddingEnd="@dimen/dp16"
-        android:paddingBottom="@dimen/dp10"
+        android:paddingBottom="@dimen/dp8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/txtAppName"
+            android:id="@+id/planToolbarTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/txtDateSort"
-            android:layout_alignBottom="@id/txtDateSort"
-            android:layout_toStartOf="@id/txtDateSort"
+            android:layout_alignTop="@id/filterByDateBtn"
+            android:layout_alignBottom="@id/filterByDateBtn"
+            android:layout_toStartOf="@id/filterByDateBtn"
             android:gravity="center_vertical"
             android:text="@string/my_plans"
             android:textColor="@color/white"
             android:textSize="@dimen/sp18"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck" />
 
         <TextView
-            android:id="@+id/txtDateSort"
+            android:id="@+id/filterByDateBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -49,22 +51,23 @@
             android:textColor="@color/white"
             android:textSize="14sp"
             android:visibility="visible"
-            app:drawableRightCompat="@drawable/icon_dropdown" />
+            app:drawableRightCompat="@drawable/icon_dropdown"
+            tools:ignore="TextContrastCheck" />
 
     </RelativeLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
+        android:id="@+id/planViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tabLayout" />
+        android:layout_below="@+id/planCustomToolbar" />
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+        android:id="@+id/planTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/my_plan_custom_toolbar"
-        android:backgroundTint="@color/colorPrimaryVariant"
+        android:layout_below="@+id/planCustomToolbar"
+        android:background="@drawable/toolbar_background"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/green"
         app:tabIndicatorFullWidth="false"

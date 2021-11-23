@@ -23,6 +23,7 @@ android {
         buildConfigField 'String', 'BASE_DEV_URL', '"https://clxns.infiny.dev/"'
         buildConfigField 'String', 'BASE_STAGING_URL', '"https://staging.clxns.in/"'
         buildConfigField 'String', 'BASE_DEMO_URL', '"https://demo.clxns.in/"'
+        buildConfigField 'String', 'BASE_PROD_URL', '"https://app.clxns.in/"'
     }
 
     buildTypes {

@@ -89,7 +89,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
 
     private fun subscribeObserver() {
         viewModel.response.observe(this) {
-            binding.historyNoData.noDataTv.text = getString(R.string.something_went_wrong)
+            binding.historyNoData.noDataTxt.text = getString(R.string.something_went_wrong)
             when (it) {
                 is NetworkResult.Success -> {
                     binding.progressBar.hide()
@@ -103,7 +103,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
                             historyDetailsAdapter.notifyItemRangeChanged(0, list.size)
                         } else {
                             binding.historyNoData.retryBtn.hide()
-                            binding.historyNoData.noDataTv.text = getString(R.string.no_data)
+                            binding.historyNoData.noDataTxt.text = getString(R.string.no_data)
                             noDataLayout.show()
                         }
                     } else {

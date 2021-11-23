@@ -64,7 +64,7 @@ class MyPlanAdapter(
                 status += context.getString(R.string.arrow_forward) + details.lead.subDispositionData.name
             }
         }
-        holder.contactItemBinding.planStatusBagde.text = status
+        holder.contactItemBinding.planStatusBadge.text = status
 
         holder.contactItemBinding.planContactAddress.text =
             details?.lead?.address?.lowercase()?.makeFirstLetterCapital()

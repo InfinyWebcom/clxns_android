@@ -10,10 +10,11 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerContacts"
+        android:id="@+id/myPlanRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
+        android:paddingTop="@dimen/dp44"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,12 +23,12 @@
 
 
     <include
-        android:id="@+id/plan_no_data"
+        android:id="@+id/myPlanNoDataLayout"
         layout="@layout/no_data_layout"
         android:visibility="gone" />
 
     <ProgressBar
-        android:id="@+id/plan_progress_bar"
+        android:id="@+id/myPlanProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"

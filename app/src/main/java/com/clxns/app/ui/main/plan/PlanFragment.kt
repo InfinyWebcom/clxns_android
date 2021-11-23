@@ -1,10 +1,12 @@
 package com.clxns.app.ui.main.plan
 
+import android.animation.LayoutTransition
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.clxns.app.R
@@ -12,9 +14,12 @@ import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentPlanBinding
 import com.clxns.app.ui.main.plan.plannedLeads.MyPlanViewModel
 import com.clxns.app.utils.Constants
+import com.clxns.app.utils.hide
+import com.clxns.app.utils.show
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -49,16 +54,24 @@ class PlanFragment : Fragment() {
 
     override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val transition = binding.root.layoutTransition
+        transition.enableTransitionType(LayoutTransition.CHANGING)
+        transition.setDuration(500)
         setInit()
         initDatePicker()
         setListeners()
     }
 
     private fun setListeners() {
-        binding.tabLayout.addOnTabSelectedListener(object :
+        binding.planTabLayout.addOnTabSelectedListener(object :
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab : TabLayout.Tab?) {
-                binding.viewPager.currentItem = tab?.position!!
+                binding.planViewPager.currentItem = tab?.position!!
+                if (tab.position == 1){
+                    binding.planCustomToolbar.hide()
+                }else{
+                    binding.planCustomToolbar.show()
+                }
             }
 
             override fun onTabUnselected(tab : TabLayout.Tab?) {
@@ -70,11 +83,11 @@ class PlanFragment : Fragment() {
 
         })
 
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+        TabLayoutMediator(binding.planTabLayout, binding.planViewPager) { tab, position ->
             tab.text = tabName[position]
         }.attach()
 
-        binding.txtDateSort.setOnClickListener {
+        binding.filterByDateBtn.setOnClickListener {
             datePickerDialog.show()
         }
 
@@ -84,8 +97,8 @@ class PlanFragment : Fragment() {
 
     private fun setInit() {
         viewPagerAdapter = PlansViewPagerAdapter(requireActivity())
-        binding.viewPager.adapter = viewPagerAdapter
-        binding.viewPager.isUserInputEnabled = false
+        binding.planViewPager.adapter = viewPagerAdapter
+        binding.planViewPager.isUserInputEnabled = false
         planViewModel.calendar = Calendar.getInstance()
         planViewModel.getCurrentDate()
         token = sessionManager.getString(Constants.TOKEN)!!
@@ -109,9 +122,9 @@ class PlanFragment : Fragment() {
             }-${String.format("%02d", planViewModel.mDay)}"
 
             if (planViewModel.currentDate == filterAPIDate) {
-                binding.txtDateSort.text = resources.getString(R.string.today)
+                binding.filterByDateBtn.text = resources.getString(R.string.today)
             } else {
-                binding.txtDateSort.text = filterDate
+                binding.filterByDateBtn.text = filterDate
             }
             planViewModel.getMyPlanList(token, filterAPIDate)
         }, planViewModel.mYear, planViewModel.mMonth, planViewModel.mDay)
@@ -126,7 +139,7 @@ class PlanFragment : Fragment() {
                 planViewModel.mMonth,
                 planViewModel.mDay
             )
-            binding.txtDateSort.text = resources.getString(R.string.today)
+            binding.filterByDateBtn.text = resources.getString(R.string.today)
             planViewModel.getMyPlanList(token, planViewModel.currentDate)
         }
     }

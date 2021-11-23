@@ -152,7 +152,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
     @SuppressLint("NotifyDataSetChanged")
     private fun subscribeObserver() {
         viewModel.responseCaseList.observe(viewLifecycleOwner) { response ->
-            binding.casesNoData.noDataTv.text = getString(R.string.something_went_wrong)
+            binding.casesNoData.noDataTxt.text = getString(R.string.something_went_wrong)
             when (response) {
                 is NetworkResult.Success -> {
                     // bind data to the view
@@ -173,7 +173,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                             casesDataList.addAll(dataList)
                             casesAdapter.notifyDataSetChanged()
                         } else {
-                            binding.casesNoData.noDataTv.text = getString(R.string.no_data)
+                            binding.casesNoData.noDataTxt.text = getString(R.string.no_data)
                             binding.casesNoData.retryBtn.hide()
                             noDataLayout.show()
                             val size = casesDataList.size
@@ -181,7 +181,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                             casesAdapter.notifyItemRangeRemoved(0, size)
                         }
                     } else {
-                        binding.casesNoData.noDataTv.text = response.data?.title
+                        binding.casesNoData.noDataTxt.text = response.data?.title
                         noDataLayout.show()
                         casesRV.hide()
                     }

@@ -76,23 +76,24 @@ class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
                 )
             }-${String.format("%02d", planViewModel.mDay)}"
             getPlanList(filterAPIDate)
+            //Setting intent data to null otherwise it's gonna keep refreshing when being resumed from the paused state
             requireActivity().intent = null
         }
     }
 
     private fun initView() {
-        //Initializing Calendar
+        //Initializing Calendar to get the current date
         planViewModel.calendar = Calendar.getInstance()
         planViewModel.getCurrentDate()
-        noDataLayout = binding.planNoData.root
-        planRV = binding.recyclerContacts
+        noDataLayout = binding.myPlanNoDataLayout.root
+        planRV = binding.myPlanRecyclerView
         token = sessionManager.getString(Constants.TOKEN)!!
 
     }
 
     private fun setListeners() {
 
-        binding.planNoData.retryBtn.setOnClickListener {
+        binding.myPlanNoDataLayout.retryBtn.setOnClickListener {
             getPlanList()
         }
     }
@@ -105,7 +106,7 @@ class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
         planViewModel.response.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    binding.planProgressBar.hide()
+                    binding.myPlanProgressBar.hide()
                     planRV.show()
                     if (!response.data?.error!!) {
                         if (response.data.total!! > 0) {
@@ -117,27 +118,27 @@ class MyPlanFragment : Fragment(), MyPlanAdapter.OnPlanItemClickListener {
                                 )
                             }
                         } else {
-                            binding.planNoData.noDataTv.text = getString(R.string.no_data)
+                            binding.myPlanNoDataLayout.noDataTxt.text = getString(R.string.no_data)
                             noDataLayout.show()
-                            binding.planNoData.retryBtn.hide()
+                            binding.myPlanNoDataLayout.retryBtn.hide()
                             planRV.hide()
                         }
                     } else {
                         noDataLayout.show()
-                        binding.planNoData.noDataTv.text = response.data.title
+                        binding.myPlanNoDataLayout.noDataTxt.text = response.data.title
                         planRV.hide()
                     }
                     // bind data to the view
                 }
                 is NetworkResult.Error -> {
-                    binding.planProgressBar.hide()
+                    binding.myPlanProgressBar.hide()
                     planRV.hide()
                     noDataLayout.show()
                     binding.root.snackBar(response.message!!)
                     // show error message
                 }
                 is NetworkResult.Loading -> {
-                    binding.planProgressBar.show()
+                    binding.myPlanProgressBar.show()
                     noDataLayout.hide()
                     // show a progress bar
                 }

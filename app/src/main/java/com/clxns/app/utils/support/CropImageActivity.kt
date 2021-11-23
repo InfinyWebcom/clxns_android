@@ -31,7 +31,7 @@ class CropImageActivity : AppCompatActivity() {
     var file : File? = null
     private var mFrameRect : RectF? = null
     var context : Context? = null
-    var mSourceUri : Uri? = null
+    private var mSourceUri : Uri? = null
 
     private val mCompressFormat = CompressFormat.JPEG
 
@@ -91,7 +91,7 @@ class CropImageActivity : AppCompatActivity() {
             activityCropImageBinding!!.cropImageView.crop(mSourceUri).execute(mCropCallback)
         }
 
-        activityCropImageBinding!!.buttonCencel.setOnClickListener {
+        activityCropImageBinding!!.buttonCancel.setOnClickListener {
             val setResultIntent = Intent()
             setResult(2, setResultIntent)
             finish()
@@ -139,7 +139,7 @@ class CropImageActivity : AppCompatActivity() {
         values.put(MediaStore.Images.Media.TITLE, title)
         values.put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/" + getMimeType(format))
-        values.put(MediaStore.Images.Media.DATA, path)
+        //values.put(MediaStore.Images.Media.DATA, path)
         val time = currentTimeMillis / 1000
         values.put(MediaStore.MediaColumns.DATE_ADDED, time)
         values.put(MediaStore.MediaColumns.DATE_MODIFIED, time)

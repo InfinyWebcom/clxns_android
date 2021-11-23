@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide
 import com.clxns.app.R
 import com.clxns.app.databinding.DialogCollectableAmountBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import java.io.*
@@ -87,6 +88,10 @@ fun View.hide() {
     visibility = View.GONE
 }
 
+/**
+ * Disable the view for the time range provided as a parameter thus preventing the problem of double actions such as multiple dialogs, etc.
+ * @param delayTime Time in milli seconds
+ */
 fun View.preventDoubleClick(delayTime : Long = 1000) {
     this.apply { isEnabled = false }.postDelayed({ isEnabled = true }, delayTime)
 }
@@ -103,7 +108,7 @@ fun Context.hideKeyboard(view : View) {
 }
 
 /**
- * This function is only triggered on long click of Call button from plan fragment to copy the number on the clipboard
+ * This function is only triggered on long click of the Call button from the plan fragment to copy the number on the clipboard
  * @param text Provided mobile number
  */
 fun Context.copyToClipBoard(text : CharSequence) {
@@ -117,6 +122,7 @@ fun View.snackBar(message : String) {
         snackBar.setAction("Ok") {
             snackBar.dismiss()
         }
+        snackBar.animationMode = BaseTransientBottomBar.ANIMATION_MODE_SLIDE
     }.show()
 }
 
@@ -141,7 +147,7 @@ fun String.makeFirstLetterCapital() : String {
  * This functions converts server date to any format given
  * @param newFormat -> Any desired format eg. "dd, MMM yyyy"
  * @param isGMT -> This is only used for History Detail Activity due to server date being 5:30 Hr behind
- * @return Formatted date in string type
+ * @return Formatted date in string type eg. 01, Jan 2022
  */
 fun String.convertServerDateToNormal(newFormat : String, isGMT : Boolean = false) : String? {
     var date = this
@@ -172,7 +178,7 @@ fun ImageView.loadImage(url : String) {
 /**
  * This function converts an integer value to an indian currency by adding rupee symbol at
  * the end of the result also keeping only value before the decimal point
- * @return String i.e Value = 100 -> Result = "₹ 100.0000" -> finalResult = "₹ 100"
+ * @return String eg. Value = 100 -> Result = "₹ 100.0000" -> finalResult = "₹ 100"
  */
 fun Int.convertToCurrency() : String {
     val amount = NumberFormat.getCurrencyInstance(Locale("en", "in"))
@@ -217,6 +223,9 @@ fun String.getDateInLongFormat() : Long {
     return dateInLong
 }
 
+/**
+ * @return Base64 string for the provided image file
+ */
 @Throws(IOException::class)
 fun File.getBase64StringFile() : String {
     var inputStream : InputStream? = null
@@ -307,7 +316,7 @@ fun getProgressDialog(context : Context, title : String, msg : String) : Progres
 /**
  * Get calculated date by passing any number of days to this function
  * @param days Number of days to be subtracted from the current date
- *  @return Date in string format, i.e days = 7 & Current Date = 08-02-2021 then result = 01-02-2021
+ *  @return Date in string format, eg. days = 7 & Current Date = 08-02-2021 then result = 01-02-2021
  */
 fun getCalculatedDate(days : Int) : String {
     val calendar = Calendar.getInstance()

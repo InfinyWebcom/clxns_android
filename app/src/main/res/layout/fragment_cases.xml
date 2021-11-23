@@ -25,7 +25,8 @@
             android:text="@string/my_cases"
             android:textColor="@color/white"
             android:textSize="@dimen/sp18"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/filter_btn"
@@ -42,7 +43,8 @@
             android:textSize="@dimen/sp16"
             app:cornerRadius="@dimen/dp24"
             app:strokeColor="@color/white"
-            app:strokeWidth="@dimen/dp1" />
+            app:strokeWidth="@dimen/dp1"
+            tools:ignore="TextContrastCheck" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/searchCard"
@@ -76,8 +78,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/searchCard"
             android:layout_marginTop="@dimen/dp8"
-            android:background="@drawable/toolbar_background"
-            android:backgroundTint="@color/colorSecondary"
             android:orientation="horizontal"
             android:paddingStart="@dimen/dp16"
             android:paddingTop="@dimen/dp8"

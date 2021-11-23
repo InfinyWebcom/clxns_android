@@ -11,7 +11,7 @@
         android:id="@+id/payment_collection_custom_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_tab">
+        android:background="@drawable/toolbar_background">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgBack"
@@ -197,7 +197,7 @@
                     android:elevation="@dimen/dp4"
                     android:overlapAnchor="false"
                     android:paddingVertical="@dimen/dp10"
-                    android:spinnerMode="dialog"
+                    android:spinnerMode="dropdown"
                     android:theme="@style/spinnerTheme"
                     tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
             </RelativeLayout>

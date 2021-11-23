@@ -85,7 +85,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var noInternetLayout : RelativeLayout
 
     companion object {
-        private const val DEFAULT_ZOOM = 15
+        private const val DEFAULT_ZOOM = 12
 
         private const val PLAY_SERVICES_ERROR_CODE = 9001
         private var mLocationPermissionGranted = false
@@ -140,7 +140,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val span = SpannableString(s)
             span.setSpan(RelativeSizeSpan(1.2f), 0, 25, 0)
             span.setSpan(ForegroundColorSpan(getColor(requireContext(), R.color.red_orange)), 0, 25, 0)
-            binding.mapNoInternetLayout.noDataTv.text = span
+            binding.mapNoInternetLayout.noDataTxt.text = span
         }
     }
 
@@ -226,8 +226,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             override fun onLocationResult(locationResult : LocationResult) {
                 val location : Location? = locationResult.lastLocation
                 if (location != null) {
-                    mGoogleMap.uiSettings.isMyLocationButtonEnabled = true
-                    mGoogleMap.isMyLocationEnabled = true
+                    //mGoogleMap.uiSettings.isMyLocationButtonEnabled = true
+                    //mGoogleMap.isMyLocationEnabled = true
                     Timber.i(
                         location.latitude.toString() + " : " + location.longitude
                     )

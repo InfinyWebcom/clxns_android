@@ -1,9 +1,6 @@
 package com.clxns.app.data.api.helper
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import com.clxns.app.utils.NoInternetException
 import com.clxns.app.utils.ViewUtils
 import okhttp3.Interceptor

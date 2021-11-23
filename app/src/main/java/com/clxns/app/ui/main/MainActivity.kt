@@ -20,6 +20,7 @@ import com.clxns.app.databinding.ActivityMainBinding
 import com.clxns.app.utils.Constants
 import com.clxns.app.utils.Constants.APP_UPDATE_RC
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var listener : InstallStateUpdatedListener
 
     private lateinit var navController : NavController
-    private lateinit var snackbar : Snackbar
+    private lateinit var snackBar : Snackbar
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +65,8 @@ class MainActivity : AppCompatActivity() {
 
         navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-        snackbar = Snackbar.make(binding.root, "Press back again to exit", Snackbar.LENGTH_LONG);
+        snackBar = Snackbar.make(binding.root, "Press back again to exit", Snackbar.LENGTH_LONG)
+        snackBar.animationMode = BaseTransientBottomBar.ANIMATION_MODE_SLIDE
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -235,10 +237,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (navController.currentDestination!!.id == navController.graph.startDestination){
-            if (snackbar.isShown){
+            if (snackBar.isShown){
                 super.onBackPressed()
             }else{
-                snackbar.show()
+                snackBar.show()
             }
         }else{
             super.onBackPressed()

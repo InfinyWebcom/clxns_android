@@ -75,7 +75,7 @@
     <string name="DPDs">DPDs</string>
     <string name="principal_outstanding_amount">Principal Outstanding Amount</string>
     <string name="pin_code">Pincode</string>
-    <string name="type_new_address">Type new Address</string>
+    <string name="type_new_address">Type new address here…</string>
     <string name="location_verified">Location Check In</string>
     <string name="online">Online</string>
     <string name="cheque">Cheque</string>
@@ -170,6 +170,7 @@
     <string name="map">Map</string>
     <string name="select_date">Select date</string>
     <string name="cancel">Cancel</string>
+    <string name="update">Update</string>
 
     <string-array name="amount_type">
         <item>Select an Option</item>

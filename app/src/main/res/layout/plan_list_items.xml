@@ -46,25 +46,27 @@
                 android:ellipsize="end"
                 android:text="@string/dash"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@id/planStatusBagde"
-                app:layout_constraintEnd_toStartOf="@id/planStatusBagde"
+                app:layout_constraintBottom_toBottomOf="@id/planStatusBadge"
+                app:layout_constraintEnd_toStartOf="@id/planStatusBadge"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/planItemAmountTxt"
-                app:layout_constraintTop_toTopOf="@id/planStatusBagde" />
+                app:layout_constraintTop_toTopOf="@id/planStatusBadge" />
 
             <TextView
-                android:id="@+id/planStatusBagde"
+                android:id="@+id/planStatusBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp4"
                 android:background="@drawable/background_green_border"
-                android:backgroundTint="@color/quantum_grey400"
+                android:backgroundTint="@color/colorPrimaryVariant"
                 android:fontFamily="@font/gt_pro_medium"
                 android:paddingHorizontal="@dimen/dp8"
                 android:paddingVertical="5dp"
                 android:text="@string/status"
                 android:textColor="@color/white"
                 android:textSize="12sp"
+                android:maxLines="1"
+                android:ellipsize="end"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/planItemAmountTxt" />
 
@@ -82,7 +84,7 @@
                 app:drawableStartCompat="@drawable/ic_location_on_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/planStatusBagde" />
+                app:layout_constraintTop_toBottomOf="@id/planStatusBadge" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/planCallBtn"

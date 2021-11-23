@@ -71,7 +71,7 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                         casesDataList.addAll(dataList)
                         casesAdapter.notifyItemRangeChanged(0, dataList.size)
                     } else {
-                        binding.searchNoData.noDataTv.text = getString(R.string.no_data)
+                        binding.searchNoData.noDataTxt.text = getString(R.string.no_data)
                         binding.searchNoData.retryBtn.hide()
                         noDataLayout.show()
                         val size = casesDataList.size
@@ -82,7 +82,7 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                 is NetworkResult.Error -> {
                     noDataLayout.show()
                     searchRV.hide()
-                    binding.searchNoData.noDataTv.text = getString(R.string.something_went_wrong)
+                    binding.searchNoData.noDataTxt.text = getString(R.string.something_went_wrong)
                     binding.searchNoData.retryBtn.show()
                     binding.root.snackBar(it.message!!)
                 }

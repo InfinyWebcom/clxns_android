@@ -9,7 +9,6 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.clxns.app.BuildConfig
 import com.clxns.app.R
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.home.ActionsData
@@ -20,7 +19,6 @@ import com.clxns.app.data.preference.SessionManager
 import com.clxns.app.databinding.FragmentHomeBinding
 import com.clxns.app.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -50,13 +48,13 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
     private var toDate : String = ""
 
 //    @Inject
-//    lateinit var BASE_URL : String
+//    late init var BASE_URL : String
 
     override fun onCreateView(
         inflater : LayoutInflater,
         container : ViewGroup?,
         savedInstanceState : Bundle?
-    ) : View? {
+    ) : View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -65,12 +63,12 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
     override fun onViewCreated(view : View, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Temporary will be removed
-//        when(BASE_URL){
-//            BuildConfig.BASE_DEMO_URL -> {binding.apkTypeTxt.text = "DEMO"}
-//            BuildConfig.BASE_STAGING_URL -> {binding.apkTypeTxt.text = "STAGING"}
-//            BuildConfig.BASE_DEV_URL -> {binding.apkTypeTxt.text = "DEV"}
-//        }
+        // Temporary will be removed
+        // when(BASE_URL){
+        // BuildConfig.BASE_DEMO_URL -> {binding.apkTypeTxt.text = "DEMO"}
+        // BuildConfig.BASE_STAGING_URL -> {binding.apkTypeTxt.text = "STAGING"}
+        // BuildConfig.BASE_DEV_URL -> {binding.apkTypeTxt.text = "DEV"}
+        // }
 
         getHomeStatistics()
 
@@ -99,7 +97,7 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                         weekData = it.data.weekData!!
                         monthData = it.data.monthData!!
 
-                        //Updating UI for Today
+                        /* Updating UI for Month */
                         when {
                             binding.rbToday.isChecked -> {
                                 summaryData = todayData.summaryData!!
@@ -110,8 +108,6 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
                                 updateHomeStatsUI(weekData.actionsData!!, weekData.stats!!)
                             }
                             binding.rbMonth.isChecked -> {
-                                fromDate = getCalculatedDate(-31)
-                                toDate = getCalculatedDate(0)
                                 summaryData = monthData.summaryData!!
                                 updateHomeStatsUI(monthData.actionsData!!, monthData.stats!!)
                             }
@@ -138,10 +134,10 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
 
     private fun initView() {
         binding.homeDaysContainer.setOnCheckedChangeListener(this)
-        binding.usernameTv.text = sessionManager.getString(Constants.USER_NAME)
+        binding.usernameTxt.text = sessionManager.getString(Constants.USER_NAME)
         noDataLayout = binding.homeNoData.root
 
-        fromDate = getCalculatedDate(-31)
+        fromDate = getCalculatedDate(-30)
         toDate = getCalculatedDate(0)
     }
 

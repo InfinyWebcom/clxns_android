@@ -6,7 +6,7 @@
     android:gravity="center">
 
     <ImageView
-        android:id="@+id/no_data_img"
+        android:id="@+id/noDataImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -14,20 +14,20 @@
         android:src="@drawable/ic_no_data" />
 
     <TextView
-        android:id="@+id/no_data_tv"
+        android:id="@+id/noDataTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/no_data_img"
+        android:layout_below="@id/noDataImg"
         android:layout_centerHorizontal="true"
         android:text="@string/something_went_wrong"
         android:textAlignment="center"
         android:textSize="@dimen/sp18" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/retry_btn"
+        android:id="@+id/retryBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/no_data_tv"
+        android:layout_below="@id/noDataTxt"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp8"
         android:text="@string/retry"
