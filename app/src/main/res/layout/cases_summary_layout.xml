@@ -63,12 +63,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp12"
+                android:visibility="gone"
                 app:cardCornerRadius="@dimen/dp8"
                 app:cardElevation="2dp"
-                android:visibility="gone"
-                tools:visibility="visible"
                 app:rippleColor="@color/colorPrimary"
-                >
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -509,10 +508,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dp4"
-                            android:maxLines="1"
                             android:ellipsize="end"
                             android:fontFamily="@font/gt_pro_medium"
                             android:includeFontPadding="false"
+                            android:maxLines="1"
                             android:text="@string/settlement_foreclosure"
                             android:textSize="@dimen/sp14" />
                     </LinearLayout>

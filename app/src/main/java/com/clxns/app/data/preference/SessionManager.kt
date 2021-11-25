@@ -2,7 +2,6 @@ package com.clxns.app.data.preference
 
 import android.content.SharedPreferences
 import androidx.annotation.NonNull
-import timber.log.Timber
 import javax.inject.Inject
 
 class SessionManager @Inject constructor(private val sharedPreferences: SharedPreferences){
@@ -13,7 +12,7 @@ class SessionManager @Inject constructor(private val sharedPreferences: SharedPr
             is String -> editor.putString(key, value)
             is Boolean -> editor.putBoolean(key, value)
             is Long -> editor.putLong(key, value)
-            else -> Timber.i("Error saving data.")
+            else -> {}
         }
         editor.apply()
     }

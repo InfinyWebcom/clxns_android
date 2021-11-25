@@ -109,21 +109,6 @@ interface ApiService {
     suspend fun getBankList(@Header("token") token: String): Response<FISBankResponse>
 
     @FormUrlEncoded
-    @POST("fos/addPayment")
-    suspend fun addPayment(
-        @Header("token") token: String,
-        @Field("leadId") leadId: String,
-        @Field("loanNo") loanNo: String,
-        @Field("amtType") amtType: String,
-        @Field("paymentMode") paymentMode: String,
-        @Field("recoveryDate") recoveryDate: String,
-        @Field("refNo") refNo: String,
-        @Field("chequeNo") chequeNo: String,
-        @Field("remark") remark: String,
-        @Field("supporting[]") supporting: Array<String>
-    ): Response<HomeStatisticsResponse>
-
-    @FormUrlEncoded
     @POST("fos/leadContactUpdate")
     suspend fun leadContactUpdate(
         @Header("token") token: String,

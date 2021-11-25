@@ -12,7 +12,6 @@ import com.clxns.app.R
 import com.clxns.app.databinding.AddedImageBinding
 import com.clxns.app.utils.hide
 import com.clxns.app.utils.show
-import timber.log.Timber
 
 class AddImageAdapter(
     private var removePhotoListener : RemovePhotoListener,
@@ -48,7 +47,7 @@ class AddImageAdapter(
         } else {
             holder.addedImageBinding.imgAddedImage.background = ContextCompat.getDrawable(
                 ctx,
-                R.drawable.background_green_border
+                R.drawable.selected_radio_button
             )
             holder.addedImageBinding.imgCamera.show()
             holder.addedImageBinding.imgDeletePhoto.hide()

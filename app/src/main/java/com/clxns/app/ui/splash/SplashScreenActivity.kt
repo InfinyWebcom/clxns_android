@@ -19,7 +19,7 @@ class SplashScreenActivity : AppCompatActivity() {
     lateinit var binding: ActivitySplashScreenBinding
 
     @Inject
-    lateinit var sessionManager: SessionManager
+    lateinit var sessionManager: SessionManager //Property will be initialize by Preference Module using Hilt - Dependency Injection
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +27,7 @@ class SplashScreenActivity : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Checking if the user has already logged in the past, using shared preference and open new activity accordingly
         val isLoggedIn = sessionManager.getBoolean(Constants.IS_USER_LOGGED_IN)
         if (isLoggedIn) {
             openNewActivity(MainActivity())
@@ -35,6 +36,9 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * @param activity Passing New Activity Instance
+     */
     private fun openNewActivity(activity: AppCompatActivity) {
 
         Handler(Looper.getMainLooper()).postDelayed({
@@ -42,6 +46,6 @@ class SplashScreenActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
 
-        }, Constants.SPLASH_SCREEN_TIMEOUT)
+        }, Constants.SPLASH_SCREEN_TIMEOUT) //Delay of 1 Sec before starting the new activity
     }
 }

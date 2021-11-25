@@ -19,6 +19,7 @@ class AccountRepository @Inject constructor(
     private val localDataSource : LocalDataSource
 ) : BaseApiResponse() {
 
+    /* Network Calls */
     suspend fun logout(token : String) : Flow<NetworkResult<LogoutResponse>> {
         return flow {
             emit(safeApiCall { remoteDataSource.logout(token) })
@@ -31,6 +32,7 @@ class AccountRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    /* Local Calls */
     suspend fun getBankNameList() : Flow<List<String>> {
         return flow {
             emit(localDataSource.getBankNameList())

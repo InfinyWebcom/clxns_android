@@ -25,7 +25,7 @@
 
 
         <TextView
-            android:id="@+id/txtAppName"
+            android:id="@+id/checkInToolbarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/imgBack"
@@ -114,14 +114,14 @@
                     android:id="@+id/txtLocationVerification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/txtLocationCheckIn"
                     android:layout_toStartOf="@id/txtLocationCheckIn"
                     android:drawablePadding="@dimen/dp8"
+                    android:fontFamily="@font/gt_pro_medium"
                     android:gravity="center_vertical"
                     android:text="@string/location_verified"
                     android:textAllCaps="false"
-                    android:textColor="@color/text_black"
                     android:textSize="@dimen/sp16"
-                    android:textStyle="bold"
                     app:drawableStartCompat="@drawable/ic_baseline_cancel_24" />
 
 
@@ -130,8 +130,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/dp8"
+                    android:layout_marginEnd="0dp"
+                    android:background="@drawable/button_ripple"
                     android:gravity="center_vertical"
+                    android:padding="@dimen/dp8"
                     android:text="@string/check_in"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
@@ -146,20 +148,20 @@
                 android:id="@+id/relImageVerified"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp16">
+                android:layout_marginTop="@dimen/dp8">
 
                 <TextView
                     android:id="@+id/txtImageVerification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/txtImageVerify"
                     android:layout_toStartOf="@id/txtImageVerify"
                     android:drawablePadding="@dimen/dp8"
+                    android:fontFamily="@font/gt_pro_medium"
                     android:gravity="center_vertical"
                     android:text="@string/image_upload"
                     android:textAllCaps="false"
-                    android:textColor="@color/text_black"
                     android:textSize="@dimen/sp16"
-                    android:textStyle="bold"
                     app:drawableStartCompat="@drawable/ic_baseline_cancel_24" />
 
 
@@ -168,7 +170,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/dp8"
+                    android:background="@drawable/button_ripple"
+                    android:padding="@dimen/dp8"
+                    android:layout_marginEnd="0dp"
                     android:text="@string/upload"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary"
@@ -182,7 +186,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp10">
+                android:layout_marginTop="@dimen/dp8">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerAddImage"
@@ -194,15 +198,6 @@
 
 
             </LinearLayout>
-
-            <ImageView
-                android:id="@+id/verifiedImageUpload"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp200"
-                android:layout_margin="@dimen/dp16"
-                android:importantForAccessibility="no"
-                android:scaleType="fitCenter"
-                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/statusesRV"

@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp4"
-                android:background="@drawable/background_green_border"
+                android:background="@drawable/selected_radio_button"
                 android:backgroundTint="@color/colorPrimaryVariant"
                 android:fontFamily="@font/gt_pro_medium"
                 android:paddingHorizontal="@dimen/dp8"

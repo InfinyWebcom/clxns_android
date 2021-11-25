@@ -93,7 +93,7 @@
                 android:id="@+id/cases_plan_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/select_radio_color"
+                android:background="@drawable/selected_radio_button"
                 android:backgroundTint="@color/green"
                 android:paddingHorizontal="@dimen/dp16"
                 android:paddingVertical="@dimen/dp6"

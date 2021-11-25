@@ -2,8 +2,8 @@ package com.clxns.app.utils.support
 
 import android.graphics.Rect
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
 class GridSpacingItemDecoration(
     private val spanCount: Int,

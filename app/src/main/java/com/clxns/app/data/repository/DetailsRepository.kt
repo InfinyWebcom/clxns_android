@@ -5,8 +5,6 @@ import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.api.helper.RemoteDataSource
 import com.clxns.app.data.database.LocalDataSource
 import com.clxns.app.data.model.CaseDetailsResponse
-import com.clxns.app.data.model.Lead
-import com.clxns.app.data.model.MyPlanModel
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -21,6 +19,7 @@ class DetailsRepository @Inject constructor(
     private val localDataSource: LocalDataSource
 ) : BaseApiResponse() {
 
+    /* Network Calls */
     suspend fun getCaseDetails(token: String,loanAccountNumber: String): Flow<NetworkResult<CaseDetailsResponse>> {
         return flow {
             emit(safeApiCall { remoteDataSource.getCaseDetails(token,loanAccountNumber) })
@@ -33,7 +32,7 @@ class DetailsRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-
+    /* Local Calls */
     suspend fun getSubDispositionName(subDispositionId:Int) : Flow<String>{
         return flow {
             emit(localDataSource.getSubDispositionName(subDispositionId))

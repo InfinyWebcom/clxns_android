@@ -12,9 +12,6 @@ import com.clxns.app.utils.isValidEmail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 

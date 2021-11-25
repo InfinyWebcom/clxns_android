@@ -2,6 +2,7 @@ package com.clxns.app.data.database
 
 import javax.inject.Inject
 
+// This Local Data Source class is used for performing coroutines operation to fetch the data from the ROOM DB
 class LocalDataSource @Inject constructor(private val appDao: AppDao) {
 
     suspend fun saveAllDispositions(dispositionList: List<DispositionEntity>) =

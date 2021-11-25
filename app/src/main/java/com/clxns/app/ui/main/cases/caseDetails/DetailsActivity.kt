@@ -166,9 +166,17 @@ class DetailsActivity : AppCompatActivity() {
             if (binding.userDetailsContainer.isVisible) {
                 binding.showMoreTxt.text = getString(R.string.show_more)
                 binding.userDetailsContainer.hide()
+                binding.showMoreTxt.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    null, null,
+                    ContextCompat.getDrawable(this, R.drawable.ic_round_arrow_drop_down), null
+                )
             } else {
                 binding.showMoreTxt.text = getString(R.string.show_less)
                 binding.userDetailsContainer.show()
+                binding.showMoreTxt.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    null, null,
+                    ContextCompat.getDrawable(this, R.drawable.ic_round_arrow_drop_up_24), null
+                )
                 lifecycleScope.launch {
                     delay(100L)
                     binding.detailsScrollView.fullScroll(View.FOCUS_DOWN)

@@ -171,6 +171,8 @@
     <string name="select_date">Select date</string>
     <string name="cancel">Cancel</string>
     <string name="update">Update</string>
+    <string name="enter_cheque_no">Enter cheque no.</string>
+    <string name="enter_reference_no">Enter reference no.</string>
 
     <string-array name="amount_type">
         <item>Select an Option</item>

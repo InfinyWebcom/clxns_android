@@ -23,7 +23,8 @@ class CheckInRepository @Inject constructor(
 ) : BaseApiResponse() {
 
 
-    suspend fun saveCheckInData(
+    /* Network Calls */
+   suspend fun saveCheckInData(
         token: String,
         body: CaseCheckInBody
     ): Flow<NetworkResult<MyPlanModel>> {
@@ -60,7 +61,7 @@ class CheckInRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-
+    /* Local Calls */
     suspend fun getDispositionIdFromRoomDB(dispositionName: String): Flow<Int> {
         return flow {
             emit(localDataSource.getDispositionId(dispositionName))

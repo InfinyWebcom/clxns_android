@@ -37,16 +37,16 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
     private lateinit var casesAdapter: CasesAdapter
 
     @Inject
-    lateinit var sessionManager: SessionManager
+    lateinit var sessionManager: SessionManager //Property will be initialize by Preference Module using Hilt - Dependency Injection
 
     private lateinit var token: String
 
     private var searchTxt: String = ""
 
     private lateinit var searchRV: RecyclerView
-    private lateinit var noDataLayout: RelativeLayout
+    private lateinit var noDataLayout: RelativeLayout // This layout will be shown if any error has occurred or no data has been found
 
-    private lateinit var planStatusIntent: Intent
+    private lateinit var planStatusIntent: Intent //This is used for notifying the cases fragment if it needs to refresh the cases list
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -149,13 +149,13 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        token = sessionManager.getString(Constants.TOKEN).toString()
+        token = sessionManager.getString(Constants.TOKEN).toString() //Token required for the authentication for the network calls
 
         searchView = binding.searchView
         searchRV = binding.searchRecyclerView
         noDataLayout = binding.searchNoData.root
 
-        casesAdapter = CasesAdapter(this, casesDataList, this)
+        casesAdapter = CasesAdapter(this, casesDataList, this) //Passing the context, list data, and interface reference that is implemented by this activity
         searchRV.layoutManager = LinearLayoutManager(this)
         searchRV.adapter = casesAdapter
     }
@@ -166,6 +166,7 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         searchRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
+                //This helps in hiding the keyboard if it's opened when the user starts scrolling the list
                 if (searchView.hasFocus() && dy > 0) {
                     searchView.clearFocus()
                     this@SearchActivity.hideKeyboard(binding.root)
@@ -196,6 +197,8 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                     casesDataList.clear()
                     casesAdapter.notifyItemRangeRemoved(0, size)
                 } else {
+                    /* searchTxt is use for refreshing the list with last query searched,
+                    if the user has planned or unplanned the lead either from this activity or details activity */
                     searchTxt = newText
                 }
                 return false
@@ -204,6 +207,10 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         })
     }
 
+    /* This function is used for clearing all the data list and notifying the cases adapter to update the UI accordingly.
+    * Advantage of using this new notifying functions that you can see the smooth UI transition if implemented properly.
+    * If it's not implemented correctly you can get "Inconsistency Detected Crash Problem" while updating the list
+    * */
     private fun clearAndNotifyAdapter() {
         val size = casesDataList.size
         casesDataList.clear()
@@ -248,6 +255,9 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
             dialog.dismiss()
         }.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
 
+        /** Could have directly used the create() & show() method above itself but we wanted to customize the button appearance
+         * And the customization must be written after the show() function or else we'll get NPE
+         */
         val d = logoutDialog.create()
         d.show()
         d.getButton(AlertDialog.BUTTON_POSITIVE).isAllCaps = false
@@ -266,6 +276,7 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         binding.searchView.requestFocus()
     }
 
+    //Abstract method define in the Cases Adapter OnCaseItemClickListener
     override fun onPlanClick(isPlanned: Boolean, casesData: CasesData) {
         if (isPlanned) {
             showConfirmUnPlanDialog(casesData)
@@ -281,18 +292,20 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         isPlanned: Boolean
     ) {
         val intent = Intent(this, DetailsActivity::class.java)
-        intent.putExtra("loan_account_number", loadId)
-        intent.putExtra("status", dispositions)
+        intent.putExtra("loan_account_number", loadId) //Loan Id to fetch the lead's details in the detail activity
+        intent.putExtra("status", dispositions) //Disposition Status such as Collected, PTP, etc.
         intent.putExtra("name", name)
-        intent.putExtra("isPlanned", isPlanned)
-        intent.putExtra("isCaseDetail", true)
-        startDetailActivityForResult.launch(intent)
+        intent.putExtra("isPlanned", isPlanned) //Lead planned status
+        intent.putExtra("isCaseDetail", true) //Only set true if the user has opened the detail activity from cases fragment or search activity(this), used for hiding the check-in Button
+        startDetailActivityForResult.launch(intent) // Launching an intent using activity result api to get any data back to this activity
     }
 
+    //Used "Activity Result API" which is a replacement to an old method called "OnActivityResult" for getting any data back to calling activities
     private val startDetailActivityForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = it.data
+                //It's only true when the user has perform plan or unplanned action on the lead from the details activity
                 val status = data?.getBooleanExtra("hasChangedPlanStatus", false)
                 if (status == true) {
                     casesViewModel.getCasesList(

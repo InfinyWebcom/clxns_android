@@ -355,7 +355,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
                     openLocationToggleDialog()
                 }
             } else {
-                var isSelectedNeverAskAgain : Boolean = false
+                var isSelectedNeverAskAgain = false
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     isSelectedNeverAskAgain =
                         shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)

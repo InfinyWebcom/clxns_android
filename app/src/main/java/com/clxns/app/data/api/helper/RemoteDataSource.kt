@@ -4,6 +4,10 @@ import com.clxns.app.data.api.ApiService
 import com.clxns.app.data.model.cases.CaseCheckInBody
 import javax.inject.Inject
 
+/**
+ * Remote Data Source class with all the suspend function which can only be triggered using Coroutine on the independent background thread
+ * @param apiService Rest Api Implementation with all the endpoints required for this project
+ */
 class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
     suspend fun performLogin(emailId: String, password: String) =
@@ -76,22 +80,6 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
     suspend fun getHomeStatsData(token: String) = apiService.getHomeStatsData(token)
 
     suspend fun getBankList(token: String) = apiService.getBankList(token)
-
-    suspend fun addPayment(
-        token: String,
-        leadId: String,
-        loanNo: String,
-        amtType: String,
-        paymentMode: String,
-        recoveryDate: String,
-        refNo: String,
-        chequeNo: String,
-        remark: String,
-        supporting: Array<String>
-    ) = apiService.addPayment(
-        token, leadId, loanNo, amtType,
-        paymentMode, recoveryDate, refNo, chequeNo, remark, supporting
-    )
 
     suspend fun leadContactUpdate(
         token: String,

@@ -26,7 +26,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -133,9 +132,9 @@ class LoginActivity : AppCompatActivity() {
                     if (response.data?.error == false) {
                         val loginData = response.data.loginData
                         val name = loginData?.firstName + " " + loginData?.lastName
-                        binding.txtLogin.text = "Welcome $name"
+                        //binding.txtLogin.text = "Welcome $name"
                         sessionManager.saveAnyData(Constants.TOKEN, response.data.token!!)
-                        sessionManager.saveAnyData(Constants.USER_NAME, name)
+                        sessionManager.saveAnyData(Constants.USER_NAME, name.makeFirstLetterCapital())
                         sessionManager.saveAnyData(Constants.USER_ID, loginData!!.id)
                         sessionManager.saveAnyData(Constants.USER_EMPLOYEE_ID, loginData.employeeId)
                         sessionManager.saveAnyData(Constants.USER_DOB, loginData.dob)

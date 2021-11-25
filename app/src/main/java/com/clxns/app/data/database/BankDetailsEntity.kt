@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/** STEP 1 in implementing Room DB is to create entity classes
+ * It's nothing but designing your table or schema much like MySQL
+ */
 @Entity(tableName = "bank_details")
 data class BankDetailsEntity(
     @PrimaryKey(autoGenerate = false)

@@ -158,7 +158,7 @@ class AccountFragment : Fragment() {
                         val name = loginData?.firstName + " " + loginData?.lastName
                         val managerName =
                             loginData?.reportingDetails?.firstName + " " + loginData?.reportingDetails?.lastName
-                        sessionManager.saveAnyData(Constants.USER_NAME, name)
+                        sessionManager.saveAnyData(Constants.USER_NAME, name.makeFirstLetterCapital())
                         sessionManager.saveAnyData(
                             Constants.USER_EMPLOYEE_ID,
                             loginData?.employeeId!!
@@ -173,7 +173,7 @@ class AccountFragment : Fragment() {
                         sessionManager.saveAnyData(Constants.USER_MOBILE, loginData.phone)
                         sessionManager.saveAnyData(Constants.USER_ADDRESS, loginData.address)
                         sessionManager.saveAnyData(Constants.USER_LOCATION, loginData.location)
-                        sessionManager.saveAnyData(Constants.USER_REPORTING_MANAGER, managerName)
+                        sessionManager.saveAnyData(Constants.USER_REPORTING_MANAGER, managerName.makeFirstLetterCapital())
                         sessionManager.saveAnyData(
                             Constants.USER_REPORTING_MANAGER_CONTACT,
                             loginData.reportingDetails?.phone!!
@@ -197,9 +197,9 @@ class AccountFragment : Fragment() {
                     // update UI
                     requireContext().toast(response.data?.title!!)
                     if (response.data.error == false) {
-                        //clear token
-                        sessionManager.saveAnyData(Constants.TOKEN, "")
-                        sessionManager.saveAnyData(Constants.IS_USER_LOGGED_IN, false)
+                        //Removing authentication token
+                        sessionManager.removeData(Constants.IS_USER_LOGGED_IN)
+                        sessionManager.removeData(Constants.TOKEN)
                         //start login screen
                         val intent = Intent(requireActivity(), LoginActivity::class.java)
                         intent.flags =

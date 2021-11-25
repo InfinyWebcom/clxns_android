@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
-import com.clxns.app.data.model.MyPlanDataItem
 import com.clxns.app.data.model.MyPlanModel
 import com.clxns.app.data.repository.ListViewRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

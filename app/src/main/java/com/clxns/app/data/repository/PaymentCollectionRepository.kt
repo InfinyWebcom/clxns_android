@@ -29,28 +29,6 @@ class PaymentCollectionRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun addPayment(
-        token: String,
-        leadId: String,
-        loanNo: String,
-        amtType: String,
-        paymentMode: String,
-        recoveryDate: String,
-        refNo: String,
-        chequeNo: String,
-        remark: String,
-        supporting: Array<String>
-    ): Flow<NetworkResult<HomeStatisticsResponse>> {
-        return flow {
-            emit(safeApiCall {
-                remoteDataSource.addPayment(
-                    token, leadId, loanNo, amtType,
-                    paymentMode, recoveryDate, refNo, chequeNo, remark, supporting
-                )
-            })
-        }.flowOn(Dispatchers.IO)
-    }
-
     suspend fun saveCheckInData(
         token: String,
         body: CaseCheckInBody

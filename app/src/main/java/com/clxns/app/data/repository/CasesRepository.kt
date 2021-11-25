@@ -20,7 +20,7 @@ class CasesRepository @Inject constructor(
     private val localDataSource: LocalDataSource
 ) : BaseApiResponse() {
 
-    //Network Calls
+    /* Network Calls */
     suspend fun getCasesList(
         token: String,
         searchTxt: String,
@@ -63,7 +63,7 @@ class CasesRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    //Local Calls
+    /* Local Calls */
     suspend fun getAllDispositionsFromRoomDB(): Flow<List<String>> {
         return flow {
             emit(localDataSource.getAllDispositionsFromRoomDB())

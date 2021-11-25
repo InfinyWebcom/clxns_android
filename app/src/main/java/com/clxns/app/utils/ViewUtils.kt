@@ -48,6 +48,9 @@ class ViewUtils {
                 val networkCapabilities = connectivityManager.activeNetwork ?: return false
                 val activeNetwork =
                     connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+                if (!activeNetwork.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)){
+                    return false
+                }
                 result = when {
                     activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
                     activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true

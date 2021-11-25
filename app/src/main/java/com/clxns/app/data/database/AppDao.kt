@@ -2,14 +2,17 @@ package com.clxns.app.data.database
 
 import androidx.room.*
 
+/** STEP 2 in Implementing ROOM DB
+ * AppDao - Data Access Objects are the main classes where you define your database interactions. They can include a variety of query methods
+ */
 @Dao
 interface AppDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE) //If the same data already exists it will replace it with the current.
     suspend fun insertAllDispositions(dispositionEntity: DispositionEntity)
 
     @Transaction
     suspend fun createAllDispositions(dispositionList: List<DispositionEntity>) =
-        dispositionList.forEach { insertAllDispositions(it) }
+        dispositionList.forEach { insertAllDispositions(it) } //Traversing list of disposition data that contains (ID, NAME), and inserting it in the Room DB
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllSubDispositions(subDispositionEntity: SubDispositionEntity)

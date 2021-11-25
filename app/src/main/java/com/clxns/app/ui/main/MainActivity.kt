@@ -1,12 +1,12 @@
 package com.clxns.app.ui.main
 
-import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -32,6 +32,9 @@ import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -82,9 +85,17 @@ class MainActivity : AppCompatActivity() {
         //Will be removed
         //Timber.i("MAIN_TOKEN -> ${sessionManager.getString(Constants.TOKEN)!!}")
 
-        checkForAppUpdate()
+        lifecycleScope.launch {
+            checkForNewAppVersion()
+        }
         mainViewModel.getAllDispositions()
         mainViewModel.getBankList(token)
+    }
+
+    private suspend fun checkForNewAppVersion(){
+        withContext(Dispatchers.IO){
+            checkForAppUpdate()
+        }
     }
 
     override fun onNewIntent(intent : Intent?) {
