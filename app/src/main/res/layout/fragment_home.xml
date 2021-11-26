@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeParentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.home.HomeFragment">
+
+    <RelativeLayout
+        android:id="@+id/homeCustomToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/toolbar_background"
+        android:padding="@dimen/dp12">
+
+
+        <TextView
+            android:id="@+id/welcomeTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp12"
+            android:layout_toStartOf="@id/notification_btn"
+            android:includeFontPadding="false"
+            android:text="@string/welcome_back"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp12"
+            tools:ignore="TextContrastCheck" />
+
+
+        <TextView
+            android:id="@+id/usernameTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/welcomeTxt"
+            android:layout_marginStart="@dimen/dp12"
+            android:layout_toStartOf="@id/notification_btn"
+            android:includeFontPadding="false"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp22"
+            android:textStyle="bold"
+            tools:ignore="TextContrastCheck" />
+
+<!--        <com.google.android.material.card.MaterialCardView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/apkTypeCard"-->
+<!--            app:cardCornerRadius="@dimen/dp18"-->
+<!--            app:cardBackgroundColor="@color/colorPrimaryVariant"-->
+<!--            android:layout_alignTop="@+id/tv_welcome"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginEnd="@dimen/dp4">-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/apkTypeTxt"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:paddingHorizontal="@dimen/dp12"-->
+<!--                android:paddingVertical="@dimen/dp8"-->
+<!--                android:textSize="@dimen/sp14"/>-->
+<!--        </com.google.android.material.card.MaterialCardView>-->
+
+        <ImageView
+            android:id="@+id/notification_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/welcomeTxt"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/dp4"
+            android:background="?android:selectableItemBackgroundBorderless"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_notifications_24"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:tint="@color/white"
+            tools:ignore="ImageContrastCheck" />
+
+
+    </RelativeLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/homeSwipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/homeCustomToolbar">
+
+        <ScrollView
+            android:id="@+id/homeScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="visible"
+            tools:ignore="SpeakableTextPresentCheck">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioGroup
+                    android:id="@+id/home_days_container"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp48"
+                    android:layout_margin="@dimen/dp12"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/rbMonth"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp4"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_rb_selection"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/this_month"
+                        android:textAllCaps="true"
+                        android:textColor="@drawable/radio_text_color_state"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/rbWeek"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp4"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_rb_selection"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/this_week"
+                        android:textAllCaps="true"
+                        android:textColor="@drawable/radio_text_color_state"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+                    <RadioButton
+                        android:id="@+id/rbToday"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp4"
+                        android:layout_weight="1"
+                        android:background="@drawable/background_rb_selection"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/today"
+                        android:textAllCaps="true"
+                        android:textColor="@drawable/radio_text_color_state"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+
+                </RadioGroup>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/my_stats_container"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp16"
+                    app:cardCornerRadius="@dimen/dp24"
+                    app:cardElevation="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/home_days_container">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@drawable/cases_summary_background"
+                        >
+
+                        <TextView
+                            android:id="@+id/my_stats_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gt_pro_medium"
+                            android:gravity="center"
+                            android:text="@string/my_statistics"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp18"
+                            android:padding="@dimen/dp6"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:baselineAligned="false">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                >
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/cases_allocated"
+                                android:textSize="@dimen/sp18"
+                                android:padding="@dimen/dp4"
+                                android:textColor="@color/quantum_grey100"
+                                android:gravity="center_horizontal"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
+
+                            <TextView
+                                android:id="@+id/cases_allocated_count_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingBottom="@dimen/dp16"
+                                android:paddingStart="@dimen/dp16"
+                                android:paddingEnd="@dimen/dp16"
+                                android:paddingTop="@dimen/dp8"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="center"
+                                android:text="@string/zero"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp30" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                >
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/total_pos"
+                                    android:textSize="@dimen/sp18"
+                                    android:textColor="@color/quantum_grey100"
+                                    android:padding="@dimen/dp4"
+                                    android:gravity="center_horizontal"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
+
+                                <TextView
+                                    android:id="@+id/total_pos_amount_tv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:paddingBottom="@dimen/dp16"
+                                    android:paddingStart="@dimen/dp16"
+                                    android:paddingEnd="@dimen/dp16"
+                                    android:paddingTop="@dimen/dp8"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:gravity="center"
+                                    android:text="@string/zero"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/sp30" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:baselineAligned="false">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                >
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/total_due_amount"
+                                    android:textSize="@dimen/sp18"
+                                    android:padding="@dimen/dp4"
+                                    android:textColor="@color/quantum_grey100"
+                                    android:gravity="center_horizontal"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
+
+                                <TextView
+                                    android:id="@+id/total_due_amount_tv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:paddingBottom="@dimen/dp16"
+                                    android:paddingStart="@dimen/dp16"
+                                    android:paddingEnd="@dimen/dp16"
+                                    android:paddingTop="@dimen/dp8"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:gravity="center"
+                                    android:text="@string/zero"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/sp30" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                >
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/amount_recovered"
+                                    android:textSize="@dimen/sp18"
+                                    android:padding="@dimen/dp4"
+                                    android:gravity="center_horizontal"
+                                    android:textColor="@color/quantum_grey100"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@id/my_stats_tv" />
+
+                                <TextView
+                                    android:id="@+id/amount_collected_tv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:paddingBottom="@dimen/dp16"
+                                    android:paddingStart="@dimen/dp16"
+                                    android:paddingEnd="@dimen/dp16"
+                                    android:paddingTop="@dimen/dp8"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:gravity="center"
+                                    android:text="@string/zero"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/sp30" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/summary_card_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dp12"
+                            android:background="@drawable/button_ripple"
+                            android:fontFamily="@font/gt_pro_medium"
+                            android:text="@string/summary"
+                            android:textColor="@color/colorPrimaryVariant"
+                            android:textSize="@dimen/sp20"
+                            app:drawableEndCompat="@drawable/ic_arrow_forward_20"
+                            app:drawableTint="@color/colorPrimaryVariant" />
+
+                    </LinearLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:id="@+id/summary_card_view"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="@dimen/dp16"-->
+<!--                    android:backgroundTint="@color/white"-->
+<!--                    app:cardCornerRadius="@dimen/dp24"-->
+<!--                    app:cardElevation="4dp"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/my_stats_container"-->
+<!--                    app:rippleColor="@color/colorSecondaryVariant">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/summary_tv"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_margin="@dimen/dp12"-->
+<!--                        android:fontFamily="@font/gt_pro_medium"-->
+<!--                        android:text="@string/summary"-->
+<!--                        android:textColor="@color/colorPrimaryVariant"-->
+<!--                        android:textSize="@dimen/sp20"-->
+<!--                        app:drawableEndCompat="@drawable/ic_arrow_forward_20"-->
+<!--                        app:drawableTint="@color/colorPrimaryVariant" />-->
+<!--                </com.google.android.material.card.MaterialCardView>-->
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp24"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginBottom="@dimen/dp16"
+                    app:cardCornerRadius="@dimen/dp24"
+                    app:cardElevation="4dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/my_stats_container"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/action_pending_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/gt_pro_medium"
+                            android:gravity="center"
+                            android:background="@drawable/cases_summary_background"
+                            android:textColor="@color/white"
+                            android:padding="@dimen/dp6"
+                            android:text="@string/actions_pending"
+                            android:textSize="@dimen/sp18" />
+
+                        <LinearLayout
+                            android:id="@+id/visit_pending_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/button_ripple"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp16">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/visit_pending"
+                                android:textSize="@dimen/sp16" />
+
+                            <TextView
+                                android:id="@+id/visit_pending_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="end"
+                                android:paddingStart="@dimen/dp8"
+                                android:paddingEnd="@dimen/dp8"
+                                android:text="@string/zero"
+                                android:textColor="@color/red_orange"
+                                android:textSize="@dimen/sp30" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".2"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_arrow_forward_20" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/follow_up_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/button_ripple"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp16">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="@string/follow_ups"
+                                android:textSize="@dimen/sp16" />
+
+                            <TextView
+                                android:id="@+id/follow_up_tv"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="end"
+                                android:paddingStart="@dimen/dp8"
+                                android:paddingEnd="@dimen/dp8"
+                                android:text="@string/zero"
+                                android:textColor="@color/red_orange"
+                                android:textSize="@dimen/sp30" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".2"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/ic_arrow_forward_20" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <ProgressBar
+        android:id="@+id/home_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/home_no_data"
+        layout="@layout/no_data_layout"
+        android:visibility="gone" />
+</RelativeLayout>
