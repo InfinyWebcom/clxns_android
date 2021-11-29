@@ -12,8 +12,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class AddMobileOrAddressBottomSheet(private val listener: OnClick) : BottomSheetDialogFragment() {
 
-    lateinit var ctx: Context
-    lateinit var sheetDialogBinding: FragmentAddMobileAddressBottomSheetDialogBinding
+    private lateinit var ctx: Context
+    private lateinit var sheetDialogBinding: FragmentAddMobileAddressBottomSheetDialogBinding
     private var isMobile = false
 
 

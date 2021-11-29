@@ -149,6 +149,7 @@
         <entry key="app/src/main/res/drawable/ic_close_black_24dp.xml" value="0.32916666666666666" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.17962962962962964" />
         <entry key="app/src/main/res/drawable/ic_email_24.xml" value="0.1648148148148148" />
+        <entry key="app/src/main/res/drawable/ic_follow_up.xml" value="0.17314814814814813" />
         <entry key="app/src/main/res/drawable/ic_forgot_password.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.140234375" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.140234375" />
@@ -241,7 +242,7 @@
         <entry key="app/src/main/res/layout/no_data_layout.xml" value="0.3143518518518518" />
         <entry key="app/src/main/res/layout/plan_list_items.xml" value="0.3143518518518518" />
         <entry key="app/src/main/res/layout/status_items.xml" value="0.3143518518518518" />
-        <entry key="app/src/main/res/layout/sub_status_action_bottom_sheet.xml" value="0.3541666666666667" />
+        <entry key="app/src/main/res/layout/sub_status_action_bottom_sheet.xml" value="0.17314814814814813" />
         <entry key="app/src/main/res/layout/sub_status_item.xml" value="0.144921875" />
         <entry key="app/src/main/res/menu/account_menu.xml" value="0.3148148148148148" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.17083333333333334" />

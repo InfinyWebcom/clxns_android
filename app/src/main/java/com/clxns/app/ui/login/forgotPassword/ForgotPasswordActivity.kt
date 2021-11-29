@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import com.clxns.app.R
@@ -259,6 +260,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         val d = exitDialog.create()
         d.show()
         d.getButton(AlertDialog.BUTTON_POSITIVE).isAllCaps = false
+        d.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.light_red))
         d.getButton(AlertDialog.BUTTON_NEGATIVE).isAllCaps = false
     }
 

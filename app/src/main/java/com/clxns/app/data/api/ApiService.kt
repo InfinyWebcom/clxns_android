@@ -88,7 +88,7 @@ interface ApiService {
     @POST("fos/saveCheckinData")
     suspend fun saveCheckInData(
         @Header("token") token: String,
-        @Body() body: CaseCheckInBody
+        @Body body: CaseCheckInBody
     ): Response<MyPlanModel>
 
     @POST("fos/getUserDetails")

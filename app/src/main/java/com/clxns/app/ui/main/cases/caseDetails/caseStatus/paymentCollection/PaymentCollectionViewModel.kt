@@ -5,10 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
-import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.data.model.MyPlanModel
 import com.clxns.app.data.model.cases.CaseCheckInBody
-import com.clxns.app.data.model.home.HomeStatisticsResponse
 import com.clxns.app.data.repository.PaymentCollectionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -24,22 +22,6 @@ class PaymentCollectionViewModel @Inject constructor(
     var dispositionId : String? = null
     var location : String? = null
     lateinit var mainSupporting : ArrayList<String>
-
-    private val _responseCaseDetails : MutableLiveData<NetworkResult<CaseDetailsResponse>> =
-        MutableLiveData()
-    val responseCaseDetails : LiveData<NetworkResult<CaseDetailsResponse>> = _responseCaseDetails
-
-    fun getCaseDetails(token : String, loanAccountNumber : String) = viewModelScope.launch {
-        _responseCaseDetails.value = NetworkResult.Loading()
-        repository.getCaseDetails(token, loanAccountNumber).collect { values ->
-            _responseCaseDetails.value = values
-        }
-    }
-
-    private val _responseAddPayment : MutableLiveData<NetworkResult<HomeStatisticsResponse>> =
-        MutableLiveData()
-    val responseAddPayment : LiveData<NetworkResult<HomeStatisticsResponse>> = _responseAddPayment
-
 
     private val _responseSaveCheckIn : MutableLiveData<NetworkResult<MyPlanModel>> =
         MutableLiveData()

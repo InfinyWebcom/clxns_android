@@ -183,10 +183,10 @@
             android:backgroundTint="@color/white"
             android:text="@string/reset"
             android:textAllCaps="false"
-            android:textColor="@color/red"
+            android:textColor="@color/light_red"
             android:textSize="@dimen/sp18"
-            app:rippleColor="@color/red"
-            app:strokeColor="@color/red"
+            app:rippleColor="@color/light_red"
+            app:strokeColor="@color/light_red"
             app:strokeWidth="@dimen/dp1" />
 
         <com.google.android.material.button.MaterialButton

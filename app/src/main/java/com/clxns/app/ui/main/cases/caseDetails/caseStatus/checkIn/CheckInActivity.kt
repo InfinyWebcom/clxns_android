@@ -193,7 +193,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         binding.statusesRV.apply {
             layoutManager = GridLayoutManager(context, 3)
             addItemDecoration(GridSpacingItemDecoration(3, 40, true))
-            adapter = StatusAdapter(context, statusList, this@CheckInActivity)
+            adapter = StatusAdapter(statusList, this@CheckInActivity)
         }
     }
 
@@ -461,7 +461,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
             binding.txtImageVerify.setTextColor(
                 ContextCompat.getColor(
                     this,
-                    R.color.red
+                    R.color.light_red
                 )
             )
         } else {
@@ -501,7 +501,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         d.show()
         d.getButton(AlertDialog.BUTTON_POSITIVE).isAllCaps = false
         d.getButton(AlertDialog.BUTTON_POSITIVE)
-            .setTextColor(ContextCompat.getColorStateList(this, R.color.red))
+            .setTextColor(ContextCompat.getColorStateList(this, R.color.light_red))
         d.getButton(AlertDialog.BUTTON_NEGATIVE).isAllCaps = false
     }
 

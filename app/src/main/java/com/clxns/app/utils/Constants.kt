@@ -3,8 +3,8 @@ package com.clxns.app.utils
 import com.clxns.app.BuildConfig
 
 object Constants {
-    const val BANK_LOGO_URL = BuildConfig.BASE_PROD_URL + "fis_Logo/"
-    const val PROFILE_IMAGE_URL = BuildConfig.BASE_PROD_URL + "fis_Image/"
+    const val BANK_LOGO_URL = BuildConfig.BASE_DEV_URL + "fis_Logo/"
+    const val PROFILE_IMAGE_URL = BuildConfig.BASE_DEV_URL + "fis_Image/"
     const val SUPPORTING_IMAGE_URL = BuildConfig.BASE_STAGING_URL + "supportings/"
     const val DATABASE_NAME = "collections_database"
     const val PREF_NAME = "clxns_pref_${BuildConfig.APPLICATION_ID}"

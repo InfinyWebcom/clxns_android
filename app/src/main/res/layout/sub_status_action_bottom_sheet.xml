@@ -398,9 +398,9 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
                     android:text="@string/cancel"
-                    android:textColor="@color/red"
-                    app:rippleColor="@color/red"
-                    app:strokeColor="@color/red"
+                    android:textColor="@color/light_red"
+                    app:rippleColor="@color/light_red"
+                    app:strokeColor="@color/light_red"
                     android:textAllCaps="false"
                     app:strokeWidth="@dimen/dp1" />
 

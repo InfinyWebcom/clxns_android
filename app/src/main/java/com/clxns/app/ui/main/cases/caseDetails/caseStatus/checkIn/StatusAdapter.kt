@@ -1,6 +1,5 @@
 package com.clxns.app.ui.main.cases.caseDetails.caseStatus.checkIn
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +9,6 @@ import com.clxns.app.utils.preventDoubleClick
 
 
 class StatusAdapter(
-    private val context: Context,
     private val statusList: ArrayList<StatusModel>,
     private val onStatusListener: OnStatusListener
 ) :

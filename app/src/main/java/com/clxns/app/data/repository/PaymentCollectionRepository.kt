@@ -6,7 +6,6 @@ import com.clxns.app.data.api.helper.RemoteDataSource
 import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.data.model.MyPlanModel
 import com.clxns.app.data.model.cases.CaseCheckInBody
-import com.clxns.app.data.model.home.HomeStatisticsResponse
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -19,15 +18,6 @@ import javax.inject.Inject
 class PaymentCollectionRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) : BaseApiResponse() {
-
-    suspend fun getCaseDetails(
-        token: String,
-        loanAccountNumber: String
-    ): Flow<NetworkResult<CaseDetailsResponse>> {
-        return flow {
-            emit(safeApiCall { remoteDataSource.getCaseDetails(token, loanAccountNumber) })
-        }.flowOn(Dispatchers.IO)
-    }
 
     suspend fun saveCheckInData(
         token: String,

@@ -52,15 +52,6 @@ class CheckInRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getCaseDetails(
-        token: String,
-        loanAccountNumber: String
-    ): Flow<NetworkResult<CaseDetailsResponse>> {
-        return flow {
-            emit(safeApiCall { remoteDataSource.getCaseDetails(token, loanAccountNumber) })
-        }.flowOn(Dispatchers.IO)
-    }
-
     /* Local Calls */
     suspend fun getDispositionIdFromRoomDB(dispositionName: String): Flow<Int> {
         return flow {

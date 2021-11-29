@@ -24,19 +24,19 @@ class OTPTextWatcher(private val editText: Array<TextInputEditText>, private val
             }
             R.id.otpET2 -> {
                 if (otp.length == 1)
-                    editText[2].requestFocus();
+                    editText[2].requestFocus()
                 else if (otp.isEmpty())
-                    editText[0].requestFocus();
+                    editText[0].requestFocus()
             }
             R.id.otpET3 -> {
                 if (otp.length == 1)
-                    editText[3].requestFocus();
+                    editText[3].requestFocus()
                 else if (otp.isEmpty())
-                    editText[1].requestFocus();
+                    editText[1].requestFocus()
             }
             R.id.otpET4 -> {
                 if (otp.isEmpty())
-                    editText[2].requestFocus();
+                    editText[2].requestFocus()
             }
         }
     }

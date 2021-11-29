@@ -33,14 +33,12 @@
     <string name="follow_ups">Follow Ups</string>
     <string name="actions_pending">Actions Pending</string>
     <string name="amount_recovered">Amount Recovered</string>
-    <string name="total_due">Total Due</string>
     <string name="total_pos">Total POS</string>
     <string name="notifications">Notifications</string>
     <string name="my_cases">My Cases</string>
     <string name="filter">Filter</string>
     <string name="search_hint_txt">Search by Loan Id/Name/Mobile/Pincode</string>
     <string name="account">Account</string>
-    <string name="profile">Profile</string>
     <string name="select_bank">Select Bank</string>
     <string name="profile_subtitle">CLXNS Technologies Pvt. Ltd.</string>
     <string name="logout">Logout</string>
@@ -53,11 +51,8 @@
     <string name="reset">Reset</string>
     <string name="apply">Apply</string>
     <string name="search_cases">Search Cases</string>
-    <string name="refresh">Refresh</string>
-    <string name="followup">Follow Up</string>
     <string name="check_in">Check In</string>
     <string name="checked_in">Checked In</string>
-    <string name="create_route">Create Route</string>
     <string name="my_plans">My Plans</string>
     <string name="cases_summary">Cases Summary</string>
 
@@ -75,7 +70,7 @@
     <string name="DPDs">DPDs</string>
     <string name="principal_outstanding_amount">Principal Outstanding Amount</string>
     <string name="pin_code">Pincode</string>
-    <string name="type_new_address">Type new address here…</string>
+    <string name="type_new_address">Type new Address</string>
     <string name="location_verified">Location Check In</string>
     <string name="online">Online</string>
     <string name="cheque">Cheque</string>
@@ -88,7 +83,6 @@
     <string name="greater_than_80"><![CDATA[80% >]]></string>
     <string name="interest_due_amount">Interest Due Amount</string>
     <string name="late_fee_penal_charges">Late Fee/Penal Charges</string>
-    <string name="we_will_send_you_an_one_time_password_on_this_mobile_number">We will send you an <b>One Time Password</b> on this email</string>
     <string name="profile_image">Profile Image</string>
     <string name="manager_contact_none">Manager Contact : None</string>
     <string name="reporting_manager_none">Reporting Manager : None</string>
@@ -146,7 +140,6 @@
     <string name="reference_no">Reference No.</string>
     <string name="remarks">Remarks</string>
     <string name="upload_supporting">Upload Supporting</string>
-    <string name="plan_list_is_empty">Plan list is empty</string>
     <string name="probability">Probability</string>
     <string name="between_50_80">50% - 80%</string>
     <string name="reference_cheque_no">Reference/Cheque No.</string>
@@ -174,15 +167,16 @@
     <string name="enter_cheque_no">Enter cheque no.</string>
     <string name="enter_reference_no">Enter reference no.</string>
 
+
+    <string-array name="settlement_amount_type">
+        <item>Settlement/Foreclosure Amount</item>
+    </string-array>
+
     <string-array name="amount_type">
         <item>Select an Option</item>
         <item>Total Due Amount</item>
         <item>Principal Outstanding Amount (POS)</item>
         <item>Settlement Amount (if different from POS)</item>
-    </string-array>
-
-    <string-array name="settlement_amount_type">
-        <item>Settlement/Foreclosure Amount</item>
     </string-array>
 
     <string-array name="dispute_amount_type">
