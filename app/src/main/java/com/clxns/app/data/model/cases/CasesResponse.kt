@@ -7,13 +7,13 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class CasesResponse(
     @Json(name = "collectable")
-    val collectable: Int?,
+    val collectable : Int?,
     @Json(name = "data")
-    val casesDataList: List<CasesData>,
+    val casesDataList : List<CasesData>,
     @Json(name = "error")
-    val error: Boolean,
+    val error : Boolean,
     @Json(name = "title")
-    val title: String,
+    val title : String,
     @Json(name = "total")
-    val total: Int
+    val total : Int
 )

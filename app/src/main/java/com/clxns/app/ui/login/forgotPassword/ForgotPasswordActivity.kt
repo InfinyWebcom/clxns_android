@@ -260,7 +260,8 @@ class ForgotPasswordActivity : AppCompatActivity() {
         val d = exitDialog.create()
         d.show()
         d.getButton(AlertDialog.BUTTON_POSITIVE).isAllCaps = false
-        d.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(this, R.color.light_red))
+        d.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(ContextCompat.getColor(this, R.color.light_red))
         d.getButton(AlertDialog.BUTTON_NEGATIVE).isAllCaps = false
     }
 

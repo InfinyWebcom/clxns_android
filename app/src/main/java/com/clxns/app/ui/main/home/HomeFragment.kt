@@ -190,32 +190,37 @@ class HomeFragment : Fragment(), RadioGroup.OnCheckedChangeListener {
     override fun onCheckedChanged(group : RadioGroup?, checkedId : Int) {
         when (checkedId) {
             R.id.rbToday -> {
-                actionsData = todayData.actionsData!!
-                statsData = todayData.stats!!
-                summaryData = todayData.summaryData!!
+                if (::todayData.isInitialized) {
+                    actionsData = todayData.actionsData!!
+                    statsData = todayData.stats!!
+                    summaryData = todayData.summaryData!!
 
-                fromDate = getCalculatedDate(0)
-                toDate = getCalculatedDate(0)
-                updateHomeStatsUI(actionsData, statsData)
+                    fromDate = getCalculatedDate(0)
+                    toDate = getCalculatedDate(0)
+                    updateHomeStatsUI(actionsData, statsData)
+                }
             }
             R.id.rbWeek -> {
-                actionsData = weekData.actionsData!!
-                statsData = weekData.stats!!
-                summaryData = weekData.summaryData!!
+                if (::weekData.isInitialized) {
+                    actionsData = weekData.actionsData!!
+                    statsData = weekData.stats!!
+                    summaryData = weekData.summaryData!!
 
-                fromDate = getCalculatedDate(-6)
-                toDate = getCalculatedDate(0)
-                updateHomeStatsUI(actionsData, statsData)
+                    fromDate = getCalculatedDate(-6)
+                    toDate = getCalculatedDate(0)
+                    updateHomeStatsUI(actionsData, statsData)
+                }
             }
             R.id.rbMonth -> {
-                actionsData = monthData.actionsData!!
-                statsData = monthData.stats!!
-                summaryData = monthData.summaryData!!
+                if (::monthData.isInitialized) {
+                    actionsData = monthData.actionsData!!
+                    statsData = monthData.stats!!
+                    summaryData = monthData.summaryData!!
 
-
-                fromDate = getCalculatedDate(-30)
-                toDate = getCalculatedDate(0)
-                updateHomeStatsUI(actionsData, statsData)
+                    fromDate = getCalculatedDate(-30)
+                    toDate = getCalculatedDate(0)
+                    updateHomeStatsUI(actionsData, statsData)
+                }
             }
         }
     }

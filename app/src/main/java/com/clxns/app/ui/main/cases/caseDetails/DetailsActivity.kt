@@ -371,7 +371,7 @@ class DetailsActivity : AppCompatActivity() {
 
         val updatedDueAmount = totalDueAmount - collectedAmount
         binding.totalDueAmountValue.text = checkIfAmountValueIsZero(updatedDueAmount.toString())
-        if (updatedDueAmount == 0){
+        if (updatedDueAmount == 0) {
             updatePlanButtonUI(R.color.quantum_grey400)
             binding.detailsPlanBtn.isEnabled = false
         }
@@ -464,9 +464,9 @@ class DetailsActivity : AppCompatActivity() {
                 color
             )
         )
-        if (isPlanned){
+        if (isPlanned) {
             binding.detailsPlanBtn.text = getString(R.string.un_plan)
-        }else{
+        } else {
             binding.detailsPlanBtn.text = getString(R.string.plan)
         }
     }

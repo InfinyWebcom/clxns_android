@@ -158,7 +158,10 @@ class AccountFragment : Fragment() {
                         val name = loginData?.firstName + " " + loginData?.lastName
                         val managerName =
                             loginData?.reportingDetails?.firstName + " " + loginData?.reportingDetails?.lastName
-                        sessionManager.saveAnyData(Constants.USER_NAME, name.makeFirstLetterCapital())
+                        sessionManager.saveAnyData(
+                            Constants.USER_NAME,
+                            name.makeFirstLetterCapital()
+                        )
                         sessionManager.saveAnyData(
                             Constants.USER_EMPLOYEE_ID,
                             loginData?.employeeId!!
@@ -173,7 +176,10 @@ class AccountFragment : Fragment() {
                         sessionManager.saveAnyData(Constants.USER_MOBILE, loginData.phone)
                         sessionManager.saveAnyData(Constants.USER_ADDRESS, loginData.address)
                         sessionManager.saveAnyData(Constants.USER_LOCATION, loginData.location)
-                        sessionManager.saveAnyData(Constants.USER_REPORTING_MANAGER, managerName.makeFirstLetterCapital())
+                        sessionManager.saveAnyData(
+                            Constants.USER_REPORTING_MANAGER,
+                            managerName.makeFirstLetterCapital()
+                        )
                         sessionManager.saveAnyData(
                             Constants.USER_REPORTING_MANAGER_CONTACT,
                             loginData.reportingDetails?.phone!!

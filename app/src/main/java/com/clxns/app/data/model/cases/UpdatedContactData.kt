@@ -8,15 +8,15 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class UpdatedContactData(
     @Json(name = "content")
-    val content: String,
+    val content : String,
     @Json(name = "createdAt")
-    val createdAt: String,
+    val createdAt : String,
     @Json(name = "id")
-    val id: Int,
+    val id : Int,
     @Json(name = "leadId")
-    val leadId: Int,
+    val leadId : Int,
     @Json(name = "type")
-    val type: String,
+    val type : String,
     @Json(name = "updatedAt")
-    val updatedAt: String
+    val updatedAt : String
 ) : Serializable

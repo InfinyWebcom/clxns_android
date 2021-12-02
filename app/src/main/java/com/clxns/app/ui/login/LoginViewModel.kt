@@ -17,23 +17,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repository: LoginRepository
+    private val repository : LoginRepository
 ) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
-    val loginFormState: LiveData<LoginFormState> = _loginForm
+    val loginFormState : LiveData<LoginFormState> = _loginForm
 
-    private val _response: MutableLiveData<NetworkResult<LoginResponse>> = MutableLiveData()
-    val response: LiveData<NetworkResult<LoginResponse>> = _response
+    private val _response : MutableLiveData<NetworkResult<LoginResponse>> = MutableLiveData()
+    val response : LiveData<NetworkResult<LoginResponse>> = _response
 
-    fun performLogin(emailId: String, password: String) = viewModelScope.launch {
+    fun performLogin(emailId : String, password : String) = viewModelScope.launch {
         _response.value = NetworkResult.Loading()
         repository.performLogin(emailId, password).collect { values ->
             _response.value = values
         }
     }
 
-    fun loginDataChanged(emailId: String, password: String) {
+    fun loginDataChanged(emailId : String, password : String) {
         if (!isEmailAddressValid(emailId)) {
             _loginForm.value =
                 LoginFormState(emailAddressError = R.string.invalid_email, isDataValid = false)
@@ -48,11 +48,11 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun isValidPassword(password: String): Boolean {
+    private fun isValidPassword(password : String) : Boolean {
         return password.contains(Regex("^(?=\\S+$).{0,50}$"))
     }
 
-    private fun isEmailAddressValid(emailId: String): Boolean {
+    private fun isEmailAddressValid(emailId : String) : Boolean {
         return emailId.isValidEmail()
     }
 }

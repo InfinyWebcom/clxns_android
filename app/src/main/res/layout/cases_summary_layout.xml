@@ -41,9 +41,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/dp6"
                 android:importantForAccessibility="no"
-                android:src="@drawable/ic_close_black_24dp"
-                app:tint="@color/text_black"
-                tools:ignore="RedundantDescriptionCheck" />
+                android:src="@drawable/ic_close_black_24dp" />
         </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
 

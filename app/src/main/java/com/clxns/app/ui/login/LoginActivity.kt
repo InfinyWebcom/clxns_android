@@ -30,19 +30,19 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
-    private val loginViewModel: LoginViewModel by viewModels()
+    private val loginViewModel : LoginViewModel by viewModels()
 
-    private lateinit var binding: ActivityLoginBinding
+    private lateinit var binding : ActivityLoginBinding
 
-    private lateinit var loginBtn: MaterialButton
-    private lateinit var emailET: TextInputEditText
-    private lateinit var emailIL: TextInputLayout
-    private lateinit var passwordET: TextInputEditText
-    private lateinit var passwordIL: TextInputLayout
+    private lateinit var loginBtn : MaterialButton
+    private lateinit var emailET : TextInputEditText
+    private lateinit var emailIL : TextInputLayout
+    private lateinit var passwordET : TextInputEditText
+    private lateinit var passwordIL : TextInputLayout
 
     @Inject
-    lateinit var sessionManager: SessionManager
-    override fun onCreate(savedInstanceState: Bundle?) {
+    lateinit var sessionManager : SessionManager
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -90,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
                     emailET.text.toString(),
                     passwordET.text.toString()
                 )
-            }else{
+            } else {
                 binding.root.snackBar("Fields cannot be empty")
             }
 
@@ -134,7 +134,10 @@ class LoginActivity : AppCompatActivity() {
                         val name = loginData?.firstName + " " + loginData?.lastName
                         //binding.txtLogin.text = "Welcome $name"
                         sessionManager.saveAnyData(Constants.TOKEN, response.data.token!!)
-                        sessionManager.saveAnyData(Constants.USER_NAME, name.makeFirstLetterCapital())
+                        sessionManager.saveAnyData(
+                            Constants.USER_NAME,
+                            name.makeFirstLetterCapital()
+                        )
                         sessionManager.saveAnyData(Constants.USER_ID, loginData!!.id)
                         sessionManager.saveAnyData(Constants.USER_EMPLOYEE_ID, loginData.employeeId)
                         sessionManager.saveAnyData(Constants.USER_DOB, loginData.dob)
@@ -203,15 +206,21 @@ class LoginActivity : AppCompatActivity() {
     /**
      * Extension function to simplify setting an afterTextChanged action to EditText components.
      */
-    private fun TextInputEditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
+    private fun TextInputEditText.afterTextChanged(afterTextChanged : (String) -> Unit) {
         this.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(editable: Editable?) {
+            override fun afterTextChanged(editable : Editable?) {
                 afterTextChanged.invoke(editable.toString())
             }
 
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun beforeTextChanged(
+                s : CharSequence,
+                start : Int,
+                count : Int,
+                after : Int
+            ) {
+            }
 
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun onTextChanged(s : CharSequence, start : Int, before : Int, count : Int) {}
         })
     }
 }

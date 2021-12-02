@@ -6,5 +6,5 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 class DemoCap(
     @Json(name = "mainSupporting")
-    var mainSupporting: ArrayList<String>?=ArrayList()
+    var mainSupporting : ArrayList<String>? = ArrayList()
 )

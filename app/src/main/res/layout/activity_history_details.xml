@@ -18,10 +18,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackgroundBorderless"
-            android:paddingTop="@dimen/dp16"
-            android:paddingBottom="@dimen/dp16"
             android:paddingStart="@dimen/dp16"
+            android:paddingTop="@dimen/dp16"
             android:paddingEnd="@dimen/dp8"
+            android:paddingBottom="@dimen/dp16"
             android:src="@drawable/ic_arrow_back_24"
             app:tint="@color/white" />
 
@@ -44,24 +44,24 @@
             android:textSize="@dimen/sp18" />
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/due_amount_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/due_amount_card"
-            app:cardCornerRadius="@dimen/dp18"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/dp12"
             android:layout_marginEnd="@dimen/dp16"
-            app:rippleColor="@color/quantum_grey600"
             app:cardBackgroundColor="@color/quantum_grey100"
-            android:layout_alignParentEnd="true">
+            app:cardCornerRadius="@dimen/dp18"
+            app:rippleColor="@color/quantum_grey600">
 
             <TextView
+                android:id="@+id/due_amount_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/due_amount_tv"
-                android:text="@string/due_amount"
                 android:paddingHorizontal="@dimen/dp12"
                 android:paddingVertical="@dimen/dp8"
-                android:textSize="@dimen/sp14"/>
+                android:text="@string/due_amount"
+                android:textSize="@dimen/sp14" />
         </com.google.android.material.card.MaterialCardView>
 
     </RelativeLayout>
@@ -77,15 +77,15 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
-    <include layout="@layout/no_data_layout"
+    <include
         android:id="@+id/history_no_data"
-        android:visibility="gone"/>
+        layout="@layout/no_data_layout"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_centerInParent="true"
-        />
+        android:visibility="gone" />
 </RelativeLayout>

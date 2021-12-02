@@ -15,22 +15,22 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPlanViewModel @Inject constructor(
-    private val repository: ListViewRepository
+    private val repository : ListViewRepository
 ) : ViewModel() {
 
-    lateinit var calendar: Calendar
+    lateinit var calendar : Calendar
     val monthArray =
         arrayOf("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-    var mYear: Int = 0
-    var mMonth: Int = 0
-    var mDay: Int = 0
-    lateinit var currentDate: String
+    var mYear : Int = 0
+    var mMonth : Int = 0
+    var mDay : Int = 0
+    lateinit var currentDate : String
 
-    private val _response: MutableLiveData<NetworkResult<MyPlanModel>> = MutableLiveData()
-    val response: LiveData<NetworkResult<MyPlanModel>> = _response
+    private val _response : MutableLiveData<NetworkResult<MyPlanModel>> = MutableLiveData()
+    val response : LiveData<NetworkResult<MyPlanModel>> = _response
 
 
-    fun getMyPlanList(token: String, planDate: String) = viewModelScope.launch {
+    fun getMyPlanList(token : String, planDate : String) = viewModelScope.launch {
         _response.value = NetworkResult.Loading()
         repository.getMyPlanList(token, planDate).collect { values ->
             _response.value = values

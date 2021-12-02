@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "509017660295",
-    "project_id": "clxns-82bcf",
-    "storage_bucket": "clxns-82bcf.appspot.com"
+    "project_number": "404934212702",
+    "project_id": "clxns---android",
+    "storage_bucket": "clxns---android.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:509017660295:android:7ee9e7832a44031caa5122",
+        "mobilesdk_app_id": "1:404934212702:android:d8a20e7bcfbb6882b788cf",
         "android_client_info": {
           "package_name": "com.clxns.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "509017660295-dc4r3ddrbg5n92qmiofpkvdest5uqd2d.apps.googleusercontent.com",
+          "client_id": "404934212702-67eqfqa2lj2sfsjrm22v93f7flfn8jf9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.clxns.app",
+            "certificate_hash": "6942561314edb6ac9f592f7b9bae27f430e6f46f"
+          }
+        },
+        {
+          "client_id": "404934212702-o5307hnj5rqg89jrbtb4i0vnk1a4leld.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCZwXInqAbWsK9UzrPqazXhyEXGtits5NU"
+          "current_key": "AIzaSyBH-kRU1IXYJuCJFSHr2FvdpWGpI0I2xnA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "509017660295-dc4r3ddrbg5n92qmiofpkvdest5uqd2d.apps.googleusercontent.com",
+              "client_id": "404934212702-o5307hnj5rqg89jrbtb4i0vnk1a4leld.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

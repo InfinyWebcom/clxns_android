@@ -138,7 +138,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             val s = "No Internet Connection!!.\nPlease provide internet access to continue."
             val span = SpannableString(s)
             span.setSpan(RelativeSizeSpan(1.2f), 0, 25, 0)
-            span.setSpan(ForegroundColorSpan(getColor(requireContext(), R.color.red_orange)), 0, 25, 0)
+            span.setSpan(
+                ForegroundColorSpan(getColor(requireContext(), R.color.red_orange)),
+                0,
+                25,
+                0
+            )
             binding.mapNoInternetLayout.noDataTxt.text = span
         }
     }

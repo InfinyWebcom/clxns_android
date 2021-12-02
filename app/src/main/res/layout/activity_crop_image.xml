@@ -62,8 +62,8 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:layout_toEndOf="@+id/buttonCancel"
-            android:src="@drawable/ic_baseline_rotate_left_24"
             android:importantForAccessibility="no"
+            android:src="@drawable/ic_baseline_rotate_left_24"
             app:tint="@color/white" />
 
         <ImageView
@@ -73,9 +73,9 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
             android:layout_toStartOf="@+id/buttonDone"
+            android:importantForAccessibility="no"
             android:src="@drawable/ic_baseline_rotate_right_24"
-            app:tint="@color/white"
-            android:importantForAccessibility="no" />
+            app:tint="@color/white" />
 
 
     </RelativeLayout>

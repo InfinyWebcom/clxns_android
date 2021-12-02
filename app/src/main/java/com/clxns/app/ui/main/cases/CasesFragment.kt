@@ -124,7 +124,8 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         filterBtn.setOnClickListener {
             if (filterBtn.text.equals("Filter")) {
                 findNavController().safeNavigate(
-                    CasesFragmentDirections.actionNavigationCasesToNavigationCasesFilter())
+                    CasesFragmentDirections.actionNavigationCasesToNavigationCasesFilter()
+                )
             } else {
                 filterBtn.text = getString(R.string.filter)
                 getCaseList(

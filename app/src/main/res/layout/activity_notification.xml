@@ -12,10 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/toolbar_background"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/notification_back_btn"
@@ -32,12 +31,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/notification_back_btn"
+            android:fontFamily="@font/gt_pro_bold"
             android:paddingTop="@dimen/dp16"
             android:paddingBottom="@dimen/dp16"
             android:text="@string/notifications"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp18"
-            android:fontFamily="@font/gt_pro_bold" />
+            android:textSize="@dimen/sp18" />
 
     </RelativeLayout>
 
@@ -45,9 +44,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="@dimen/dp8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/notificationCustomToolbar"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notificationCustomToolbar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

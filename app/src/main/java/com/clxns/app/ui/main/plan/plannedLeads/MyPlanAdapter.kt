@@ -17,34 +17,34 @@ import com.clxns.app.utils.makeFirstLetterCapital
 import com.clxns.app.utils.preventDoubleClick
 
 class MyPlanAdapter(
-    private val context: Context,
-    private val contactList: List<MyPlanDataItem?>?,
-    private val onPlanItemClickListener: OnPlanItemClickListener
+    private val context : Context,
+    private val contactList : List<MyPlanDataItem?>?,
+    private val onPlanItemClickListener : OnPlanItemClickListener
 ) : RecyclerView.Adapter<MyPlanAdapter.MyPlanVH>() {
 
     interface OnPlanItemClickListener {
         fun openDetailActivity(
-            loadId: String,
-            name: String,
-            dispositions: String,
-            isPlanned: Boolean
+            loadId : String,
+            name : String,
+            dispositions : String,
+            isPlanned : Boolean
         )
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyPlanVH {
+    override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : MyPlanVH {
         return MyPlanVH(PlanListItemsBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
-    override fun onBindViewHolder(holder: MyPlanVH, position: Int) {
+    override fun onBindViewHolder(holder : MyPlanVH, position : Int) {
         val details = contactList?.get(position)
 
         val name = details?.lead?.name?.lowercase()?.makeFirstLetterCapital()
         holder.contactItemBinding.planItemNameTxt.text = name
 
         var amount = 0
-        if (details?.lead?.totalDueAmount != null){
+        if (details?.lead?.totalDueAmount != null) {
             amount = details.lead.totalDueAmount
-            if (details.lead.amountCollected != null){
+            if (details.lead.amountCollected != null) {
                 amount -= details.lead.amountCollected
             }
         }
@@ -101,15 +101,15 @@ class MyPlanAdapter(
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
+    override fun getItemViewType(position : Int) : Int {
         return position
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount() : Int {
         return contactList?.size!!
     }
 
-    class MyPlanVH(itemView: PlanListItemsBinding) : RecyclerView.ViewHolder(itemView.root) {
+    class MyPlanVH(itemView : PlanListItemsBinding) : RecyclerView.ViewHolder(itemView.root) {
         val contactItemBinding = itemView
     }
 }

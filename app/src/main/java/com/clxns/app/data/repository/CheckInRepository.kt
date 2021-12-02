@@ -4,7 +4,6 @@ import com.clxns.app.data.api.helper.BaseApiResponse
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.api.helper.RemoteDataSource
 import com.clxns.app.data.database.LocalDataSource
-import com.clxns.app.data.model.CaseDetailsResponse
 import com.clxns.app.data.model.LeadContactUpdateResponse
 import com.clxns.app.data.model.MyPlanModel
 import com.clxns.app.data.model.cases.CaseCheckInBody

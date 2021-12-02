@@ -12,29 +12,29 @@ import com.clxns.app.utils.*
 
 
 class CasesAdapter(
-    private val context: Context,
-    private var casesList: List<CasesData>,
-    private val onCaseItemClickListener: OnCaseItemClickListener
+    private val context : Context,
+    private var casesList : List<CasesData>,
+    private val onCaseItemClickListener : OnCaseItemClickListener
 ) :
     RecyclerView.Adapter<CasesAdapter.CasesVH>() {
 
 
     interface OnCaseItemClickListener {
-        fun onPlanClick(isPlanned: Boolean, casesData: CasesData)
+        fun onPlanClick(isPlanned : Boolean, casesData : CasesData)
         fun openDetailActivity(
-            loadId: String,
-            name: String,
-            dispositions: String,
-            isPlanned: Boolean
+            loadId : String,
+            name : String,
+            dispositions : String,
+            isPlanned : Boolean
         )
     }
 
     class CasesVH(
-        itemView: CasesListItemBinding,
-        private val onCaseItemClickListener: OnCaseItemClickListener
+        itemView : CasesListItemBinding,
+        private val onCaseItemClickListener : OnCaseItemClickListener
     ) : RecyclerView.ViewHolder(itemView.root) {
         private val contactBinding = itemView
-        fun bind(context: Context, casesData: CasesData) {
+        fun bind(context : Context, casesData : CasesData) {
             val name = casesData.name.lowercase()
             contactBinding.casesUsernameTv.text = name.makeFirstLetterCapital()
             var dispositions = "New Lead"
@@ -58,7 +58,7 @@ class CasesAdapter(
                 contactBinding.casesImage.loadImage(url)
 
             }
-            val isPlanned: Boolean
+            val isPlanned : Boolean
             if (casesData.plans.isNotEmpty()) {
                 isPlanned = true
                 contactBinding.casesPlanBtn.backgroundTintList =
@@ -70,7 +70,7 @@ class CasesAdapter(
                     ContextCompat.getColorStateList(context, R.color.green)
                 contactBinding.casesPlanBtn.text = context.getString(R.string.plan)
             }
-            if (amount == 0){
+            if (amount == 0) {
                 contactBinding.casesPlanBtn.backgroundTintList =
                     ContextCompat.getColorStateList(context, R.color.quantum_grey400)
                 contactBinding.casesPlanBtn.isEnabled = false
@@ -90,24 +90,24 @@ class CasesAdapter(
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
+    override fun getItemViewType(position : Int) : Int {
         return position
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CasesVH {
+    override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : CasesVH {
         return CasesVH(
             CasesListItemBinding.inflate(LayoutInflater.from(parent.context)),
             onCaseItemClickListener
         )
     }
 
-    override fun onBindViewHolder(holder: CasesVH, position: Int) {
+    override fun onBindViewHolder(holder : CasesVH, position : Int) {
         val listItem = casesList[position]
         holder.bind(context, listItem)
 
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount() : Int {
         return casesList.size
     }
 }

@@ -9,27 +9,28 @@ import com.clxns.app.utils.preventDoubleClick
 
 
 class StatusAdapter(
-    private val statusList: ArrayList<StatusModel>,
-    private val onStatusListener: OnStatusListener
+    private val statusList : ArrayList<StatusModel>,
+    private val onStatusListener : OnStatusListener
 ) :
     RecyclerView.Adapter<StatusAdapter.StatusVH>() {
 
     interface OnStatusListener {
-        fun openAddDetailsBottomSheet(isMobile: Boolean)
-//        fun openSubStatusBottomSheet()
-        fun openSubStatusActionBottomSheet(isPTPAction: Boolean, dispositionType: String)
-        fun openPaymentScreen(dispositionType: String)
+        fun openAddDetailsBottomSheet(isMobile : Boolean)
+
+        //        fun openSubStatusBottomSheet()
+        fun openSubStatusActionBottomSheet(isPTPAction : Boolean, dispositionType : String)
+        fun openPaymentScreen(dispositionType : String)
     }
 
-    class StatusVH(itemView: StatusItemsBinding) : RecyclerView.ViewHolder(itemView.root) {
+    class StatusVH(itemView : StatusItemsBinding) : RecyclerView.ViewHolder(itemView.root) {
         val itemsBinding = itemView
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StatusVH {
+    override fun onCreateViewHolder(parent : ViewGroup, viewType : Int) : StatusVH {
         return StatusVH(StatusItemsBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
-    override fun onBindViewHolder(holder: StatusVH, position: Int) {
+    override fun onBindViewHolder(holder : StatusVH, position : Int) {
         val statusDetails = statusList[position]
         holder.itemsBinding.statusCard.setOnClickListener {
             it.preventDoubleClick()
@@ -78,11 +79,11 @@ class StatusAdapter(
         )
     }
 
-    override fun getItemViewType(position: Int): Int {
+    override fun getItemViewType(position : Int) : Int {
         return position
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount() : Int {
         return statusList.size
     }
 }

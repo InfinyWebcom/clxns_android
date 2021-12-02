@@ -398,10 +398,10 @@
                     android:layout_weight="1"
                     android:backgroundTint="@color/white"
                     android:text="@string/cancel"
+                    android:textAllCaps="false"
                     android:textColor="@color/light_red"
                     app:rippleColor="@color/light_red"
                     app:strokeColor="@color/light_red"
-                    android:textAllCaps="false"
                     app:strokeWidth="@dimen/dp1" />
 
                 <com.google.android.material.button.MaterialButton

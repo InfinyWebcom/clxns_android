@@ -14,17 +14,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChangePasswordViewModel @Inject constructor(
-    private val repository: ChangePasswordRepository
+    private val repository : ChangePasswordRepository
 ) : ViewModel() {
 
-    private val _changePasswordResponse: MutableLiveData<NetworkResult<ChangePasswordResponse>> =
+    private val _changePasswordResponse : MutableLiveData<NetworkResult<ChangePasswordResponse>> =
         MutableLiveData()
-    val changePasswordResponse: LiveData<NetworkResult<ChangePasswordResponse>> = _changePasswordResponse
+    val changePasswordResponse : LiveData<NetworkResult<ChangePasswordResponse>> =
+        _changePasswordResponse
+
     fun changePassword(
-        token: String,
-        newPassword: String,
-        confirmPassword: String,
-        oldPassword: String
+        token : String,
+        newPassword : String,
+        confirmPassword : String,
+        oldPassword : String
     ) = viewModelScope.launch {
         repository.changePassword(
             token,

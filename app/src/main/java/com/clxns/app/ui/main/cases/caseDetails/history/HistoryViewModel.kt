@@ -14,13 +14,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val repository: HistoryRepository
+    private val repository : HistoryRepository
 ) : ViewModel() {
 
-    private val _response: MutableLiveData<NetworkResult<HistoryResponse>> = MutableLiveData()
-    val response: LiveData<NetworkResult<HistoryResponse>> = _response
+    private val _response : MutableLiveData<NetworkResult<HistoryResponse>> = MutableLiveData()
+    val response : LiveData<NetworkResult<HistoryResponse>> = _response
 
-    fun getCaseHistory(token: String, loanAccountNumber: String) = viewModelScope.launch {
+    fun getCaseHistory(token : String, loanAccountNumber : String) = viewModelScope.launch {
         _response.value = NetworkResult.Loading()
         repository.getCaseHistory(token, loanAccountNumber).collect { values ->
             _response.value = values

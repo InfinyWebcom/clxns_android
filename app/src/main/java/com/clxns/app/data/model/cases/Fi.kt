@@ -8,21 +8,21 @@ import java.io.Serializable
 @JsonClass(generateAdapter = true)
 data class Fi(
     @Json(name = "category")
-    val category: String,
+    val category : String,
     @Json(name = "createdAt")
-    val createdAt: String,
+    val createdAt : String,
     @Json(name = "description")
-    val description: String,
+    val description : String,
     @Json(name = "fiImage")
-    val fiImage: String,
+    val fiImage : String,
     @Json(name = "id")
-    val id: Int,
+    val id : Int,
     @Json(name = "isDeleted")
-    val isDeleted: Int,
+    val isDeleted : Int,
     @Json(name = "location")
-    val location: String,
+    val location : String,
     @Json(name = "name")
-    val name: String,
+    val name : String,
     @Json(name = "updatedAt")
-    val updatedAt: String
+    val updatedAt : String
 ) : Serializable

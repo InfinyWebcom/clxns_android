@@ -8,7 +8,7 @@ import retrofit2.Response
  * Combination of this and NetworkConnectionInterceptor we are also throwing no internet exception with a proper message
  */
 abstract class BaseApiResponse {
-    suspend fun <T> safeApiCall(apiCall: suspend () -> Response<T>): NetworkResult<T> {
+    suspend fun <T> safeApiCall(apiCall : suspend () -> Response<T>) : NetworkResult<T> {
         try {
             val response = apiCall()
             if (response.isSuccessful) {
@@ -18,11 +18,11 @@ abstract class BaseApiResponse {
                 }
             }
             return error("${response.code()} ${response.message()}")
-        } catch (e: Exception) {
+        } catch (e : Exception) {
             return error(e.message ?: e.toString())
         }
     }
 
-    private fun <T> error(errorMessage: String): NetworkResult<T> =
+    private fun <T> error(errorMessage : String) : NetworkResult<T> =
         NetworkResult.Error("Error -> $errorMessage")
 }

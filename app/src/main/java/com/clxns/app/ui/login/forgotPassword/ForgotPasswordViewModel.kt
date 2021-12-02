@@ -14,23 +14,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ForgotPasswordViewModel @Inject constructor(
-    private val repository: ForgotPasswordRepository
+    private val repository : ForgotPasswordRepository
 ) : ViewModel() {
 
-    private val _responseGetOTP: MutableLiveData<NetworkResult<ForgotPasswordResponse>> =
+    private val _responseGetOTP : MutableLiveData<NetworkResult<ForgotPasswordResponse>> =
         MutableLiveData()
-    val responseGetOTP: LiveData<NetworkResult<ForgotPasswordResponse>> = _responseGetOTP
-    fun getOTP(emailId: String) = viewModelScope.launch {
+    val responseGetOTP : LiveData<NetworkResult<ForgotPasswordResponse>> = _responseGetOTP
+    fun getOTP(emailId : String) = viewModelScope.launch {
         _responseGetOTP.value = NetworkResult.Loading()
         repository.getOTP(emailId).collect { values ->
             _responseGetOTP.value = values
         }
     }
 
-    private val _responseVerifyOTP: MutableLiveData<NetworkResult<ForgotPasswordResponse>> =
+    private val _responseVerifyOTP : MutableLiveData<NetworkResult<ForgotPasswordResponse>> =
         MutableLiveData()
-    val responseVerifyOTP: LiveData<NetworkResult<ForgotPasswordResponse>> = _responseVerifyOTP
-    fun verifyOTP(token: String, otp: String, emailId: String) = viewModelScope.launch {
+    val responseVerifyOTP : LiveData<NetworkResult<ForgotPasswordResponse>> = _responseVerifyOTP
+    fun verifyOTP(token : String, otp : String, emailId : String) = viewModelScope.launch {
         _responseVerifyOTP.value = NetworkResult.Loading()
         repository.verifyOTP(token, otp, emailId).collect { values ->
             _responseVerifyOTP.value = values

@@ -8,25 +8,25 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class CasesData(
     @Json(name = "applicantPincode")
-    val applicantPincode: Int,
+    val applicantPincode : Int,
     @Json(name = "disposition")
-    val disposition: Disposition? = null,
+    val disposition : Disposition? = null,
     @Json(name = "fi")
-    val fi: Fi? = null,
+    val fi : Fi? = null,
     @Json(name = "fosAssignedDate")
-    val fosAssignedDate: String?,
+    val fosAssignedDate : String?,
     @Json(name = "loanAccountNo")
-    val loanAccountNo: Int,
+    val loanAccountNo : Int,
     @Json(name = "name")
-    val name: String,
+    val name : String,
     @Json(name = "plans")
-    val plans: List<MyPlanDataItem>,
+    val plans : List<MyPlanDataItem>,
     @Json(name = "srNo")
-    val srNo: Int,
+    val srNo : Int,
     @Json(name = "subDisposition")
-    val subDisposition: SubDispositionData? = null,
+    val subDisposition : SubDispositionData? = null,
     @Json(name = "totalDueAmount")
-    val totalDueAmount: Int,
+    val totalDueAmount : Int,
     @Json(name = "amountCollected")
-    val amountCollected: Int
+    val amountCollected : Int
 )

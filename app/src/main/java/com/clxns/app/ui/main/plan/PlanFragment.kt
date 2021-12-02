@@ -65,9 +65,9 @@ class PlanFragment : Fragment() {
             TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab : TabLayout.Tab?) {
                 binding.planViewPager.currentItem = tab?.position!!
-                if (tab.position == 1){
+                if (tab.position == 1) {
                     binding.planCustomToolbar.hide()
-                }else{
+                } else {
                     binding.planCustomToolbar.show()
                 }
             }

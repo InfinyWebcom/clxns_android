@@ -13,14 +13,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val homeRepository: HomeRepository) : ViewModel() {
+class HomeViewModel @Inject constructor(private val homeRepository : HomeRepository) : ViewModel() {
 
 
-    private val _responseHomeStats: MutableLiveData<NetworkResult<HomeStatisticsResponse>> =
+    private val _responseHomeStats : MutableLiveData<NetworkResult<HomeStatisticsResponse>> =
         MutableLiveData()
-    val responseHomeStats: LiveData<NetworkResult<HomeStatisticsResponse>> = _responseHomeStats
+    val responseHomeStats : LiveData<NetworkResult<HomeStatisticsResponse>> = _responseHomeStats
 
-    fun getHomeStatsData(token: String) = viewModelScope.launch {
+    fun getHomeStatsData(token : String) = viewModelScope.launch {
         _responseHomeStats.value = NetworkResult.Loading()
         homeRepository.getHomeStatsData(token).collect {
             _responseHomeStats.value = it

@@ -92,8 +92,8 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.getBankList(token)
     }
 
-    private suspend fun checkForNewAppVersion(){
-        withContext(Dispatchers.IO){
+    private suspend fun checkForNewAppVersion() {
+        withContext(Dispatchers.IO) {
             checkForAppUpdate()
         }
     }
@@ -247,13 +247,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (navController.currentDestination!!.id == navController.graph.startDestination){
-            if (snackBar.isShown){
+        if (navController.currentDestination!!.id == navController.graph.startDestination) {
+            if (snackBar.isShown) {
                 super.onBackPressed()
-            }else{
+            } else {
                 snackBar.show()
             }
-        }else{
+        } else {
             super.onBackPressed()
         }
     }

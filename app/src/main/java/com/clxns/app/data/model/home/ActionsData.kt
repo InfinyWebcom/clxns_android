@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class ActionsData(
     @Json(name = "pendingFollowUp")
-    val pendingFollowUp: Int,
+    val pendingFollowUp : Int,
     @Json(name = "pendingVisit")
-    val pendingVisit: Int
+    val pendingVisit : Int
 )

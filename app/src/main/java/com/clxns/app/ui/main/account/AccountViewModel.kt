@@ -15,15 +15,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
-    private val repository: AccountRepository
+    private val repository : AccountRepository
 ) : ViewModel() {
 
-    private val _responseLogout: MutableLiveData<NetworkResult<LogoutResponse>> = MutableLiveData()
-    val responseLogout: LiveData<NetworkResult<LogoutResponse>> = _responseLogout
+    private val _responseLogout : MutableLiveData<NetworkResult<LogoutResponse>> = MutableLiveData()
+    val responseLogout : LiveData<NetworkResult<LogoutResponse>> = _responseLogout
 
-    private val _responseUserDetails: MutableLiveData<NetworkResult<LoginResponse>> =
+    private val _responseUserDetails : MutableLiveData<NetworkResult<LoginResponse>> =
         MutableLiveData()
-    val responseUserDetails: LiveData<NetworkResult<LoginResponse>> = _responseUserDetails
+    val responseUserDetails : LiveData<NetworkResult<LoginResponse>> = _responseUserDetails
 
     private val _responseBankNames : MutableLiveData<List<String>> = MutableLiveData()
     val responseBankNames : LiveData<List<String>> = _responseBankNames
@@ -37,20 +37,20 @@ class AccountViewModel @Inject constructor(
         }
     }
 
-    fun getBankImage(bankName:String) = viewModelScope.launch {
+    fun getBankImage(bankName : String) = viewModelScope.launch {
         repository.getBankImage(bankName).collect {
             _responseBankImage.value = it
         }
     }
 
-    fun logout(token: String) = viewModelScope.launch {
+    fun logout(token : String) = viewModelScope.launch {
         _responseLogout.value = NetworkResult.Loading()
         repository.logout(token).collect { values ->
             _responseLogout.value = values
         }
     }
 
-    fun getUserDetails(token: String) = viewModelScope.launch {
+    fun getUserDetails(token : String) = viewModelScope.launch {
         _responseUserDetails.value = NetworkResult.Loading()
         repository.getUserDetails(token).collect {
             _responseUserDetails.value = it

@@ -417,11 +417,15 @@ class SubStatusActionBottomSheet(
         )
         if (amount.isNotEmpty() || amount.isNotBlank()) {
             if (isPTP) {
-                if (amount.toInt() < actualAmount!!) {
+                if (additionalFields.ptpAmountType.equals("Total Due Amount")) {
                     additionalFields.ptpAmount = amount
                 } else {
-                    requireContext().toast("Amount must be less than total due amount - ₹$actualAmount")
-                    return false
+                    if (amount.toInt() < actualAmount!!) {
+                        additionalFields.ptpAmount = amount
+                    } else {
+                        requireContext().toast("Amount must be less than total due amount - ₹$actualAmount")
+                        return false
+                    }
                 }
             } else {
                 if (amount.toInt() <= actualAmount!!) {
@@ -444,12 +448,13 @@ class SubStatusActionBottomSheet(
 
         additionalFields.assignTracer = actionBinding.assignToTracerCB.isChecked
 
-        additionalFields.ptpProbability = when (actionBinding.statusActionActiveRG.checkedRadioButtonId) {
-                    actionBinding.rb80.id -> "80% >"
-                    actionBinding.rb50.id -> "50% - 80%"
-                    actionBinding.rb30.id -> "50% <"
-                    else -> ""
-                }
+        additionalFields.ptpProbability =
+            when (actionBinding.statusActionActiveRG.checkedRadioButtonId) {
+                actionBinding.rb80.id -> "80% >"
+                actionBinding.rb50.id -> "50% - 80%"
+                actionBinding.rb30.id -> "50% <"
+                else -> ""
+            }
 
         return true
     }

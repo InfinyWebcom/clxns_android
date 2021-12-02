@@ -21,14 +21,14 @@ import javax.inject.Singleton
 object DBModule {
     @Provides
     @Singleton
-    fun provideRoomDB(@ApplicationContext context: Context) : AppDatabase{
+    fun provideRoomDB(@ApplicationContext context : Context) : AppDatabase {
         return Room.databaseBuilder(context, AppDatabase::class.java, Constants.DATABASE_NAME)
             .fallbackToDestructiveMigration()
             .build()
     }
 
     @Provides
-    fun provideDispositionDao(appDatabase: AppDatabase): AppDao{
+    fun provideDispositionDao(appDatabase : AppDatabase) : AppDao {
         return appDatabase.appDao()
     }
 }
