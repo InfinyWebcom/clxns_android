@@ -29,6 +29,7 @@ import com.clxns.app.ui.search.SearchActivity
 import com.clxns.app.utils.*
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -191,6 +192,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
                     binding.casesProgressBar.hide()
                     noDataLayout.show()
                     casesRV.hide()
+                    Timber.i("ERROR -> ${response.message}")
                     binding.root.snackBar(response.message!!)
                     // show error message
                 }
@@ -264,7 +266,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
 
                 viewModel.addToPlan(
                     token,
-                    casesData.loanAccountNo.toString(),
+                    casesData.loanAccountNo,
                     "${year}-${monthOfYear + 1}-${dayOfMonth}"
                 )
             }
@@ -290,7 +292,7 @@ class CasesFragment : Fragment(), CasesAdapter.OnCaseItemClickListener {
         logoutDialog.setPositiveButton("Yes") { dialog, _ ->
             viewModel.removePlan(
                 token,
-                casesData.loanAccountNo.toString()
+                casesData.loanAccountNo
             )
             dialog.dismiss()
         }.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }

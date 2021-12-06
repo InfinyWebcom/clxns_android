@@ -16,7 +16,7 @@ data class CasesData(
     @Json(name = "fosAssignedDate")
     val fosAssignedDate : String?,
     @Json(name = "loanAccountNo")
-    val loanAccountNo : Int,
+    val loanAccountNo : String,
     @Json(name = "name")
     val name : String,
     @Json(name = "plans")

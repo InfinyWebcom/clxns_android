@@ -21,7 +21,7 @@ data class HistoryData(
     @Json(name = "id")
     val id: Int,
     @Json(name = "leadId")
-    val leadId: Int,
+    val leadId: String,
     @Json(name = "location")
     val location: String?,
     @Json(name = "nextAction")

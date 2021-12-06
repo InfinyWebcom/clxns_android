@@ -14,7 +14,7 @@ data class UpdatedContactData(
     @Json(name = "id")
     val id : Int,
     @Json(name = "leadId")
-    val leadId : Int,
+    val leadId : String,
     @Json(name = "type")
     val type : String,
     @Json(name = "updatedAt")

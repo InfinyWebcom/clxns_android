@@ -47,7 +47,7 @@ class CasesAdapter(
             }
             val assignedDate = casesData.fosAssignedDate?.convertServerDateToNormal("dd, MMM yyyy")
             contactBinding.casesStatusTv.text = dispositions
-            val loanIdDatePinCode = casesData.loanAccountNo.toString() + " | " +
+            val loanIdDatePinCode = casesData.loanAccountNo + " | " +
                     casesData.applicantPincode.toString() + " | " + assignedDate
             contactBinding.loanIdDatePincodeTv.text = loanIdDatePinCode
 
@@ -81,7 +81,7 @@ class CasesAdapter(
             }
             contactBinding.casesCardView.setOnClickListener {
                 onCaseItemClickListener.openDetailActivity(
-                    casesData.loanAccountNo.toString(),
+                    casesData.loanAccountNo,
                     name,
                     dispositions,
                     isPlanned

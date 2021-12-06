@@ -216,4 +216,6 @@
         <item>Others</item>
     </string-array>
 
+    <string name="GOOGLE_MAP_API_KEY">AIzaSyApIyQPCHicqPshDMO0fcmpLgTPltlfQbw</string>
+
 </resources>

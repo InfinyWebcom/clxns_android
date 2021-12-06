@@ -232,7 +232,7 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 casesViewModel.addToPlan(
                     token,
-                    casesData.loanAccountNo.toString(),
+                    casesData.loanAccountNo,
                     "${year}-${monthOfYear + 1}-${dayOfMonth}"
                 )
             }
@@ -256,7 +256,7 @@ class SearchActivity : AppCompatActivity(), CasesAdapter.OnCaseItemClickListener
         logoutDialog.setMessage("Are you sure you want to un-plan this case?")
 
         logoutDialog.setPositiveButton("Yes") { dialog, _ ->
-            casesViewModel.removePlan(token, casesData.loanAccountNo.toString())
+            casesViewModel.removePlan(token, casesData.loanAccountNo)
             dialog.dismiss()
         }.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
 

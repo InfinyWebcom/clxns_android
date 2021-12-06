@@ -41,7 +41,7 @@ data class MyPlanDataItem(
     val lead: Lead? = null,
 
     @Json(name = "leadId")
-    val leadId: Int? = null,
+    val leadId: String? = null,
 
     @Json(name = "updatedAt")
     val updatedAt: String? = null
@@ -288,7 +288,7 @@ data class Lead(
     val chassisNumber: String? = null,
 
     @Json(name = "loanAccountNo")
-    val loanAccountNo: Int? = null,
+    val loanAccountNo: String? = null,
 
     @Json(name = "srNo")
     val srNo: Int? = null,

@@ -626,7 +626,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible"
+                >
 
                 <TextView
                     android:id="@+id/personalDetailsTxt"
@@ -916,7 +918,9 @@
                     android:layout_marginTop="@dimen/dp12"
                     android:layout_marginEnd="@dimen/dp16"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    >
 
                     <TextView
                         android:id="@+id/txtNewAddress"

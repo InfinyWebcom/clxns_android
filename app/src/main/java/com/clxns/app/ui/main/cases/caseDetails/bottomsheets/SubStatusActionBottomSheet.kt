@@ -17,6 +17,7 @@ import com.clxns.app.utils.hide
 import com.clxns.app.utils.show
 import com.clxns.app.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import timber.log.Timber
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
