@@ -7,32 +7,32 @@ import com.squareup.moshi.JsonClass
 data class AdditionalFieldModel(
 
     @field:SerializedName("recoveredAmount")
-    var recoveredAmount: String? = "",
+    var Recovered_Amount: String? = "",
 
-    @field:SerializedName("ref_ChequeNo")
-    var refChequeNo: String? = "",
+    @field:SerializedName("refChequeNo")
+    var RefChequeNo: String? = "",
 
     @field:SerializedName("paymentMode")
-    var paymentMode: String? = "",
+    var Payment_Mode: String? = "",
 
     @field:SerializedName("ptpAmount")
-    var ptpAmount: String? = "",
+    var PTP_Amount: String? = "",
 
     @field:SerializedName("recoveryDate")
-    var recoveryDate: String? = "",
+    var Recovery_Date: String? = "",
 
     @field:SerializedName("ptpAmountType")
-    var ptpAmountType: String? = "",
+    var PTP_Amount_Type: String? = "",
 
     @field:SerializedName("ptpDate")
-    var ptpDate: String? = "",
+    var PTP_Date: String? = "",
 
     @field:SerializedName("recoveryType")
-    var recoveryType: String? = "",
+    var Recovery_Type: String? = "",
 
     @field:SerializedName("assignTracer")
-    var assignTracer: Boolean? = false,
+    var Assign_To_Tracer: Boolean? = false,
 
     @field:SerializedName("ptpProbability")
-    var ptpProbability: String? = ""
+    var PTP_Probability: String? = ""
 )

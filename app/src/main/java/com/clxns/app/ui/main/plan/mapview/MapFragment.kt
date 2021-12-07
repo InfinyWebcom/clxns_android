@@ -342,11 +342,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             if (it) {
                 mLocationPermissionGranted = true
-                if (isGPSEnabled()) {
-                    getLocationUpdates()
-                } else {
-                    openLocationToggleDialog()
-                }
+                checkIfPermissionAndLocationHasProvided()
             } else {
                 var isSelectedNeverAskAgain = false
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -373,11 +369,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (checkLocationPermission()) {
                 mLocationPermissionGranted = true
-                if (isGPSEnabled()) {
-                    getLocationUpdates()
-                } else {
-                    openLocationToggleDialog()
-                }
+                checkIfPermissionAndLocationHasProvided()
             } else {
                 binding.root.snackBar("Please provide location permission to continue.")
             }
@@ -399,6 +391,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         requireContext().toast("Dialog is cancelled by User")
                     }
                 dialog?.show()
+                progressDialog.dismiss()
             }
             else -> {
                 requireContext().toast("Play services are required by this application")

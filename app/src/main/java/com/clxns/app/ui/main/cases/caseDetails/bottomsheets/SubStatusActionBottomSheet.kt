@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.RadioGroup
 import com.clxns.app.R
 import com.clxns.app.data.model.AdditionalFieldModel
 import com.clxns.app.data.model.CaseDetailsResponse
@@ -26,7 +27,7 @@ import java.util.*
 class SubStatusActionBottomSheet(
     private var caseDetails : CaseDetailsResponse?,
     private var doneClickListener : OnDispositionDoneClickListener
-) : BottomSheetDialogFragment() {
+) : BottomSheetDialogFragment(), RadioGroup.OnCheckedChangeListener {
 
     private lateinit var actionBinding : SubStatusActionBottomSheetBinding
     private var isPTP = false
@@ -92,6 +93,7 @@ class SubStatusActionBottomSheet(
 
 
     private fun initView() {
+        actionBinding.rgPayment.setOnCheckedChangeListener(this)
         actionBinding.llPayment.hide()
         if (isPTP) {
             actionBinding.revisitDateLabel.text = getString(R.string.future)
@@ -399,14 +401,14 @@ class SubStatusActionBottomSheet(
             requireContext().toast(message)
             return false
         }
-        additionalFields.paymentMode =
+        additionalFields.Payment_Mode =
             if (actionBinding.rgPayment.checkedRadioButtonId == actionBinding.rbOnline.id) "Online" else
                 (if (actionBinding.rgPayment.checkedRadioButtonId == actionBinding.rbCheque.id) "Cheque" else
                     (if (actionBinding.rgPayment.checkedRadioButtonId == actionBinding.rbCash.id) "Cash" else ""))
 
-        additionalFields.recoveryType = additionalFields.paymentMode
+        additionalFields.Recovery_Type = additionalFields.Payment_Mode
 
-        additionalFields.ptpAmountType =
+        additionalFields.PTP_Amount_Type =
             if (actionBinding.spAmount.selectedItem == null
                 || actionBinding.spAmount.selectedItem.toString() == "Select an Option"
             ) ""
@@ -418,11 +420,11 @@ class SubStatusActionBottomSheet(
         )
         if (amount.isNotEmpty() || amount.isNotBlank()) {
             if (isPTP) {
-                if (additionalFields.ptpAmountType.equals("Total Due Amount")) {
-                    additionalFields.ptpAmount = amount
+                if (additionalFields.PTP_Amount_Type.equals("Total Due Amount")) {
+                    additionalFields.PTP_Amount = amount
                 } else {
                     if (amount.toInt() < actualAmount!!) {
-                        additionalFields.ptpAmount = amount
+                        additionalFields.PTP_Amount = amount
                     } else {
                         requireContext().toast("Amount must be less than total due amount - ₹$actualAmount")
                         return false
@@ -430,7 +432,7 @@ class SubStatusActionBottomSheet(
                 }
             } else {
                 if (amount.toInt() <= actualAmount!!) {
-                    additionalFields.ptpAmount = amount
+                    additionalFields.PTP_Amount = amount
                 } else {
                     requireContext().toast("Amount cannot be greater than total due amount - ₹$actualAmount")
                     return false
@@ -439,17 +441,17 @@ class SubStatusActionBottomSheet(
 
         }
 
-        additionalFields.recoveredAmount = additionalFields.ptpAmount
+        additionalFields.Recovered_Amount = additionalFields.PTP_Amount
 
-        additionalFields.recoveryDate = dateFormattedRecovery
+        additionalFields.Recovery_Date = dateFormattedRecovery
 
-        additionalFields.refChequeNo = actionBinding.edtReferenceType.text.toString()
+        additionalFields.RefChequeNo = actionBinding.edtReferenceType.text.toString()
 
-        additionalFields.ptpDate = dateFormatted
+        additionalFields.PTP_Date = dateFormatted
 
-        additionalFields.assignTracer = actionBinding.assignToTracerCB.isChecked
+        additionalFields.Assign_To_Tracer = actionBinding.assignToTracerCB.isChecked
 
-        additionalFields.ptpProbability =
+        additionalFields.PTP_Probability =
             when (actionBinding.statusActionActiveRG.checkedRadioButtonId) {
                 actionBinding.rb80.id -> "80% >"
                 actionBinding.rb50.id -> "50% - 80%"
@@ -477,6 +479,16 @@ class SubStatusActionBottomSheet(
             remark : String,
             additionalFields : AdditionalFieldModel?
         )
+    }
+
+    override fun onCheckedChanged(group : RadioGroup?, checkedId : Int) {
+        when(checkedId){
+            R.id.rbOnline, R.id.rbCheque -> {actionBinding.edtReferenceType.isEnabled = true}
+            R.id.rbCash -> {
+                actionBinding.edtReferenceType.isEnabled = false
+                actionBinding.edtReferenceType.text = null
+            }
+        }
     }
 
 }

@@ -137,14 +137,13 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.RemovePho
                 onBackPressed()
             } else {
                 if (validate()) {
-                    //additional fields
                     val additionalField = AdditionalFieldModel()
-                    additionalField.recoveryDate = recoveryDate
-                    additionalField.paymentMode = paymentType
-                    additionalField.recoveryType = getSelectedRecoveryType()
-                    additionalField.refChequeNo =
+                    additionalField.Recovery_Date = recoveryDate
+                    additionalField.Payment_Mode = paymentType
+                    additionalField.Recovery_Type = getSelectedRecoveryType()
+                    additionalField.RefChequeNo =
                         if (paymentType == "CHEQUE") binding.edtChequeNumber.text.toString() else (if (paymentType == "ONLINE") binding.edtReferenceNo.text.toString() else "")
-                    additionalField.recoveredAmount =
+                    additionalField.Recovered_Amount =
                         binding.paymentAmountEt.text.toString()
 
                     //payment details
