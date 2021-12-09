@@ -28,7 +28,6 @@ class CropImageActivity : AppCompatActivity() {
 
     private var path : String? = null
     var activityCropImageBinding : ActivityCropImageBinding? = null
-    var file : File? = null
     private var mFrameRect : RectF? = null
     var context : Context? = null
     private var mSourceUri : Uri? = null
@@ -59,7 +58,7 @@ class CropImageActivity : AppCompatActivity() {
         mSourceUri = Uri.parse(intent.getStringExtra("sourceUri"))
         val cropping = intent.getStringExtra("cropping")?.equals("disable")
         if (!cropping!!) {
-            activityCropImageBinding!!.cropImageView.setCropMode(CropImageView.CropMode.CIRCLE)
+            activityCropImageBinding!!.cropImageView.setCropMode(CropImageView.CropMode.CIRCLE_SQUARE)
         }
         val fromDoc = intent.getBooleanExtra("from_documents", false)
         if (fromDoc) {
