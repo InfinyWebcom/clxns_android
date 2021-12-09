@@ -26,13 +26,13 @@ class DetailsRepository @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    /* Local Calls */
     suspend fun getDispositionName(dispositionId:Int) : Flow<String>{
         return flow {
             emit(localDataSource.getDispositionName(dispositionId))
         }.flowOn(Dispatchers.IO)
     }
 
-    /* Local Calls */
     suspend fun getSubDispositionName(subDispositionId:Int) : Flow<String>{
         return flow {
             emit(localDataSource.getSubDispositionName(subDispositionId))

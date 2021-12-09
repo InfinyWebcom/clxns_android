@@ -146,12 +146,12 @@ class LoginActivity : AppCompatActivity() {
                         sessionManager.saveAnyData(Constants.USER_MOBILE, loginData.phone)
                         sessionManager.saveAnyData(Constants.USER_ADDRESS, loginData.address)
                         sessionManager.saveAnyData(Constants.USER_LOCATION, loginData.location)
-                        if (!loginData.profileImage.isNullOrEmpty()) {
-                            sessionManager.saveAnyData(
-                                Constants.USER_IMAGE,
-                                Constants.PROFILE_IMAGE_URL + loginData.profileImage
-                            )
-                        }
+//                        if (!loginData.profileImage.isNullOrEmpty()) {
+//                            sessionManager.saveAnyData(
+//                                Constants.USER_IMAGE,
+//                                Constants.PROFILE_IMAGE_URL + loginData.profileImage
+//                            )
+//                        }
                         sessionManager.saveAnyData(Constants.IS_USER_LOGGED_IN, true)
                         Handler(Looper.getMainLooper()).postDelayed({
                             startActivity(Intent(this, MainActivity::class.java))

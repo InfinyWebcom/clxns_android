@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 @ActivityRetainedScoped
-class ListViewRepository @Inject constructor(
+class MyPlanRepository @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) : BaseApiResponse() {
 

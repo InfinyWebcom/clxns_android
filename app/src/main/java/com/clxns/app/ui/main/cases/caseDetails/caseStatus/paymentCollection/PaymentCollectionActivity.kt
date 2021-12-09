@@ -506,13 +506,13 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.RemovePho
         imageCameraPickerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
-            Timber.i("getResultCode---->" + result.resultCode)
+            //Timber.i("getResultCode---->" + result.resultCode)
             if (result.resultCode == RESULT_OK) {
                 // There are no request codes
-                Timber.i("data---->$imageUri")
+                //Timber.i("data---->$imageUri")
 
                 imageUri?.let {
-                    Timber.i(" ------------- > $imageUri")
+                    //Timber.i(" ------------- > $imageUri")
                     startCropActivity(imageUri!!)
                 }
 
@@ -525,7 +525,7 @@ class PaymentCollectionActivity : AppCompatActivity(), AddImageAdapter.RemovePho
             ) { result ->
                 if (result?.resultCode == RESULT_OK) {
                     val data = result.data
-                    Timber.i("data-->$data")
+                    //Timber.i("data-->$data")
 
                     data?.data?.let { startCropActivity(data.data!!) }
 

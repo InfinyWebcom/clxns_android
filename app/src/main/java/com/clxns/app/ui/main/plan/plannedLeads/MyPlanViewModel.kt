@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clxns.app.data.api.helper.NetworkResult
 import com.clxns.app.data.model.MyPlanModel
-import com.clxns.app.data.repository.ListViewRepository
+import com.clxns.app.data.repository.MyPlanRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPlanViewModel @Inject constructor(
-    private val repository : ListViewRepository
+    private val repository : MyPlanRepository
 ) : ViewModel() {
 
     lateinit var calendar : Calendar
