@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -85,11 +86,12 @@ class MainActivity : AppCompatActivity() {
         //Will be removed
         //Timber.i("MAIN_TOKEN -> ${sessionManager.getString(Constants.TOKEN)!!}")
 
+        mainViewModel.getAllDispositions()
+        mainViewModel.getBankList(token)
+
         lifecycleScope.launch {
             checkForNewAppVersion()
         }
-        mainViewModel.getAllDispositions()
-        mainViewModel.getBankList(token)
     }
 
     private suspend fun checkForNewAppVersion() {
@@ -178,7 +180,9 @@ class MainActivity : AppCompatActivity() {
 
         listener = InstallStateUpdatedListener {
             if (it.installStatus() == InstallStatus.DOWNLOADING) {
-                binding.appUpdateProgressBar.show()
+                if (!binding.appUpdateProgressBar.isVisible) {
+                    binding.appUpdateProgressBar.show()
+                }
                 binding.appUpdateProgressBar.progress = it.bytesDownloaded().toInt()
             }
             if (it.installStatus() == InstallStatus.DOWNLOADED) {
@@ -212,16 +216,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun popupSnackBarForCompleteUpdate() {
-        val snackBar = Snackbar.make(
+        val appUpdateSnackBar = Snackbar.make(
             binding.root,
             "An update has just been downloaded.",
             Snackbar.LENGTH_INDEFINITE
         )
-        snackBar.setAction("RESTART") { appUpdateManager.completeUpdate() }
-        snackBar.setActionTextColor(
+        appUpdateSnackBar.setAction("RESTART") { appUpdateManager.completeUpdate() }
+        appUpdateSnackBar.setActionTextColor(
             ContextCompat.getColor(this, android.R.color.holo_green_light)
         )
-        snackBar.show()
+        appUpdateSnackBar.show()
     }
 
     override fun onResume() {

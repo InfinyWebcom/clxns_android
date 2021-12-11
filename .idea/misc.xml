@@ -4,6 +4,26 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.17314814814814813" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/drawable/background_rb_selection.xml" value="0.2449074074074074" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/drawable/ic_add_smartphone.xml" value="0.33" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/drawable/ic_arrow_forward_20.xml" value="0.2449074074074074" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/drawable/ic_collect.xml" value="0.3365740740740741" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/drawable/ic_deal.xml" value="0.3365740740740741" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/drawable/ic_dispute.xml" value="0.2" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/drawable/ic_img_424837.xml" value="0.3365740740740741" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/drawable/ic_notebook.xml" value="0.3365740740740741" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/drawable/selected_radio_button.xml" value="0.2449074074074074" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/drawable/unselected_radio_button.xml" value="0.2449074074074074" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/layout/activity_check_in.xml" value="0.23055555555555557" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/layout/activity_details.xml" value="0.33055555555555555" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/layout/activity_login.xml" value="0.32222222222222224" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/layout/activity_payment_collection.xml" value="0.23055555555555557" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/layout/fragment_account.xml" value="0.23055555555555557" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/layout/fragment_cases.xml" value="0.23055555555555557" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/layout/fragment_home.xml" value="0.33055555555555555" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/layout/fragment_my_plan.xml" value="0.23055555555555557" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/layout/fragment_plan.xml" value="0.23055555555555557" />
+        <entry key="..\:/Users/sksha/StudioProjects/clxns/app/src/main/res/layout/plan_list_items.xml" value="0.4" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable-v24/background_apply_filter.xml" value="0.9" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable-v24/background_bottomsheet_view.xml" value="0.16574074074074074" />
         <entry key="..\:/WorkFromHome/CLXNS/MAIN_PROJECT/clxns/app/src/main/res/drawable-v24/background_button.xml" value="0.18888888888888888" />
@@ -221,7 +241,7 @@
         <entry key="app/src/main/res/layout/custom_info_contents.xml" value="0.12777777777777777" />
         <entry key="app/src/main/res/layout/custom_info_window.xml" value="0.3143518518518518" />
         <entry key="app/src/main/res/layout/dialog_collectable_amount.xml" value="0.3143518518518518" />
-        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_account.xml" value="0.3143518518518518" />
         <entry key="app/src/main/res/layout/fragment_account2.xml" value="0.3148148148148148" />
         <entry key="app/src/main/res/layout/fragment_account3.xml" value="0.3148148148148148" />
         <entry key="app/src/main/res/layout/fragment_add_mobile_address_bottom_sheet_dialog.xml" value="0.3143518518518518" />
@@ -242,7 +262,7 @@
         <entry key="app/src/main/res/layout/no_data_layout.xml" value="0.3143518518518518" />
         <entry key="app/src/main/res/layout/plan_list_items.xml" value="0.3143518518518518" />
         <entry key="app/src/main/res/layout/status_items.xml" value="0.3143518518518518" />
-        <entry key="app/src/main/res/layout/sub_status_action_bottom_sheet.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/sub_status_action_bottom_sheet.xml" value="0.17314814814814813" />
         <entry key="app/src/main/res/layout/sub_status_item.xml" value="0.144921875" />
         <entry key="app/src/main/res/menu/account_menu.xml" value="0.3148148148148148" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.17083333333333334" />
@@ -251,17 +271,10 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
-  </component>
-  <component name="VisualizationToolProject">
-    <option name="state">
-      <ProjectState>
-        <option name="scale" value="0.1" />
-      </ProjectState>
-    </option>
   </component>
 </project>

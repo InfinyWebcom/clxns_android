@@ -139,7 +139,7 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         statusList.add(
             StatusModel(
                 "Dispute",
-                ContextCompat.getDrawable(this, R.drawable.ic_lock_24)
+                ContextCompat.getDrawable(this, R.drawable.ic_dispute)
             )
         )
         statusList.add(
@@ -157,31 +157,31 @@ class CheckInActivity : AppCompatActivity(), StatusAdapter.OnStatusListener,
         statusList.add(
             StatusModel(
                 "Add Mobile",
-                ContextCompat.getDrawable(this, R.drawable.ic_round_note_add_24)
+                ContextCompat.getDrawable(this, R.drawable.ic_add_smartphone)
             )
         )
         statusList.add(
             StatusModel(
                 "Add Address",
-                ContextCompat.getDrawable(this, R.drawable.ic_round_note_add_24)
+                ContextCompat.getDrawable(this, R.drawable.ic_add_address)
             )
         )
         statusList.add(
             StatusModel(
                 "Collect",
-                ContextCompat.getDrawable(this, R.drawable.ic_receipt_24)
+                ContextCompat.getDrawable(this, R.drawable.ic_collect)
             )
         )
         statusList.add(
             StatusModel(
                 "Partially Collect",
-                ContextCompat.getDrawable(this, R.drawable.ic_receipt_24)
+                ContextCompat.getDrawable(this, R.drawable.ic_collect)
             )
         )
         statusList.add(
             StatusModel(
                 "Settlement/Foreclosure",
-                ContextCompat.getDrawable(this, R.drawable.ic_phone_android_24)
+                ContextCompat.getDrawable(this, R.drawable.ic_settlement)
             )
         )
         statusList.add(

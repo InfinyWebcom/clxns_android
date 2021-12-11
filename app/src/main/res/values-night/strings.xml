@@ -217,7 +217,8 @@
         <item>Others</item>
     </string-array>
 
-    <string name="GOOGLE_MAP_API_KEY">AIzaSyApIyQPCHicqPshDMO0fcmpLgTPltlfQbw</string>
+    <string name="GOOGLE_MAP_API_KEY_DEV">AIzaSyApIyQPCHicqPshDMO0fcmpLgTPltlfQbw</string>
+    <string name="GOOGLE_MAP_API_KEY_PROD">AIzaSyB-0vGM2K2fu_UQjILXdVdiX0KYAVm5aXo</string>
 
 
 </resources>
